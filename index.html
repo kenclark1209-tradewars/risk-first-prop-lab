@@ -1,0 +1,1706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<title>Risk First Prop Lab — Prop Firm Reviews, Payout Tests &amp; Rule Audits</title>
+<meta name="description" content="Independent prop firm lab: FTMO and FundedNext tested on XAUUSD spreads, daily drawdown rules, payout speed and country restrictions. No paid rankings — discussion lives in the Telegram group." />
+<link rel="canonical" href="https://kenclark1209-tradewars.github.io/risk-first-prop-lab/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Risk First Prop Lab" />
+<meta property="og:title" content="Risk First Prop Lab — Prop Firm Reviews, Payout Tests & Rule Audits" />
+<meta property="og:description" content="Tested prop firms. Real payouts only. One XAUUSD system run through every firm: spreads, drawdown rules, payout speed." />
+<meta property="og:url" content="https://kenclark1209-tradewars.github.io/risk-first-prop-lab/" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 105'%3E%3Cpath d='M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z' fill='%230A1931' stroke='%23D4AF37' stroke-width='4'/%3E%3Cpath fill='%23D4AF37' fill-rule='evenodd' d='M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z'/%3E%3C/svg%3E" />
+<script type="application/ld+json" id="jsonld">
+{"@context":"https://schema.org","@type":"WebSite","name":"Risk First Prop Lab","url":"https://kenclark1209-tradewars.github.io/risk-first-prop-lab/","description":"Independent prop firm reviews, payout tests and rule audits for XAUUSD traders.","publisher":{"@type":"Organization","name":"Risk First Prop Lab","sameAs":["https://t.me/RiskFirstPropLab"]}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A1931; --navy-deep:#050D1D; --navy-2:#10264A;
+    --gold:#D4AF37; --gold-light:#E9CE7A; --gold-dark:#A9862A;
+    --paper:#F6F3EC; --paper-2:#EFEAE0;
+    --ink:#131A26; --muted:#5B6577;
+    --line:rgba(10,25,49,.16); --card:#FFFFFF;
+    --bg:var(--paper); --text:var(--ink);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#070E1D; --text:#EDE8DA; --muted:#9AA5B8; --line:rgba(212,175,55,.22); --card:#0C1B36; --paper-2:#0A1931; }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+  button{font-family:inherit;cursor:pointer}
+  img,svg{display:block;max-width:100%}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .serif{font-family:"Source Serif 4",serif}
+  [hidden]{display:none!important}
+
+  /* ---------- HEADER ---------- */
+  .sitehead{position:sticky;top:0;z-index:40;background:var(--navy);color:#F3EFE3;border-bottom:1px solid rgba(212,175,55,.35)}
+  .sitehead .wrap{display:flex;align-items:center;gap:18px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:none}
+  .brand .name{font-weight:900;font-size:17.5px;letter-spacing:-.01em;line-height:1.05}
+  .brand .name small{display:block;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:9.5px;letter-spacing:.22em;color:rgba(243,239,227,.55);margin-top:3px}
+  .mainnav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+  .mainnav a{font-size:13.5px;font-weight:600;color:rgba(243,239,227,.78);text-decoration:none;padding:9px 11px;border-radius:8px;min-height:38px;display:inline-flex;align-items:center}
+  .mainnav a:hover{color:var(--gold-light);background:rgba(255,255,255,.05)}
+  .mainnav a[aria-current="page"]{color:var(--gold);background:rgba(212,175,55,.12)}
+  .btn{border-radius:10px;border:1px solid transparent;padding:11px 18px;font-weight:700;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;min-height:44px}
+  .btn-gold{background:var(--gold);color:#0A1931}
+  .btn-gold:hover{background:var(--gold-light)}
+  .btn-ghost{background:transparent;color:#F3EFE3;border-color:rgba(255,255,255,.35)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-light)}
+  .btn-navy{background:var(--navy);color:#F3EFE3;border:1px solid var(--navy)}
+  .btn-navy:hover{background:var(--navy-2)}
+  .btn-line{background:transparent;color:var(--text);border:1px solid var(--line)}
+  .btn-line:hover{border-color:var(--gold-dark)}
+  .btn-sm{padding:8px 13px;min-height:38px;font-size:13.5px}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--navy);color:#F3EFE3;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(700px 340px at 85% -60px, rgba(212,175,55,.20), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 72px);}
+  .hero-inner{position:relative;padding:48px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:210px 1fr;gap:40px;align-items:center}
+  .hero-mark{background:linear-gradient(160deg,#12294F,#08142A);border:1px solid rgba(212,175,55,.35);border-radius:22px;padding:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .hero h1{font-size:clamp(36px,5.6vw,58px);line-height:1.0;letter-spacing:-.02em;margin:0 0 14px;font-weight:900}
+  .hero h1 .gold{color:var(--gold)}
+  .hero .lead{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.3vw,22px);line-height:1.45;color:rgba(243,239,227,.88);max-width:600px;margin:0 0 20px}
+  .hero-meta{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:9px 13px;font-size:13.5px;min-height:40px}
+  .sw{width:16px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,.35);flex:none}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+
+  /* ---------- SECTIONS ---------- */
+  section.blk{padding:52px 0 4px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+  .sec-no{font-family:"IBM Plex Mono",monospace;color:var(--gold-dark);font-size:13px;font-weight:600}
+  @media (prefers-color-scheme: dark){.sec-no{color:var(--gold)}}
+  h2{font-size:clamp(25px,3.8vw,34px);letter-spacing:-.015em;margin:0;font-weight:800}
+  .sec-sub{color:var(--muted);font-size:15.5px;line-height:1.55;max-width:700px;margin:6px 0 24px}
+  .rule{height:2px;background:linear-gradient(90deg,var(--gold) 120px,var(--line) 120px);margin:14px 0 24px}
+  .lbl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .card h3{margin:0 0 6px;font-size:17px;font-weight:800}
+  .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
+
+  /* article cards */
+  .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .post{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:border-color .2s, transform .2s}
+  .post:hover{border-color:var(--gold-dark)}
+  .post .kicker{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .tagcat{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);border:1px solid rgba(212,175,55,.55);padding:5px 9px;border-radius:999px}
+  @media (prefers-color-scheme: dark){.tagcat{color:var(--gold-light)}}
+  .post .path{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+  .post h3{font-size:20px;font-weight:800;letter-spacing:-.01em;line-height:1.2;margin:0}
+  .post p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55;flex:1}
+  .post .go{font-weight:700;font-size:14px;color:var(--gold-dark)}
+  @media (prefers-color-scheme: dark){.post .go{color:var(--gold-light)}}
+
+  /* tables */
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px}
+  th,td{padding:12px 16px;text-align:left;border-top:1px solid var(--line);vertical-align:top;line-height:1.45}
+  thead th{border-top:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--paper-2)}
+  td.num,th.num{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:13.5px;white-space:nowrap}
+  .pending{color:var(--gold-dark);font-weight:600}
+  @media (prefers-color-scheme: dark){.pending{color:var(--gold-light)}}
+  .note{font-size:13.5px;color:var(--muted);line-height:1.55;margin:12px 2px 0}
+
+  /* article pages */
+  .crumbs{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .crumbs a{text-decoration:none;color:var(--gold-dark);font-weight:600}
+  @media (prefers-color-scheme: dark){.crumbs a{color:var(--gold-light)}}
+  .article-head{padding:40px 0 6px}
+  .article-head h1{font-size:clamp(30px,5vw,46px);line-height:1.05;letter-spacing:-.02em;margin:14px 0 12px;font-weight:900;max-width:820px}
+  .article-head .standfirst{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.2vw,21px);line-height:1.5;color:var(--muted);max-width:720px;margin:0 0 16px}
+  .byline{display:flex;gap:14px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0}
+  .article-body{max-width:760px;padding-bottom:8px}
+  .article-body h2{font-size:clamp(22px,3.4vw,28px);margin:34px 0 10px}
+  .article-body p{font-size:16.5px;line-height:1.65;margin:0 0 14px}
+  .article-body ul{margin:0 0 14px;padding-left:22px}
+  .article-body li{font-size:16px;line-height:1.6;margin-bottom:7px}
+  .article-body .tblwrap{margin:18px 0 6px}
+  .callout{background:var(--navy);color:#F3EFE3;border-radius:var(--radius);padding:22px;margin:26px 0}
+  .callout h3{margin:0 0 6px;font-size:17px;color:var(--gold-light)}
+  .callout p{margin:0 0 14px;color:rgba(243,239,227,.82);font-size:14.5px;line-height:1.55}
+  .related{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:6px}
+  .related a{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-decoration:none;display:block}
+  .related a:hover{border-color:var(--gold-dark)}
+  .related b{display:block;font-size:15px;margin-bottom:4px}
+  .related span{font-size:13px;color:var(--muted);line-height:1.45;display:block}
+
+  /* telegram topics */
+  .topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  .topic{background:var(--navy);color:#F3EFE3;border-radius:var(--radius);padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(212,175,55,.3)}
+  .topic:hover{border-color:var(--gold)}
+  .topic .no{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--gold-light);letter-spacing:.1em}
+  .topic b{font-size:16.5px}
+  .topic span{font-size:13.5px;color:rgba(243,239,227,.72);line-height:1.5;flex:1}
+  .topic .join{font-weight:700;font-size:13.5px;color:var(--gold)}
+
+  /* code / seo files */
+  pre.code{background:var(--navy-deep);color:#D9E2F2;border-radius:12px;padding:18px;font-family:"IBM Plex Mono",monospace;font-size:12.6px;line-height:1.65;overflow-x:auto;margin:0;border:1px solid rgba(212,175,55,.25);white-space:pre}
+  pre.code .g{color:var(--gold-light)}
+  pre.code .c{color:#7E8CA6}
+  .filetabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .filetabs button{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:9px 15px;border-radius:8px;font-weight:700;font-size:13.5px;min-height:38px}
+  .filetabs button[aria-pressed="true"]{background:var(--navy);color:var(--gold-light);border-color:var(--navy)}
+  @media (prefers-color-scheme: dark){.filetabs button[aria-pressed="true"]{background:var(--gold);color:#0A1931;border-color:var(--gold)}}
+  .dl-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .steps{counter-reset:st;display:grid;gap:0}
+  .step{display:flex;gap:16px;padding:15px 0;border-top:1px solid var(--line)}
+  .step:first-child{border-top:0;padding-top:2px}
+  .step::before{counter-increment:st;content:counter(st,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--gold-dark);font-size:14px;padding-top:2px}
+  @media (prefers-color-scheme: dark){.step::before{color:var(--gold)}}
+  .step b{display:block;font-size:15.5px;margin-bottom:3px}
+  .step p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+  .step code,.mono-code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--paper-2);padding:2px 6px;border-radius:5px;overflow-wrap:anywhere;word-break:break-word}
+  .checklist{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+  .checklist li{display:flex;gap:11px;font-size:14.8px;line-height:1.5;align-items:flex-start}
+  .mark{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;margin-top:1px;background:rgba(212,175,55,.18);color:var(--gold-dark);border:1px solid var(--gold)}
+  @media (prefers-color-scheme: dark){.mark{color:var(--gold-light)}}
+
+  /* verdict / pros-cons / status chips */
+  .verdictbox{border:1px solid var(--gold);border-radius:var(--radius);background:var(--card);padding:20px 22px;margin:22px 0 4px}
+  .verdictbox .vlabel{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:6px}
+  @media (prefers-color-scheme: dark){.verdictbox .vlabel{color:var(--gold-light)}}
+  .verdictbox p{margin:0;font-size:15.5px;line-height:1.6}
+  .verdictbox .vscore{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);margin-top:8px}
+  .statuschip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+  .st-pending{color:var(--gold-dark);border-color:rgba(212,175,55,.6)}
+  @media (prefers-color-scheme: dark){.st-pending{color:var(--gold-light)}}
+  .st-no{color:#A63A2B;border-color:rgba(166,58,43,.55)}
+  @media (prefers-color-scheme: dark){.st-no{color:#E08A7B}}
+  .st-ok{color:#2E6B34;border-color:rgba(46,107,52,.5)}
+  @media (prefers-color-scheme: dark){.st-ok{color:#8FCB96}}
+  .proscons{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0 6px}
+  .pc-list{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:9px}
+  .pc-list li{display:flex;gap:10px;font-size:14.8px;line-height:1.55;align-items:flex-start}
+  .pc-mark{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-top:1px;border:1px solid var(--gold);background:rgba(212,175,55,.16);color:var(--gold-dark)}
+  @media (prefers-color-scheme: dark){.pc-mark{color:var(--gold-light)}}
+  .pc-mark.minus{border-color:rgba(166,58,43,.55);background:rgba(166,58,43,.1);color:#A63A2B}
+  @media (prefers-color-scheme: dark){.pc-mark.minus{color:#E08A7B}}
+
+  /* prop firm match tool */
+  .q-block{padding:16px 0;border-top:1px solid var(--line)}
+  .q-block:first-child{border-top:0;padding-top:2px}
+  .opts{display:flex;gap:8px;flex-wrap:wrap}
+  .opts button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;min-height:42px}
+  .opts button:hover{border-color:var(--gold-dark)}
+  .opts button[aria-pressed="true"]{background:var(--navy);color:var(--gold-light);border-color:var(--navy)}
+  @media (prefers-color-scheme: dark){.opts button[aria-pressed="true"]{background:var(--gold);color:#0A1931;border-color:var(--gold)}}
+  .match-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px}
+  .match-card.excluded{opacity:.62}
+  .match-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+  .match-head b{font-size:18px}
+  .match-score{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted)}
+  .crit{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+  .crit span:first-child{line-height:1.45}
+  .verify-list{margin:10px 0 0;padding-left:20px}
+  .verify-list li{font-size:14px;line-height:1.55;margin-bottom:5px;color:var(--muted)}
+
+  .err404{padding:70px 0 30px;text-align:left}
+  .err404 .big{font-size:clamp(60px,12vw,120px);font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--gold-dark);margin:0}
+  @media (prefers-color-scheme: dark){.err404 .big{color:var(--gold)}}
+
+  footer{margin-top:64px;background:var(--navy-deep);color:rgba(243,239,227,.7)}
+  footer .wrap{padding-top:30px;padding-bottom:34px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+  .lockup{display:flex;align-items:center;gap:14px}
+  .lockup .name{font-weight:900;font-size:19px;letter-spacing:-.01em;line-height:1.05}
+  .lockup .name small{display:block;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10px;letter-spacing:.22em;margin-top:4px;color:rgba(243,239,227,.55)}
+  .footlinks{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px}
+  .footlinks a{color:rgba(243,239,227,.75);text-decoration:none}
+  .footlinks a:hover{color:var(--gold-light)}
+  #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,80px);background:var(--navy);color:#F3EFE3;border:1px solid var(--gold);padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:60;pointer-events:none;max-width:90vw;text-align:center}
+  #toast.show{transform:translate(-50%,0);opacity:1}
+
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;gap:24px}
+    .hero-mark{max-width:210px}
+    .grid2,.grid3,.proscons{grid-template-columns:1fr}
+    section.blk{padding-top:42px}
+    .mainnav{margin-left:0}
+    table{min-width:520px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="sitehead">
+  <div class="wrap">
+    <a class="brand" href="#/" data-route-link="home" aria-label="Risk First Prop Lab — home">
+      <svg width="34" height="36" viewBox="0 0 100 105" aria-hidden="true"><path d="M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z" fill="#0A1931" stroke="#D4AF37" stroke-width="3.5"/><path d="M50 11.5 L83 22.3 V50.5 C83 70.5 69 84.5 50 93 C31 84.5 17 70.5 17 50.5 V22.3 Z" fill="none" stroke="#D4AF37" stroke-width="1" opacity=".45"/><path fill="#D4AF37" fill-rule="evenodd" d="M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z"/></svg>
+      <span class="name">Risk First <span style="color:var(--gold)">Prop Lab</span><small>TESTED FIRMS · REAL PAYOUTS</small></span>
+    </a>
+    <nav class="mainnav" aria-label="Main navigation">
+      <a href="#/ftmo-review/" data-nav="ftmo-review">FTMO Review</a>
+      <a href="#/fundednext-payout-test/" data-nav="fundednext-payout-test">FundedNext Payout</a>
+      <a href="#/rule-trap-daily-dd/" data-nav="rule-trap-daily-dd">Rule Traps</a>
+      <a href="#/country-check/" data-nav="country-check">Country Check</a>
+      <a href="#/prop-firm-scorecard/" data-nav="prop-firm-scorecard">Scorecard</a>
+      <a href="#/prop-firm-match/" data-nav="prop-firm-match">Prop Firm Match</a>
+      <a href="#/trader-viet/" data-nav="trader-viet">Trader Việt</a>
+      <a href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Telegram ↗</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================= -->
+<!-- ======================= VIEW: HOME ========================== -->
+<!-- ============================================================= -->
+<div data-view="home">
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-grid">
+        <div class="hero-mark" aria-label="R Monogram logo of Risk First Prop Lab">
+          <svg width="150" height="158" viewBox="0 0 100 105" role="img" aria-label="R Monogram — gold letter R in a navy shield">
+            <path d="M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z" fill="#0A1931" stroke="#D4AF37" stroke-width="3.5"/>
+            <path d="M50 11.5 L83 22.3 V50.5 C83 70.5 69 84.5 50 93 C31 84.5 17 70.5 17 50.5 V22.3 Z" fill="none" stroke="#D4AF37" stroke-width="1" opacity=".45"/>
+            <path fill="#D4AF37" fill-rule="evenodd" d="M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Prop firms, tested<br>like a <span class="gold">risk desk</span>.</h1>
+          <p class="lead">Tested prop firms. Real payouts only. An FTMO Prime trader runs one XAUUSD system through every firm — spreads, drawdown rules and payout speed, measured the same way every time. No hype, no paid ranking.</p>
+          <div class="hero-meta">
+            <span class="chip"><span class="sw" style="background:#0A1931"></span> Navy <span class="mono">#0A1931</span></span>
+            <span class="chip"><span class="sw" style="background:#D4AF37"></span> Gold <span class="mono">#D4AF37</span></span>
+            <span class="chip">Blog here · Forum on <span class="mono">Telegram</span></span>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Join the Telegram group ↗</a>
+            <a class="btn btn-ghost" href="#/prop-firm-match/">Find your firm — Prop Firm Match</a>
+            <a class="btn btn-ghost" href="#latest">Read the latest tests ↓</a>
+            <button class="btn btn-ghost" data-dl="png">↓ Channel avatar PNG</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <!-- Latest articles -->
+    <section class="blk" id="latest">
+      <div class="sec-head"><span class="sec-no">LAB</span><h2>Latest reviews &amp; tests</h2></div>
+      <div class="rule"></div>
+      <p class="sec-sub">Every test is its own page, so you can find it, share it and check it on its own. Where a number has not been measured on a live MT5 terminal yet, the field stays blank — it is filled from the terminal log or not at all.</p>
+      <div class="post-grid">
+        <a class="post" href="#/ftmo-review/">
+          <div class="kicker"><span class="tagcat">Firm Review</span><span class="path">/ftmo-review/</span></div>
+          <h3>FTMO Review: XAUUSD Costs, Daily Loss Rule &amp; Payout Test</h3>
+          <p>The benchmark firm, tested the Lab way: gold spread and commission from the MT5 log, how the daily loss limit is really calculated, and what the payout run has to prove.</p>
+          <span class="go">Read the review →</span>
+        </a>
+        <a class="post" href="#/fundednext-payout-test/">
+          <div class="kicker"><span class="tagcat">Payout Test</span><span class="path">/fundednext-payout-test/</span></div>
+          <h3>FundedNext Payout Test: Request to Money Received, Timed</h3>
+          <p>A payout only counts when it lands. The full timeline — request, approval, processing, received — with every field waiting on the first real withdrawal.</p>
+          <span class="go">See the test protocol →</span>
+        </a>
+        <a class="post" href="#/rule-trap-daily-dd/">
+          <div class="kicker"><span class="tagcat">Rule Trap Audit</span><span class="path">/rule-trap-daily-dd/</span></div>
+          <h3>Rule Trap: Daily Drawdown — Balance-Based or Equity-Based?</h3>
+          <p>One word in the rulebook decides whether a floating loss kills your challenge. How daily DD is calculated, why gold traders get caught, and the 60-second check before you buy.</p>
+          <span class="go">Read the audit →</span>
+        </a>
+        <a class="post" href="#/country-check/">
+          <div class="kicker"><span class="tagcat">Country Check</span><span class="path">/country-check/</span></div>
+          <h3>Country Check: Which Prop Firms Ban Your Country?</h3>
+          <p>Traders lose challenge fees every week by buying first and reading the restricted-country list second. Check your country against each firm before you pay.</p>
+          <span class="go">Check your country →</span>
+        </a>
+        <a class="post" href="#/prop-firm-scorecard/">
+          <div class="kicker"><span class="tagcat">Method</span><span class="path">/prop-firm-scorecard/</span></div>
+          <h3>The 10-Point Prop Firm Scorecard Behind Every Lab Test</h3>
+          <p>The exact checklist every firm is scored against — costs, rule traps, payout behaviour, country access — and why no firm can buy a better score.</p>
+          <span class="go">See the scorecard →</span>
+        </a>
+        <a class="post" href="#/fundednext-review/">
+          <div class="kicker"><span class="tagcat">Firm Review</span><span class="path">/fundednext-review/</span></div>
+          <h3>FundedNext Review: Rules, All-In Gold Cost &amp; Payout Terms</h3>
+          <p>The full Lab template applied to FundedNext: daily and max drawdown basis, spread + commission as one all-in number, profit split and first-payout terms — every unmeasured field marked pending, none invented.</p>
+          <span class="go">Read the review →</span>
+        </a>
+        <a class="post" href="#/the5ers-review/">
+          <div class="kicker"><span class="tagcat">Firm Review</span><span class="path">/the5ers-review/</span></div>
+          <h3>The5ers Review: Scaling Model, Drawdown Rules &amp; Payout Test</h3>
+          <p>The5ers runs a different model from the classic two-step challenge. The review audits its drawdown basis, gold costs and payout terms with the same template — and the same blank fields until the data exists.</p>
+          <span class="go">Read the review →</span>
+        </a>
+        <a class="post" href="#/prop-firm-match/">
+          <div class="kicker"><span class="tagcat">Tool · Quiz</span><span class="path">/prop-firm-match/</span></div>
+          <h3>Prop Firm Match: Shortlist a Firm by Budget, Style &amp; Country</h3>
+          <p>Answer five questions — challenge budget, trading style, country, payout priority, overnight holding — and get a shortlist where every criterion is marked confirmed, excluded, or still to verify. No invented data.</p>
+          <span class="go">Start the Match quiz →</span>
+        </a>
+        <a class="post" href="#/trader-viet/">
+          <div class="kicker"><span class="tagcat">Trader Việt</span><span class="path">/trader-viet/</span></div>
+          <h3>Trader Việt: Firm nào cấm Việt Nam, payout nào về được VN?</h3>
+          <p>Trang riêng cho trader Việt: firm nào cấm trader cư trú tại Việt Nam, các kênh payout có thể nhận về VN, giấy tờ và thuế cần chuẩn bị, và những lỗi khiến trader Việt mất phí challenge oan.</p>
+          <span class="go">Đọc hướng dẫn →</span>
+        </a>
+        <a class="post" href="#/funding-pips-review/">
+          <div class="kicker"><span class="tagcat">Queued Reviews</span><span class="path">/funding-pips-review/ · /e8-markets-review/ · /alpha-capital-review/</span></div>
+          <h3>Next in the Queue: Funding Pips, E8 Markets, Alpha Capital</h3>
+          <p>Review frameworks are already open for the next three firms — full template, every field pending until each firm is bought, traded and paid out by the Lab itself.</p>
+          <span class="go">See the queue →</span>
+        </a>
+        <div class="post" style="justify-content:center;background:var(--navy);border-color:rgba(212,175,55,.4)">
+          <div class="kicker"><span class="tagcat" style="color:var(--gold-light)">Forum</span><span class="path" style="color:rgba(243,239,227,.55)">Telegram Topics</span></div>
+          <h3 style="color:#F3EFE3">Discussion does not live on this blog.</h3>
+          <p style="color:rgba(243,239,227,.75)">Payout proofs, rule questions and your own test results go in the Telegram group — split into topics, one per subject. The blog stays the clean, searchable record.</p>
+          <span class="go"><a href="#forum" style="color:var(--gold);text-decoration:none">See the 7 topics ↓</a></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live scoreboard -->
+    <section class="blk">
+      <div class="sec-head"><span class="sec-no">DATA</span><h2>The Lab scoreboard</h2></div>
+      <div class="rule"></div>
+      <p class="sec-sub">One table, every firm, same measurements. Cells marked <span class="pending">Pending MT5 log</span> are waiting for real terminal data — the Lab does not publish estimated spreads or payout times.</p>
+      <div class="tblwrap">
+        <table aria-label="Prop firm lab measurements">
+          <thead><tr><th>Firm</th><th class="num">XAUUSD spread (avg)</th><th class="num">Commission</th><th>Daily loss basis</th><th class="num">Payout time</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#/ftmo-review/"><b>FTMO</b></a></td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td>Checked in <a href="#/rule-trap-daily-dd/">Rule Trap audit</a></td><td class="num pending">— First payout pending</td><td>Testing</td></tr>
+            <tr><td><a href="#/fundednext-payout-test/"><b>FundedNext</b></a></td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td>Checked in <a href="#/rule-trap-daily-dd/">Rule Trap audit</a></td><td class="num pending">— First payout pending</td><td>Testing</td></tr>
+            <tr><td><a href="#/the5ers-review/"><b>The5ers</b></a></td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td>To be audited</td><td class="num pending">— First payout pending</td><td>Testing</td></tr>
+            <tr><td><a href="#/funding-pips-review/"><b>Funding Pips</b></a></td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td>To be audited</td><td class="num pending">— First payout pending</td><td>Queued</td></tr>
+            <tr><td><a href="#/e8-markets-review/"><b>E8 Markets</b></a></td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td>To be audited</td><td class="num pending">— First payout pending</td><td>Queued</td></tr>
+            <tr><td><a href="#/alpha-capital-review/"><b>Alpha Capital Group</b></a></td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td>To be audited</td><td class="num pending">— First payout pending</td><td>Queued</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">How each number gets earned: <a href="#/prop-firm-scorecard/">the 10-point scorecard</a>. Country restrictions per firm: <a href="#/country-check/">Country Check</a>.</p>
+    </section>
+
+    <!-- Forum / Telegram -->
+    <section class="blk" id="forum">
+      <div class="sec-head"><span class="sec-no">FORUM</span><h2>Forum = Telegram Group Topics</h2></div>
+      <div class="rule"></div>
+      <p class="sec-sub">This blog is read-only by design: articles are published here so Google can index them and traders can find them. All discussion — questions, payout proofs, your own measurements — happens in the linked Telegram group, organised into topics so threads never bury each other.</p>
+      <div class="topics">
+        <a class="topic" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener"><span class="no">TOPIC 01</span><b>General</b><span>Introductions and anything that fits nowhere else.</span><span class="join">Open in Telegram ↗</span></a>
+        <a class="topic" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener"><span class="no">TOPIC 02</span><b>Prop Lab Results</b><span>Spread, slippage and commission measurements — discuss each test under its article.</span><span class="join">Open in Telegram ↗</span></a>
+        <a class="topic" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener"><span class="no">TOPIC 03</span><b>Payout Proof</b><span>Real withdrawals only: firm, date, amount, how long it took.</span><span class="join">Open in Telegram ↗</span></a>
+        <a class="topic" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener"><span class="no">TOPIC 04</span><b>Rule Trap Audit</b><span>Rulebook clauses that end challenges — bring the exact wording.</span><span class="join">Open in Telegram ↗</span></a>
+        <a class="topic" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener"><span class="no">TOPIC 05</span><b>Demo League</b><span>Free 3-day gold demo contest, UTC leaderboard, top 3 get a free challenge audit.</span><span class="join">Open in Telegram ↗</span></a>
+        <a class="topic" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener"><span class="no">TOPIC 06</span><b>Country Check</b><span>“Is firm X open in my country?” — ask here before you buy a challenge.</span><span class="join">Open in Telegram ↗</span></a>
+        <a class="topic" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener"><span class="no">TOPIC 07</span><b>Ask Thang</b><span>Direct questions for the desk: risk rules, gold, prop firm selection.</span><span class="join">Open in Telegram ↗</span></a>
+      </div>
+    </section>
+
+    <!-- SEO / GitHub Pages -->
+    <section class="blk" id="seo-files" style="padding-bottom:24px">
+      <div class="sec-head"><span class="sec-no">SEO</span><h2>Built for Google, hosted on GitHub Pages</h2></div>
+      <div class="rule"></div>
+      <p class="sec-sub">Each article ships as its own page in the repo — its own folder, title, meta description, canonical URL, Open Graph tags and Article structured data — plus a sitemap and robots file at the root. The files below are the exact ones that go into the repo.</p>
+      <div class="grid2">
+        <div class="card">
+          <h3>Per-page SEO checklist</h3>
+          <ul class="checklist" style="margin-top:14px">
+            <li><span class="mark">✓</span><span><b>Unique title + meta description</b> on every page — no duplicates across the reviews, audits, the Match tool and the Trader Việt guide.</span></li>
+            <li><span class="mark">✓</span><span><b>Exactly one &lt;h1&gt;</b> per page; the article headline, nothing else.</span></li>
+            <li><span class="mark">✓</span><span><b>Canonical URL</b> per page under <span class="mono-code">kenclark1209-tradewars.github.io/risk-first-prop-lab/</span></span></li>
+            <li><span class="mark">✓</span><span><b>Open Graph + Twitter card</b> tags so links preview properly on Telegram, X and Reddit.</span></li>
+            <li><span class="mark">✓</span><span><b>JSON-LD Article</b> schema on every article page, plus <b>JSON-LD Review</b> on every firm review (itemReviewed, author, review body — no numeric rating until a payout test completes, so no score is ever invented for search engines).</span></li>
+            <li><span class="mark">✓</span><span><b>Internal links</b> between every article, the scorecard and Country Check.</span></li>
+            <li><span class="mark">✓</span><span><b>sitemap.xml + robots.txt</b> at the repo root, and a styled <b>404 page</b> for dead links.</span></li>
+            <li><span class="mark">✓</span><span><b>Google Search Console:</b> verify the property, submit the sitemap, expect first indexing in about 5–10 days.</span></li>
+          </ul>
+          <div class="dl-row">
+            <button class="btn btn-navy btn-sm" data-dl-file="sitemap">↓ sitemap.xml</button>
+            <button class="btn btn-line btn-sm" data-dl-file="robots">↓ robots.txt</button>
+            <button class="btn btn-line btn-sm" data-dl="svg">↓ Logo SVG (favicon / OG)</button>
+          </div>
+        </div>
+        <div>
+          <div class="filetabs" role="group" aria-label="SEO file preview">
+            <button data-filetab="sitemap" aria-pressed="true">sitemap.xml</button>
+            <button data-filetab="robots" aria-pressed="false">robots.txt</button>
+            <button data-filetab="tree" aria-pressed="false">Repo structure</button>
+          </div>
+          <pre class="code" id="filePreview" aria-live="polite"></pre>
+          <p class="note">Deploy: push these files to the public repo <span class="mono-code">risk-first-prop-lab</span>, then Settings → Pages → Deploy from branch <span class="mono-code">main / root</span>. Each article folder holds one <span class="mono-code">index.html</span> — that is what gives it a clean URL like <span class="mono-code">/ftmo-review/</span>.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="lbl">Title &amp; meta description — one set per page</div>
+        <div class="tblwrap" style="border:0">
+          <table aria-label="Per page SEO titles and descriptions" style="min-width:640px">
+            <thead><tr><th>Page</th><th>Title tag</th><th>Meta description</th></tr></thead>
+            <tbody id="seoTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ==================== VIEW: FTMO REVIEW ====================== -->
+<!-- ============================================================= -->
+<div data-view="ftmo-review" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Reviews</a> <span>›</span> <span>FTMO Review</span></nav>
+      <h1>FTMO Review: XAUUSD Costs, Daily Loss Rule &amp; Payout Test</h1>
+      <p class="standfirst">FTMO is the firm every other firm is compared against — so it is the first one through the Lab. Same gold system, same sessions, same measurement method as every other review on this blog.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Prop Lab #001</span></div>
+    </div>
+    <div class="article-body">
+      <div class="verdictbox">
+        <div class="vlabel">Verdict — interim · Kết luận tạm thời</div>
+        <p><b>Status: Testing.</b> The framework audit is open and the cost, rule and payout fields below fill in only from the Lab's own MT5 log, the current FTMO rulebook and a completed payout. No final verdict — and no score — is published until the first payout lands. Anything marked <span class="statuschip st-pending">Chưa kiểm chứng · Pending</span> still needs its source checked.</p>
+        <p class="vscore">Scorecard: — / 10 · pending payout test · <a href="#/prop-firm-scorecard/">how scoring works</a> · <a href="#/prop-firm-match/">compare firms in Prop Firm Match</a></p>
+      </div>
+      <h2>What this review measures</h2>
+      <p>Most FTMO reviews repeat the marketing page. This one measures three things a gold trader actually pays for: the all-in cost of trading XAUUSD (spread plus commission, from the MT5 terminal log), how the daily loss limit is calculated in practice, and how long a payout takes from request to money received. The full method is public in <a href="#/prop-firm-scorecard/">the 10-point scorecard</a>.</p>
+      <h2>XAUUSD trading costs</h2>
+      <div class="tblwrap"><table aria-label="FTMO XAUUSD cost measurements">
+        <thead><tr><th>Measurement</th><th class="num">London session</th><th class="num">New York session</th><th class="num">News releases</th></tr></thead>
+        <tbody>
+          <tr><td>Average spread</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td></tr>
+          <tr><td>Commission per lot</td><td class="num pending" colspan="3">— Pending MT5 log</td></tr>
+          <tr><td>Average slippage</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td></tr>
+        </tbody></table></div>
+      <p class="note">Fields stay blank until the trades exist in the terminal. An estimated spread copied from a broker page is marketing, not a measurement.</p>
+      <h2>The daily loss rule</h2>
+      <p>The single most expensive misunderstanding in prop trading is the daily loss limit: whether it is calculated from your starting balance or from live equity including floating losses. FTMO's calculation method, and how to verify it against the current rulebook before you trade, is broken down step by step in <a href="#/rule-trap-daily-dd/">the Rule Trap audit of daily drawdown</a>.</p>
+      <h2>Payout test</h2>
+      <p>A payout is only real when it arrives. The Lab logs the request time, approval time and the moment funds land, then publishes the full timeline — the same protocol used for the <a href="#/fundednext-payout-test/">FundedNext payout test</a>.</p>
+      <div class="tblwrap"><table aria-label="FTMO payout test timeline">
+        <thead><tr><th>Step</th><th class="num">Time</th></tr></thead>
+        <tbody>
+          <tr><td>Payout requested</td><td class="num pending">— First payout pending</td></tr>
+          <tr><td>Approved by firm</td><td class="num pending">— First payout pending</td></tr>
+          <tr><td>Money received</td><td class="num pending">— First payout pending</td></tr>
+        </tbody></table></div>
+      <h2>Rules, audited line by line</h2>
+      <p>Every rule that can end an FTMO account, with the basis it is calculated on. Values enter this table only from FTMO's own current Terms &amp; FAQ, re-read at test time and dated — until then the cell says what source is still needed.</p>
+      <div class="tblwrap"><table aria-label="FTMO rules audit">
+        <thead><tr><th>Rule</th><th>How it works</th><th>Status / source needed</th></tr></thead>
+        <tbody>
+          <tr><td>Daily drawdown (Daily DD)</td><td>Calculated on balance or equity — the distinction decides whether floating gold losses count intraday. Full breakdown in <a href="#/rule-trap-daily-dd/">the Rule Trap audit</a>.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FTMO Terms &amp; FAQ, current version</td></tr>
+          <tr><td>Max drawdown (Max DD)</td><td>Static or trailing — and if trailing, whether it trails balance or highest equity.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FTMO Terms &amp; FAQ, current version</td></tr>
+          <tr><td>Profit target — Phase 1 / Phase 2</td><td>Target % per phase as published in the challenge terms.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Challenge terms at purchase date</td></tr>
+          <tr><td>Minimum trading days / time limit</td><td>Whether a phase expires, and how many days must be traded.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Challenge terms at purchase date</td></tr>
+          <tr><td>News trading</td><td>Whether positions may be opened or held through high-impact releases, and any restricted window.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FTMO trading rules / FAQ</td></tr>
+          <tr><td>Overnight &amp; weekend holding</td><td>Whether gold positions may be held overnight and over the weekend, and any swap or forced-close clause.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FTMO trading rules / FAQ</td></tr>
+          <tr><td>Consistency / hedging clauses</td><td>Any rule on lot-size consistency, hedging across accounts, or third-party EAs.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Full terms, clause by clause</td></tr>
+        </tbody></table></div>
+      <h2>All-in cost: spread + commission</h2>
+      <p>A spread quoted without commission is half a price. The Lab publishes one all-in figure per round trip — average spread from the MT5 log plus the per-lot commission — in the cost table above. Until the log exists, both fields stay <span class="pending">Pending MT5 log</span>; FTMO's marketing page is never used as the source.</p>
+      <h2>Payout terms</h2>
+      <div class="tblwrap"><table aria-label="FTMO payout terms">
+        <thead><tr><th>Term</th><th>Detail</th><th>Status / source needed</th></tr></thead>
+        <tbody>
+          <tr><td>Profit split</td><td>Published split for funded accounts, and any scale-up of the split.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Funded account terms</td></tr>
+          <tr><td>First payout — earliest day</td><td>How many days after funding (or after first trade) a payout may first be requested.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout FAQ / terms</td></tr>
+          <tr><td>Payout frequency after that</td><td>Fixed cycle or on-demand, per the current terms.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout FAQ / terms</td></tr>
+          <tr><td>Payout methods</td><td>Bank transfer, crypto or e-wallet — and which of them actually reach Vietnam. See <a href="#/trader-viet/">Trader Việt</a>.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout page + first real withdrawal</td></tr>
+          <tr><td>Real payout speed</td><td>Measured, not advertised: the timed timeline in the payout test above.</td><td><span class="statuschip st-pending">Pending</span> First completed Lab payout</td></tr>
+          <tr><td>Payout proof</td><td>Dashboard record + receiving-account confirmation, published in the Payout Proof topic.</td><td><span class="statuschip st-pending">Pending</span> First completed Lab payout</td></tr>
+        </tbody></table></div>
+      <h2>Real experience log</h2>
+      <p>This section is a diary, not a summary of other people's reviews. Each stage is written when the Lab actually goes through it — buying, trading the phases, requesting money, dealing with support.</p>
+      <div class="tblwrap"><table aria-label="FTMO experience log">
+        <thead><tr><th>Stage</th><th>What will be recorded</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Buying the challenge</td><td>Checkout flow, payment methods offered, fee actually charged, account credentials delivery time.</td><td><span class="statuschip st-pending">Chưa có log</span> Written at purchase</td></tr>
+          <tr><td>2 · Trading the phases</td><td>Platform stability, gold execution at London / New York / news, any rule warnings received.</td><td><span class="statuschip st-pending">Chưa có log</span> Written during the test</td></tr>
+          <tr><td>3 · Funded stage &amp; payout</td><td>KYC steps, payout request flow, any extra verification, money received.</td><td><span class="statuschip st-pending">Chưa có log</span> Written at payout</td></tr>
+          <tr><td>4 · Support</td><td>One real problem raised with support: response time and whether the answer solved it.</td><td><span class="statuschip st-pending">Chưa có log</span> Written when a ticket exists</td></tr>
+        </tbody></table></div>
+      <h2>Pros &amp; cons</h2>
+      <p>Listed from the audit framework — a “pro” here means the published terms are clear enough to verify, not that the Lab has finished testing. Both lists are rewritten when the payout test completes.</p>
+      <div class="proscons">
+        <div class="card">
+          <h3>Ưu điểm · Strengths to verify</h3>
+          <ul class="pc-list">
+            <li><span class="pc-mark">+</span><span>Rulebook and FAQ are published in full, so every clause in the audit table above can be checked against the firm's own words.</span></li>
+            <li><span class="pc-mark">+</span><span>The benchmark firm: the widest base of community payout reports to cross-check the Lab's own test against, in the Payout Proof topic.</span></li>
+            <li><span class="pc-mark">+</span><span>Long operating history relative to the industry — longevity is a framework fact, not a payout guarantee.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Nhược điểm · Watch-outs</h3>
+          <ul class="pc-list">
+            <li><span class="pc-mark minus">−</span><span>The daily loss basis is the most misread clause in prop trading — verify it in <a href="#/rule-trap-daily-dd/">the Rule Trap audit</a> before sizing any gold position.</span></li>
+            <li><span class="pc-mark minus">−</span><span>No Lab payout has completed yet, so payout speed and reliability are unproven <i>by this Lab</i> — the only standard that counts here.</span></li>
+            <li><span class="pc-mark minus">−</span><span>Challenge fee is only refundable under the firm's conditions — check the refund clause before paying, not after failing.</span></li>
+          </ul>
+        </div>
+      </div>
+      <h2>Verdict</h2>
+      <p><b>Interim verdict: the framework is auditable, the proof is pending.</b> FTMO stays the Lab's benchmark because its rules can be checked line by line — but on this site a firm earns its verdict from a completed payout, not from reputation. When the first payout lands, this section is replaced with a scored verdict: all-in gold cost, rule-trap count, payout time, and who this firm suits (and who should use <a href="#/prop-firm-match/">Prop Firm Match</a> to look elsewhere).</p>
+      <h2>Country availability</h2>
+      <p>Before buying any FTMO challenge, confirm your country is not on the restricted list — see <a href="#/country-check/">Country Check</a> for how restrictions work and which firms ban which regions. Trading from Vietnam? The <a href="#/trader-viet/">Trader Việt page</a> covers VN-specific bans, payout rails and paperwork.</p>
+      <div class="callout">
+        <h3>Discuss this review</h3>
+        <p>Questions and your own FTMO measurements belong in the Telegram group — Prop Lab Results topic for numbers, Payout Proof topic for withdrawals.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Join the discussion ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/fundednext-payout-test/"><b>FundedNext Payout Test</b><span>The same payout protocol, run on FundedNext.</span></a>
+        <a href="#/rule-trap-daily-dd/"><b>Rule Trap: Daily Drawdown</b><span>Balance-based or equity-based — the word that kills challenges.</span></a>
+        <a href="#/prop-firm-scorecard/"><b>The 10-Point Scorecard</b><span>How every firm in the Lab is scored.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ================= VIEW: FUNDEDNEXT PAYOUT =================== -->
+<!-- ============================================================= -->
+<div data-view="fundednext-payout-test" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Payout Tests</a> <span>›</span> <span>FundedNext Payout Test</span></nav>
+      <h1>FundedNext Payout Test: Request to Money Received, Timed</h1>
+      <p class="standfirst">Payout speed is the claim every firm advertises and few traders verify. This test times one real FundedNext withdrawal end to end — no screenshots from anyone else, no affiliate summary.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Payout Proof #001</span></div>
+    </div>
+    <div class="article-body">
+      <h2>The protocol</h2>
+      <p>One withdrawal, four timestamps, all published: the moment the payout is requested in the dashboard, the firm's approval, the processor's confirmation, and the moment the money is spendable in the receiving account. Anything in between — extra KYC requests, changed payout methods, silent delays — is logged as it happens. The same protocol runs in the <a href="#/ftmo-review/">FTMO review</a>, so payout times can be compared firm to firm.</p>
+      <h2>The timeline</h2>
+      <div class="tblwrap"><table aria-label="FundedNext payout test timeline">
+        <thead><tr><th>Step</th><th class="num">Timestamp (UTC)</th><th class="num">Elapsed</th></tr></thead>
+        <tbody>
+          <tr><td>Payout requested</td><td class="num pending">— First payout pending</td><td class="num pending">—</td></tr>
+          <tr><td>Approved by FundedNext</td><td class="num pending">— First payout pending</td><td class="num pending">—</td></tr>
+          <tr><td>Processor confirmation</td><td class="num pending">— First payout pending</td><td class="num pending">—</td></tr>
+          <tr><td>Money received</td><td class="num pending">— First payout pending</td><td class="num pending">—</td></tr>
+          <tr><td>Amount / method</td><td class="num pending" colspan="2">— Published with the first real withdrawal</td></tr>
+        </tbody></table></div>
+      <p class="note">No payout time is published until a withdrawal has actually completed. A firm's advertised “24-hour payout” is a claim; this table is the test of it.</p>
+      <h2>What can slow a payout down</h2>
+      <ul>
+        <li><b>Rule reviews.</b> Trades flagged for news trading, hedging or consistency rules can pause a payout — the traps are catalogued in <a href="#/rule-trap-daily-dd/">the Rule Trap audits</a>.</li>
+        <li><b>KYC and payout method.</b> A method added after funding often triggers fresh verification.</li>
+        <li><b>Country restrictions.</b> Some payout rails are unavailable in some countries — check <a href="#/country-check/">Country Check</a> before you fund, not after you profit.</li>
+      </ul>
+      <h2>How FundedNext is scored overall</h2>
+      <p>Payout behaviour is 3 of the 10 points in <a href="#/prop-firm-scorecard/">the Lab scorecard</a>. The firm's spread, commission and slippage fields stay blank until measured from the MT5 log — see the live scoreboard on the <a href="#/">home page</a>.</p>
+      <div class="callout">
+        <h3>Post your payout proof</h3>
+        <p>Already withdrew from FundedNext? Post firm, date, amount and elapsed time in the Payout Proof topic — community proofs are labelled as community proofs, Lab tests as Lab tests.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Payout Proof topic ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/ftmo-review/"><b>FTMO Review</b><span>Costs, daily loss rule and the matching payout test.</span></a>
+        <a href="#/country-check/"><b>Country Check</b><span>Which firms ban your country — and your payout rail.</span></a>
+        <a href="#/prop-firm-scorecard/"><b>The 10-Point Scorecard</b><span>Where payout speed sits in the full score.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ================= VIEW: RULE TRAP DAILY DD ================== -->
+<!-- ============================================================= -->
+<div data-view="rule-trap-daily-dd" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Rule Trap Audits</a> <span>›</span> <span>Daily Drawdown</span></nav>
+      <h1>Rule Trap: Daily Drawdown — Balance-Based or Equity-Based?</h1>
+      <p class="standfirst">More challenges die from this one definition than from bad trading. If the daily limit is calculated on equity, a trade floating against you counts — even if it closes in profit an hour later.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Rule Trap Audit #001</span></div>
+    </div>
+    <div class="article-body">
+      <h2>The two ways firms calculate it</h2>
+      <ul>
+        <li><b>Balance-based:</b> the daily limit is measured against your balance at the start of the day (or the initial balance). Floating losses on open trades do not move it until trades close.</li>
+        <li><b>Equity-based:</b> the limit follows live equity, including unrealised losses. A gold spike against an open position can breach the limit mid-trade — the account fails while the trade idea is still valid.</li>
+      </ul>
+      <p>Neither is “unfair” — but they demand completely different position sizing. An equity-based limit with a wide gold stop is a trap; the same system on a balance-based limit survives the same candle.</p>
+      <h2>Why gold traders get caught first</h2>
+      <p>XAUUSD routinely moves several dollars in minutes around London and New York data releases. On an equity-based daily limit, that intraday swing — not your closed result — decides whether the challenge survives the day. News traders and swing traders holding through releases are exposed the most.</p>
+      <h2>Per-firm check</h2>
+      <div class="tblwrap"><table aria-label="Daily drawdown basis per firm">
+        <thead><tr><th>Firm</th><th>Daily loss basis</th><th>Where the Lab verifies it</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#/ftmo-review/">FTMO</a></td><td class="pending">Being verified against the current rulebook</td><td>FTMO terms &amp; FAQ, re-checked each test</td></tr>
+          <tr><td><a href="#/fundednext-payout-test/">FundedNext</a></td><td class="pending">Being verified against the current rulebook</td><td>FundedNext terms &amp; FAQ, re-checked each test</td></tr>
+          <tr><td>The5ers</td><td class="pending">Queued for audit</td><td>—</td></tr>
+        </tbody></table></div>
+      <p class="note">Rulebooks change without announcements. The Lab records the basis from the firm's own current documents at test time and dates it — never from a review site's summary.</p>
+      <h2>The 60-second check before you buy any challenge</h2>
+      <ul>
+        <li>Find the exact phrase: search the firm's terms for “daily” and read whether the reference is <i>balance</i>, <i>equity</i>, or “whichever is higher”.</li>
+        <li>Check the reset time and timezone — a “day” that resets at 00:00 CET is not your local day.</li>
+        <li>Check whether the overall drawdown trails your highest balance or equity — a trailing max loss is a second, quieter trap.</li>
+        <li>Size positions from the stricter of the two limits until you have proof of which one applies.</li>
+      </ul>
+      <div class="callout">
+        <h3>Found a nastier clause?</h3>
+        <p>Bring the exact rulebook wording to the Rule Trap Audit topic. Clauses get added to the audit list with the firm named and the text quoted.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Rule Trap topic ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/ftmo-review/"><b>FTMO Review</b><span>How this trap shows up in the benchmark firm's test.</span></a>
+        <a href="#/prop-firm-scorecard/"><b>The 10-Point Scorecard</b><span>Rule traps are 2 of the 10 points every firm is scored on.</span></a>
+        <a href="#/country-check/"><b>Country Check</b><span>The other silent challenge-killer: buying from a banned country.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ==================== VIEW: COUNTRY CHECK ==================== -->
+<!-- ============================================================= -->
+<div data-view="country-check" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Country Check</a> <span>›</span> <span>Restricted Countries</span></nav>
+      <h1>Country Check: Which Prop Firms Ban Your Country?</h1>
+      <p class="standfirst">A challenge bought from a restricted country is a fee donated to the firm: the account can be closed at payout time even if you traded perfectly. Check first — it takes two minutes.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Country Check #001</span></div>
+    </div>
+    <div class="article-body">
+      <h2>Why firms restrict countries</h2>
+      <p>Restrictions come from sanctions law, payment-rail limits and fraud patterns — not from the firm's opinion of your trading. US residents are the most commonly restricted group across the industry, and several firms exclude specific Asian and African countries even while marketing heavily into them. One example the Lab tracks: Funding Pips has restricted traders based in Vietnam, a fact many Vietnamese traders only discover at payout time.</p>
+      <h2>Check table</h2>
+      <div class="tblwrap"><table aria-label="Country restrictions per firm">
+        <thead><tr><th>Firm</th><th>US residents</th><th>Vietnam</th><th>Full restricted list</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#/ftmo-review/">FTMO</a></td><td class="pending">Verify in current terms</td><td class="pending">Verify in current terms</td><td>Firm's official terms page</td></tr>
+          <tr><td><a href="#/fundednext-payout-test/">FundedNext</a></td><td class="pending">Verify in current terms</td><td class="pending">Verify in current terms</td><td>Firm's official terms page</td></tr>
+          <tr><td>Funding Pips</td><td class="pending">Verify in current terms</td><td>Restricted — per firm's published terms</td><td>Firm's official terms page</td></tr>
+        </tbody></table></div>
+      <p class="note">Lists change quietly. Every cell in this table is re-verified against the firm's own terms before a Lab test starts, and the verification date is published with the test. Never rely on a screenshot in a Telegram group — including ours.</p>
+      <h2>How to check any firm in two minutes</h2>
+      <ul>
+        <li>Open the firm's Terms of Use and search for “restricted”, “prohibited” and your country's name.</li>
+        <li>Check the payout page separately — trading may be allowed while your local payout rail is not, which matters in the <a href="#/fundednext-payout-test/">payout test</a> sense: money you cannot receive is not a payout.</li>
+        <li>If you trade through a VPN or a foreign entity, read the residency clause, not just the IP clause — most bans are residency-based.</li>
+        <li>Screenshot the clause with the date. If the firm later changes it, that screenshot is your only evidence.</li>
+      </ul>
+      <h2>Trading from Vietnam?</h2>
+      <p>The <a href="#/trader-viet/">Trader Việt page</a> covers the Vietnam-specific side of this check in Vietnamese: which firms restrict VN residents, which payout rails can actually reach Vietnam, and the tax paperwork to prepare from day one. Not sure which firm fits? Run <a href="#/prop-firm-match/">Prop Firm Match</a> with country set to Việt Nam.</p>
+      <div class="callout">
+        <h3>Ask before you buy</h3>
+        <p>Post “firm + country” in the Country Check topic and the community confirms against the current terms — free, and cheaper than a wasted challenge fee.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Country Check topic ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/ftmo-review/"><b>FTMO Review</b><span>Costs, rules and payout — the full Lab test.</span></a>
+        <a href="#/rule-trap-daily-dd/"><b>Rule Trap: Daily Drawdown</b><span>The rulebook trap that kills accounts from allowed countries too.</span></a>
+        <a href="#/prop-firm-scorecard/"><b>The 10-Point Scorecard</b><span>Country access is scored for every firm.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ==================== VIEW: SCORECARD ======================== -->
+<!-- ============================================================= -->
+<div data-view="prop-firm-scorecard" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Method</a> <span>›</span> <span>10-Point Scorecard</span></nav>
+      <h1>The 10-Point Prop Firm Scorecard Behind Every Lab Test</h1>
+      <p class="standfirst">Every firm in the Lab is scored on the same ten points, measured the same way, published whether the firm likes the result or not. This page is the method — the reviews are the receipts.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Lab Method</span></div>
+    </div>
+    <div class="article-body">
+      <h2>The ten points</h2>
+      <div class="tblwrap"><table aria-label="The 10 point prop firm scorecard">
+        <thead><tr><th class="num">#</th><th>Criterion</th><th>How it is measured</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>XAUUSD spread</td><td>Average and peak spread from the MT5 log, London + New York sessions</td></tr>
+          <tr><td class="num">2</td><td>Commission &amp; all-in cost</td><td>Per-lot commission plus spread cost per round trip</td></tr>
+          <tr><td class="num">3</td><td>Slippage at news</td><td>Fill vs requested price on releases, logged per trade</td></tr>
+          <tr><td class="num">4</td><td>Daily loss calculation</td><td>Balance-based or equity-based — audited in <a href="#/rule-trap-daily-dd/">Rule Trap</a></td></tr>
+          <tr><td class="num">5</td><td>Max drawdown type</td><td>Static or trailing, and what it trails</td></tr>
+          <tr><td class="num">6</td><td>Rule trap count</td><td>News, hedging, consistency and holding clauses that end accounts</td></tr>
+          <tr><td class="num">7</td><td>Payout speed</td><td>Timed end to end, as in the <a href="#/fundednext-payout-test/">FundedNext payout test</a></td></tr>
+          <tr><td class="num">8</td><td>Payout reliability</td><td>Paid in full, reduced, or denied — with the firm's stated reason</td></tr>
+          <tr><td class="num">9</td><td>Country access</td><td>Restricted list vs <a href="#/country-check/">Country Check</a>, re-verified per test</td></tr>
+          <tr><td class="num">10</td><td>Support behaviour</td><td>Response time and answer quality when a real problem is raised</td></tr>
+        </tbody></table></div>
+      <h2>Three rules the Lab does not break</h2>
+      <ul>
+        <li><b>Measured beats advertised.</b> A number enters a review only from a terminal log, a rulebook document or a completed payout — never from the firm's marketing page.</li>
+        <li><b>No paid ranking.</b> Affiliate links, where they exist, are disclosed and never change a score. A firm that has not completed a payout test cannot top the table.</li>
+        <li><b>Blank beats wrong.</b> Fields awaiting real data stay blank and say why — see the live scoreboard on the <a href="#/">home page</a>.</li>
+      </ul>
+      <div class="callout">
+        <h3>Challenge the method</h3>
+        <p>Think a criterion is missing or weighted wrong? Argue it in the Ask Thang topic — the scorecard is versioned, and changes are published with reasons.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Ask Thang topic ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/ftmo-review/"><b>FTMO Review</b><span>The scorecard applied to the benchmark firm.</span></a>
+        <a href="#/fundednext-payout-test/"><b>FundedNext Payout Test</b><span>Points 7 and 8, measured live.</span></a>
+        <a href="#/country-check/"><b>Country Check</b><span>Point 9, country by country.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ================= VIEW: FUNDEDNEXT REVIEW =================== -->
+<!-- ============================================================= -->
+<div data-view="fundednext-review" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Reviews</a> <span>›</span> <span>FundedNext Review</span></nav>
+      <h1>FundedNext Review: Rules, All-In Gold Cost &amp; Payout Terms</h1>
+      <p class="standfirst">FundedNext markets speed — fast payouts, fast scaling. The Lab tests the claims in order: the drawdown rules that decide survival, the all-in cost of trading gold, then a payout timed to the minute.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Prop Lab #002</span></div>
+    </div>
+    <div class="article-body">
+      <div class="verdictbox">
+        <div class="vlabel">Verdict — interim · Kết luận tạm thời</div>
+        <p><b>Status: Testing.</b> The payout protocol is already published in the <a href="#/fundednext-payout-test/">FundedNext payout test</a>; this review fills the rest of the template around it. No score until the first withdrawal completes — advertised payout speed is a claim, the Lab's timeline is the test.</p>
+        <p class="vscore">Scorecard: — / 10 · pending payout test · <a href="#/prop-firm-match/">compare in Prop Firm Match</a></p>
+      </div>
+      <h2>Rules, audited line by line</h2>
+      <div class="tblwrap"><table aria-label="FundedNext rules audit">
+        <thead><tr><th>Rule</th><th>How it works</th><th>Status / source needed</th></tr></thead>
+        <tbody>
+          <tr><td>Daily drawdown (Daily DD)</td><td>Balance-based or equity-based — checked against the method in <a href="#/rule-trap-daily-dd/">the Rule Trap audit</a>.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FundedNext Terms &amp; FAQ, current version</td></tr>
+          <tr><td>Max drawdown (Max DD)</td><td>Static or trailing, and what it trails.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FundedNext Terms &amp; FAQ, current version</td></tr>
+          <tr><td>Profit target per phase / model</td><td>Targets differ by account model — recorded per model at purchase.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Challenge terms at purchase date</td></tr>
+          <tr><td>News trading</td><td>Any restricted window around high-impact releases.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FundedNext trading rules / FAQ</td></tr>
+          <tr><td>Overnight &amp; weekend holding</td><td>Whether gold may be held overnight and over weekends.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> FundedNext trading rules / FAQ</td></tr>
+          <tr><td>Consistency rule</td><td>Any single-day or lot-size consistency clause that can reduce or delay a payout.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Full terms, clause by clause</td></tr>
+        </tbody></table></div>
+      <h2>All-in cost: spread + commission</h2>
+      <div class="tblwrap"><table aria-label="FundedNext XAUUSD cost measurements">
+        <thead><tr><th>Measurement</th><th class="num">London session</th><th class="num">New York session</th><th class="num">News releases</th></tr></thead>
+        <tbody>
+          <tr><td>Average spread</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td></tr>
+          <tr><td>Commission per lot</td><td class="num pending" colspan="3">— Pending MT5 log</td></tr>
+          <tr><td>All-in cost per round trip</td><td class="num pending" colspan="3">— Calculated when spread + commission exist</td></tr>
+          <tr><td>Average slippage</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td></tr>
+        </tbody></table></div>
+      <p class="note">No estimated figures. The all-in row is arithmetic on measured numbers, and it stays blank until both inputs exist.</p>
+      <h2>Payout terms</h2>
+      <div class="tblwrap"><table aria-label="FundedNext payout terms">
+        <thead><tr><th>Term</th><th>Detail</th><th>Status / source needed</th></tr></thead>
+        <tbody>
+          <tr><td>Profit split</td><td>Published split per account model, and any scale-up path.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Funded account terms</td></tr>
+          <tr><td>First payout — earliest day</td><td>Days from funding (or first trade) to the first allowed request.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout FAQ / terms</td></tr>
+          <tr><td>Real payout speed</td><td>Timed end to end in <a href="#/fundednext-payout-test/">the payout test</a> — request, approval, processor, received.</td><td><span class="statuschip st-pending">Pending</span> First completed Lab payout</td></tr>
+          <tr><td>Payout methods → Vietnam</td><td>Which rails are offered and which reach a Vietnamese trader — see <a href="#/trader-viet/">Trader Việt</a>.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout page + first real withdrawal</td></tr>
+          <tr><td>Payout proof</td><td>Published in the Payout Proof topic when the withdrawal lands.</td><td><span class="statuschip st-pending">Pending</span> First completed Lab payout</td></tr>
+        </tbody></table></div>
+      <h2>Real experience log</h2>
+      <div class="tblwrap"><table aria-label="FundedNext experience log">
+        <thead><tr><th>Stage</th><th>What will be recorded</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Buying the challenge</td><td>Checkout, fee charged, model chosen, credentials delivery.</td><td><span class="statuschip st-pending">Chưa có log</span> Written at purchase</td></tr>
+          <tr><td>2 · Trading the phases</td><td>Execution quality on gold, platform stability, rule warnings.</td><td><span class="statuschip st-pending">Chưa có log</span> Written during the test</td></tr>
+          <tr><td>3 · Payout</td><td>The full timed run — already templated in <a href="#/fundednext-payout-test/">the payout test</a>.</td><td><span class="statuschip st-pending">Chưa có log</span> Written at payout</td></tr>
+          <tr><td>4 · Support</td><td>One real ticket: response time and answer quality.</td><td><span class="statuschip st-pending">Chưa có log</span> Written when a ticket exists</td></tr>
+        </tbody></table></div>
+      <h2>Pros &amp; cons</h2>
+      <div class="proscons">
+        <div class="card">
+          <h3>Ưu điểm · Strengths to verify</h3>
+          <ul class="pc-list">
+            <li><span class="pc-mark">+</span><span>Multiple account models, so the audit can compare which model a gold trader should actually pick — the comparison lands in <a href="#/prop-firm-match/">Prop Firm Match</a>.</span></li>
+            <li><span class="pc-mark">+</span><span>Payout speed is the firm's headline claim, which makes it the easiest claim in the industry to test — and the test is already templated.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Nhược điểm · Watch-outs</h3>
+          <ul class="pc-list">
+            <li><span class="pc-mark minus">−</span><span>Model choice is a trap of its own: different models carry different rules, and buying the wrong one is a fee lost before the first trade.</span></li>
+            <li><span class="pc-mark minus">−</span><span>No Lab payout has completed yet — speed claims stay claims until the timeline table is filled.</span></li>
+          </ul>
+        </div>
+      </div>
+      <h2>Verdict</h2>
+      <p><b>Interim verdict: promising claims, unproven proof.</b> FundedNext earns a final verdict the same way every firm here does — a completed, timed payout plus a measured all-in gold cost. Until then, treat this page as the checklist the Lab is working through, and use <a href="#/prop-firm-match/">Prop Firm Match</a> to see how it stacks up on the criteria you care about.</p>
+      <div class="callout">
+        <h3>Discuss this review</h3>
+        <p>FundedNext measurements and payout reports from your own accounts go in the Telegram group — Prop Lab Results for numbers, Payout Proof for withdrawals.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Join the discussion ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/fundednext-payout-test/"><b>FundedNext Payout Test</b><span>The timed withdrawal protocol for this firm.</span></a>
+        <a href="#/ftmo-review/"><b>FTMO Review</b><span>The benchmark firm, same template.</span></a>
+        <a href="#/the5ers-review/"><b>The5ers Review</b><span>A different model: scaling instead of a classic challenge.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ==================== VIEW: THE5ERS REVIEW =================== -->
+<!-- ============================================================= -->
+<div data-view="the5ers-review" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Reviews</a> <span>›</span> <span>The5ers Review</span></nav>
+      <h1>The5ers Review: Scaling Model, Drawdown Rules &amp; Payout Test</h1>
+      <p class="standfirst">The5ers does not run the standard two-step challenge — its model grows the account as you perform. That makes the drawdown basis and the payout terms even more important to audit before paying.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Prop Lab #003</span></div>
+    </div>
+    <div class="article-body">
+      <div class="verdictbox">
+        <div class="vlabel">Verdict — interim · Kết luận tạm thời</div>
+        <p><b>Status: Testing.</b> Full template open: rules, all-in gold cost, payout terms, experience log. Every field that needs a terminal log, a rulebook re-read or a completed payout is marked pending with its source — nothing estimated.</p>
+        <p class="vscore">Scorecard: — / 10 · pending payout test · <a href="#/prop-firm-match/">compare in Prop Firm Match</a></p>
+      </div>
+      <h2>Rules, audited line by line</h2>
+      <div class="tblwrap"><table aria-label="The5ers rules audit">
+        <thead><tr><th>Rule</th><th>How it works</th><th>Status / source needed</th></tr></thead>
+        <tbody>
+          <tr><td>Daily drawdown (Daily DD)</td><td>Whether a daily limit applies in the chosen program, and its balance/equity basis — see <a href="#/rule-trap-daily-dd/">the Rule Trap audit</a>.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> The5ers Terms &amp; program FAQ</td></tr>
+          <tr><td>Max drawdown (Max DD)</td><td>Static or trailing; in a scaling model, whether the limit moves as the account grows.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> The5ers Terms &amp; program FAQ</td></tr>
+          <tr><td>Scaling plan</td><td>Growth steps, target per step, and what resets when a step is hit or missed.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Program terms at purchase date</td></tr>
+          <tr><td>News trading</td><td>Any restricted window around high-impact releases.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> The5ers trading rules / FAQ</td></tr>
+          <tr><td>Overnight &amp; weekend holding</td><td>Whether gold may be held overnight and over weekends in the chosen program.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> The5ers trading rules / FAQ</td></tr>
+        </tbody></table></div>
+      <h2>All-in cost: spread + commission</h2>
+      <div class="tblwrap"><table aria-label="The5ers XAUUSD cost measurements">
+        <thead><tr><th>Measurement</th><th class="num">London session</th><th class="num">New York session</th><th class="num">News releases</th></tr></thead>
+        <tbody>
+          <tr><td>Average spread</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td></tr>
+          <tr><td>Commission per lot</td><td class="num pending" colspan="3">— Pending MT5 log</td></tr>
+          <tr><td>All-in cost per round trip</td><td class="num pending" colspan="3">— Calculated when spread + commission exist</td></tr>
+          <tr><td>Average slippage</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td><td class="num pending">— Pending MT5 log</td></tr>
+        </tbody></table></div>
+      <h2>Payout terms</h2>
+      <div class="tblwrap"><table aria-label="The5ers payout terms">
+        <thead><tr><th>Term</th><th>Detail</th><th>Status / source needed</th></tr></thead>
+        <tbody>
+          <tr><td>Profit split</td><td>Published split and how it changes as the account scales.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Program / funded terms</td></tr>
+          <tr><td>First payout — earliest day</td><td>When the first request becomes available in the chosen program.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout FAQ / terms</td></tr>
+          <tr><td>Real payout speed</td><td>Timed end to end with the same protocol as the <a href="#/fundednext-payout-test/">FundedNext payout test</a>.</td><td><span class="statuschip st-pending">Pending</span> First completed Lab payout</td></tr>
+          <tr><td>Payout methods → Vietnam</td><td>Which rails reach a Vietnamese trader — see <a href="#/trader-viet/">Trader Việt</a>.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout page + first real withdrawal</td></tr>
+          <tr><td>Payout proof</td><td>Published in the Payout Proof topic when the withdrawal lands.</td><td><span class="statuschip st-pending">Pending</span> First completed Lab payout</td></tr>
+        </tbody></table></div>
+      <h2>Real experience log</h2>
+      <div class="tblwrap"><table aria-label="The5ers experience log">
+        <thead><tr><th>Stage</th><th>What will be recorded</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Buying the program</td><td>Checkout, fee charged, program chosen, credentials delivery.</td><td><span class="statuschip st-pending">Chưa có log</span> Written at purchase</td></tr>
+          <tr><td>2 · Trading &amp; scaling steps</td><td>Execution on gold, how each scaling step actually triggered.</td><td><span class="statuschip st-pending">Chưa có log</span> Written during the test</td></tr>
+          <tr><td>3 · Payout</td><td>Request flow, verification, money received — timed.</td><td><span class="statuschip st-pending">Chưa có log</span> Written at payout</td></tr>
+          <tr><td>4 · Support</td><td>One real ticket: response time and answer quality.</td><td><span class="statuschip st-pending">Chưa có log</span> Written when a ticket exists</td></tr>
+        </tbody></table></div>
+      <h2>Pros &amp; cons</h2>
+      <div class="proscons">
+        <div class="card">
+          <h3>Ưu điểm · Strengths to verify</h3>
+          <ul class="pc-list">
+            <li><span class="pc-mark">+</span><span>A scaling model suits swing and position traders better than a sprint-style challenge — if the drawdown basis audit confirms it. That “if” is what this review exists to settle.</span></li>
+            <li><span class="pc-mark">+</span><span>Long-running firm by industry standards; program terms are published and auditable line by line.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Nhược điểm · Watch-outs</h3>
+          <ul class="pc-list">
+            <li><span class="pc-mark minus">−</span><span>Scaling models punish impatience: growth steps take time, so traders who need a fast first payout should compare in <a href="#/prop-firm-match/">Prop Firm Match</a> first.</span></li>
+            <li><span class="pc-mark minus">−</span><span>No Lab payout has completed yet — split and speed stay unverified by this Lab until one does.</span></li>
+          </ul>
+        </div>
+      </div>
+      <h2>Verdict</h2>
+      <p><b>Interim verdict: a different model, the same standard of proof.</b> The5ers will be scored on identical measurements — all-in gold cost, drawdown basis, timed payout — so its verdict can be compared line by line with <a href="#/ftmo-review/">FTMO</a> and <a href="#/fundednext-review/">FundedNext</a>.</p>
+      <div class="callout">
+        <h3>Discuss this review</h3>
+        <p>Trading The5ers already? Post your program, drawdown experience and payout times in the Telegram group — community reports are labelled as community reports.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Join the discussion ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/ftmo-review/"><b>FTMO Review</b><span>The benchmark firm, same template.</span></a>
+        <a href="#/fundednext-review/"><b>FundedNext Review</b><span>Rules, all-in cost and payout terms.</span></a>
+        <a href="#/prop-firm-match/"><b>Prop Firm Match</b><span>Which model fits your style and budget?</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ============== VIEW: QUEUED FIRM REVIEW FRAMES ============== -->
+<!-- ============================================================= -->
+<div data-view="funding-pips-review" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Reviews</a> <span>›</span> <span>Funding Pips Review</span></nav>
+      <h1>Funding Pips Review: Framework Open — Lab Test Queued</h1>
+      <p class="standfirst">The full review template is open for Funding Pips and every field waits for the Lab's own test. One fact is already on record: the firm's published terms restrict traders based in Vietnam — see <a href="#/country-check/">Country Check</a> and <a href="#/trader-viet/">Trader Việt</a> before paying anything.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Prop Lab — Queued</span></div>
+    </div>
+    <div class="article-body">
+      <div class="verdictbox">
+        <div class="vlabel">Verdict · Kết luận</div>
+        <p><b>Not tested yet — no verdict.</b> A verdict appears here only after the Lab buys, trades and completes a payout (or documents exactly why it could not). For Vietnamese traders the queue question is already answered: check the restriction first.</p>
+        <p class="vscore">Scorecard: — / 10 · queued · <a href="#/prop-firm-match/">see how it ranks in Prop Firm Match</a></p>
+      </div>
+      <h2>What will be measured</h2>
+      <div class="tblwrap"><table aria-label="Funding Pips review framework">
+        <thead><tr><th>Section</th><th>Fields</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Rules audit</td><td>Daily DD basis · Max DD static/trailing · targets · news rule · overnight holding</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Firm's current Terms &amp; FAQ</td></tr>
+          <tr><td>All-in gold cost</td><td>XAUUSD spread (London / NY / news) + commission = all-in per round trip · slippage</td><td><span class="statuschip st-pending">Pending MT5 log</span></td></tr>
+          <tr><td>Payout terms</td><td>Profit split · first payout day · frequency · methods · timed real speed · proof</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout page + first withdrawal</td></tr>
+          <tr><td>Experience log</td><td>Purchase → phases → payout → support ticket</td><td><span class="statuschip st-pending">Chưa có log</span></td></tr>
+          <tr><td>Country access</td><td>Restricted list — Vietnam already flagged in <a href="#/country-check/">Country Check</a></td><td><span class="statuschip st-no">VN restricted — per firm's published terms</span></td></tr>
+        </tbody></table></div>
+      <p>The completed reviews show exactly how a filled framework looks: <a href="#/ftmo-review/">FTMO</a> · <a href="#/fundednext-review/">FundedNext</a> · <a href="#/the5ers-review/">The5ers</a>. The method is <a href="#/prop-firm-scorecard/">the 10-point scorecard</a>.</p>
+      <div class="callout">
+        <h3>Want this firm tested sooner?</h3>
+        <p>Queue order is argued in the Ask Thang topic — bring payout reports or rulebook findings and the firm moves up.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Ask Thang topic ↗</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div data-view="e8-markets-review" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Reviews</a> <span>›</span> <span>E8 Markets Review</span></nav>
+      <h1>E8 Markets Review: Framework Open — Lab Test Queued</h1>
+      <p class="standfirst">The full review template is open for E8 Markets. No numbers, no verdict and no ranking until the Lab runs its own account through the same measurements as every other firm here.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Prop Lab — Queued</span></div>
+    </div>
+    <div class="article-body">
+      <div class="verdictbox">
+        <div class="vlabel">Verdict · Kết luận</div>
+        <p><b>Not tested yet — no verdict.</b> Everything below is the empty template the test will fill, with the source each field needs named in advance.</p>
+        <p class="vscore">Scorecard: — / 10 · queued · <a href="#/prop-firm-match/">see how it ranks in Prop Firm Match</a></p>
+      </div>
+      <h2>What will be measured</h2>
+      <div class="tblwrap"><table aria-label="E8 Markets review framework">
+        <thead><tr><th>Section</th><th>Fields</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Rules audit</td><td>Daily DD basis · Max DD static/trailing · targets · news rule · overnight holding</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Firm's current Terms &amp; FAQ</td></tr>
+          <tr><td>All-in gold cost</td><td>XAUUSD spread (London / NY / news) + commission = all-in per round trip · slippage</td><td><span class="statuschip st-pending">Pending MT5 log</span></td></tr>
+          <tr><td>Payout terms</td><td>Profit split · first payout day · frequency · methods · timed real speed · proof</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout page + first withdrawal</td></tr>
+          <tr><td>Experience log</td><td>Purchase → phases → payout → support ticket</td><td><span class="statuschip st-pending">Chưa có log</span></td></tr>
+          <tr><td>Country access</td><td>Restricted list re-verified at test time — method in <a href="#/country-check/">Country Check</a></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+        </tbody></table></div>
+      <p>The completed reviews show exactly how a filled framework looks: <a href="#/ftmo-review/">FTMO</a> · <a href="#/fundednext-review/">FundedNext</a> · <a href="#/the5ers-review/">The5ers</a>. The method is <a href="#/prop-firm-scorecard/">the 10-point scorecard</a>.</p>
+      <div class="callout">
+        <h3>Want this firm tested sooner?</h3>
+        <p>Queue order is argued in the Ask Thang topic — bring payout reports or rulebook findings and the firm moves up.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Ask Thang topic ↗</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div data-view="alpha-capital-review" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Reviews</a> <span>›</span> <span>Alpha Capital Group Review</span></nav>
+      <h1>Alpha Capital Group Review: Framework Open — Lab Test Queued</h1>
+      <p class="standfirst">The full review template is open for Alpha Capital Group. No numbers, no verdict and no ranking until the Lab runs its own account through the same measurements as every other firm here.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Updated 18 Nov 2026</span><span>Series: Prop Lab — Queued</span></div>
+    </div>
+    <div class="article-body">
+      <div class="verdictbox">
+        <div class="vlabel">Verdict · Kết luận</div>
+        <p><b>Not tested yet — no verdict.</b> Everything below is the empty template the test will fill, with the source each field needs named in advance.</p>
+        <p class="vscore">Scorecard: — / 10 · queued · <a href="#/prop-firm-match/">see how it ranks in Prop Firm Match</a></p>
+      </div>
+      <h2>What will be measured</h2>
+      <div class="tblwrap"><table aria-label="Alpha Capital Group review framework">
+        <thead><tr><th>Section</th><th>Fields</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Rules audit</td><td>Daily DD basis · Max DD static/trailing · targets · news rule · overnight holding</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Firm's current Terms &amp; FAQ</td></tr>
+          <tr><td>All-in gold cost</td><td>XAUUSD spread (London / NY / news) + commission = all-in per round trip · slippage</td><td><span class="statuschip st-pending">Pending MT5 log</span></td></tr>
+          <tr><td>Payout terms</td><td>Profit split · first payout day · frequency · methods · timed real speed · proof</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Payout page + first withdrawal</td></tr>
+          <tr><td>Experience log</td><td>Purchase → phases → payout → support ticket</td><td><span class="statuschip st-pending">Chưa có log</span></td></tr>
+          <tr><td>Country access</td><td>Restricted list re-verified at test time — method in <a href="#/country-check/">Country Check</a></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+        </tbody></table></div>
+      <p>The completed reviews show exactly how a filled framework looks: <a href="#/ftmo-review/">FTMO</a> · <a href="#/fundednext-review/">FundedNext</a> · <a href="#/the5ers-review/">The5ers</a>. The method is <a href="#/prop-firm-scorecard/">the 10-point scorecard</a>.</p>
+      <div class="callout">
+        <h3>Want this firm tested sooner?</h3>
+        <p>Queue order is argued in the Ask Thang topic — bring payout reports or rulebook findings and the firm moves up.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Ask Thang topic ↗</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ================== VIEW: PROP FIRM MATCH ==================== -->
+<!-- ============================================================= -->
+<div data-view="prop-firm-match" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Tools</a> <span>›</span> <span>Prop Firm Match</span></nav>
+      <h1>Prop Firm Match: Shortlist a Firm by Budget, Style &amp; Country</h1>
+      <p class="standfirst">Five questions, one honest shortlist. Match only ranks firms on criteria that are actually confirmed — everything else is listed as “chưa kiểm chứng” with the exact check to run before you pay. No firm pays to rank higher, and no data is invented to fill a cell.</p>
+      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Data status: framework audit in progress</span><span>Firms in the pool: 6</span></div>
+    </div>
+    <div class="article-body" style="max-width:860px">
+      <div class="card" id="matchQuiz">
+        <div class="q-block">
+          <div class="lbl">1 · Ngân sách challenge tối đa của bạn? · Challenge budget</div>
+          <div class="opts" data-q="budget">
+            <button data-v="low" aria-pressed="false">Dưới $100</button>
+            <button data-v="mid" aria-pressed="false">$100 – $300</button>
+            <button data-v="high" aria-pressed="false">Trên $300</button>
+            <button data-v="any" aria-pressed="true">Chưa rõ / linh hoạt</button>
+          </div>
+        </div>
+        <div class="q-block">
+          <div class="lbl">2 · Phong cách trade chính? · Main style</div>
+          <div class="opts" data-q="style">
+            <button data-v="gold" aria-pressed="true">Vàng · XAUUSD</button>
+            <button data-v="news" aria-pressed="false">Đánh tin · News</button>
+            <button data-v="swing" aria-pressed="false">Swing · giữ lệnh lâu</button>
+            <button data-v="scalp" aria-pressed="false">Scalping</button>
+          </div>
+        </div>
+        <div class="q-block">
+          <div class="lbl">3 · Bạn cư trú ở đâu? · Country of residence</div>
+          <div class="opts" data-q="country">
+            <button data-v="vn" aria-pressed="true">Việt Nam</button>
+            <button data-v="us" aria-pressed="false">Mỹ · US</button>
+            <button data-v="other" aria-pressed="false">Nước khác</button>
+          </div>
+        </div>
+        <div class="q-block">
+          <div class="lbl">4 · Ưu tiên payout nào? · Payout priority</div>
+          <div class="opts" data-q="payout">
+            <button data-v="fast" aria-pressed="false">Payout càng nhanh càng tốt</button>
+            <button data-v="split" aria-pressed="false">Profit split cao</button>
+            <button data-v="any" aria-pressed="true">Cân bằng / chưa rõ</button>
+          </div>
+        </div>
+        <div class="q-block">
+          <div class="lbl">5 · Bạn có giữ lệnh qua đêm / cuối tuần không? · Overnight holding</div>
+          <div class="opts" data-q="overnight">
+            <button data-v="yes" aria-pressed="false">Có — hệ thống của tôi giữ lệnh</button>
+            <button data-v="no" aria-pressed="false">Không — đóng lệnh trong ngày</button>
+            <button data-v="any" aria-pressed="true">Tuỳ setup</button>
+          </div>
+        </div>
+      </div>
+
+      <h2>Kết quả · Your shortlist</h2>
+      <p id="matchSummary" style="color:var(--muted)"></p>
+      <div id="matchResults" aria-live="polite"></div>
+      <p class="note">Cách đọc kết quả: <span class="statuschip st-ok">Khớp · Confirmed</span> = tiêu chí đã có cơ sở trong khung audit của Lab. <span class="statuschip st-no">Không khớp · Excluded</span> = đã xác nhận không phù hợp (ví dụ firm cấm quốc gia của bạn). <span class="statuschip st-pending">Chưa kiểm chứng</span> = Lab chưa có nguồn kiểm chứng — danh sách việc cần tự kiểm tra nằm ngay trong từng thẻ firm. Match không xếp hạng bằng dữ kiện chưa kiểm chứng.</p>
+
+      <h2>Bảng đối chiếu toàn bộ · Full matrix</h2>
+      <div class="tblwrap"><table aria-label="Prop firm match comparison matrix">
+        <thead><tr><th>Tiêu chí</th><th>FTMO</th><th>FundedNext</th><th>The5ers</th><th>Funding Pips</th><th>E8 Markets</th><th>Alpha Capital</th></tr></thead>
+        <tbody>
+          <tr><td>Trade vàng XAUUSD (đối tượng đo của Lab)</td><td><span class="statuschip st-ok">Có · trong chương trình test</span></td><td><span class="statuschip st-ok">Có · trong chương trình test</span></td><td><span class="statuschip st-ok">Có · trong chương trình test</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td>Nhận trader cư trú tại Việt Nam</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-no">Không — theo terms công bố</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td>Nhận trader cư trú tại Mỹ</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td>Đánh tin (news trading)</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td>Giữ lệnh qua đêm / cuối tuần</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td>Scalping</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td>Payout nhanh (đo thật)</td><td><span class="statuschip st-pending">Pending payout test</span></td><td><span class="statuschip st-pending">Pending payout test</span></td><td><span class="statuschip st-pending">Pending payout test</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td>Phí challenge theo size tài khoản</td><td><span class="statuschip st-pending">Xem bảng giá firm</span></td><td><span class="statuschip st-pending">Xem bảng giá firm</span></td><td><span class="statuschip st-pending">Xem bảng giá firm</span></td><td><span class="statuschip st-pending">Xem bảng giá firm</span></td><td><span class="statuschip st-pending">Xem bảng giá firm</span></td><td><span class="statuschip st-pending">Xem bảng giá firm</span></td></tr>
+        </tbody></table></div>
+      <p class="note">Nguồn cần kiểm chứng cho từng ô “chưa kiểm chứng” được ghi rõ trong bài review của firm đó. Khi Lab test xong firm nào, hàng của firm đó trong bảng này được cập nhật cùng ngày với bài review.</p>
+
+      <div class="callout">
+        <h3>Chưa chắc chắn? Hỏi trước khi mua</h3>
+        <p>Đưa kết quả Match của bạn vào topic Country Check hoặc Ask Thang trong group Telegram — cộng đồng đối chiếu lại theo terms hiện hành của firm, miễn phí.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Hỏi trong Telegram ↗</a>
+      </div>
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="#/ftmo-review/"><b>FTMO Review</b><span>Bài review đầy đủ của firm benchmark.</span></a>
+        <a href="#/trader-viet/"><b>Trader Việt</b><span>Cấm VN, payout về VN, thuế và giấy tờ.</span></a>
+        <a href="#/prop-firm-scorecard/"><b>The 10-Point Scorecard</b><span>Phương pháp chấm điểm phía sau Match.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ===================== VIEW: TRADER VIỆT ===================== -->
+<!-- ============================================================= -->
+<div data-view="trader-viet" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a> <span>›</span> <a href="#/#latest">Guides</a> <span>›</span> <span>Trader Việt</span></nav>
+      <h1>Trader Việt: Firm Nào Cấm Việt Nam, Payout Nào Về Được VN?</h1>
+      <p class="standfirst">Trang riêng cho trader cư trú tại Việt Nam: firm nào cấm VN ngay trong điều khoản, những kênh payout nào có thể nhận về VN, giấy tờ và thuế cần chuẩn bị từ ngày đầu, và các lỗi khiến trader Việt mất tiền oan nhất. Chỗ nào Lab chưa kiểm chứng được, trang này ghi rõ “chưa kiểm chứng” kèm cách tự kiểm tra.</p>
+      <div class="byline"><span>Bởi Thang Nguyen · FTMO Prime Trader</span><span>Đăng 18 Nov 2026</span><span>Cập nhật 18 Nov 2026</span><span>Chuyên mục: Trader Việt #001</span></div>
+    </div>
+    <div class="article-body">
+      <h2>1 · Firm nào cấm trader Việt Nam?</h2>
+      <p>Cấm ở đây nghĩa là cấm theo <b>nơi cư trú (residency)</b>, không phải theo IP. Mua challenge bằng VPN hay địa chỉ nước ngoài không làm bạn “hợp lệ” — firm có quyền đóng tài khoản và từ chối payout khi KYC khớp hộ chiếu Việt Nam với điều khoản cấm. Bảng dưới đây chỉ ghi điều đã có cơ sở; còn lại là chưa kiểm chứng và bạn phải tự đối chiếu terms hiện hành của firm trước khi trả phí.</p>
+      <div class="tblwrap"><table aria-label="Firm nào cấm trader Việt Nam">
+        <thead><tr><th>Firm</th><th>Trader cư trú tại VN</th><th>Cơ sở / cách kiểm chứng</th></tr></thead>
+        <tbody>
+          <tr><td>Funding Pips</td><td><span class="statuschip st-no">Cấm — theo terms công bố của firm</span></td><td>Đã ghi trong <a href="#/country-check/">Country Check</a>; đối chiếu lại Terms hiện hành trước mọi quyết định</td></tr>
+          <tr><td><a href="#/ftmo-review/">FTMO</a></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td>Đọc mục restricted countries trong Terms &amp; FAQ hiện hành của FTMO</td></tr>
+          <tr><td><a href="#/fundednext-review/">FundedNext</a></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td>Đọc mục restricted countries trong Terms &amp; FAQ hiện hành của FundedNext</td></tr>
+          <tr><td><a href="#/the5ers-review/">The5ers</a></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td>Đọc mục restricted countries trong Terms của chương trình bạn định mua</td></tr>
+          <tr><td><a href="#/e8-markets-review/">E8 Markets</a></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td>Đọc mục restricted countries trong Terms hiện hành của E8</td></tr>
+          <tr><td><a href="#/alpha-capital-review/">Alpha Capital Group</a></td><td><span class="statuschip st-pending">Chưa kiểm chứng</span></td><td>Đọc mục restricted countries trong Terms hiện hành của Alpha Capital</td></tr>
+        </tbody></table></div>
+      <p class="note">Cách tự kiểm tra trong 2 phút cho bất kỳ firm nào: <a href="#/country-check/">Country Check</a>. Chụp lại điều khoản kèm ngày tháng — đó là bằng chứng duy nhất của bạn nếu firm đổi luật sau này.</p>
+      <h2>2 · Payout nào về được Việt Nam?</h2>
+      <p>Trade được không đồng nghĩa rút được. Mỗi firm hỗ trợ một tập kênh payout khác nhau, và kênh nào “về được VN” phải kiểm chứng trên trang payout của chính firm đó cộng với lần rút thật. Ba kênh trader Việt thường gặp:</p>
+      <div class="tblwrap"><table aria-label="Kênh payout về Việt Nam">
+        <thead><tr><th>Kênh</th><th>Điểm cần biết khi nhận về VN</th><th>Trạng thái kiểm chứng</th></tr></thead>
+        <tbody>
+          <tr><td>Chuyển khoản ngân hàng quốc tế (SWIFT)</td><td>Ngân hàng VN có thể yêu cầu chứng từ nguồn thu nhập: giữ hợp đồng/điều khoản với firm, payout statement và sao kê. Tên người nhận phải khớp KYC.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Firm nào hỗ trợ + phí/thời gian thực tế: đối chiếu payout page của firm và lần rút đầu tiên của Lab</td></tr>
+          <tr><td>Crypto (ví dụ stablecoin)</td><td>Nhận nhanh nhưng bạn tự chịu trách nhiệm lưu trữ, quy đổi ra VND qua kênh hợp pháp và lưu chứng từ giao dịch để giải trình nguồn tiền.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Firm nào hỗ trợ + mạng lưới/token cụ thể: đối chiếu payout page của firm</td></tr>
+          <tr><td>Ví điện tử / cổng thanh toán quốc tế</td><td>Một số cổng không hỗ trợ rút về tài khoản ngân hàng VN hoặc giới hạn hạn mức — kiểm tra khả năng rút (withdraw) chứ không chỉ khả năng nhận.</td><td><span class="statuschip st-pending">Chưa kiểm chứng</span> Đối chiếu điều khoản của cổng và payout page của firm</td></tr>
+        </tbody></table></div>
+      <p>Quy tắc của Lab: một payout chỉ được tính là “về được VN” khi tiền đã vào tài khoản người nhận tại Việt Nam và có chứng từ — đúng chuẩn của <a href="#/fundednext-payout-test/">bài test payout</a>. Ảnh chụp màn hình “đã gửi” từ firm chưa phải là bằng chứng.</p>
+      <h2>3 · Thuế và giấy tờ: chuẩn bị từ ngày đầu</h2>
+      <ul>
+        <li><b>Payout là thu nhập.</b> Tiền nhận từ firm nước ngoài là khoản thu nhập bạn cần kê khai thuế thu nhập cá nhân tại Việt Nam theo quy định hiện hành. Lab không tư vấn thuế — khi số tiền đáng kể, hãy hỏi kế toán hoặc cơ quan thuế địa phương và lấy câu trả lời bằng văn bản.</li>
+        <li><b>Giữ đủ bộ chứng từ cho mỗi lần payout:</b> điều khoản/hợp đồng với firm, payout statement, sao kê ngân hàng hoặc lịch sử giao dịch ví, và ảnh chụp điều khoản quốc gia tại thời điểm mua challenge.</li>
+        <li><b>Đừng nhận payout qua tài khoản người khác.</b> Tên không khớp KYC vừa rủi ro bị firm từ chối, vừa không giải trình được nguồn tiền ở phía ngân hàng và thuế.</li>
+        <li><b>Phí challenge cũng là chi phí của bạn:</b> lưu hoá đơn mua challenge — vừa để đối chiếu refund, vừa là một phần hồ sơ thu nhập–chi phí của hoạt động trading.</li>
+      </ul>
+      <h2>4 · Kinh nghiệm thực tế: 4 lỗi trader Việt hay dính nhất</h2>
+      <ul>
+        <li><b>Mua trước, đọc danh sách cấm sau.</b> Lỗi đắt nhất và dễ tránh nhất — kiểm tra mục 1 của trang này và <a href="#/country-check/">Country Check</a> trước khi trả bất kỳ khoản phí nào.</li>
+        <li><b>Dùng VPN để “lách” quốc gia.</b> Điều khoản cấm tính theo cư trú và KYC, không tính theo IP. Lách được lúc mua, mất trắng lúc payout.</li>
+        <li><b>Chọn firm theo quảng cáo payout nhanh mà không soi kênh rút về VN.</b> Payout “trong 24h” vô nghĩa nếu kênh đó không rút được về tài khoản của bạn — dùng <a href="#/prop-firm-match/">Prop Firm Match</a> và lọc theo quốc gia Việt Nam trước.</li>
+        <li><b>Không lưu chứng từ.</b> Đến khi ngân hàng hỏi nguồn tiền hoặc cần kê khai thuế mới đi tìm lại email cũ — lúc đó firm có thể đã đổi terms, đổi cổng payout, hoặc đóng tài khoản.</li>
+      </ul>
+      <p>Kinh nghiệm và payout proof của trader Việt được tập hợp trong topic Country Check và Payout Proof của group Telegram — ghi rõ firm, ngày, kênh rút và thời gian tiền về. Báo cáo của cộng đồng được ghi nhãn cộng đồng; số liệu của Lab được ghi nhãn Lab.</p>
+      <div class="callout">
+        <h3>Hỏi trước khi mua — dành cho trader Việt</h3>
+        <p>Post “tên firm + Việt Nam” vào topic Country Check, cộng đồng đối chiếu theo terms hiện hành giúp bạn. Miễn phí, và rẻ hơn một phí challenge bị mất rất nhiều.</p>
+        <a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Mở topic Country Check ↗</a>
+      </div>
+      <h2>Đọc tiếp</h2>
+      <div class="related">
+        <a href="#/country-check/"><b>Country Check</b><span>Cách kiểm tra quốc gia bị cấm cho mọi firm trong 2 phút.</span></a>
+        <a href="#/prop-firm-match/"><b>Prop Firm Match</b><span>Lọc firm theo ngân sách, phong cách và quốc gia Việt Nam.</span></a>
+        <a href="#/fundednext-payout-test/"><b>FundedNext Payout Test</b><span>Quy trình đo một payout từ lúc request tới khi tiền về.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================================= -->
+<!-- ======================= VIEW: 404 =========================== -->
+<!-- ============================================================= -->
+<div data-view="404" hidden>
+  <main class="wrap">
+    <div class="err404">
+      <p class="big">404</p>
+      <h1 style="font-size:clamp(26px,4vw,38px);margin:10px 0 12px;letter-spacing:-.015em">This page is not in the Lab.</h1>
+      <p class="serif" style="font-size:18px;line-height:1.55;color:var(--muted);max-width:560px;margin:0 0 22px">The link is dead, the article moved, or the firm folded before we could test it. Everything that does exist is one click away:</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-navy" href="#/">← Back to the blog</a>
+        <a class="btn btn-line" href="#/ftmo-review/">FTMO Review</a>
+        <a class="btn btn-line" href="#/country-check/">Country Check</a>
+        <a class="btn btn-line" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Telegram group ↗</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="lockup" style="color:#F3EFE3">
+      <svg width="36" height="38" viewBox="0 0 100 105" aria-hidden="true"><path d="M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z" fill="#050D1D" stroke="#D4AF37" stroke-width="3.5"/><path fill="#D4AF37" fill-rule="evenodd" d="M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z"/></svg>
+      <div class="name" style="font-size:18px">Risk First <span style="color:var(--gold)">Prop Lab</span><small>BLOG ON GITHUB PAGES · FORUM ON TELEGRAM</small></div>
+    </div>
+    <nav class="footlinks" aria-label="Footer">
+      <a href="#/ftmo-review/">FTMO Review</a>
+      <a href="#/fundednext-payout-test/">FundedNext Payout</a>
+      <a href="#/rule-trap-daily-dd/">Rule Traps</a>
+      <a href="#/country-check/">Country Check</a>
+      <a href="#/prop-firm-scorecard/">Scorecard</a>
+      <a href="#/prop-firm-match/">Prop Firm Match</a>
+      <a href="#/trader-viet/">Trader Việt</a>
+      <a href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">@RiskFirstPropLab ↗</a>
+    </nav>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var BASE = "https://kenclark1209-tradewars.github.io/risk-first-prop-lab/";
+  var TG = "https://t.me/RiskFirstPropLab";
+
+  /* ---------------- SEO registry: one entry per page ---------------- */
+  var PAGES = {
+    "home": {
+      path: "",
+      title: "Risk First Prop Lab — Prop Firm Reviews, Payout Tests & Rule Audits",
+      desc: "Independent prop firm lab: FTMO and FundedNext tested on XAUUSD spreads, daily drawdown rules, payout speed and country restrictions. No paid rankings — discussion lives in the Telegram group.",
+      type: "website"
+    },
+    "ftmo-review": {
+      path: "ftmo-review/",
+      title: "FTMO Review 2026: XAUUSD Spread, Daily Loss Rule & Payout Test | Risk First Prop Lab",
+      desc: "FTMO tested by an FTMO Prime trader: XAUUSD spread and commission measured from MT5, how the daily loss limit is calculated, and a timed payout test. No paid ranking.",
+      type: "article",
+      headline: "FTMO Review: XAUUSD Costs, Daily Loss Rule & Payout Test"
+    },
+    "fundednext-payout-test": {
+      path: "fundednext-payout-test/",
+      title: "FundedNext Payout Test: How Long Does a Payout Really Take? | Risk First Prop Lab",
+      desc: "A real FundedNext withdrawal timed end to end — request, approval, processing, money received. Payout fields publish only after the first real withdrawal completes.",
+      type: "article",
+      headline: "FundedNext Payout Test: Request to Money Received, Timed"
+    },
+    "rule-trap-daily-dd": {
+      path: "rule-trap-daily-dd/",
+      title: "Rule Trap: Daily Drawdown — Balance-Based vs Equity-Based Explained | Risk First Prop Lab",
+      desc: "The daily drawdown definition that kills prop firm challenges: balance-based vs equity-based daily loss, why gold traders get caught, and the 60-second check before you buy.",
+      type: "article",
+      headline: "Rule Trap: Daily Drawdown — Balance-Based or Equity-Based?"
+    },
+    "country-check": {
+      path: "country-check/",
+      title: "Country Check: Which Prop Firms Ban Your Country? | Risk First Prop Lab",
+      desc: "Prop firm restricted countries checked before you buy: US residents, Vietnam and more. How to verify any firm's country ban in two minutes from its own terms.",
+      type: "article",
+      headline: "Country Check: Which Prop Firms Ban Your Country?"
+    },
+    "prop-firm-scorecard": {
+      path: "prop-firm-scorecard/",
+      title: "The 10-Point Prop Firm Scorecard | Risk First Prop Lab",
+      desc: "The exact 10 criteria behind every Risk First Prop Lab test: XAUUSD spread, commission, slippage, drawdown rules, payout speed and reliability, country access, support.",
+      type: "article",
+      headline: "The 10-Point Prop Firm Scorecard Behind Every Lab Test"
+    },
+    "fundednext-review": {
+      path: "fundednext-review/",
+      title: "FundedNext Review 2026: Rules, All-In XAUUSD Cost & Payout Terms | Risk First Prop Lab",
+      desc: "FundedNext reviewed with the full Lab template: daily and max drawdown basis, XAUUSD spread plus commission as one all-in cost, profit split, first payout terms and a timed payout test. Unmeasured fields stay marked pending.",
+      type: "review",
+      firm: "FundedNext",
+      headline: "FundedNext Review: Rules, All-In Gold Cost & Payout Terms"
+    },
+    "the5ers-review": {
+      path: "the5ers-review/",
+      title: "The5ers Review 2026: Scaling Model, Drawdown Rules & Payout Test | Risk First Prop Lab",
+      desc: "The5ers audited line by line: how the scaling model changes drawdown risk, XAUUSD all-in cost from the MT5 log, profit split and payout terms. No invented numbers — pending fields name the source needed.",
+      type: "review",
+      firm: "The5ers",
+      headline: "The5ers Review: Scaling Model, Drawdown Rules & Payout Test"
+    },
+    "funding-pips-review": {
+      path: "funding-pips-review/",
+      title: "Funding Pips Review: Lab Test Queued — Vietnam Restriction Flagged | Risk First Prop Lab",
+      desc: "Funding Pips review framework is open and queued for a full Lab test. One fact is already recorded: the firm's published terms restrict traders based in Vietnam. All other fields pending verification.",
+      type: "review",
+      firm: "Funding Pips",
+      headline: "Funding Pips Review: Framework Open — Lab Test Queued"
+    },
+    "e8-markets-review": {
+      path: "e8-markets-review/",
+      title: "E8 Markets Review: Lab Test Queued — Full Framework Open | Risk First Prop Lab",
+      desc: "E8 Markets review framework is open and queued: drawdown rules, all-in XAUUSD cost, payout terms and experience log, every field pending until the Lab's own test. No verdict before a completed payout.",
+      type: "review",
+      firm: "E8 Markets",
+      headline: "E8 Markets Review: Framework Open — Lab Test Queued"
+    },
+    "alpha-capital-review": {
+      path: "alpha-capital-review/",
+      title: "Alpha Capital Group Review: Lab Test Queued — Full Framework Open | Risk First Prop Lab",
+      desc: "Alpha Capital Group review framework is open and queued: drawdown rules, all-in XAUUSD cost, payout terms and experience log, every field pending until the Lab's own test. No verdict before a completed payout.",
+      type: "review",
+      firm: "Alpha Capital Group",
+      headline: "Alpha Capital Group Review: Framework Open — Lab Test Queued"
+    },
+    "prop-firm-match": {
+      path: "prop-firm-match/",
+      title: "Prop Firm Match: Find a Firm by Budget, Style & Country | Risk First Prop Lab",
+      desc: "Answer five questions — challenge budget, trading style (gold, news, swing, scalping), country including Vietnam, payout priority and overnight holding — and get an honest shortlist: confirmed, excluded, or still to verify.",
+      type: "website"
+    },
+    "trader-viet": {
+      path: "trader-viet/",
+      title: "Trader Việt: Firm Nào Cấm Việt Nam, Payout Nào Về Được VN? | Risk First Prop Lab",
+      desc: "Dành cho trader cư trú tại Việt Nam: firm nào cấm VN theo điều khoản, các kênh payout có thể nhận về VN, thuế và giấy tờ cần chuẩn bị, và 4 lỗi khiến trader Việt mất phí challenge oan. Chưa kiểm chứng ở đâu, ghi rõ ở đó.",
+      type: "article",
+      headline: "Trader Việt: Firm Nào Cấm Việt Nam, Payout Nào Về Được VN?"
+    },
+    "404": {
+      path: "404.html",
+      title: "Page Not Found (404) | Risk First Prop Lab",
+      desc: "This page is not in the Lab. Browse the FTMO review, FundedNext payout test, rule trap audits and country check instead.",
+      type: "website"
+    }
+  };
+
+  function articleLD(p){
+    var art = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": p.headline,
+      "description": p.desc,
+      "author": {"@type": "Person", "name": "Thang Nguyen", "jobTitle": "FTMO Prime Trader"},
+      "publisher": {"@type": "Organization", "name": "Risk First Prop Lab", "sameAs": [TG]},
+      "datePublished": "2026-11-18",
+      "dateModified": "2026-11-18",
+      "mainEntityOfPage": BASE + p.path
+    };
+    if (p.type === "review"){
+      /* Review schema without a numeric rating: the Lab does not publish a
+         score until the firm's payout test completes, so no reviewRating
+         is emitted — a rating here would be an invented number. */
+      var rev = {
+        "@context": "https://schema.org",
+        "@type": "Review",
+        "itemReviewed": {"@type": "Organization", "name": p.firm},
+        "author": {"@type": "Person", "name": "Thang Nguyen", "jobTitle": "FTMO Prime Trader"},
+        "publisher": {"@type": "Organization", "name": "Risk First Prop Lab", "sameAs": [TG]},
+        "datePublished": "2026-11-18",
+        "dateModified": "2026-11-18",
+        "inLanguage": "en",
+        "reviewBody": "Lab review in progress: drawdown rules audited line by line, XAUUSD all-in cost measured from the MT5 log, payout timed end to end. Fields not yet measured are marked pending verification in the review — no estimated figures are published."
+      };
+      return [art, rev];
+    }
+    return art;
+  }
+  function siteLD(){
+    return {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Risk First Prop Lab",
+      "url": BASE,
+      "description": PAGES.home.desc,
+      "publisher": {"@type": "Organization", "name": "Risk First Prop Lab", "sameAs": [TG]}
+    };
+  }
+
+  function setMeta(selector, attr, value){
+    var el = document.head.querySelector(selector);
+    if (el) el.setAttribute(attr, value);
+  }
+  function applySEO(key){
+    var p = PAGES[key];
+    document.title = p.title;
+    setMeta('meta[name="description"]', "content", p.desc);
+    setMeta('link[rel="canonical"]', "href", BASE + p.path);
+    setMeta('meta[property="og:title"]', "content", p.title);
+    setMeta('meta[property="og:description"]', "content", p.desc);
+    setMeta('meta[property="og:url"]', "content", BASE + p.path);
+    setMeta('meta[property="og:type"]', "content", p.type === "article" ? "article" : "website");
+    var ld = document.getElementById("jsonld");
+    ld.textContent = JSON.stringify((p.type === "article" || p.type === "review") ? articleLD(p) : siteLD());
+  }
+
+  /* ---------------- Router ---------------- */
+  var views = {};
+  document.querySelectorAll("[data-view]").forEach(function(el){ views[el.getAttribute("data-view")] = el; });
+
+  function parseRoute(){
+    var h = window.location.hash.replace(/^#\/?/, "").replace(/^#/, "").replace(/\/$/, "");
+    if (h === "") return "home";
+    if (h === "latest" || h === "forum" || h === "seo-files") return "home";
+    var seg = h.split("/")[0];
+    return PAGES.hasOwnProperty(seg) ? seg : "404";
+  }
+  function render(){
+    var key = parseRoute();
+    Object.keys(views).forEach(function(k){ views[k].hidden = (k !== key); });
+    applySEO(key);
+    document.querySelectorAll("[data-nav]").forEach(function(a){
+      if (a.getAttribute("data-nav") === key) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    var anchor = window.location.hash.replace(/^#\/?/, "").replace(/^#/, "").replace(/\/$/, "");
+    if (key === "home" && (anchor === "latest" || anchor === "forum" || anchor === "seo-files")){
+      var target = document.getElementById(anchor);
+      if (target) { setTimeout(function(){ target.scrollIntoView(); }, 30); return; }
+    }
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", render);
+
+  /* In-page anchors inside the home view (cards link to #latest etc. via plain ids) */
+  document.querySelectorAll('a[href="#latest"], a[href="#forum"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      e.preventDefault();
+      if (parseRoute() !== "home"){ window.location.hash = "#/"; }
+      var t = document.getElementById(a.getAttribute("href").slice(1));
+      if (t) setTimeout(function(){ t.scrollIntoView({behavior:"smooth"}); }, 40);
+    });
+  });
+
+  /* ---------------- Toast + copy ---------------- */
+  var toast = document.getElementById("toast"), timer = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(timer);
+    timer = setTimeout(function(){ toast.classList.remove("show"); }, 2400);
+  }
+  function download(name, text, type){
+    var blob = new Blob([text], {type: type || "text/plain;charset=utf-8"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+  }
+
+  /* ---------------- SEO files content ---------------- */
+  var SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + ["", "ftmo-review/", "fundednext-review/", "the5ers-review/", "funding-pips-review/", "e8-markets-review/", "alpha-capital-review/", "fundednext-payout-test/", "rule-trap-daily-dd/", "country-check/", "prop-firm-scorecard/", "prop-firm-match/", "trader-viet/"].map(function(p){
+        return "  <url>\n    <loc>" + BASE + p + "</loc>\n    <lastmod>2026-11-18</lastmod>\n  </url>";
+      }).join("\n")
+    + "\n</urlset>";
+  var ROBOTS = "User-agent: *\nAllow: /\n\nSitemap: " + BASE + "sitemap.xml\n";
+  var TREE = "risk-first-prop-lab/            ← repo (public)\n"
+    + "├─ index.html                   ← home: blog index + scoreboard\n"
+    + "├─ ftmo-review/index.html       ← /ftmo-review/ (Review schema)\n"
+    + "├─ fundednext-review/index.html ← /fundednext-review/\n"
+    + "├─ the5ers-review/index.html    ← /the5ers-review/\n"
+    + "├─ funding-pips-review/index.html\n"
+    + "├─ e8-markets-review/index.html\n"
+    + "├─ alpha-capital-review/index.html\n"
+    + "├─ fundednext-payout-test/index.html\n"
+    + "├─ rule-trap-daily-dd/index.html\n"
+    + "├─ country-check/index.html\n"
+    + "├─ prop-firm-scorecard/index.html\n"
+    + "├─ prop-firm-match/index.html   ← quiz / filter tool\n"
+    + "├─ trader-viet/index.html       ← guide for VN traders\n"
+    + "├─ 404.html                     ← styled not-found page\n"
+    + "├─ sitemap.xml\n"
+    + "├─ robots.txt\n"
+    + "└─ favicon.svg                  ← R Monogram";
+  var FILES = { sitemap: SITEMAP, robots: ROBOTS, tree: TREE };
+  var preview = document.getElementById("filePreview");
+  function showFile(name){
+    preview.textContent = FILES[name];
+    document.querySelectorAll("[data-filetab]").forEach(function(b){
+      b.setAttribute("aria-pressed", b.getAttribute("data-filetab") === name ? "true" : "false");
+    });
+  }
+  document.querySelectorAll("[data-filetab]").forEach(function(b){
+    b.addEventListener("click", function(){ showFile(b.getAttribute("data-filetab")); });
+  });
+  showFile("sitemap");
+
+  document.querySelectorAll("[data-dl-file]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var kind = b.getAttribute("data-dl-file");
+      if (kind === "sitemap"){ download("sitemap.xml", SITEMAP, "application/xml"); showToast("Downloaded sitemap.xml — place at repo root"); }
+      if (kind === "robots"){ download("robots.txt", ROBOTS); showToast("Downloaded robots.txt — place at repo root"); }
+    });
+  });
+
+  /* ---------------- SEO table ---------------- */
+  var tbody = document.getElementById("seoTableBody");
+  ["home","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","prop-firm-match","trader-viet","404"].forEach(function(k){
+    var p = PAGES[k];
+    var tr = document.createElement("tr");
+    var td1 = document.createElement("td"); td1.innerHTML = "<span class='mono' style='font-size:12.5px'>/" + p.path + "</span>";
+    var td2 = document.createElement("td"); td2.textContent = p.title; td2.style.fontWeight = "600";
+    var td3 = document.createElement("td"); td3.textContent = p.desc; td3.style.color = "var(--muted)";
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+    tbody.appendChild(tr);
+  });
+
+  /* ---------------- Logo downloads (brand) ---------------- */
+  function logoSVGString(){
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1075" viewBox="0 0 100 105">'
+      + '<path d="M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z" fill="#0A1931" stroke="#D4AF37" stroke-width="3.5"/>'
+      + '<path d="M50 11.5 L83 22.3 V50.5 C83 70.5 69 84.5 50 93 C31 84.5 17 70.5 17 50.5 V22.3 Z" fill="none" stroke="#D4AF37" stroke-width="1" opacity=".45"/>'
+      + '<path fill="#D4AF37" fill-rule="evenodd" d="M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z"/>'
+      + "</svg>";
+  }
+  function downloadPNG(){
+    var img = new Image();
+    var url = URL.createObjectURL(new Blob([logoSVGString()], {type:"image/svg+xml;charset=utf-8"}));
+    img.onload = function(){
+      var c = document.createElement("canvas");
+      c.width = 1024; c.height = 1024;
+      var ctx = c.getContext("2d");
+      ctx.fillStyle = "#0A1931"; ctx.fillRect(0,0,1024,1024);
+      var w = 800, h = w * 105/100;
+      ctx.drawImage(img, (1024-w)/2, (1024-h)/2, w, h);
+      URL.revokeObjectURL(url);
+      if (c.toBlob) c.toBlob(function(b){
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(b); a.download = "risk-first-prop-lab-avatar.png";
+        document.body.appendChild(a); a.click();
+        setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+        showToast("Avatar PNG 1024×1024 downloaded — set it on the Telegram channel");
+      }, "image/png");
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); showToast("PNG export blocked — use the SVG instead"); };
+    img.src = url;
+  }
+  document.querySelectorAll("[data-dl]").forEach(function(el){
+    el.addEventListener("click", function(){
+      if (el.getAttribute("data-dl") === "svg"){ download("risk-first-prop-lab-logo.svg", logoSVGString(), "image/svg+xml"); showToast("Logo SVG downloaded — favicon, web header, print"); }
+      else downloadPNG();
+    });
+  });
+
+  /* ---------------- Prop Firm Match ----------------
+     Tri-state data only: "yes" = confirmed inside the Lab framework,
+     "no" = confirmed mismatch, "unknown" = not yet verified (the source
+     needed is named in each firm's review). Unknown never counts as a
+     match — the tool lists it as a check to run before paying. */
+  var MATCH_CRITERIA = {
+    budget:    { label: "Ngân sách challenge", check: "Đối chiếu bảng giá theo size tài khoản trên trang của firm — phí thay đổi theo size và chương trình khuyến mãi." },
+    gold:      { label: "Trade vàng XAUUSD", check: "Xác nhận XAUUSD có trong danh mục sản phẩm của tài khoản bạn định mua." },
+    news:      { label: "Đánh tin (news trading)", check: "Đọc điều khoản news trading trong Terms/FAQ của firm: có cửa sổ cấm quanh tin mạnh hay không." },
+    swing:     { label: "Swing / giữ lệnh nhiều ngày", check: "Đọc điều khoản giữ lệnh qua đêm và phí swap trong Terms của firm." },
+    scalp:     { label: "Scalping", check: "Đọc điều khoản scalping / thời gian giữ lệnh tối thiểu trong Terms của firm." },
+    vn:        { label: "Nhận trader cư trú tại Việt Nam", check: "Tìm tên Việt Nam trong mục restricted countries của Terms hiện hành — xem trang Trader Việt." },
+    us:        { label: "Nhận trader cư trú tại Mỹ", check: "Tìm United States trong mục restricted countries của Terms hiện hành." },
+    payoutFast:{ label: "Payout nhanh (đo thật)", check: "Chờ kết quả payout test đã bấm giờ của Lab — tốc độ quảng cáo không tính là bằng chứng." },
+    split:     { label: "Profit split cao", check: "Đọc profit split trong điều khoản tài khoản funded của firm, gồm cả điều kiện scale-up." },
+    overnight: { label: "Giữ lệnh qua đêm / cuối tuần", check: "Đọc điều khoản overnight & weekend holding trong trading rules của firm." }
+  };
+  var MATCH_FIRMS = [
+    { name: "FTMO", slug: "ftmo-review", status: "Đang test · Testing", data: { gold: "yes" } },
+    { name: "FundedNext", slug: "fundednext-review", status: "Đang test · Testing", data: { gold: "yes" } },
+    { name: "The5ers", slug: "the5ers-review", status: "Đang test · Testing", data: { gold: "yes" } },
+    { name: "Funding Pips", slug: "funding-pips-review", status: "Chờ test · Queued", data: { vn: "no" } },
+    { name: "E8 Markets", slug: "e8-markets-review", status: "Chờ test · Queued", data: {} },
+    { name: "Alpha Capital Group", slug: "alpha-capital-review", status: "Chờ test · Queued", data: {} }
+  ];
+  var matchState = { budget: "any", style: "gold", country: "vn", payout: "any", overnight: "any" };
+
+  function matchCriteria(){
+    var list = [];
+    if (matchState.budget !== "any") list.push("budget");
+    if (matchState.style) list.push(matchState.style);
+    if (matchState.style === "swing") list.push("overnight");
+    if (matchState.country === "vn") list.push("vn");
+    if (matchState.country === "us") list.push("us");
+    if (matchState.payout === "fast") list.push("payoutFast");
+    if (matchState.payout === "split") list.push("split");
+    if (matchState.overnight === "yes") list.push("overnight");
+    var seen = {}, out = [];
+    list.forEach(function(k){ if (!seen[k]) { seen[k] = 1; out.push(k); } });
+    return out;
+  }
+  function chipFor(v){
+    if (v === "yes") return '<span class="statuschip st-ok">Khớp · Confirmed</span>';
+    if (v === "no") return '<span class="statuschip st-no">Không khớp · Excluded</span>';
+    return '<span class="statuschip st-pending">Chưa kiểm chứng</span>';
+  }
+  function renderMatch(){
+    var box = document.getElementById("matchResults");
+    var sum = document.getElementById("matchSummary");
+    if (!box || !sum) return;
+    var crit = matchCriteria();
+    var rows = MATCH_FIRMS.map(function(f){
+      var yes = 0, no = 0, unknown = [];
+      crit.forEach(function(k){
+        var v = f.data[k] || "unknown";
+        if (v === "yes") yes++;
+        else if (v === "no") no++;
+        else unknown.push(k);
+      });
+      return { f: f, yes: yes, no: no, unknown: unknown };
+    });
+    rows.sort(function(a, b){
+      if ((a.no > 0) !== (b.no > 0)) return a.no > 0 ? 1 : -1;
+      if (b.yes !== a.yes) return b.yes - a.yes;
+      return a.unknown.length - b.unknown.length;
+    });
+    var live = rows.filter(function(r){ return r.no === 0; }).length;
+    sum.textContent = "Dựa trên " + crit.length + " tiêu chí bạn đã chọn: " + live + " firm còn trong danh sách, " + (rows.length - live) + " firm bị loại bởi tiêu chí đã xác nhận. Thứ hạng chỉ tính trên tiêu chí đã xác nhận — phần chưa kiểm chứng được liệt kê để bạn tự đối chiếu trước khi mua.";
+    box.innerHTML = "";
+    rows.forEach(function(r, i){
+      var card = document.createElement("div");
+      card.className = "match-card" + (r.no > 0 ? " excluded" : "");
+      var head = document.createElement("div");
+      head.className = "match-head";
+      var title = document.createElement("b");
+      title.textContent = (r.no > 0 ? "Bị loại · " : ("#" + (i + 1) + " ")) + r.f.name;
+      var meta = document.createElement("span");
+      meta.className = "match-score";
+      meta.textContent = r.f.status + " · " + r.yes + " khớp · " + r.unknown.length + " cần kiểm chứng";
+      head.appendChild(title); head.appendChild(meta);
+      card.appendChild(head);
+      crit.forEach(function(k){
+        var v = r.f.data[k] || "unknown";
+        var row = document.createElement("div");
+        row.className = "crit";
+        var lab = document.createElement("span");
+        lab.textContent = MATCH_CRITERIA[k].label;
+        var chip = document.createElement("span");
+        chip.innerHTML = chipFor(v);
+        row.appendChild(lab); row.appendChild(chip);
+        card.appendChild(row);
+      });
+      if (r.unknown.length){
+        var p = document.createElement("p");
+        p.style.cssText = "margin:12px 0 4px;font-weight:700;font-size:14px";
+        p.textContent = "Cần kiểm chứng trước khi mua:";
+        card.appendChild(p);
+        var ul = document.createElement("ul");
+        ul.className = "verify-list";
+        r.unknown.forEach(function(k){
+          var li = document.createElement("li");
+          li.textContent = MATCH_CRITERIA[k].label + " — " + MATCH_CRITERIA[k].check;
+          ul.appendChild(li);
+        });
+        card.appendChild(ul);
+      }
+      var link = document.createElement("p");
+      link.style.cssText = "margin:12px 0 0;font-size:14px";
+      var a = document.createElement("a");
+      a.href = "#/" + r.f.slug + "/";
+      a.textContent = "Đọc review đầy đủ của " + r.f.name + " →";
+      a.style.fontWeight = "700";
+      link.appendChild(a);
+      card.appendChild(link);
+      box.appendChild(card);
+    });
+  }
+  document.querySelectorAll("#matchQuiz .opts").forEach(function(group){
+    var q = group.getAttribute("data-q");
+    group.querySelectorAll("button").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        matchState[q] = btn.getAttribute("data-v");
+        group.querySelectorAll("button").forEach(function(b){
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+        renderMatch();
+      });
+    });
+  });
+  renderMatch();
+
+  render();
+})();
+</script>
+</body>
+</html>
