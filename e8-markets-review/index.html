@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -15,295 +15,487 @@
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 105'%3E%3Cpath d='M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z' fill='%230A1931' stroke='%23D4AF37' stroke-width='4'/%3E%3Cpath fill='%23D4AF37' fill-rule='evenodd' d='M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z'/%3E%3C/svg%3E" />
 <script type="application/ld+json" id="jsonld">
-[{"@context": "https://schema.org", "@type": "Article", "headline": "E8 Markets Review 2026: E8 One, Dynamic Drawdown & Payout Buffers", "description": "E8 Markets audited: single-phase configurable challenges — target is 1.5x the drawdown dial; the Help Centre preset (6% / 4%) and the configurator preset (9% / 6%) currently disagree — payout buffer, 40% best-day rule, splits to 100%, and the Trustpilot warning on record. Full rules, fees and verdict.", "author": {"@type": "Person", "name": "Thang Nguyen", "jobTitle": "FTMO Prime Trader"}, "publisher": {"@type": "Organization", "name": "Risk First Prop Lab", "sameAs": ["https://t.me/RiskFirstPropLab"]}, "datePublished": "2026-11-18", "dateModified": "2026-11-18", "mainEntityOfPage": "https://riskproplab.vercel.app/e8-markets-review/"}, {"@context": "https://schema.org", "@type": "Review", "itemReviewed": {"@type": "Organization", "name": "E8 Markets"}, "author": {"@type": "Person", "name": "Thang Nguyen", "jobTitle": "FTMO Prime Trader"}, "publisher": {"@type": "Organization", "name": "Risk First Prop Lab", "sameAs": ["https://t.me/RiskFirstPropLab"]}, "datePublished": "2026-11-18", "dateModified": "2026-11-18", "inLanguage": "en", "reviewBody": "Full Lab review: overview, challenge rules with calculation bases, challenge fees and all-in XAUUSD cost (spread plus commission), payout terms, experience log, pros and cons, who should use the firm, and a Risk First verdict. Firm-published figures are sourced and dated; figures not yet measured by the Lab (MT5 spread log, timed payout) are marked pending — no estimated figures are published and no numeric rating is emitted until the payout test completes."}]
+{"@context":"https://schema.org","@type":"WebSite","name":"Risk First Prop Lab","url":"https://riskproplab.vercel.app/","description":"Independent prop firm reviews, directory, payout tests and rule audits for XAUUSD traders.","publisher":{"@type":"Organization","name":"Risk First Prop Lab","sameAs":["https://t.me/RiskFirstPropLab"]}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
 <style>
+  /* ============ RISK TERMINAL — design tokens ============ */
   :root{
-    --navy:#0A1931; --navy-deep:#050D1D; --navy-2:#10264A;
-    --gold:#D4AF37; --gold-light:#E9CE7A; --gold-dark:#A9862A;
-    --paper:#F6F3EC; --paper-2:#EFEAE0;
-    --ink:#131A26; --muted:#5B6577;
-    --line:rgba(10,25,49,.16); --card:#FFFFFF;
-    --bg:var(--paper); --text:var(--ink);
-    --radius:14px;
+    --navy-950:#050D1D; --navy-900:#0A1931; --navy-800:#12233F; --navy-700:#1B3050; --navy-600:#274067;
+    --gold:#D4AF37; --gold-soft:#E9CE7A; --gold-deep:#A9862A;
+    --green:#2FA36B; --green-bg:rgba(47,163,107,.13);
+    --red:#D64541; --red-bg:rgba(214,69,65,.13);
+    --amber:#D9A441; --amber-bg:rgba(217,164,65,.15);
+    --blue:#4E7DD9; --blue-bg:rgba(78,125,217,.14);
+    --bg:#050D1D; --surface:#12233F; --surface-2:#1B3050; --sunken:#0A1931;
+    --text:#E8ECF3; --muted:#9AA5B8; --faint:#5B6577;
+    --line:rgba(232,236,243,.13); --line-soft:rgba(232,236,243,.07);
+    --gold-ink:#0A1931;
+    --r-card:10px; --r-ctl:8px; --r-table:6px;
+    --shadow:0 8px 32px rgba(0,0,0,.35);
   }
-  @media (prefers-color-scheme: dark){
-    :root{ --bg:#070E1D; --text:#EDE8DA; --muted:#9AA5B8; --line:rgba(212,175,55,.22); --card:#0C1B36; --paper-2:#0A1931; }
+  html[data-theme="light"]{
+    --bg:#F6F3EC; --surface:#FFFFFF; --surface-2:#EFEAE0; --sunken:#0A1931;
+    --text:#131A26; --muted:#5B6577; --faint:#8A93A5;
+    --line:rgba(10,25,49,.16); --line-soft:rgba(10,25,49,.08);
+    --green-bg:rgba(47,163,107,.12); --red-bg:rgba(214,69,65,.10); --amber-bg:rgba(217,164,65,.16); --blue-bg:rgba(78,125,217,.10);
+    --shadow:0 8px 32px rgba(5,13,29,.18);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
   button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
   button{font-family:inherit;cursor:pointer}
   img,svg{display:block;max-width:100%}
   a{color:inherit}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
   .mono{font-family:"IBM Plex Mono",monospace}
   .serif{font-family:"Source Serif 4",serif}
   [hidden]{display:none!important}
-  .sitehead{position:sticky;top:0;z-index:40;background:var(--navy);color:#F3EFE3;border-bottom:1px solid rgba(212,175,55,.35)}
-  .sitehead .wrap{display:flex;align-items:center;gap:18px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
-  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:none}
-  .brand .name{font-weight:900;font-size:17.5px;letter-spacing:-.01em;line-height:1.05}
-  .brand .name small{display:block;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:9.5px;letter-spacing:.22em;color:rgba(243,239,227,.55);margin-top:3px}
-  .mainnav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
-  .mainnav a{font-size:13.5px;font-weight:600;color:rgba(243,239,227,.78);text-decoration:none;padding:9px 11px;border-radius:8px;min-height:38px;display:inline-flex;align-items:center}
-  .mainnav a:hover{color:var(--gold-light);background:rgba(255,255,255,.05)}
+  h1,h2,h3{font-family:"Archivo","Inter",sans-serif}
+  /* ============ Header — sticky 64px ============ */
+  .sitehead{position:sticky;top:0;z-index:50;background:rgba(10,25,49,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#E8ECF3;border-bottom:1px solid rgba(212,175,55,.30)}
+  .sitehead .headbar{display:flex;align-items:center;gap:16px;height:64px;min-height:64px;max-height:64px;padding-top:0;padding-bottom:0;flex-wrap:nowrap;overflow:visible}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:none;min-width:0}
+  .brand svg{flex:none}
+  .brand .name{font-family:"Archivo",sans-serif;font-weight:800;font-size:16.5px;letter-spacing:-.01em;line-height:1.05;color:#F3EFE3;white-space:nowrap}
+  .brand .name small{display:block;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:9px;letter-spacing:.22em;color:rgba(243,239,227,.55);margin-top:3px;white-space:nowrap}
+  .mainnav{display:flex;gap:2px;flex-wrap:nowrap;margin-left:auto}
+  .mainnav a{font-size:13.5px;font-weight:600;color:rgba(243,239,227,.78);text-decoration:none;padding:8px 10px;border-radius:8px;min-height:38px;display:inline-flex;align-items:center;white-space:nowrap;flex:none}
+  .mainnav a:hover{color:var(--gold-soft);background:rgba(255,255,255,.05)}
   .mainnav a[aria-current="page"]{color:var(--gold);background:rgba(212,175,55,.12)}
-  .btn{border-radius:10px;border:1px solid transparent;padding:11px 18px;font-weight:700;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;min-height:44px}
-  .btn-gold{background:var(--gold);color:#0A1931}
-  .btn-gold:hover{background:var(--gold-light)}
+  .headtools{display:flex;align-items:center;gap:8px;flex:none;margin-left:0}
+  .headsearch{position:relative}
+  .headsearch input{width:190px;padding:8px 12px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(255,255,255,.06);color:#F3EFE3;font-size:13.5px;font-family:inherit;min-height:38px}
+  .headsearch input::placeholder{color:rgba(243,239,227,.45)}
+  .headsearch .searchres{top:calc(100% + 8px);min-width:280px}
+  .themebtn{width:38px;height:38px;min-height:38px;flex:none;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:transparent;color:var(--gold-soft);font-size:16px;display:inline-flex;align-items:center;justify-content:center}
+  .themebtn:hover{border-color:var(--gold)}
+  .headcta{flex:none}
+  .menubtn{display:none;width:40px;height:40px;min-height:40px;flex:none;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#F3EFE3;align-items:center;justify-content:center;padding:0}
+  .menubtn:hover{border-color:var(--gold);color:var(--gold-soft)}
+  .menubtn .mb-icon{display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center}
+  .menubtn .mb-icon i{display:block;width:18px;height:2px;background:currentColor;border-radius:1px;transition:transform .18s ease,opacity .18s ease}
+  .menubtn[aria-expanded="true"] .mb-icon i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menubtn[aria-expanded="true"] .mb-icon i:nth-child(2){opacity:0}
+  .menubtn[aria-expanded="true"] .mb-icon i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobilemenu{display:none}
+  .mobilemenu-inner{display:block;height:auto;max-height:none}
+  .mobilesearch{position:relative}
+  .mobilesearch input{width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,.22);border-radius:8px;background:rgba(255,255,255,.06);color:#F3EFE3;font-size:14.5px;font-family:inherit;min-height:44px}
+  .mobilesearch input::placeholder{color:rgba(243,239,227,.45)}
+  .mobilesearch .searchres{top:calc(100% + 6px);min-width:0}
+  .mobilenav{display:flex;flex-direction:column;gap:2px}
+  .mobilenav a{font-size:15px;font-weight:600;color:rgba(243,239,227,.88);text-decoration:none;padding:11px 12px;border-radius:8px;min-height:44px;display:flex;align-items:center;white-space:nowrap}
+  .mobilenav a:hover{color:var(--gold-soft);background:rgba(255,255,255,.05)}
+  .mobilenav a[aria-current="page"]{color:var(--gold);background:rgba(212,175,55,.12)}
+  .mobilecta{width:100%;justify-content:center;margin-top:12px}
+  /* ============ Buttons ============ */
+  .btn{border-radius:8px;white-space:nowrap;border:1px solid transparent;padding:11px 18px;font-weight:700;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;min-height:44px;font-family:"Inter",sans-serif}
+  .btn-gold{background:var(--gold);color:var(--gold-ink)}
+  .btn-gold:hover{background:var(--gold-soft)}
   .btn-ghost{background:transparent;color:#F3EFE3;border-color:rgba(255,255,255,.35)}
-  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-light)}
-  .btn-navy{background:var(--navy);color:#F3EFE3;border:1px solid var(--navy)}
-  .btn-navy:hover{background:var(--navy-2)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-soft)}
+  .btn-navy{background:var(--navy-900);color:#F3EFE3;border:1px solid var(--navy-600)}
+  .btn-navy:hover{background:var(--navy-700)}
+  html[data-theme="light"] .btn-navy{background:var(--navy-900);color:#F3EFE3}
   .btn-line{background:transparent;color:var(--text);border:1px solid var(--line)}
-  .btn-line:hover{border-color:var(--gold-dark)}
+  .btn-line:hover{border-color:var(--gold)}
   .btn-sm{padding:8px 13px;min-height:38px;font-size:13.5px}
-  .hero{background:var(--navy);color:#F3EFE3;position:relative;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 340px at 85% -60px, rgba(212,175,55,.20), transparent 60%),repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 72px);}
-  .hero-inner{position:relative;padding:48px 0 40px}
-  .hero-grid{display:grid;grid-template-columns:210px 1fr;gap:40px;align-items:center}
-  .hero-mark{background:linear-gradient(160deg,#12294F,#08142A);border:1px solid rgba(212,175,55,.35);border-radius:22px;padding:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 24px 60px rgba(0,0,0,.35)}
-  .hero h1{font-size:clamp(36px,5.6vw,58px);line-height:1.0;letter-spacing:-.02em;margin:0 0 14px;font-weight:900}
+  .textlink{font-weight:600;font-size:14.5px;color:var(--gold-soft);text-decoration:none}
+  html[data-theme="light"] .textlink{color:var(--gold-deep)}
+  .textlink:hover{text-decoration:underline}
+  /* ============ Hero ============ */
+  .hero{background:var(--navy-900);color:#E8ECF3;border-bottom:1px solid rgba(212,175,55,.25)}
+  .hero-inner{padding:48px 0 40px}
+  .hero-grid{display:grid;grid-template-columns:180px 1fr;gap:40px;align-items:center}
+  .hero-mark{background:var(--navy-800);border:1px solid rgba(212,175,55,.35);border-radius:10px;padding:24px;display:flex;align-items:center;justify-content:center}
+  .hero .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;color:var(--gold-soft);margin:0 0 14px}
+  .hero h1{font-size:clamp(30px,4.6vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 14px;font-weight:800}
   .hero h1 .gold{color:var(--gold)}
-  .hero .lead{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.3vw,22px);line-height:1.45;color:rgba(243,239,227,.88);max-width:620px;margin:0 0 20px}
-  .hero-meta{display:flex;gap:10px;flex-wrap:wrap}
-  .chip{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:9px 13px;font-size:13.5px;min-height:40px}
-  .sw{width:16px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,.35);flex:none}
-  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-  section.blk{padding:52px 0 4px}
+  .hero .lead{font-size:clamp(16px,2vw,18px);line-height:1.55;color:rgba(232,236,243,.85);max-width:640px;margin:0 0 20px}
+  .trustrow{display:flex;gap:8px 18px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:rgba(232,236,243,.72);border-top:1px solid rgba(255,255,255,.12);padding-top:16px;margin-top:24px}
+  .trustrow b{color:var(--gold-soft);font-weight:600}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:4px}
+  .chip{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:9px 13px;font-size:13.5px;min-height:40px}
+  /* ============ Sections ============ */
+  section.blk{padding:56px 0 8px}
   .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap}
-  .sec-no{font-family:"IBM Plex Mono",monospace;color:var(--gold-dark);font-size:13px;font-weight:600}
-  @media (prefers-color-scheme: dark){.sec-no{color:var(--gold)}}
-  h2{font-size:clamp(25px,3.8vw,34px);letter-spacing:-.015em;margin:0;font-weight:800}
-  .sec-sub{color:var(--muted);font-size:15.5px;line-height:1.55;max-width:720px;margin:6px 0 24px}
-  .rule{height:2px;background:linear-gradient(90deg,var(--gold) 120px,var(--line) 120px);margin:14px 0 24px}
+  .sec-no{font-family:"IBM Plex Mono",monospace;color:var(--gold);font-size:12px;font-weight:600;letter-spacing:.12em}
+  html[data-theme="light"] .sec-no{color:var(--gold-deep)}
+  h2{font-size:clamp(24px,3.4vw,32px);letter-spacing:-.015em;margin:0;font-weight:800;line-height:1.15}
+  .sec-sub{color:var(--muted);font-size:15.5px;line-height:1.6;max-width:760px;margin:6px 0 24px}
+  .rule{height:1px;background:var(--line);margin:14px 0 24px;position:relative}
+  .rule::before{content:"";position:absolute;left:0;top:0;height:2px;width:120px;background:var(--gold)}
   .lbl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
-  .card h3{margin:0 0 6px;font-size:17px;font-weight:800}
-  .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
-  .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
-  .post{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:border-color .2s}
-  .post:hover{border-color:var(--gold-dark)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:24px}
+  .card h3{margin:0 0 6px;font-size:17px;font-weight:700}
+  .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
+  .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+  .post{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:border-color .2s}
+  .post:hover{border-color:var(--gold)}
   .post .kicker{display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .tagcat{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);border:1px solid rgba(212,175,55,.55);padding:5px 9px;border-radius:999px}
-  @media (prefers-color-scheme: dark){.tagcat{color:var(--gold-light)}}
+  .tagcat{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-soft);border:1px solid rgba(212,175,55,.55);padding:5px 9px;border-radius:999px}
+  html[data-theme="light"] .tagcat{color:var(--gold-deep)}
   .post .path{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
-  .post h3{font-size:20px;font-weight:800;letter-spacing:-.01em;line-height:1.2;margin:0}
-  .post p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55;flex:1}
-  .post .go{font-weight:700;font-size:14px;color:var(--gold-dark)}
-  @media (prefers-color-scheme: dark){.post .go{color:var(--gold-light)}}
-  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
-  table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px}
-  th,td{padding:12px 16px;text-align:left;border-top:1px solid var(--line);vertical-align:top;line-height:1.45}
-  thead th{border-top:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--paper-2)}
-  td.num,th.num{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:13.5px;white-space:nowrap}
-  .pending{color:var(--gold-dark);font-weight:600}
-  @media (prefers-color-scheme: dark){.pending{color:var(--gold-light)}}
-  .note{font-size:13.5px;color:var(--muted);line-height:1.55;margin:12px 2px 0}
+  .post h3{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.25;margin:0}
+  .post p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6;flex:1}
+  .post .go{font-weight:700;font-size:14px;color:var(--gold-soft)}
+  html[data-theme="light"] .post .go{color:var(--gold-deep)}
+  /* ============ Tables ============ */
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-table);background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+  th,td{padding:12px 16px;text-align:left;border-top:1px solid var(--line-soft);vertical-align:top;line-height:1.5}
+  thead th{border-top:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--sunken);font-weight:600}
+  html[data-theme="light"] thead th{background:var(--navy-900);color:rgba(232,236,243,.75)}
+  tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
+  html[data-theme="light"] tbody tr:nth-child(even){background:rgba(10,25,49,.025)}
+  tbody tr:hover{background:rgba(255,255,255,.04)}
+  html[data-theme="light"] tbody tr:hover{background:rgba(10,25,49,.045)}
+  td.num,th.num{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:13px;white-space:nowrap}
+  td .fname{font-weight:700}
+  .pending{color:var(--amber);font-weight:600}
+  html[data-theme="light"] .pending{color:#9A7414}
+  .note{font-size:13.5px;color:var(--muted);line-height:1.6;margin:12px 2px 0}
   .srcnote{font-size:13px;color:var(--muted);line-height:1.6;margin:10px 2px 0;border-top:1px dashed var(--line);padding-top:10px}
-  .srcnote a{color:var(--gold-dark);font-weight:600}
-  @media (prefers-color-scheme: dark){.srcnote a{color:var(--gold-light)}}
+  .srcnote a{color:var(--gold-soft);font-weight:600}
+  html[data-theme="light"] .srcnote a{color:var(--gold-deep)}
+  /* optional columns (column chooser) */
+  .optcol{display:none}
+  .tblwrap.show-opt .optcol{display:table-cell}
+  .colchooser{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13.5px}
+  .colchooser .cc-label{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .colchooser label{display:inline-flex;gap:7px;align-items:center;cursor:pointer;min-height:32px}
+  .colchooser input{width:17px;height:17px;accent-color:var(--gold)}
+  /* compare pick */
+  .cmp-pick{display:inline-flex;align-items:flex-start;gap:9px;cursor:pointer}
+  .cmp-pick input{width:18px;height:18px;margin-top:2px;accent-color:var(--gold);flex:none;cursor:pointer}
+  /* ============ Score badge + evidence chips ============ */
+  .score-wrap{display:flex;gap:14px;align-items:flex-start}
+  .score-badge{flex:none;width:64px;background:var(--navy-900);border:1px solid rgba(212,175,55,.5);border-radius:10px;padding:8px 4px 7px;text-align:center}
+  .score-badge .sb-num{display:block;font-family:"IBM Plex Mono",monospace;font-size:27px;font-weight:600;line-height:1;color:var(--gold)}
+  .score-badge .sb-den{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:rgba(232,236,243,.6);margin-top:3px}
+  .score-mini{display:inline-flex;align-items:baseline;gap:5px;background:var(--navy-900);border:1px solid rgba(212,175,55,.5);border-radius:8px;padding:3px 9px}
+  .score-mini .sb-num{font-family:"IBM Plex Mono",monospace;font-size:16px;font-weight:600;color:var(--gold);line-height:1.2}
+  .score-mini .sb-den{font-family:"IBM Plex Mono",monospace;font-size:10px;color:rgba(232,236,243,.6)}
+  .sb-basis{font-size:12.5px;color:var(--muted);line-height:1.45;display:block;margin-top:5px}
+  .evrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .evchip{display:inline-flex;align-items:center;gap:5px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500;letter-spacing:.02em;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+  .evchip.ev-src{border-color:rgba(78,125,217,.5);color:#9DB9EC;background:var(--blue-bg)}
+  html[data-theme="light"] .evchip.ev-src{color:#2F5AAC}
+  .evchip.ev-pend{border-color:rgba(217,164,65,.55);color:var(--amber);background:var(--amber-bg)}
+  html[data-theme="light"] .evchip.ev-pend{color:#8A6410}
+  .evchip.ev-ok{border-color:rgba(47,163,107,.5);color:#6FCB9C;background:var(--green-bg)}
+  html[data-theme="light"] .evchip.ev-ok{color:#1E7047}
+  /* ============ Status pills ============ */
+  .statuschip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+  .st-pending{color:var(--amber);border-color:rgba(217,164,65,.55);background:var(--amber-bg)}
+  html[data-theme="light"] .st-pending{color:#8A6410}
+  .st-no{color:#F0938F;border-color:rgba(214,69,65,.55);background:var(--red-bg)}
+  html[data-theme="light"] .st-no{color:#B0332E}
+  .st-ok{color:#6FCB9C;border-color:rgba(47,163,107,.5);background:var(--green-bg)}
+  html[data-theme="light"] .st-ok{color:#1E7047}
+  /* ============ Articles / reviews ============ */
   .crumbs{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .crumbs a{text-decoration:none;color:var(--gold-dark);font-weight:600}
-  @media (prefers-color-scheme: dark){.crumbs a{color:var(--gold-light)}}
+  .crumbs a{text-decoration:none;color:var(--gold-soft);font-weight:600}
+  html[data-theme="light"] .crumbs a{color:var(--gold-deep)}
   .article-head{padding:40px 0 6px}
-  .article-head h1{font-size:clamp(30px,5vw,46px);line-height:1.05;letter-spacing:-.02em;margin:14px 0 12px;font-weight:900;max-width:840px}
-  .article-head .standfirst{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.2vw,21px);line-height:1.5;color:var(--muted);max-width:740px;margin:0 0 16px}
-  .byline{display:flex;gap:14px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0}
+  .article-head h1{font-size:clamp(28px,4.6vw,40px);line-height:1.1;letter-spacing:-.02em;margin:14px 0 12px;font-weight:800;max-width:840px}
+  .article-head .standfirst{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.2vw,20px);line-height:1.55;color:var(--muted);max-width:740px;margin:0 0 16px}
+  .byline{display:flex;gap:8px 16px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0}
   .article-body{max-width:780px;padding-bottom:8px}
-  .article-body h2{font-size:clamp(22px,3.4vw,28px);margin:36px 0 10px}
+  .article-body h2{font-size:clamp(22px,3.2vw,27px);margin:36px 0 10px}
   .article-body h3{font-size:18px;margin:24px 0 8px}
-  .article-body p{font-size:16.5px;line-height:1.65;margin:0 0 14px}
+  .article-body p{font-family:"Source Serif 4",serif;font-size:17px;line-height:1.7;margin:0 0 14px}
+  .article-body li{font-family:"Source Serif 4",serif;font-size:16.5px;line-height:1.65;margin-bottom:7px}
   .article-body ul{margin:0 0 14px;padding-left:22px}
-  .article-body li{font-size:16px;line-height:1.6;margin-bottom:7px}
   .article-body .tblwrap{margin:18px 0 6px}
-  .callout{background:var(--navy);color:#F3EFE3;border-radius:var(--radius);padding:22px;margin:26px 0}
-  .callout h3{margin:0 0 6px;font-size:17px;color:var(--gold-light)}
-  .callout p{margin:0 0 14px;color:rgba(243,239,227,.82);font-size:14.5px;line-height:1.55}
+  .article-body .tblwrap p,.article-body .card p,.article-body .verdictbox p,.article-body .callout p,.article-body .affcta p,.article-body .vnbox li,.article-body .pc-list li,.article-body .checklist li{font-family:"Inter",sans-serif}
+  .callout{background:var(--navy-900);color:#E8ECF3;border-radius:var(--r-card);padding:24px;margin:26px 0;border:1px solid rgba(212,175,55,.3)}
+  .callout h3{margin:0 0 6px;font-size:17px;color:var(--gold-soft)}
+  .callout p{margin:0 0 14px;color:rgba(232,236,243,.82);font-size:14.5px;line-height:1.6}
   .related{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:6px}
-  .related a{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-decoration:none;display:block}
-  .related a:hover{border-color:var(--gold-dark)}
-  .related b{display:block;font-size:15px;margin-bottom:4px}
-  .related span{font-size:13px;color:var(--muted);line-height:1.45;display:block}
+  .related a{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:16px;text-decoration:none;display:block}
+  .related a:hover{border-color:var(--gold)}
+  .related b{display:block;font-size:15px;margin-bottom:4px;font-family:"Archivo",sans-serif}
+  .related span{font-size:13px;color:var(--muted);line-height:1.5;display:block}
   .topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-  .topic{background:var(--navy);color:#F3EFE3;border-radius:var(--radius);padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(212,175,55,.3)}
+  .topic{background:var(--navy-900);color:#E8ECF3;border-radius:var(--r-card);padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(212,175,55,.3)}
   .topic:hover{border-color:var(--gold)}
-  .topic .no{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--gold-light);letter-spacing:.1em}
-  .topic b{font-size:16.5px}
-  .topic span{font-size:13.5px;color:rgba(243,239,227,.72);line-height:1.5;flex:1}
+  .topic .no{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--gold-soft);letter-spacing:.1em}
+  .topic b{font-size:16.5px;font-family:"Archivo",sans-serif}
+  .topic span{font-size:13.5px;color:rgba(232,236,243,.72);line-height:1.55;flex:1}
   .topic .join{font-weight:700;font-size:13.5px;color:var(--gold)}
-  pre.code{background:var(--navy-deep);color:#D9E2F2;border-radius:12px;padding:18px;font-family:"IBM Plex Mono",monospace;font-size:12.6px;line-height:1.65;overflow-x:auto;margin:0;border:1px solid rgba(212,175,55,.25);white-space:pre}
+  pre.code{background:var(--navy-950);color:#D9E2F2;border-radius:var(--r-card);padding:18px;font-family:"IBM Plex Mono",monospace;font-size:12.6px;line-height:1.65;overflow-x:auto;margin:0;border:1px solid rgba(212,175,55,.25);white-space:pre}
   .filetabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-  .filetabs button{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:9px 15px;border-radius:8px;font-weight:700;font-size:13.5px;min-height:38px}
-  .filetabs button[aria-pressed="true"]{background:var(--navy);color:var(--gold-light);border-color:var(--navy)}
-  @media (prefers-color-scheme: dark){.filetabs button[aria-pressed="true"]{background:var(--gold);color:#0A1931;border-color:var(--gold)}}
-  .dl-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .filetabs button{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 15px;border-radius:8px;font-weight:700;font-size:13.5px;min-height:38px}
+  .filetabs button[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+  .dl-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
   .checklist{list-style:none;margin:0;padding:0;display:grid;gap:11px}
-  .checklist li{display:flex;gap:11px;font-size:14.8px;line-height:1.5;align-items:flex-start}
-  .mark{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;margin-top:1px;background:rgba(212,175,55,.18);color:var(--gold-dark);border:1px solid var(--gold)}
-  @media (prefers-color-scheme: dark){.mark{color:var(--gold-light)}}
-  .verdictbox{border:1px solid var(--gold);border-radius:var(--radius);background:var(--card);padding:20px 22px;margin:22px 0 4px}
-  .verdictbox .vlabel{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:6px}
-  @media (prefers-color-scheme: dark){.verdictbox .vlabel{color:var(--gold-light)}}
-  .verdictbox p{margin:0;font-size:15.5px;line-height:1.6}
-  .verdictbox .vscore{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);margin-top:8px}
-  .statuschip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
-  .st-pending{color:var(--gold-dark);border-color:rgba(212,175,55,.6)}
-  @media (prefers-color-scheme: dark){.st-pending{color:var(--gold-light)}}
-  .st-no{color:#A63A2B;border-color:rgba(166,58,43,.55)}
-  @media (prefers-color-scheme: dark){.st-no{color:#E08A7B}}
-  .st-ok{color:#2E6B34;border-color:rgba(46,107,52,.5)}
-  @media (prefers-color-scheme: dark){.st-ok{color:#8FCB96}}
-  .proscons{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0 6px}
+  .checklist li{display:flex;gap:11px;font-size:14.8px;line-height:1.55;align-items:flex-start}
+  .mark{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;margin-top:1px;background:rgba(212,175,55,.16);color:var(--gold-soft);border:1px solid var(--gold)}
+  html[data-theme="light"] .mark{color:var(--gold-deep)}
+  /* verdict — navy panel, gold rule, score badge first */
+  .verdictbox{border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:var(--r-card);background:var(--navy-900);color:#E8ECF3;padding:24px;margin:22px 0 4px}
+  .verdictbox .vlabel{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:10px}
+  .verdictbox p{margin:0;font-size:15.5px;line-height:1.65;font-family:"Inter",sans-serif}
+  .verdictbox .vscore{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:rgba(232,236,243,.65);margin-top:10px}
+  .verdictbox .vscore a{color:var(--gold-soft)}
+  .verdictbox .sb-basis{color:rgba(232,236,243,.65)}
+  .verdictbox .score-badge{background:var(--navy-950)}
+  .proscons{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0 6px}
   .pc-list{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:9px}
-  .pc-list li{display:flex;gap:10px;font-size:14.8px;line-height:1.55;align-items:flex-start}
-  .pc-mark{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-top:1px;border:1px solid var(--gold);background:rgba(212,175,55,.16);color:var(--gold-dark)}
-  @media (prefers-color-scheme: dark){.pc-mark{color:var(--gold-light)}}
-  .pc-mark.minus{border-color:rgba(166,58,43,.55);background:rgba(166,58,43,.1);color:#A63A2B}
-  @media (prefers-color-scheme: dark){.pc-mark.minus{color:#E08A7B}}
+  .pc-list li{display:flex;gap:10px;font-size:14.8px;line-height:1.6;align-items:flex-start}
+  .pc-mark{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-top:1px;border:1px solid rgba(47,163,107,.6);background:var(--green-bg);color:#6FCB9C}
+  html[data-theme="light"] .pc-mark{color:#1E7047}
+  .pc-mark.minus{border-color:rgba(214,69,65,.55);background:var(--red-bg);color:#F0938F}
+  html[data-theme="light"] .pc-mark.minus{color:#B0332E}
+  /* ============ Match / forms ============ */
   .q-block{padding:16px 0;border-top:1px solid var(--line)}
   .q-block:first-child{border-top:0;padding-top:2px}
   .opts{display:flex;gap:8px;flex-wrap:wrap}
-  .opts button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;min-height:42px}
-  .opts button:hover{border-color:var(--gold-dark)}
-  .opts button[aria-pressed="true"]{background:var(--navy);color:var(--gold-light);border-color:var(--navy)}
-  @media (prefers-color-scheme: dark){.opts button[aria-pressed="true"]{background:var(--gold);color:#0A1931;border-color:var(--gold)}}
-  .match-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px}
-  .match-card.excluded{opacity:.62}
+  .opts button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;min-height:42px}
+  .opts button:hover{border-color:var(--gold)}
+  .opts button[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+  .match-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:20px 22px;margin-bottom:14px}
+  .match-card.excluded{opacity:.6}
   .match-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
-  .match-head b{font-size:18px}
+  .match-head b{font-size:18px;font-family:"Archivo",sans-serif}
   .match-score{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted)}
-  .crit{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+  .crit{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid var(--line-soft);font-size:14px;align-items:center}
   .verify-list{margin:10px 0 0;padding-left:20px}
-  .verify-list li{font-size:14px;line-height:1.55;margin-bottom:5px;color:var(--muted)}
-  /* directory + filters */
+  .verify-list li{font-size:14px;line-height:1.6;margin-bottom:5px;color:var(--muted);font-family:"Inter",sans-serif}
   .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
   .filters label{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-  .filters select,.filters input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--text);font-size:14.5px;font-family:inherit;min-height:44px}
+  .filters select,.filters input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font-size:14.5px;font-family:inherit;min-height:44px}
+  .filters.sticky{position:sticky;top:76px;background:var(--bg);z-index:6;padding:10px 0 4px}
   .dir-count{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);margin:4px 2px 14px}
-  table.dir{min-width:1080px}
-  table.dir td .fname{font-weight:800;font-size:15px}
-  /* community reviews */
-  .stars{color:var(--gold-dark);letter-spacing:2px;font-size:15px;white-space:nowrap}
-  @media (prefers-color-scheme: dark){.stars{color:var(--gold)}}
-  .revcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px}
-  .revcard.sample{border-style:dashed;border-color:var(--gold-dark)}
+  table.dir{min-width:1020px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+  .tabs button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;min-height:42px}
+  .tabs button[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+  /* ============ Community reviews ============ */
+  .stars{color:var(--gold);letter-spacing:2px;font-size:15px;white-space:nowrap;font-family:"IBM Plex Mono",monospace}
+  .revcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:20px 22px;margin-bottom:14px}
+  .revcard.sample{border-style:dashed;border-color:var(--gold-deep)}
   .rev-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin-bottom:6px}
-  .rev-head b{font-size:16.5px}
+  .rev-head b{font-size:16.5px;font-family:"Archivo",sans-serif}
   .rev-meta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
   .rev-scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:12px 0}
-  .rev-scores div{background:var(--paper-2);border-radius:9px;padding:9px 12px;font-size:13px}
+  .rev-scores div{background:var(--surface-2);border-radius:8px;padding:9px 12px;font-size:13px}
   .rev-scores div b{display:block;font-size:12px;font-family:"IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:3px;font-weight:600}
-  .emptybox{border:1.5px dashed var(--gold-dark);border-radius:var(--radius);padding:26px;text-align:left;background:var(--card)}
+  .emptybox{border:1.5px dashed var(--gold-deep);border-radius:var(--r-card);padding:26px;text-align:left;background:var(--surface)}
   .emptybox h3{margin:0 0 6px;font-size:18px}
-  .emptybox p{margin:0 0 14px;color:var(--muted);font-size:14.5px;line-height:1.55}
+  .emptybox p{margin:0 0 14px;color:var(--muted);font-size:14.5px;line-height:1.6}
   form.revform{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   form.revform label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px}
-  form.revform input,form.revform select,form.revform textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--text);font-size:14.5px;font-family:inherit;min-height:44px}
+  form.revform input,form.revform select,form.revform textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font-size:14.5px;font-family:inherit;min-height:44px}
   form.revform textarea{min-height:110px;resize:vertical}
   form.revform .full{grid-column:1/-1}
+  /* ============ Misc components ============ */
   .err404{padding:70px 0 30px;text-align:left}
-  .err404 .big{font-size:clamp(60px,12vw,120px);font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--gold-dark);margin:0}
-  @media (prefers-color-scheme: dark){.err404 .big{color:var(--gold)}}
-  footer{margin-top:64px;background:var(--navy-deep);color:rgba(243,239,227,.7)}
-  footer .wrap{padding-top:30px;padding-bottom:34px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-start}
+  .err404 .big{font-size:clamp(56px,11vw,110px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--gold);margin:0;font-family:"Archivo",sans-serif}
+  #readProgress{position:fixed;top:0;left:0;height:2px;background:var(--gold);width:0;z-index:80}
+  .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:16px 20px;margin:18px 0 4px;max-width:780px}
+  .toc .lbl{margin-bottom:8px}
+  .toc a{display:inline-block;margin:3px 10px 3px 0;font-size:14px;font-weight:600;text-decoration:none;color:var(--gold-soft)}
+  html[data-theme="light"] .toc a{color:var(--gold-deep)}
+  .backbtn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:7px 12px;margin-bottom:12px;background:var(--surface)}
+  .chg{display:grid;gap:10px}
+  .chg-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:14px 18px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline}
+  .chg-item .d{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);white-space:nowrap}
+  .chg-item .f{font-weight:700;font-family:"Archivo",sans-serif}
+  .chg-item .t{flex:1;min-width:220px;font-size:14.5px;line-height:1.55}
+  .chg-item a{font-size:13px;font-weight:700;color:var(--gold-soft);white-space:nowrap}
+  html[data-theme="light"] .chg-item a{color:var(--gold-deep)}
+  .vnbox{border:1px solid rgba(212,175,55,.5);border-radius:var(--r-card);background:var(--surface);padding:20px 22px;margin:22px 0}
+  .vnbox h3{margin:0 0 8px;font-size:17px}
+  .vnbox ul{margin:0;padding-left:20px}
+  .vnbox li{font-size:15px;line-height:1.6;margin-bottom:5px;font-family:"Inter",sans-serif}
+  details.faq{border-top:1px solid var(--line);padding:12px 0}
+  details.faq summary{font-weight:700;font-size:15.5px;cursor:pointer;min-height:2.25rem;font-family:"Archivo",sans-serif}
+  details.faq p{font-size:15px;line-height:1.6;color:var(--muted);margin:8px 0 2px}
+  .steps{counter-reset:st;display:grid;gap:10px;margin:10px 0 4px}
+  .steps div{background:var(--surface-2);border-radius:8px;padding:12px 16px;font-size:15px;line-height:1.6}
+  .steps b{color:var(--gold-soft)}
+  html[data-theme="light"] .steps b{color:var(--gold-deep)}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:8px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:18px}
+  .stat .k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .stat .v{font-size:17px;font-weight:700;font-family:"IBM Plex Mono",monospace;line-height:1.4}
+  .searchbox{position:relative;max-width:560px;margin-bottom:18px}
+  .searchbox input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font-size:15px;min-height:48px;font-family:inherit}
+  .searchres{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--shadow);z-index:30;overflow:hidden}
+  .searchres a{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;text-decoration:none;font-size:14.5px;border-top:1px solid var(--line-soft);color:var(--text)}
+  .searchres a:first-child{border-top:0}
+  .searchres a:hover{background:var(--surface-2)}
+  th.sortable{cursor:pointer}
+  .cmp-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .cmp-controls button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:8px 13px;border-radius:999px;font-weight:700;font-size:13px;min-height:38px}
+  .cmp-controls button[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+  .affbtn{margin-top:6px;border:1px solid rgba(212,175,55,.6);background:transparent;color:var(--gold-soft);padding:6px 12px;border-radius:8px;font-weight:700;font-size:12.5px;min-height:34px;cursor:pointer;font-family:"Inter",sans-serif}
+  html[data-theme="light"] .affbtn{color:var(--gold-deep)}
+  .affcta{background:var(--navy-900);color:#E8ECF3;border-radius:var(--r-card);padding:24px;margin:24px 0;max-width:780px;border:1px solid rgba(212,175,55,.3)}
+  .affcta h3{color:#fff;margin:0 0 6px;font-size:18px}
+  .affcta p{font-size:14.5px;line-height:1.6;margin:0 0 14px;color:#C7D0DE;font-family:"Inter",sans-serif}
+  .affcta a{color:var(--gold-soft)}
+  /* ============ Compare tray + panel ============ */
+  #compareTray{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:70;background:var(--navy-900);color:#E8ECF3;border:1px solid rgba(212,175,55,.55);border-radius:10px;box-shadow:var(--shadow);padding:10px 12px 10px 18px;display:flex;align-items:center;gap:14px;max-width:min(94vw,640px)}
+  #compareTray .tray-names{font-family:"IBM Plex Mono",monospace;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #compareTray .tray-clear{background:transparent;border:0;color:rgba(232,236,243,.65);font-size:13px;font-weight:600;min-height:38px}
+  #comparePanel{position:fixed;inset:0;z-index:90;background:rgba(3,7,15,.72);display:flex;align-items:flex-end;justify-content:center;padding:0}
+  .cmp-sheet{background:var(--bg);color:var(--text);width:100%;max-width:1060px;max-height:92vh;overflow:auto;border-radius:12px 12px 0 0;border:1px solid var(--line);padding:24px}
+  .cmp-sheet-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:6px}
+  .cmp-sheet-head h2{font-size:24px}
+  .cmp-close{width:40px;height:40px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:17px;flex:none}
+  #cmpTable td.diff,#cmpTable th.diff{background:rgba(212,175,55,.10);box-shadow:inset 3px 0 0 var(--gold)}
+  #cmpTable td{font-size:13.5px}
+  #cmpTable td .mono{font-size:13px}
+  /* ============ Footer ============ */
+  footer{margin-top:64px;background:var(--navy-950);color:rgba(232,236,243,.7);border-top:1px solid rgba(212,175,55,.25)}
+  footer .wrap{padding-top:32px;padding-bottom:16px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-start}
   .lockup{display:flex;align-items:center;gap:14px}
-  .lockup .name{font-weight:900;font-size:19px;letter-spacing:-.01em;line-height:1.05}
+  .lockup .name{font-family:"Archivo",sans-serif;font-weight:800;font-size:19px;letter-spacing:-.01em;line-height:1.05;color:#F3EFE3}
   .lockup .name small{display:block;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10px;letter-spacing:.22em;margin-top:4px;color:rgba(243,239,227,.55)}
   .footcols{display:flex;gap:34px;flex-wrap:wrap}
   .footcols h4{margin:0 0 9px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
-  .footcols a{display:block;color:rgba(243,239,227,.75);text-decoration:none;font-size:13.5px;padding:3px 0}
-  .footcols a:hover{color:var(--gold-light)}
-  #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,80px);background:var(--navy);color:#F3EFE3;border:1px solid var(--gold);padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:60;pointer-events:none;max-width:90vw;text-align:center}
+  .footcols a{display:block;color:rgba(232,236,243,.75);text-decoration:none;font-size:13.5px;padding:3px 0}
+  .footcols a:hover{color:var(--gold-soft)}
+  .footline{border-top:1px solid rgba(255,255,255,.09);padding-top:14px!important;padding-bottom:26px!important;font-family:"IBM Plex Mono",monospace;font-size:12px;color:rgba(232,236,243,.55);display:block!important}
+  .footline b{color:var(--gold-soft);font-weight:600}
+  #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,80px);background:var(--navy-900);color:#F3EFE3;border:1px solid var(--gold);padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:120;pointer-events:none;max-width:90vw;text-align:center}
   #toast.show{transform:translate(-50%,0);opacity:1}
-  @media (max-width:760px){
+  body.has-tray #toast{bottom:84px}
+  /* ============ Mobile — tables become cards, thumb-zone CTA ============ */
+  @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;gap:24px}
-    .hero-mark{max-width:210px}
-    .grid2,.grid3,.proscons,form.revform{grid-template-columns:1fr}
-    section.blk{padding-top:42px}
-    .mainnav{margin-left:0}
-    table{min-width:520px}
+    .hero-mark{max-width:180px}
+    .headsearch input{width:150px}
   }
-
-  /* --- updates: progress, TOC, comparer, tracker, changelog --- */
-  #readProgress{position:fixed;top:0;left:0;height:3px;background:var(--gold);width:0;z-index:80}
-  .toc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;margin:18px 0 4px;max-width:780px}
-  .toc .lbl{margin-bottom:8px}
-  .toc a{display:inline-block;margin:3px 10px 3px 0;font-size:14px;font-weight:600;text-decoration:none;color:var(--gold-dark)}
-  @media (prefers-color-scheme: dark){.toc a{color:var(--gold-light)}}
-  .backbtn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:7px 12px;margin-bottom:12px;background:var(--card)}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
-  .tabs button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:10px 18px;border-radius:999px;font-weight:800;font-size:14px;min-height:42px}
-  .tabs button[aria-pressed="true"]{background:var(--navy);color:var(--gold-light);border-color:var(--navy)}
-  @media (prefers-color-scheme: dark){.tabs button[aria-pressed="true"]{background:var(--gold);color:#0A1931;border-color:var(--gold)}}
-  .filters.sticky{position:sticky;top:64px;background:var(--bg);z-index:6;padding:10px 0 4px}
-  .chg{display:grid;gap:10px}
-  .chg-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline}
-  .chg-item .d{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);white-space:nowrap}
-  .chg-item .f{font-weight:800}
-  .chg-item .t{flex:1;min-width:220px;font-size:14.5px;line-height:1.5}
-  .chg-item a{font-size:13px;font-weight:700;color:var(--gold-dark);white-space:nowrap}
-  @media (prefers-color-scheme: dark){.chg-item a{color:var(--gold-light)}}
-  .vnbox{border:1px solid var(--gold);border-radius:var(--radius);background:var(--card);padding:20px 22px;margin:22px 0}
-  .vnbox h3{margin:0 0 8px;font-size:17px}
-  .vnbox ul{margin:0;padding-left:20px}
-  .vnbox li{font-size:15px;line-height:1.6;margin-bottom:5px}
-  details.faq{border-top:1px solid var(--line);padding:12px 0}
-  details.faq summary{font-weight:700;font-size:15.5px;cursor:pointer;min-height:2.25rem}
-  details.faq p{font-size:15px;line-height:1.6;color:var(--muted);margin:8px 0 2px}
-  .steps{counter-reset:st;display:grid;gap:10px;margin:10px 0 4px}
-  .steps div{background:var(--paper-2);border-radius:10px;padding:12px 16px;font-size:15px;line-height:1.55}
-  .steps b{color:var(--gold-dark)}
-  @media (prefers-color-scheme: dark){.steps b{color:var(--gold-light)}}
-  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:8px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
-  .stat .k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-  .stat .v{font-size:19px;font-weight:800}
-  .searchbox{position:relative;max-width:560px;margin-bottom:18px}
-  .searchbox input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font-size:15px;min-height:48px}
-  .searchres{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px rgba(5,13,29,.18);z-index:30;overflow:hidden}
-  .searchres a{display:flex;justify-content:space-between;gap:10px;padding:12px 16px;text-decoration:none;font-size:14.5px;border-top:1px solid var(--line)}
-  .searchres a:first-child{border-top:0}
-  .searchres a:hover{background:var(--paper-2)}
-  th.sortable{cursor:pointer}
-  .cmp-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .cmp-controls button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 13px;border-radius:999px;font-weight:700;font-size:13px;min-height:38px}
-  .affbtn{margin-top:6px;border:1px solid var(--gold);background:transparent;color:var(--gold-dark);padding:6px 12px;border-radius:8px;font-weight:800;font-size:12.5px;min-height:34px;cursor:pointer}
-  @media (prefers-color-scheme: dark){.affbtn{color:var(--gold-light)}}
-  .affcta{background:var(--navy);color:#E9EDF4;border-radius:var(--radius);padding:22px 24px;margin:24px 0;max-width:780px}
-  .affcta h3{color:#fff;margin:0 0 6px;font-size:18px}
-  .affcta p{font-size:14.5px;line-height:1.6;margin:0 0 14px;color:#C7D0DE}
-  .affcta a{color:var(--gold-light)}
-  .cmp-controls button[aria-pressed="true"]{background:var(--navy);color:var(--gold-light);border-color:var(--navy)}
-  @media (prefers-color-scheme: dark){.cmp-controls button[aria-pressed="true"]{background:var(--gold);color:#0A1931;border-color:var(--gold)}}
+  @media (max-width:760px){
+    .grid2,.grid3,.proscons,form.revform{grid-template-columns:1fr}
+    section.blk{padding-top:44px}
+    .hero-mark{max-width:118px;padding:14px}
+    table.decision,table.dir{min-width:0}
+    table.decision thead,table.dir thead{display:none}
+    table.decision tbody tr,table.dir tbody tr{display:block;border-top:1px solid var(--line);padding:10px 6px}
+    table.decision tbody tr:first-child,table.dir tbody tr:first-child{border-top:0}
+    table.decision td,table.dir td{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-top:0;padding:6px 10px;text-align:right}
+    table.decision td::before,table.dir td::before{content:attr(data-label);font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding-top:2px;flex:none}
+    table.decision td:first-child,table.dir td:first-child{justify-content:flex-start;text-align:left}
+    table.decision td:first-child::before,table.dir td:first-child::before{content:""}
+    table.decision td.num,table.dir td.num{text-align:right}
+    table.scoreboard{min-width:0}
+    table.scoreboard thead{display:none}
+    table.scoreboard tbody tr{display:block;border-top:1px solid var(--line);padding:10px 6px}
+    table.scoreboard td{display:block;border-top:0;padding:4px 10px;text-align:left}
+    table.scoreboard td.num{text-align:left}
+    .cmp-sheet{padding:18px 14px}
+    #compareTray{left:8px;right:8px;transform:none;bottom:10px;max-width:none}
+    .filters.sticky{top:0;position:static}
+  }
+  /* ============ Mobile header — exactly one 64px row (<=768px) ============ */
+  @media (max-width:768px){
+    .sitehead .headbar{height:64px;min-height:64px;max-height:64px;flex-wrap:nowrap;gap:10px;padding-left:16px;padding-right:16px}
+    .brand{gap:9px;flex:1 1 auto}
+    .brand svg{width:30px;height:32px}
+    .brand .name{font-size:15px}
+    .brand .name small{font-size:8px;letter-spacing:.18em}
+    .mainnav{display:none!important}
+    .headtools{margin-left:auto;gap:8px}
+    .headtools .headsearch{display:none!important}
+    .headcta{display:none!important}
+    .menubtn{display:inline-flex}
+    .mobilemenu{display:block;position:absolute;top:64px;left:0;right:0;background:rgba(10,25,49,.98);border-bottom:1px solid rgba(212,175,55,.35);box-shadow:0 18px 32px rgba(0,0,0,.35);max-height:calc(100dvh - 64px);overflow-y:auto;z-index:49}
+    .mobilemenu[hidden]{display:none!important}
+    .mobilemenu-inner{padding:14px 16px 18px}
+  }
+  @media (max-width:360px){
+    .brand .name small{display:none}
+    .brand .name{font-size:14.5px}
+  }
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+
+  /* ============ Challenge Pass Planner ============ */
+  .planner-grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start;padding-bottom:8px}
+  .planner-form{position:sticky;top:84px}
+  .pfield{margin-bottom:12px}
+  .pfield label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+  .pfield input,.pfield select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font-size:14.5px;font-family:inherit;min-height:44px}
+  .pgrid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+  .pnote{font-size:12.5px;color:var(--muted);line-height:1.55;display:block;margin-top:5px}
+  .warn{border-radius:10px;padding:14px 16px;margin-bottom:12px;font-size:14.5px;line-height:1.6;border:1px solid var(--line)}
+  .warn-red{background:var(--red-bg);border-color:rgba(214,69,65,.55)}
+  .warn-amber{background:var(--amber-bg);border-color:rgba(217,164,65,.5)}
+  .warn-ok{background:var(--green-bg);border-color:rgba(47,163,107,.5)}
+  .warn-fix{background:var(--surface);border-color:rgba(212,175,55,.5)}
+  .warn ul{margin:8px 0 0;padding-left:20px}
+  .warn li{font-size:14.5px;line-height:1.6;margin-bottom:5px;font-family:"Inter",sans-serif}
+  .formula-list{margin:0;padding-left:20px}
+  .formula-list li{font-size:14.5px;line-height:1.65;margin-bottom:9px;font-family:"Inter",sans-serif}
+  .hidden-rule{border-top:1px solid var(--line-soft);padding:10px 0}
+  .hidden-rule b{display:block;font-size:14.5px;margin-bottom:2px}
+  .hidden-rule span{font-size:13.5px;color:var(--muted);line-height:1.55;display:block}
+  .hidden-table{font-size:13px;min-width:900px}
+  .hidden-table td{line-height:1.5}
+  .xf-chips{display:flex;gap:8px;flex-wrap:wrap}
+  .xf{border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:13px;line-height:1.45}
+  .xf.ok{border-color:rgba(47,163,107,.6);background:var(--green-bg)}
+  .xf.bad{border-color:rgba(214,69,65,.6);background:var(--red-bg)}
+  .planner-cta{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:var(--navy-900);color:#E8ECF3;border:1px solid rgba(212,175,55,.4);border-radius:10px;padding:18px 20px;margin:18px 0;max-width:780px}
+  .planner-cta b{display:block;font-size:16px;font-family:"Archivo",sans-serif;margin-bottom:3px}
+  .planner-cta span{font-size:13.5px;color:rgba(232,236,243,.75);line-height:1.5;display:block;max-width:520px}
+  .planner-table{min-width:640px}
+  @media (max-width:960px){ .planner-grid{grid-template-columns:1fr} .planner-form{position:static} }
 </style>
 </head>
 <body>
 
 <header class="sitehead">
-  <div class="wrap">
+  <div class="wrap headbar">
     <a class="brand" href="/" data-route="home" aria-label="Risk First Prop Lab — home">
       <svg width="34" height="36" viewBox="0 0 100 105" aria-hidden="true"><path d="M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z" fill="#0A1931" stroke="#D4AF37" stroke-width="3.5"/><path d="M50 11.5 L83 22.3 V50.5 C83 70.5 69 84.5 50 93 C31 84.5 17 70.5 17 50.5 V22.3 Z" fill="none" stroke="#D4AF37" stroke-width="1" opacity=".45"/><path fill="#D4AF37" fill-rule="evenodd" d="M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z"/></svg>
       <span class="name">Risk First <span style="color:var(--gold)">Prop Lab</span><small>TESTED FIRMS · REAL PAYOUTS</small></span>
     </a>
     <nav class="mainnav" aria-label="Main navigation">
-      <a href="/" data-route="home" data-nav="home">Home</a>
       <a href="/directory/" data-route="directory" data-nav="directory">Directory</a>
-      <a href="/prop-firm-match/" data-route="prop-firm-match" data-nav="prop-firm-match">Prop Firm Match</a>
-      <a href="/community-reviews/" data-route="community-reviews" data-nav="community-reviews">Reviews</a>
+      <a href="/prop-firm-match/" data-route="prop-firm-match" data-nav="prop-firm-match">Match</a>
+      <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner">Planner</a>
       <a href="/payout-tracker/" data-route="payout-tracker" data-nav="payout-tracker">Payout Tracker</a>
       <a href="/trader-viet/" data-route="trader-viet" data-nav="trader-viet">Trader Viet</a>
       <a href="/transparency/" data-route="transparency" data-nav="transparency">Method</a>
-      <a href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Telegram ↗</a>
     </nav>
+    <div class="headtools">
+      <div class="headsearch">
+        <input id="headSearch" type="search" placeholder="Search firms…  ( / )" aria-label="Search firms and pages" autocomplete="off">
+        <div class="searchres" id="headSearchResults" hidden></div>
+      </div>
+      <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle light / dark theme" title="Toggle theme">☾</button>
+      <a class="btn btn-ghost btn-sm headcta" href="/prop-firm-match/" data-route="prop-firm-match">Find my firm</a>
+      <button class="menubtn" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span class="mb-icon" aria-hidden="true"><i></i><i></i><i></i></span></button>
+    </div>
+  </div>
+  <div class="mobilemenu" id="mobileMenu" hidden>
+    <div class="wrap mobilemenu-inner">
+      <div class="mobilesearch">
+        <input id="mobileSearch" type="search" placeholder="Search firms…" aria-label="Search firms and pages" autocomplete="off">
+        <div class="searchres" id="mobileSearchResults" hidden></div>
+      </div>
+      <nav class="mobilenav" aria-label="Mobile navigation" style="margin-top:12px">
+        <a href="/directory/" data-route="directory" data-nav="directory">Directory</a>
+        <a href="/prop-firm-match/" data-route="prop-firm-match" data-nav="prop-firm-match">Match</a>
+        <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner">Planner</a>
+        <a href="/payout-tracker/" data-route="payout-tracker" data-nav="payout-tracker">Payout Tracker</a>
+        <a href="/trader-viet/" data-route="trader-viet" data-nav="trader-viet">Trader Viet</a>
+        <a href="/transparency/" data-route="transparency" data-nav="transparency">Method</a>
+      </nav>
+      <a class="btn btn-gold mobilecta" href="/prop-firm-match/" data-route="prop-firm-match">Find my firm</a>
+    </div>
   </div>
 </header>
 
@@ -313,25 +505,25 @@
     <div class="wrap hero-inner">
       <div class="hero-grid">
         <div class="hero-mark" aria-label="R Monogram logo of Risk First Prop Lab">
-          <svg width="150" height="158" viewBox="0 0 100 105" role="img" aria-label="R Monogram — gold letter R in a navy shield">
+          <svg width="132" height="139" viewBox="0 0 100 105" role="img" aria-label="R Monogram — gold letter R in a navy shield">
             <path d="M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z" fill="#0A1931" stroke="#D4AF37" stroke-width="3.5"/>
             <path d="M50 11.5 L83 22.3 V50.5 C83 70.5 69 84.5 50 93 C31 84.5 17 70.5 17 50.5 V22.3 Z" fill="none" stroke="#D4AF37" stroke-width="1" opacity=".45"/>
             <path fill="#D4AF37" fill-rule="evenodd" d="M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z"/>
           </svg>
         </div>
         <div>
+          <p class="eyebrow">RISK FIRST PROP LAB — TESTED, NOT RANKED</p>
           <h1>Prop firms, tested<br>like a <span class="gold">risk desk</span>.</h1>
           <p class="lead">Tested prop firms. Real payouts only. Full-length reviews that open the rulebook, price the all-in cost of trading gold, and time payouts end to end — plus a directory of every major firm and reviews from traders in the community. No hype, no paid ranking.</p>
-          <div class="hero-meta">
-            <span class="chip"><span class="sw" style="background:#0A1931"></span> Navy <span class="mono">#0A1931</span></span>
-            <span class="chip"><span class="sw" style="background:#D4AF37"></span> Gold <span class="mono">#D4AF37</span></span>
-            <span class="chip">Blog here · Forum on <span class="mono">Telegram</span></span>
-          </div>
           <div class="hero-actions">
-            <a class="btn btn-gold" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Join the Telegram group ↗</a>
-            <a class="btn btn-ghost" href="/directory/" data-route="directory">Browse all firms — Directory</a>
-            <a class="btn btn-ghost" href="/prop-firm-match/" data-route="prop-firm-match">Find your firm — Prop Firm Match</a>
-            <button class="btn btn-ghost" data-dl="png">↓ Channel avatar PNG</button>
+            <a class="btn btn-gold" href="/prop-firm-match/" data-route="prop-firm-match">Find my firm →</a>
+            <a class="textlink" href="/directory/" data-route="directory">Browse all 48 firms</a>
+          </div>
+          <div class="trustrow">
+            <span><b>6</b> full reviews</span>
+            <span><b>48</b> firms in the directory</span>
+            <span><b>0</b> payouts verified yet — and we say so</span>
+            <span>Data updated <b>18 Nov 2026</b></span>
           </div>
         </div>
       </div>
@@ -343,19 +535,23 @@
       <div class="sec-head"><span class="sec-no">DECIDE</span><h2>Start here: the decision table</h2></div>
       <div class="rule"></div>
       <p class="sec-sub">The six fully reviewed firms, side by side — not a blog feed. Click a column heading to sort. Rule, price and payout figures are each firm's own published terms, checked against its official site on 18 Nov 2026; gold cost stays <span class="pending">Pending MT5 log</span> until the Lab measures it. <span class="mono" id="dataUpdated">Data updated 18 Nov 2026 · Next full re-check 18 Dec 2026</span></p>
-      <div class="searchbox">
-        <input id="homeSearch" type="search" placeholder="Search a firm — e.g. FTMO, The5ers, Funding Pips…" aria-label="Search a firm" autocomplete="off">
-        <div class="searchres" id="homeSearchResults" hidden></div>
-      </div>
+            </div>
       <div class="tabs" role="group" aria-label="Decision table filter">
         <button id="vnToggleHome" aria-pressed="false">Vietnam-accepted only</button>
         <button id="cfdFutToggle" aria-pressed="false">Include Futures firms (Directory)</button>
       </div>
-      <div class="tblwrap"><table aria-label="Decision table — reviewed firms compared">
-        <thead><tr><th class="sortable" data-sort="name">Firm ↕</th><th>Rank · basis</th><th>Country · Years</th><th>Headline model (limits shown)</th><th>Daily / Max loss</th><th>Platforms</th><th class="num sortable" data-sort="split">Max split ↕</th><th class="num sortable" data-sort="price">Entry from ↕</th><th class="num">XAUUSD all-in cost</th><th>Vietnam</th><th>Actions</th></tr></thead>
+      <div class="colchooser" role="group" aria-label="Decision table columns">
+        <span class="cc-label">Columns</span>
+        <label><input type="checkbox" class="coltoggle" data-target="decisionWrap" data-col="country"> Country · years</label>
+        <label><input type="checkbox" class="coltoggle" data-target="decisionWrap" data-col="platforms"> Platforms</label>
+        <label><input type="checkbox" class="coltoggle" data-target="decisionWrap" data-col="vietnam"> Vietnam</label>
+        <span class="cc-label" style="text-transform:none;letter-spacing:0">Tick up to 3 firms to compare ↓</span>
+      </div>
+      <div class="tblwrap" id="decisionWrap"><table class="decision" aria-label="Decision table — reviewed firms compared">
+        <thead><tr><th class="sortable" data-sort="name">Firm ↕</th><th>Score</th><th>Model</th><th>Daily / Max loss</th><th class="num sortable" data-sort="split">Max split ↕</th><th class="num sortable" data-sort="price">Entry from ↕</th><th class="num">XAUUSD all-in cost</th><th class="optcol" data-col="country">Country · years</th><th class="optcol" data-col="platforms">Platforms</th><th class="optcol" data-col="vietnam">Vietnam</th><th>Actions</th></tr></thead>
         <tbody id="decisionBody"></tbody>
       </table></div>
-      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (48)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a></div>
+      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (48)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a><a class="btn btn-line" href="/challenge-planner/" data-route="challenge-planner">Plan your pass — Challenge Pass Planner</a></div>
     </section>
 
     <section class="blk" id="updates">
@@ -494,7 +690,7 @@
       <div class="rule"></div>
       <p class="sec-sub">The six reviewed firms, same measurements. Rule and price data below is firm-published material checked on 18 Nov 2026 (sources inside each review). Cells marked <span class="pending">Pending MT5 log</span> wait for real terminal data — the Lab does not publish estimated spreads or payout times. Full list: <a href="/directory/" data-route="directory">the Directory</a>.</p>
       <div class="tblwrap">
-        <table aria-label="Prop firm lab measurements">
+        <table class="scoreboard" aria-label="Prop firm lab measurements">
           <thead><tr><th>Firm</th><th>Headline model</th><th>Daily / Max loss</th><th class="num">XAUUSD all-in cost</th><th class="num">Lab payout time</th><th>Status</th></tr></thead>
           <tbody>
             <tr><td><a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO</b></a></td><td>2-Step · 10% / 5%</td><td>5% · 10% static</td><td class="num pending">Pending MT5 log</td><td class="num pending">First payout pending</td><td>Testing</td></tr>
@@ -524,51 +720,7 @@
       </div>
     </section>
 
-    <section class="blk" id="seo-files" style="padding-bottom:24px">
-      <div class="sec-head"><span class="sec-no">DEPLOY</span><h2>Built for Vercel: clean routes, full SEO files</h2></div>
-      <div class="rule"></div>
-      <p class="sec-sub">Every article is a clean route — <span class="mono">/ftmo-review/</span>, <span class="mono">/directory/</span>, <span class="mono">/community-reviews/</span> — with its own title, meta description, canonical URL, Open Graph tags and JSON-LD (Review schema on firm reviews). On Vercel, <span class="mono">vercel.json</span> rewrites every route to this app, and <span class="mono">sitemap.xml</span> + <span class="mono">robots.txt</span> sit at the root. The exact files are below — download them and drop them next to <span class="mono">index.html</span> in the repo.</p>
-      <div class="grid2">
-        <div class="card">
-          <h3>Per-page SEO checklist</h3>
-          <ul class="checklist" style="margin-top:14px">
-            <li><span class="mark">✓</span><span><b>Clean routes, no hash URLs</b> — 14 routes including the Directory and Community Reviews.</span></li>
-            <li><span class="mark">✓</span><span><b>Unique title + meta description</b> on every page; exactly one &lt;h1&gt; per page.</span></li>
-            <li><span class="mark">✓</span><span><b>Canonical + Open Graph + Twitter card</b> per page under the Vercel domain (one <span class="mono">BASE</span> constant in the script — change it once if you attach a custom domain).</span></li>
-            <li><span class="mark">✓</span><span><b>JSON-LD Review</b> on every firm review — with <b>no numeric rating</b> until a Lab payout test completes, so no score is ever invented for search engines. Community star ratings are shown on-page only and are labelled as community data.</span></li>
-            <li><span class="mark">✓</span><span><b>Internal links everywhere</b> — nav, footer, review cross-links, Directory and Match all interlink.</span></li>
-            <li><span class="mark">✓</span><span><b>sitemap.xml + robots.txt + vercel.json</b> ready to download below, plus a styled 404 view.</span></li>
-            <li><span class="mark">!</span><span><b>Affiliate links needed from the owner:</b> every “Visit Firm / Get Challenge” button is a labelled placeholder until the owner supplies the Lab's own affiliate links for <b>FTMO, FundedNext, The5ers, Funding Pips, E8 Markets and Alpha Capital</b>, plus any Directory firms he has programmes with. Send them in one batch — they are wired into the <span class="mono">AFFILIATE</span> map in one update, and the Affiliate Disclosure status line flips to live. No generic or third-party link is ever substituted.</span></li>
-            <li><span class="mark">✓</span><span><b>Adding a new firm takes one data row:</b> append one object to the <span class="mono">DIRECTORY</span> array in the script (name, type, hq, founded, maxfund, split, price, vn, status, review, src = the firm's official site) — the Directory table, filters, tabs, search and counts render from that array automatically. A full review additionally needs one <span class="mono">COMPARER</span> row, one <span class="mono">GUIDE</span> entry and one <span class="mono">PAGES</span> entry. Firms without a checkable official source go to the <span class="mono">WATCHLIST</span> array, never into the Directory. Log every rule change as one <span class="mono">CHANGELOG</span> row with its official source link.</span></li>
-          </ul>
-          <div class="dl-row">
-            <button class="btn btn-navy btn-sm" data-dl-file="sitemap">↓ sitemap.xml</button>
-            <button class="btn btn-line btn-sm" data-dl-file="robots">↓ robots.txt</button>
-            <button class="btn btn-line btn-sm" data-dl-file="vercel">↓ vercel.json</button>
-            <button class="btn btn-line btn-sm" data-dl="svg">↓ Logo SVG</button>
-          </div>
-        </div>
-        <div>
-          <div class="filetabs" role="group" aria-label="Deploy file preview">
-            <button data-filetab="vercel" aria-pressed="true">vercel.json</button>
-            <button data-filetab="sitemap" aria-pressed="false">sitemap.xml</button>
-            <button data-filetab="robots" aria-pressed="false">robots.txt</button>
-            <button data-filetab="tree" aria-pressed="false">Repo structure</button>
-          </div>
-          <pre class="code" id="filePreview" aria-live="polite"></pre>
-          <p class="note">Deploy: import the repo in Vercel (framework preset: Other / static), keep <span class="mono">index.html</span>, <span class="mono">sitemap.xml</span>, <span class="mono">robots.txt</span> and <span class="mono">vercel.json</span> at the root. The rewrites send every clean route to the app; each route still carries its own SEO tags, applied per route.</p>
-        </div>
-      </div>
-      <div class="card" style="margin-top:18px">
-        <div class="lbl">Title &amp; meta description — one set per page</div>
-        <div class="tblwrap" style="border:0">
-          <table aria-label="Per page SEO titles and descriptions" style="min-width:640px">
-            <thead><tr><th>Page</th><th>Title tag</th><th>Meta description</th></tr></thead>
-            <tbody id="seoTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    
   </main>
 </div>
 
@@ -1773,8 +1925,17 @@
         <div><label for="dirPrice">Entry price</label><select id="dirPrice"><option value="">Any price</option><option value="50">Under $50</option><option value="100">Under $100</option><option value="300">Under $300</option></select></div>
       </div>
       <p class="dir-count" id="dirCount" aria-live="polite"></p>
-      <div class="tblwrap"><table class="dir" aria-label="All prop firms directory">
-        <thead><tr><th>Firm</th><th>Market</th><th>HQ</th><th class="num">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th>Vietnam</th><th>Lab status</th><th>Last updated</th><th>Next review</th><th>Links</th></tr></thead>
+      <div class="colchooser" role="group" aria-label="Directory table columns">
+        <span class="cc-label">Columns</span>
+        <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="market"> Market</label>
+        <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="hq"> HQ</label>
+        <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="founded"> Founded</label>
+        <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="updated"> Last updated</label>
+        <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="next"> Next review</label>
+        <span class="cc-label" style="text-transform:none;letter-spacing:0">Tick up to 3 firms to compare ↓</span>
+      </div>
+      <div class="tblwrap" id="dirWrap"><table class="dir" aria-label="All prop firms directory">
+        <thead><tr><th>Firm</th><th class="optcol" data-col="market">Market</th><th class="optcol" data-col="hq">HQ</th><th class="num optcol" data-col="founded">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th>Vietnam</th><th>Lab status</th><th class="optcol" data-col="updated">Last updated</th><th class="optcol" data-col="next">Next review</th><th>Links</th></tr></thead>
         <tbody id="dirBody"></tbody>
       </table></div>
       <p class="note">Sources — official only: the six full reviews on this site (every figure checked against the firm's own homepage / FAQ / Help Centre on 18 Nov 2026, official link in each row). For firms beyond the reviewed six, any figure the Lab could not confirm on the firm's own official pages on 18 Nov 2026 is shown as “Chưa kiểm chứng — Not yet verified” — no aggregator or third-party review site is used as a source anywhere in this directory. Found an error? Bring the firm's own page to the Country Check topic and the row gets corrected with a date.</p>
@@ -2028,6 +2189,102 @@
   </main>
 </div>
 
+<!-- ==================== VIEW: CHALLENGE PLANNER =================== -->
+<div data-view="challenge-planner" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Challenge Pass Planner</span></nav>
+      <h1>Challenge Pass Planner</h1>
+      <p class="standfirst">A pass strategy built from a firm's real rules — not a generic drawdown calculator. Pick a firm and model, set your pace and your edge, and get the daily target, the risk per trade, the lot size for your instrument, and a red flag the moment the maths stops working.</p>
+      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Firm rules checked 18 Nov 2026</span><span>Runs entirely in your browser — nothing is stored or sent</span><span>No tool can promise a pass</span></div>
+    </div>
+
+    <div class="planner-grid">
+      <div class="card planner-form">
+        <div class="lbl">1 · Firm &amp; challenge</div>
+        <div class="pfield"><label for="plFirm">Firm</label><select id="plFirm"></select></div>
+        <div class="pfield"><label for="plModel">Challenge model</label><select id="plModel"></select></div>
+        <div class="pfield"><label for="plPhase">Phase to plan</label><select id="plPhase"><option value="1">Phase 1</option><option value="2">Phase 2</option></select></div>
+        <div class="pfield"><label for="plFee">Challenge fee (for your size)</label><input id="plFee" type="text" inputmode="decimal" placeholder="e.g. €540"><span class="pnote" id="plFeeNote"></span></div>
+        <div class="lbl" style="margin-top:20px">2 · Rules in force <span style="text-transform:none;letter-spacing:0">(prefilled — edit for custom rules)</span></div>
+        <div class="pgrid2">
+          <div class="pfield"><label for="plTarget">Profit target %</label><input id="plTarget" type="number" step="0.1" min="0"></div>
+          <div class="pfield"><label for="plDaily">Daily loss limit %</label><input id="plDaily" type="number" step="0.1" min="0"></div>
+          <div class="pfield"><label for="plMax">Max loss limit %</label><input id="plMax" type="number" step="0.1" min="0"></div>
+          <div class="pfield"><label for="plMinDays">Min trading days</label><input id="plMinDays" type="number" step="1" min="0"></div>
+        </div>
+        <p class="pnote" id="plRuleNote"></p>
+        <div class="evrow" id="plRuleChips"></div>
+        <div class="lbl" style="margin-top:20px">3 · Your plan &amp; your edge</div>
+        <div class="pgrid2">
+          <div class="pfield"><label for="plSize">Account size $</label><input id="plSize" type="number" step="1000" min="1000" value="100000"></div>
+          <div class="pfield"><label for="plDaysInput">Days to pass</label><input id="plDaysInput" type="number" step="1" min="1" value="10"></div>
+          <div class="pfield"><label for="plTrades">Max trades / day</label><input id="plTrades" type="number" step="1" min="1" value="3"></div>
+          <div class="pfield"><label for="plWR">Expected win rate %</label><input id="plWR" type="number" step="1" min="1" max="99" value="60"></div>
+          <div class="pfield"><label for="plRRR">Average RRR (win = ×R)</label><input id="plRRR" type="number" step="0.1" min="0.1" value="1.5"></div>
+          <div class="pfield"><label for="plPair">Instrument</label><select id="plPair"></select></div>
+          <div class="pfield"><label for="plSL" id="plSLLabel">Stop-loss distance</label><input id="plSL" type="number" step="0.5" min="0.1"></div>
+          <div class="pfield"><label for="plUnitVal">$ value per unit, per lot</label><input id="plUnitVal" type="number" step="0.1" min="0.01"></div>
+        </div>
+        <p class="pnote" id="plPairNote"></p>
+      </div>
+
+      <div class="planner-out">
+        <div class="card" id="plFirmRules" style="margin-bottom:16px"></div>
+        <div id="plBinding"></div>
+        <div id="plWarnings"></div>
+        <div class="stat-grid" id="plStats"></div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="lbl">Plan summary — share it</div>
+          <p id="plSummary" style="font-size:15px;line-height:1.65;margin:0 0 14px"></p>
+          <button class="btn btn-gold" id="plShare" type="button">Copy plan summary</button>
+          <span class="pnote" style="margin-left:10px">Copies the summary text to send to a friend. The link below opens this exact plan — settings ride as URL parameters; nothing is saved on a server.</span><p class="mono" id="plShareLink" style="word-break:break-all;font-size:12px;color:var(--muted);margin:10px 0 0"></p>
+        </div>
+        <div class="lbl">Day-by-day plan</div>
+        <div class="tblwrap" style="margin-bottom:16px"><table class="planner-table" aria-label="Day by day pass plan">
+          <thead><tr><th>Day</th><th class="num">Day target</th><th class="num">Cumulative target</th><th class="num">Daily loss budget</th><th>Stop trading for the day if…</th><th class="num">Max trades</th></tr></thead>
+          <tbody id="plDayBody"></tbody>
+        </table></div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="lbl">Same plan, other firms</div>
+          <p class="pnote" style="margin:0 0 10px">Your current inputs (account size, days, trades/day, win rate, RRR) re-tested against every reviewed firm's own headline model. The plan that passes at one firm can fail at another on a single hidden rule.</p>
+          <div class="xf-chips" id="plCrossFirm"></div>
+        </div>
+        <div class="card">
+          <div class="lbl">Formulas &amp; assumptions — read before you trade</div>
+          <ul class="formula-list">
+            <li><span class="mono">Expectancy (R) = win rate × RRR − (1 − win rate)</span> — the average R earned per trade. At 60% and 1:1.5 that is <span class="mono">0.60 × 1.5 − 0.40 = +0.50R</span>.</li>
+            <li><span class="mono">Risk per trade = daily profit target ÷ (trades per day × expectancy R)</span> — sized so the plan hits the target <i>in expectation</i>, not on a guaranteed path.</li>
+            <li><span class="mono">Lot size = risk per trade ÷ (stop-loss distance × $ value per unit per lot)</span>. XAUUSD: 1 lot = 100 oz, so $1.00 of price movement = $100 per lot. EURUSD / GBPUSD: $10 per pip per lot. USDJPY / GBPJPY: ≈ $6.70 per pip per lot at a rate near 150 — verify on your broker. BTCUSD: assumes 1 lot = 1 BTC — verify the contract size.</li>
+            <li>Daily loss budget is computed on the <b>initial balance</b>. Some firms fix the daily limit on the initial balance, others test live equity against a midnight balance — the basis changes how much room you really have. Check the basis for your firm in its review and in the <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd">Daily Drawdown Rule Trap audit</a>.</li>
+            <li>The plan spreads the target evenly across days and ignores spread, commission, swap and slippage — your real all-in cost lowers the effective expectancy. Gold cost per firm is tracked in each review; where the Lab has not measured it yet it stays <span class="pending">Pending MT5 log</span>.</li>
+            <li>Expectancy is an average over many trades. A losing streak can breach the daily or max loss limit long before the average asserts itself — that is exactly what the warnings above test.</li>
+            <li><b>This planner does not promise or imply a pass.</b> It tests whether a plan is arithmetically compatible with a firm's rules. Most traders fail challenges; a plan that only works with no losing streak is not a plan.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <section class="blk" style="padding-top:40px">
+      <div class="sec-head"><span class="sec-no">HIDDEN RULES</span><h2>Hidden rules, firm by firm</h2></div>
+      <div class="rule"></div>
+      <p class="sec-sub">The rules that end challenges rarely sit on the pricing page. This table puts each reviewed firm's traps side by side — daily-loss basis, drawdown type, consistency caps, news and weekend clauses. Anything the Lab could not confirm on an official page is marked <span class="pending">Chưa kiểm chứng — not yet verified</span>: read the firm's own terms before you buy.</p>
+      <div class="tblwrap"><table class="hidden-table" aria-label="Hidden rules comparison across reviewed firms">
+        <thead><tr><th>Trap</th><th>FTMO</th><th>FundedNext</th><th>The5ers</th><th>Funding Pips</th><th>E8 Markets</th><th>Alpha Capital</th></tr></thead>
+        <tbody>
+          <tr><td><b>Daily loss basis</b></td><td>Live <b>equity</b> vs the midnight CE(S)T balance — floating losses count intraday</td><td>Fixed $ amount from the initial balance; floating + closed losses count; resets 00:00 server time</td><td><span class="pending">Chưa kiểm chứng</span> — basis not confirmed on an official page</td><td><span class="pending">Chưa kiểm chứng</span> — basis not confirmed on an official page</td><td>Fixed $ amount from the initial balance (Help Centre, updated 16 Nov 2026)</td><td><span class="pending">Chưa kiểm chứng</span> — basis not confirmed on an official page</td></tr>
+          <tr><td><b>Max loss type</b></td><td>2-Step: <b>static</b>. 1-Step: end-of-day trailing. Instant: intraday trailing</td><td><b>Static</b> (2-Step 10% · 1-Step 6%)</td><td><b>Static</b> — but tightens to 4% / 8% on the $50K and $100K High Stakes tiers</td><td><b>Static</b> 10% on 2-Step Standard</td><td><b>Dynamic / trailing</b> — the floor follows your balance; preset differs between Help Centre (4%) and checkout (6%)</td><td><b>Static</b> 8% on Alpha Pro 8%</td></tr>
+          <tr><td><b>Consistency / best-day cap</b></td><td>2-Step: none. 1-Step: best day ≤ 50% of profit. Instant: best day ≤ 30%</td><td>Standard cycle: none. On-Demand payout: best day ≤ 40%. Plus the Quick Strike rule — profit from trades closed within 30 seconds must stay below 30%</td><td>3 profitable days required per phase (a distribution rule in disguise)</td><td><span class="pending">Chưa kiểm chứng</span></td><td>Best day ≤ 40% rule, plus a payout buffer before withdrawal</td><td><span class="pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td><b>News trading</b></td><td>Evaluation: allowed. Funded Standard: restricted ±2 minutes around listed high-impact US releases (incl. XAUUSD). Swing account: unrestricted</td><td>Allowed on all Stellar models — no challenge-phase restriction published</td><td><span class="pending">Chưa kiểm chứng</span></td><td>Funded-stage news restrictions apply — the evaluation and funded rulebooks differ</td><td><span class="pending">Chưa kiểm chứng</span></td><td><span class="pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td><b>Weekend holding</b></td><td>Funded Standard: flat before the weekend close. Swing: holding allowed, leverage drops to 1:30</td><td>Permitted under Stellar terms</td><td><span class="pending">Chưa kiểm chứng</span></td><td>Funded-stage weekend restrictions apply</td><td><span class="pending">Chưa kiểm chứng</span></td><td><span class="pending">Chưa kiểm chứng</span></td></tr>
+          <tr><td><b>Other account-killers</b></td><td>1-Step / Instant are different products under the same logo — trailing max loss + best-day rules</td><td>60 consecutive days with zero trading = breach. Vietnam barred (residents and citizens, CFD)</td><td>Loss limits tighten on the larger High Stakes tiers — the tier you scale into is not the tier you bought</td><td>Five models, one rulebook maze — funded-stage rules differ per model. Vietnam restricted</td><td>Help Centre preset ≠ checkout preset for daily / dynamic drawdown — the configurator is the contract</td><td>Vietnam is on the excluded-countries list</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Sources: each firm's own official pages, checked 18 Nov 2026 — full sourcing inside each review. Rules change by announcement; re-confirm before buying.</p>
+    </section>
+  </main>
+</div>
+
 <!-- ======================= VIEW: 404 =========================== -->
 <div data-view="404" hidden>
   <main class="wrap">
@@ -2081,9 +2338,25 @@
     </div>
     <div style="border-top:1px solid rgba(255,255,255,.14);margin-top:22px;padding-top:16px;max-width:860px"><p style="font-size:13.5px;line-height:1.65;color:#C7D0DE;margin:0"><b style="color:#fff">How we make money:</b> (1) affiliate commissions from the Lab's own links — <a href="/affiliate-disclosure/" data-route="affiliate-disclosure" style="color:var(--gold-light)">Affiliate Disclosure</a>; (2) paid listing / advertising from firms, always labelled — <a href="/for-prop-firms/" data-route="for-prop-firms" style="color:var(--gold-light)">For Prop Firms</a>; (3) partnerships / ambassador arrangements if a firm formally invites the Lab later. Priority: trust and real tests before money — no revenue source changes a score, a ranking or a verdict.</p></div>
   </div>
+<div class="wrap footline"><b>Money buys display and listing speed — never a score, a rank or a verdict.</b> &nbsp;·&nbsp; Data updated 18 Nov 2026 · Next full re-check 18 Dec 2026</div>
 </footer>
 
 <div id="readProgress" aria-hidden="true"></div>
+
+<!-- Compare tray (sticky) + side-by-side panel -->
+<div id="compareTray" hidden>
+  <span class="tray-names" id="trayNames"></span>
+  <button class="tray-clear" id="trayClear" type="button">Clear</button>
+  <button class="btn btn-gold btn-sm" id="trayGo" type="button">Compare →</button>
+</div>
+<div id="comparePanel" hidden role="dialog" aria-modal="true" aria-label="Compare firms side by side">
+  <div class="cmp-sheet">
+    <div class="cmp-sheet-head"><h2>Side-by-side comparison</h2><button class="cmp-close" id="cmpClose" type="button" aria-label="Close comparison">✕</button></div>
+    <p class="note" style="margin:0 0 14px">Rows highlighted in gold differ between the selected firms. Every figure carries its basis — published terms are not Lab measurements.</p>
+    <div class="tblwrap"><table id="cmpTable" aria-label="Firm comparison"></table></div>
+    <p class="note">Scores are interim: payout points stay at zero until a timed Lab payout completes. <a href="/prop-firm-scorecard/" data-route="prop-firm-scorecard">How scoring works</a></p>
+  </div>
+</div>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -2107,6 +2380,7 @@
     "rule-trap-daily-dd": { path:"rule-trap-daily-dd/", title:"Rule Trap: Daily Drawdown — Balance vs Equity vs Highest-of-Both | Risk First Prop Lab", desc:"The daily drawdown definition that kills prop firm challenges, worked in dollars on a $100K account, with a per-firm method map for FTMO, FundedNext, The5ers, Funding Pips, E8 and Alpha Capital, plus the sizing rule that survives all three.", type:"article", headline:"Rule Trap: Daily Drawdown — Balance-Based, Equity-Based, or Highest-of-Both?" },
     "country-check": { path:"country-check/", title:"Country Check: Which Prop Firms Ban Your Country? | Risk First Prop Lab", desc:"Prop firm restricted countries explained: residency vs citizenship, product-by-product lists, and the checked Vietnam and US status of FTMO, FundedNext, The5ers, Funding Pips, E8 Markets and Alpha Capital.", type:"article", headline:"Country Check: Which Prop Firms Ban Your Country?" },
     "prop-firm-scorecard": { path:"prop-firm-scorecard/", title:"The 10-Point Prop Firm Scorecard | Risk First Prop Lab", desc:"The exact 10 criteria behind every Risk First Prop Lab score: XAUUSD spread, all-in cost, slippage, drawdown fairness, rule traps, payout speed and reliability, country clarity and support — and how interim documentation scores work.", type:"article", headline:"The 10-Point Prop Firm Scorecard Behind Every Lab Test" },
+    "challenge-planner": { path:"challenge-planner/", title:"Challenge Pass Planner: Day-by-Day Prop Firm Pass Plan | Risk First Prop Lab", desc:"Free challenge pass planner: pick a firm and model, set your days, win rate and RRR, and get a day-by-day plan — daily profit target, risk per trade, lot size per instrument, daily loss budget and feasibility warnings. Client-side only, no pass promised.", type:"website" },
     "prop-firm-match": { path:"prop-firm-match/", title:"Prop Firm Match: Find a Firm by Budget, Style & Country | Risk First Prop Lab", desc:"Answer five questions — challenge budget, trading style (gold, news, swing, scalping), country including Vietnam, payout priority and overnight holding — and get an honest shortlist of the six fully reviewed firms, plus a full comparison table.", type:"website" },
     "trader-viet": { path:"trader-viet/", title:"Trader Viet: Prop Firms from Vietnam — Eligibility, Payouts & Taxes | Risk First Prop Lab", desc:"For traders residing in Vietnam: which firms accept you (FTMO CFD, The5ers), which bar you (FundedNext, Funding Pips, Alpha Capital), the residency-vs-citizenship trap, payout rails that reach Vietnam, and tax paperwork to keep.", type:"article", headline:"Trader Viet: Prop Firms from Vietnam — Who Accepts You, Who Bars You, How Payouts Get Home" },
     "community-reviews": { path:"community-reviews/", title:"User Reviews: Community Ratings for Prop Firms | Risk First Prop Lab", desc:"Star ratings for rules, fees, payouts and support from traders in the Risk First community — moderated through the Telegram group, proof-labelled Verified or Not yet verified, never invented. Submit your own review.", type:"website" },
@@ -2231,7 +2505,7 @@
   }
 
   /* ---------------- Deploy files: sitemap.xml, robots.txt, vercel.json ---------------- */
-  var SITEMAP_PATHS = ["", "directory/", "ftmo-review/", "fundednext-review/", "the5ers-review/", "funding-pips-review/", "e8-markets-review/", "alpha-capital-review/", "fundednext-payout-test/", "rule-trap-daily-dd/", "country-check/", "prop-firm-scorecard/", "prop-firm-match/", "trader-viet/", "community-reviews/", "payout-tracker/", "transparency/", "for-prop-firms/", "affiliate-disclosure/"];
+  var SITEMAP_PATHS = ["", "directory/", "ftmo-review/", "fundednext-review/", "the5ers-review/", "funding-pips-review/", "e8-markets-review/", "alpha-capital-review/", "fundednext-payout-test/", "rule-trap-daily-dd/", "country-check/", "prop-firm-scorecard/", "prop-firm-match/", "challenge-planner/", "trader-viet/", "community-reviews/", "payout-tracker/", "transparency/", "for-prop-firms/", "affiliate-disclosure/"];
   var SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + SITEMAP_PATHS.map(function(p){ return "  <url>\n    <loc>" + BASE + p + "</loc>\n    <lastmod>" + CHECKED + "</lastmod>\n  </url>"; }).join("\n")
     + "\n</urlset>";
@@ -2240,14 +2514,14 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "cleanUrls": true,
     "trailingSlash": true,
-    "rewrites": SITEMAP_PATHS.filter(function(p){ return p !== ""; }).map(function(p){ return { source: "/" + p, destination: "/index.html" }; })
-      .concat([{ source: "/all-prop-firms/", destination: "/index.html" }]),
-    "redirects": [{ source: "/all-prop-firms", destination: "/directory/", permanent: true }]
+    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
   }, null, 2);
   var TREE = "risk-first-prop-lab/            <- repo root (Vercel project root)\n"
     + "|- index.html                   <- the whole site (SPA, clean routes)\n"
-    + "|- vercel.json                  <- rewrites: every route -> index.html\n"
-    + "|- sitemap.xml                  <- 15 URLs\n"
+    + "|- <route>/index.html           <- one real static file per route (directory/, ftmo-review/, ...)\n"
+    + "|- all-prop-firms/index.html    <- redirect page -> /directory/\n"
+    + "|- vercel.json                  <- one catch-all rewrite: /(.*) -> /index.html\n"
+    + "|- sitemap.xml                  <- 19 URLs\n"
     + "|- robots.txt\n"
     + "Routes: / /directory/ /ftmo-review/ /fundednext-review/\n"
     + "/the5ers-review/ /funding-pips-review/ /e8-markets-review/\n"
@@ -2257,6 +2531,7 @@
   var FILES = { sitemap: SITEMAP, robots: ROBOTS, vercel: VERCEL, tree: TREE };
   var preview = document.getElementById("filePreview");
   function showFile(name){
+    if (!preview) return;
     preview.textContent = FILES[name];
     document.querySelectorAll("[data-filetab]").forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-filetab") === name ? "true" : "false"); });
   }
@@ -2272,7 +2547,7 @@
   });
 
   /* ---------------- SEO table ---------------- */
-  var tbody = document.getElementById("seoTableBody");
+  var tbody = document.getElementById("seoTableBody"); if (!tbody) tbody = { appendChild:function(){} };
   ROUTES.forEach(function(k){
     var p = PAGES[k];
     var tr = document.createElement("tr");
@@ -2419,16 +2694,21 @@
       if (f.review) links += '<a href="/' + f.review + '/" data-route="' + f.review + '">Full review →</a>';
       if (f.src) links += (links ? "<br>" : "") + '<a href="' + f.src + '" target="_blank" rel="noopener">Source ↗</a>';
       if (!links) links = '<span style="color:var(--muted)">—</span>';
-      var nameCell = '<span class="fname">' + f.name + "</span>" + (f.closedNote ? '<br><span style="font-size:12.5px;color:#A63A2B">' + f.closedNote + "</span>" : "");
-      tr.innerHTML = "<td>" + nameCell + "</td><td>" + f.type + "</td><td>" + f.hq + "</td>"
-        + '<td class="num">' + (f.founded ? f.founded : '<span class="pending">' + NV + "</span>") + "</td>"
-        + "<td>" + (f.maxfund === NV ? '<span class="pending">' + NV + "</span>" : f.maxfund) + "</td>"
-        + "<td>" + (f.splitLabel === NV ? '<span class="pending">' + NV + "</span>" : f.splitLabel) + "</td>"
-        + '<td class="num">' + (f.priceLabel === NV ? '<span class="pending">' + NV + "</span>" : f.priceLabel) + "</td>"
-        + "<td>" + vnChip(f.vn) + "</td><td>" + statusChip(f.status) + "</td>"
-        + '<td style="font-size:13px;white-space:nowrap">' + (f.updated || NV) + "</td>"
-        + '<td style="font-size:13px;white-space:nowrap">' + (f.next || "—") + "</td>"
-        + '<td style="font-size:13.5px;white-space:nowrap">' + links + '<br><button type="button" class="affbtn" data-aff="' + f.name + '">Visit Firm</button></td>';
+      var cmpF = (typeof COMPARER !== "undefined") ? cmpByName(f.name) : null;
+      var scoreBadge = "";
+      if (cmpF){ var sm2 = /(\d+(?:\.\d+)?)\s*\/\s*10/.exec(cmpF.rankBasis); if (sm2) scoreBadge = '<br><span class="score-mini"><span class="sb-num">' + sm2[1] + '</span><span class="sb-den">/10</span></span> <span class="sb-basis" style="display:inline">' + cmpF.rankBasis + "</span>"; }
+      var nameCell = '<label class="cmp-pick"><input type="checkbox" class="cmp-check" data-cmp="' + f.name + '" aria-label="Select ' + f.name + ' to compare"><span><span class="fname">' + f.name + "</span>" + (f.closedNote ? '<br><span style="font-size:12.5px;color:var(--red)">' + f.closedNote + "</span>" : "") + scoreBadge + "</span></label>";
+      tr.innerHTML = "<td data-label='Firm'>" + nameCell + "</td>"
+        + '<td class="optcol" data-col="market" data-label="Market">' + f.type + "</td>"
+        + '<td class="optcol" data-col="hq" data-label="HQ">' + f.hq + "</td>"
+        + '<td class="num optcol" data-col="founded" data-label="Founded">' + (f.founded ? f.founded : '<span class="pending">' + NV + "</span>") + "</td>"
+        + "<td data-label='Max funding'>" + (f.maxfund === NV ? '<span class="pending">' + NV + "</span>" : f.maxfund) + "</td>"
+        + "<td data-label='Split'>" + (f.splitLabel === NV ? '<span class="pending">' + NV + "</span>" : f.splitLabel) + "</td>"
+        + '<td class="num" data-label="Entry from">' + (f.priceLabel === NV ? '<span class="pending">' + NV + "</span>" : f.priceLabel) + "</td>"
+        + "<td data-label='Vietnam'>" + vnChip(f.vn) + "</td><td data-label='Lab status'>" + statusChip(f.status) + "</td>"
+        + '<td class="optcol" data-col="updated" data-label="Last updated" style="font-size:13px;white-space:nowrap">' + (f.updated || NV) + "</td>"
+        + '<td class="optcol" data-col="next" data-label="Next review" style="font-size:13px;white-space:nowrap">' + (f.next || "—") + "</td>"
+        + '<td data-label="Links" style="font-size:13.5px;white-space:nowrap">' + links + '<br><button type="button" class="affbtn" data-aff="' + f.name + '">Visit Firm</button></td>';
       body.appendChild(tr);
     });
     body.querySelectorAll("[data-route]").forEach(function(a){
@@ -2758,11 +3038,21 @@
       });
     }
     body.innerHTML = rows.map(function(f){
-      return "<tr><td><b>" + f.name + "</b></td><td>" + f.rank + "<br><span style='color:var(--muted);font-size:12.5px'>" + f.rankBasis + " · " + f.reviews + " verified reviews</span></td>"
-        + "<td>" + f.country + " · since " + f.founded + "</td><td>" + f.stepsLabel.split("·")[0] + "</td><td>" + f.daily.split("·")[0] + " / " + f.max + "</td>"
-        + "<td>" + f.platforms.join(", ") + "</td><td class='num'>" + f.splitLabel + "</td><td class='num'>" + f.priceLabel + "</td>"
-        + "<td class='num pending'>" + f.goldCost + "</td><td>" + vnChipTxt(f.vn) + "</td>"
-        + "<td style='white-space:nowrap'><a href='/" + f.slug + "/' data-route='" + f.slug + "'>Review →</a><br><a href='" + f.src + "' target='_blank' rel='noopener'>Official ↗</a><br><button type='button' class='affbtn' data-aff='" + f.name + "'>Visit Firm</button></td></tr>";
+      var sm = /(\d+(?:\.\d+)?)\s*\/\s*10/.exec(f.rankBasis);
+      var badge = sm ? "<span class='score-mini'><span class='sb-num'>" + sm[1] + "</span><span class='sb-den'>/10</span></span>" : "";
+      var chips = "<span class='evrow'><span class='evchip ev-src'>Official site · 18 Nov 2026</span>" + (/pending/i.test(f.rankBasis) ? "<span class='evchip ev-pend'>Payout pending</span>" : "") + "</span>";
+      return "<tr>"
+        + "<td data-label='Firm'><label class='cmp-pick'><input type='checkbox' class='cmp-check' data-cmp='" + f.name + "' aria-label='Select " + f.name + " to compare'><span><b>" + f.name + "</b><br><span style='color:var(--muted);font-size:12.5px'>" + f.rank + "</span></span></label></td>"
+        + "<td data-label='Score'>" + badge + "<span class='sb-basis'>" + f.rankBasis + " · " + f.reviews + " verified reviews</span>" + chips + "</td>"
+        + "<td data-label='Model'>" + f.stepsLabel.split("·")[0] + "</td>"
+        + "<td data-label='Daily / Max loss'><span class='mono'>" + f.daily.split("·")[0] + " / " + f.max + "</span></td>"
+        + "<td class='num' data-label='Max split'>" + f.splitLabel + "</td>"
+        + "<td class='num' data-label='Entry from'>" + f.priceLabel + "</td>"
+        + "<td class='num' data-label='XAUUSD cost'><span class='pending'>" + f.goldCost + "</span><span class='evrow'><span class='evchip ev-pend'>MT5 log · pending</span></span></td>"
+        + "<td class='optcol' data-col='country' data-label='Country'>" + f.country + " · since <span class='mono'>" + f.founded + "</span></td>"
+        + "<td class='optcol' data-col='platforms' data-label='Platforms'>" + f.platforms.join(", ") + "</td>"
+        + "<td class='optcol' data-col='vietnam' data-label='Vietnam'>" + vnChipTxt(f.vn) + "</td>"
+        + "<td data-label='Actions' style='white-space:nowrap'><a href='/" + f.slug + "/' data-route='" + f.slug + "'>Review →</a><br><a href='/challenge-planner/' data-route='challenge-planner' data-planner-firm='" + f.name + "'>Plan pass →</a><br><a href='" + f.src + "' target='_blank' rel='noopener'>Official ↗</a><br><button type='button' class='affbtn' data-aff='" + f.name + "'>Visit Firm</button></td></tr>";
     }).join("");
     body.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); navigate(a.getAttribute("data-route")); }); });
   }
@@ -3135,6 +3425,449 @@
     if (toc && toc.nextSibling) body.insertBefore(box, toc.nextSibling); else body.insertBefore(box, body.firstChild);
     box.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); navigate(a.getAttribute("data-route")); }); });
   });
+
+
+  /* ================= RISK TERMINAL: theme, search, compare, badges ================= */
+  function scoreOf(basis){ var m = /(\d+(?:\.\d+)?)\s*\/\s*10/.exec(basis || ""); return m ? m[1] : null; }
+  function money(n){ if (n === null || n === undefined || isNaN(n)) return "—"; return "$" + Math.round(n).toLocaleString("en-US"); }
+
+  /* theme toggle (in-session; first visit follows the system setting) */
+  var themeBtn = document.getElementById("themeToggle");
+  function syncThemeBtn(){ if (themeBtn) themeBtn.textContent = document.documentElement.getAttribute("data-theme") === "light" ? "☀" : "☾"; }
+  if (themeBtn) themeBtn.addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", cur); syncThemeBtn();
+  });
+  syncThemeBtn();
+
+  /* mobile menu — hamburger toggles the dropdown panel (nav + search + CTA) */
+  var menuBtn = document.getElementById("menuToggle"), mobileMenu = document.getElementById("mobileMenu");
+  function closeMobileMenu(){
+    if (!mobileMenu || mobileMenu.hidden) return;
+    mobileMenu.hidden = true;
+    if (menuBtn){ menuBtn.setAttribute("aria-expanded", "false"); menuBtn.setAttribute("aria-label", "Open menu"); }
+    var msr = document.getElementById("mobileSearchResults"); if (msr) msr.hidden = true;
+  }
+  function openMobileMenu(){
+    if (!mobileMenu) return;
+    mobileMenu.hidden = false;
+    if (menuBtn){ menuBtn.setAttribute("aria-expanded", "true"); menuBtn.setAttribute("aria-label", "Close menu"); }
+  }
+  if (menuBtn && mobileMenu){
+    menuBtn.addEventListener("click", function(){ if (mobileMenu.hidden) openMobileMenu(); else closeMobileMenu(); });
+    mobileMenu.querySelectorAll("[data-route]").forEach(function(a){
+      a.addEventListener("click", function(){ closeMobileMenu(); });
+    });
+    document.addEventListener("click", function(e){
+      if (!mobileMenu.hidden && !e.target.closest(".sitehead")) closeMobileMenu();
+    });
+    window.addEventListener("resize", function(){ if (window.innerWidth > 768) closeMobileMenu(); });
+  }
+
+  /* header search — firms from the Directory data; "/" focuses it (desktop + mobile share the logic) */
+  var hs2 = document.getElementById("headSearch"), hsr2 = document.getElementById("headSearchResults");
+  var ms2 = document.getElementById("mobileSearch"), msr2 = document.getElementById("mobileSearchResults");
+  function wireHeadSearch(input, results, wrapSel){
+    if (!input || !results) return;
+    input.addEventListener("input", function(){
+      var q = input.value.trim().toLowerCase();
+      if (!q){ results.hidden = true; results.innerHTML = ""; return; }
+      var hits = DIRECTORY.filter(function(f){ return f.name.toLowerCase().indexOf(q) >= 0; }).slice(0, 6);
+      results.innerHTML = hits.length ? hits.map(function(f){
+        var route = f.review || "directory";
+        var sc = f.review ? scoreOf((cmpByName(f.name) || {}).rankBasis) : null;
+        return '<a href="/' + route + '/" data-route="' + route + '"><span><b>' + f.name + "</b> · " + f.type + '</span><span class="mono" style="font-size:12px;color:var(--muted)">' + (sc ? "Score " + sc + "/10 · interim" : f.status) + "</span></a>";
+      }).join("") : '<a href="/directory/" data-route="directory">No match — open the full Directory</a>';
+      results.hidden = false;
+      results.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); results.hidden = true; input.value = ""; closeMobileMenu(); navigate(a.getAttribute("data-route")); }); });
+    });
+    document.addEventListener("click", function(e){ if (!results.hidden && !e.target.closest(wrapSel)) results.hidden = true; });
+  }
+  wireHeadSearch(hs2, hsr2, ".headsearch");
+  wireHeadSearch(ms2, msr2, ".mobilesearch");
+  document.addEventListener("keydown", function(e){
+    if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){
+      e.preventDefault();
+      if (window.innerWidth <= 768){ openMobileMenu(); if (ms2) ms2.focus(); }
+      else if (hs2) hs2.focus();
+    }
+    if (e.key === "Escape"){ var p = document.getElementById("comparePanel"); if (p) p.hidden = true; if (hsr2) hsr2.hidden = true; if (msr2) msr2.hidden = true; closeMobileMenu(); }
+  });
+
+  /* column choosers */
+  document.querySelectorAll(".coltoggle").forEach(function(cb){
+    cb.addEventListener("change", function(){
+      var wrap = document.getElementById(cb.getAttribute("data-target")); if (!wrap) return;
+      var col = cb.getAttribute("data-col");
+      wrap.querySelectorAll('[data-col="' + col + '"]').forEach(function(cell){ cell.classList.toggle("optcol", !cb.checked); });
+    });
+  });
+
+  /* verdict score badges — a score never appears without its basis */
+  document.querySelectorAll(".verdictbox").forEach(function(box){
+    var vs = box.querySelector(".vscore"); if (!vs) return;
+    var sc = scoreOf(vs.textContent); if (!sc) return;
+    var wrap = document.createElement("div"); wrap.className = "score-wrap"; wrap.style.marginBottom = "12px";
+    wrap.innerHTML = '<div class="score-badge"><span class="sb-num">' + sc + '</span><span class="sb-den">/ 10</span></div>'
+      + '<div><span class="sb-basis">Risk First Score — interim. Basis: published terms verified from the firm\'s own documents, checked 18 Nov 2026.</span>'
+      + '<span class="evrow"><span class="evchip ev-src">Official site · 18 Nov 2026</span>' + (/pending/i.test(vs.textContent) ? '<span class="evchip ev-pend">Payout evidence · pending Lab test</span>' : "") + "</span></div>";
+    var vl = box.querySelector(".vlabel");
+    if (vl && vl.nextSibling) box.insertBefore(wrap, vl.nextSibling); else box.insertBefore(wrap, box.firstChild);
+  });
+
+  /* ================= Compare tray — up to 3 firms, differences highlighted ================= */
+  var CMP = [];
+  function cmpData(name){
+    var c = cmpByName(name);
+    if (c) return { name:name, score:scoreOf(c.rankBasis), basis:c.rankBasis, model:c.stepsLabel, dailymax:c.daily.split("·")[0] + " / " + c.max, split:c.splitLabel, entry:c.priceLabel, gold:c.goldCost, vn:vnChipTxt(c.vn), country:c.country + " · since " + c.founded, platforms:c.platforms.join(", "), status:c.rank };
+    var d = null;
+    DIRECTORY.forEach(function(f){ if (f.name === name) d = f; });
+    if (d) return { name:name, score:null, basis:"No full review yet — not scored", model:d.type, dailymax:"—", split:d.splitLabel, entry:d.priceLabel, gold:"—", vn:vnChipTxt(d.vn), country:d.hq, platforms:"—", status:d.status + " · max funding " + d.maxfund };
+    return null;
+  }
+  function syncCmpChecks(){
+    document.querySelectorAll(".cmp-check").forEach(function(cb){ cb.checked = CMP.indexOf(cb.getAttribute("data-cmp")) >= 0; });
+    var tray = document.getElementById("compareTray"), names = document.getElementById("trayNames");
+    if (!tray) return;
+    if (!CMP.length){ tray.hidden = true; document.body.classList.remove("has-tray"); return; }
+    tray.hidden = false; document.body.classList.add("has-tray");
+    names.textContent = CMP.join("  vs  ") + (CMP.length < 2 ? " — pick at least 2 to compare" : "");
+    var go = document.getElementById("trayGo"); if (go) go.disabled = CMP.length < 2;
+  }
+  document.addEventListener("change", function(e){
+    var cb = e.target.closest ? e.target.closest(".cmp-check") : null; if (!cb) return;
+    var name = cb.getAttribute("data-cmp");
+    if (cb.checked){
+      if (CMP.indexOf(name) < 0){
+        if (CMP.length >= 3){ cb.checked = false; showToast("Compare holds a maximum of 3 firms — remove one first."); return; }
+        CMP.push(name);
+      }
+    } else { CMP = CMP.filter(function(n){ return n !== name; }); }
+    syncCmpChecks();
+  });
+  var trayClear = document.getElementById("trayClear");
+  if (trayClear) trayClear.addEventListener("click", function(){ CMP = []; syncCmpChecks(); });
+  var trayGo = document.getElementById("trayGo");
+  if (trayGo) trayGo.addEventListener("click", function(){
+    if (CMP.length < 2) return;
+    var firms = CMP.map(cmpData).filter(Boolean); if (firms.length < 2) return;
+    var rows = [
+      ["Score", function(f){ return f.score ? f.score + " / 10 — " + f.basis : f.basis; }],
+      ["Status", function(f){ return f.status; }],
+      ["Model", function(f){ return f.model; }],
+      ["Daily / Max loss", function(f){ return f.dailymax; }],
+      ["Max split", function(f){ return f.split; }],
+      ["Entry from", function(f){ return f.entry; }],
+      ["XAUUSD all-in cost", function(f){ return f.gold; }],
+      ["Vietnam", function(f){ return f.vn; }],
+      ["Country", function(f){ return f.country; }],
+      ["Platforms", function(f){ return f.platforms; }]
+    ];
+    var html = "<thead><tr><th></th>" + firms.map(function(f){ return "<th>" + f.name + "</th>"; }).join("") + "</tr></thead><tbody>";
+    rows.forEach(function(r){
+      var vals = firms.map(r[1]);
+      var diff = vals.some(function(v){ return v !== vals[0]; });
+      html += "<tr><td style='font-weight:700'>" + r[0] + "</td>" + vals.map(function(v){ return "<td class='" + (diff ? "diff" : "") + "'>" + v + "</td>"; }).join("") + "</tr>";
+    });
+    html += "</tbody>";
+    document.getElementById("cmpTable").innerHTML = html;
+    document.getElementById("comparePanel").hidden = false;
+  });
+  var cmpClose = document.getElementById("cmpClose");
+  if (cmpClose) cmpClose.addEventListener("click", function(){ document.getElementById("comparePanel").hidden = true; });
+  var cmpPanel = document.getElementById("comparePanel");
+  if (cmpPanel) cmpPanel.addEventListener("click", function(e){ if (e.target === cmpPanel) cmpPanel.hidden = true; });
+
+  /* planner deep-links from reviews and the decision table */
+  var pendingPlannerFirm = null;
+  document.addEventListener("click", function(e){
+    var a = e.target.closest ? e.target.closest("[data-planner-firm]") : null;
+    if (a){ pendingPlannerFirm = a.getAttribute("data-planner-firm"); setTimeout(applyPendingFirm, 60); }
+  }, true);
+  function applyPendingFirm(){
+    if (!pendingPlannerFirm) return;
+    var sel = document.getElementById("plFirm");
+    if (sel && PLANNER_RULES[pendingPlannerFirm]){ sel.value = pendingPlannerFirm; plannerFirmChanged(); }
+    pendingPlannerFirm = null;
+  }
+  COMPARER.forEach(function(c){
+    var view = document.querySelector('[data-view="' + c.slug + '"]'); if (!view) return;
+    var vb = view.querySelector(".verdictbox"); if (!vb) return;
+    var box = document.createElement("div"); box.className = "planner-cta";
+    box.innerHTML = "<div><b>Plan your pass at " + c.name + "</b><span>Day-by-day target, risk per trade and lot size — built from " + c.name + "'s own rules, including the hidden ones.</span></div>"
+      + '<a class="btn btn-gold btn-sm" href="/challenge-planner/" data-route="challenge-planner" data-planner-firm="' + c.name + '">Open the Planner →</a>';
+    vb.parentNode.insertBefore(box, vb.nextSibling);
+    box.querySelector("[data-route]").addEventListener("click", function(e){ e.preventDefault(); pendingPlannerFirm = c.name; navigate("challenge-planner"); setTimeout(applyPendingFirm, 60); });
+  });
+
+  if (document.getElementById("dirBody")) renderDirectory();
+
+  /* ================= CHALLENGE PASS PLANNER ================= */
+  var PLANNER_RULES = {
+    "FTMO": { review:"ftmo-review", models:[
+      { id:"2step", label:"2-Step Challenge", t1:10, t2:5, daily:5, dailyBasis:"Live equity vs the midnight CE(S)T balance — floating losses count", reset:"Midnight CE(S)T (Prague)", max:10, maxType:"Static — the floor never moves", minDays:4, minDaysNote:"4 trading days per phase", cap:null, capLabel:"No consistency rule on the 2-Step", news:"Evaluation allowed · Funded Standard restricted ±2 min around listed US releases", weekend:"Funded Standard: flat before the weekend · Swing: holding allowed", timeLimit:"None", fees:{ "10000":"€89", "25000":"€250", "50000":"€345", "100000":"€540", "200000":"€1,080" }, feeFrom:"€89", payout:"80% → 90% split · first payout 14 days after the first funded trade · fee refunded with it", basis:"FTMO Trading Objectives + FAQ, checked 18 Nov 2026",
+        hidden:[
+          { rule:"Daily loss is equity-based", detail:"The day's floor is the midnight balance minus 5% of the initial balance, and live equity — floating losses included — must never cross it. A gold position floating red can end the challenge before any trade closes.", verified:true },
+          { rule:"The 1-Step and Instant are different products", detail:"Trailing max loss and best-day caps (50% / 30%) apply there — not on the 2-Step planned here.", verified:true },
+          { rule:"Funded news + weekend restrictions", detail:"On the funded Standard account, opening or closing on listed instruments (incl. XAUUSD) is restricted within ±2 minutes of specified releases, and positions must close before the weekend. The Swing account removes both, at 1:30 leverage.", verified:true } ] },
+      { id:"1step", label:"1-Step Challenge", t1:10, t2:null, daily:3, dailyBasis:"Live equity vs the midnight CE(S)T balance — floating losses count", reset:"Midnight CE(S)T (Prague)", max:10, maxType:"End-of-day trailing — the floor rises with your end-of-day balance", minDays:null, minDaysNote:"Chưa kiểm chứng — not published on the Trading Objectives page (a 2-day figure appears in some comparisons; verify at checkout)", cap:50, capLabel:"Best day ≤ 50% of total profit (orders from 12 Oct 2026)", news:"Evaluation allowed · Funded Standard restricted ±2 min around listed US releases", weekend:"Funded Standard: flat before the weekend · Swing: holding allowed", timeLimit:"None", fees:{}, feeFrom:"€79", payout:"90% split · fee not refundable", basis:"FTMO Trading Objectives + 8 Oct 2026 trading update, checked 18 Nov 2026",
+        hidden:[
+          { rule:"Trailing max loss", detail:"The 10% max loss trails your end-of-day balance — profit you bank raises the floor and shrinks your remaining room.", verified:true },
+          { rule:"Best-day cap 50%", detail:"One day may contribute at most half of your total profit — a single hero day does not pass this challenge.", verified:true } ] } ] },
+    "FundedNext": { review:"fundednext-review", models:[
+      { id:"stellar2", label:"Stellar 2-Step", t1:8, t2:5, daily:5, dailyBasis:"Fixed $ amount from the initial balance — floating and closed losses both count", reset:"00:00 server time", max:10, maxType:"Static — the floor never moves", minDays:5, minDaysNote:"5 trading days per phase", cap:null, capLabel:"None on the standard 21-day cycle · On-Demand payout adds a 40% best-day cap", news:"Allowed on all Stellar models — no challenge-phase restriction published", weekend:"Permitted under Stellar terms", timeLimit:"None — but 60 consecutive days with zero trading activity is a breach", fees:{}, feeFrom:"$59.99", payout:"80% → 95% (add-on) · 21-day cycle standard · 15% of challenge-phase profit paid at first scale-up", basis:"FundedNext Stellar 2-Step guide + Help Centre + Terms §5.3, checked 18 Nov 2026",
+        hidden:[
+          { rule:"Quick Strike rule", detail:"Profit from trades closed within 30 seconds must stay below 30% — fast scalps can be discounted.", verified:true },
+          { rule:"Inactivity is the hidden deadline", detail:"There is no time limit, but 60 consecutive days without a single trade breaches the account.", verified:true },
+          { rule:"Vietnam barred", detail:"Residents and citizens of Vietnam are barred from the CFD platform; VPN bypass means permanent termination.", verified:true } ] },
+      { id:"stellar1", label:"Stellar 1-Step", t1:10, t2:null, daily:3, dailyBasis:"Fixed $ amount from the initial balance — floating and closed losses both count", reset:"00:00 server time", max:6, maxType:"Static", minDays:2, minDaysNote:"2 trading days", cap:null, capLabel:"Per payout option chosen", news:"Allowed", weekend:"Permitted under Stellar terms", timeLimit:"None — 60-day inactivity breach applies", fees:{}, feeFrom:"", payout:"Per model terms", basis:"FundedNext published Stellar terms, checked 18 Nov 2026",
+        hidden:[ { rule:"Tighter static max loss", detail:"6% static — half the room of the 2-Step, against a higher single 10% target.", verified:true } ] } ] },
+    "The5ers": { review:"the5ers-review", models:[
+      { id:"hs", label:"High Stakes", t1:10, t2:5, daily:5, dailyBasis:"Chưa kiểm chứng — basis not confirmed on an official page; read the firm's terms before buying", reset:"Chưa kiểm chứng", max:10, maxType:"Static — but tightens to 4% daily / 8% max on the $50K and $100K tiers", minDays:3, minDaysNote:"3 profitable days required per phase", cap:null, capLabel:"No % cap published — the 3-profitable-days rule forces profit to be spread", news:"Chưa kiểm chứng — theo điều khoản firm, cần đọc lại trước khi mua", weekend:"Chưa kiểm chứng — theo điều khoản firm, cần đọc lại trước khi mua", timeLimit:"Chưa kiểm chứng", fees:{}, feeFrom:"$19", payout:"Split scales 80% → 100% · payout detail Chưa kiểm chứng on the pages checked", basis:"The5ers High Stakes published terms, checked 18 Nov 2026",
+        hidden:[
+          { rule:"Limits tighten as you scale", detail:"On the $50K and $100K tiers the loss limits quietly tighten to 4% / 8% — the account you grow into is stricter than the one you bought. The planner uses the standard 5% / 10%; switch the rule fields to 4 / 8 for those tiers.", verified:true },
+          { rule:"Profitable-days rule", detail:"Each phase needs 3 profitable days — one big day cannot carry a phase.", verified:true } ] } ] },
+    "Funding Pips": { review:"funding-pips-review", models:[
+      { id:"std2", label:"2-Step Standard", t1:8, t2:5, daily:5, dailyBasis:"Chưa kiểm chứng — basis not confirmed on an official page; read the firm's terms before buying", reset:"Chưa kiểm chứng", max:10, maxType:"Static", minDays:null, minDaysNote:"Chưa kiểm chứng — not confirmed on an official page checked 18 Nov 2026", cap:null, capLabel:"Chưa kiểm chứng", news:"Funded-stage news restrictions apply — evaluation and funded rulebooks differ", weekend:"Funded-stage weekend restrictions apply", timeLimit:"Chưa kiểm chứng", fees:{}, feeFrom:"$29", payout:"Splits up to 100% by payout cycle", basis:"Funding Pips published terms, checked 18 Nov 2026",
+        hidden:[
+          { rule:"Funded-stage rules differ", detail:"News and weekend restrictions bite at the funded stage, not in the evaluation — a strategy that passes may still be untradeable once funded.", verified:true },
+          { rule:"Five models, one maze", detail:"Rules differ per model; the model you select at checkout is the contract. Vietnam is restricted.", verified:true } ] } ] },
+    "E8 Markets": { review:"e8-markets-review", models:[
+      { id:"e8one", label:"E8 One (Help Centre preset)", t1:6, t2:null, daily:3, dailyBasis:"Fixed $ amount from the initial balance (Help Centre 'Daily Drawdown' article, updated 16 Nov 2026)", reset:"Chưa kiểm chứng", max:4, maxType:"Dynamic / trailing — the floor follows your balance upward", minDays:null, minDaysNote:"Chưa kiểm chứng — not confirmed on an official page checked 18 Nov 2026", cap:40, capLabel:"Best day ≤ 40% of total profit, plus a payout buffer before withdrawal", news:"Chưa kiểm chứng — theo điều khoản firm, cần đọc lại trước khi mua", weekend:"Chưa kiểm chứng — theo điều khoản firm, cần đọc lại trước khi mua", timeLimit:"Chưa kiểm chứng", fees:{}, feeFrom:"", payout:"Payout buffer applies before withdrawal", basis:"E8 Help Centre + checkout configurator, checked 18 Nov 2026 — the two presets disagree (3%/4% vs 4%/6%); the configurator is the contract",
+        hidden:[
+          { rule:"Trailing (dynamic) drawdown", detail:"The max-loss floor trails your balance — every dollar of profit banked raises the floor, so your real remaining room is the drawdown minus profit already made.", verified:true },
+          { rule:"Preset mismatch", detail:"The Help Centre preset (3% daily / 4% dynamic) still differs from the checkout configurator preset (4% daily / 6% dynamic). Whichever you configure at checkout is what you sign.", verified:true },
+          { rule:"Best-day cap 40% + payout buffer", detail:"No single day may contribute more than 40% of total profit, and a buffer must remain before a payout can be taken.", verified:true } ] } ] },
+    "Alpha Capital": { review:"alpha-capital-review", models:[
+      { id:"pro8", label:"Alpha Pro 8%", t1:8, t2:5, daily:4, dailyBasis:"Chưa kiểm chứng — basis not confirmed on an official page; read the firm's terms before buying", reset:"Chưa kiểm chứng", max:8, maxType:"Static", minDays:null, minDaysNote:"Chưa kiểm chứng — not confirmed on an official page checked 18 Nov 2026", cap:null, capLabel:"Chưa kiểm chứng", news:"Chưa kiểm chứng — theo điều khoản firm, cần đọc lại trước khi mua", weekend:"Chưa kiểm chứng — theo điều khoản firm, cần đọc lại trước khi mua", timeLimit:"Chưa kiểm chứng", fees:{}, feeFrom:"", payout:"On-demand payouts via Rise / Wise", basis:"Alpha Capital published Alpha Pro terms, checked 18 Nov 2026",
+        hidden:[
+          { rule:"Tight static room", detail:"4% daily against an 8% static max loss is the tightest daily budget among the reviewed firms — two max-loss days end the account.", verified:true },
+          { rule:"Vietnam excluded", detail:"Vietnam is on Alpha Capital's excluded-countries list.", verified:true } ] } ] },
+    "Custom": { review:null, models:[
+      { id:"custom", label:"Custom rules", t1:10, t2:5, daily:5, dailyBasis:"Your assumption", reset:"Your assumption", max:10, maxType:"Your assumption", minDays:0, minDaysNote:"Set your own", cap:null, capLabel:"None", news:"—", weekend:"—", timeLimit:"—", fees:{}, feeFrom:"", payout:"—", basis:"Your own rules — no firm data used", hidden:[] } ] }
+  };
+  var INSTRUMENTS = {
+    "XAUUSD":{ unitVal:100, sl:5, slLabel:"Stop-loss distance ($ per oz)", note:"1 lot = 100 oz — a $1.00 move in gold = $100 per lot. Default stop: $5.00." },
+    "EURUSD":{ unitVal:10, sl:20, slLabel:"Stop-loss distance (pips)", note:"1 pip = 0.0001 — $10 per pip per standard lot." },
+    "GBPUSD":{ unitVal:10, sl:20, slLabel:"Stop-loss distance (pips)", note:"1 pip = 0.0001 — $10 per pip per standard lot." },
+    "USDJPY":{ unitVal:6.7, sl:20, slLabel:"Stop-loss distance (pips)", note:"1 pip = 0.01 — ≈ $6.70 per pip per lot at USD/JPY ≈ 150. Check your broker's exact pip value." },
+    "GBPJPY":{ unitVal:6.7, sl:25, slLabel:"Stop-loss distance (pips)", note:"1 pip = 0.01 — ≈ $6.70 per pip per lot at GBP/JPY ≈ 190 the cross rate changes the value; check your broker." },
+    "BTCUSD":{ unitVal:1, sl:300, slLabel:"Stop-loss distance ($)", note:"Assumes 1 lot = 1 BTC, so a $1 move = $1 per lot — contract sizes vary by broker; verify before trading." }
+  };
+  var pl = {};
+  ["plFirm","plModel","plPhase","plFee","plFeeNote","plTarget","plDaily","plMax","plMinDays","plRuleNote","plRuleChips","plSize","plDaysInput","plTrades","plWR","plRRR","plPair","plSL","plSLLabel","plUnitVal","plPairNote","plWarnings","plBinding","plStats","plSummary","plDayBody","plCrossFirm","plFirmRules","plShare"].forEach(function(id){ pl[id] = document.getElementById(id); });
+  var plannerReady = !!pl.plFirm;
+  function plModel(){
+    var f = PLANNER_RULES[pl.plFirm.value]; if (!f) return null;
+    for (var i = 0; i < f.models.length; i++) if (f.models[i].id === pl.plModel.value) return f.models[i];
+    return f.models[0];
+  }
+  function plannerFirmChanged(){
+    var f = PLANNER_RULES[pl.plFirm.value]; if (!f) return;
+    pl.plModel.innerHTML = f.models.map(function(m){ return '<option value="' + m.id + '">' + m.label + "</option>"; }).join("");
+    plannerModelChanged();
+  }
+  function plannerModelChanged(){
+    var m = plModel(); if (!m) return;
+    var phase = pl.plPhase.value === "2" && m.t2 !== null ? 2 : 1;
+    if (m.t2 === null) pl.plPhase.value = "1";
+    pl.plTarget.value = phase === 2 ? m.t2 : m.t1;
+    pl.plDaily.value = m.daily; pl.plMax.value = m.max;
+    pl.plMinDays.value = m.minDays === null ? 0 : m.minDays;
+    var sizeKey = String(parseInt(pl.plSize.value, 10) || "");
+    pl.plFee.value = m.fees[sizeKey] || (m.feeFrom ? m.feeFrom + " (smallest size — confirm yours at checkout)" : "");
+    pl.plFeeNote.textContent = m.feeFrom ? "Published entry from " + m.feeFrom + "." : "";
+    renderFirmRules(); plannerCalc();
+  }
+  function renderFirmRules(){
+    var fname = pl.plFirm.value, f = PLANNER_RULES[fname], m = plModel(); if (!m || !pl.plFirmRules) return;
+    var rows = [
+      ["Profit target", "Phase 1: " + m.t1 + "%" + (m.t2 !== null ? " · Phase 2: " + m.t2 + "%" : " · single phase")],
+      ["Daily loss", m.daily + "% — " + m.dailyBasis],
+      ["Daily reset", m.reset],
+      ["Max loss", m.max + "% — " + m.maxType],
+      ["Min trading days", m.minDays === null ? m.minDaysNote : m.minDaysNote + " (" + m.minDays + ")"],
+      ["Consistency / best-day", m.capLabel],
+      ["News trading", m.news],
+      ["Weekend holding", m.weekend],
+      ["Time limit", m.timeLimit],
+      ["Payout", m.payout]
+    ];
+    var html = '<div class="lbl">' + fname + " — " + m.label + ": rules in force</div>"
+      + rows.map(function(r){ return '<div class="crit"><span style="color:var(--muted)">' + r[0] + '</span><span style="text-align:right;max-width:62%">' + r[1] + "</span></div>"; }).join("")
+      + '<p class="pnote" style="margin:12px 0 0">Basis: ' + m.basis + (f.review ? ' · <a href="/' + f.review + '/" data-route="' + f.review + '">Full ' + fname + " review</a>" : "") + "</p>";
+    if (m.hidden && m.hidden.length){
+      html += '<div class="lbl" style="margin-top:16px">Hidden rules — the ones that end challenges</div>'
+        + m.hidden.map(function(h){ return '<div class="hidden-rule"><b>' + h.rule + '</b><span>' + h.detail + '</span><span class="evrow">' + (h.verified ? '<span class="evchip ev-src">Official source · 18 Nov 2026</span>' : '<span class="evchip ev-pend">Chưa kiểm chứng — theo điều khoản firm, cần đọc lại trước khi mua</span>') + "</span></div>"; }).join("");
+    }
+    pl.plFirmRules.innerHTML = html;
+    pl.plFirmRules.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); navigate(a.getAttribute("data-route")); }); });
+    pl.plRuleNote.textContent = "Prefilled from " + fname + "'s published rules (" + m.basis + "). Edit any field to model custom rules — the plan recalculates from the fields, not the label.";
+    pl.plRuleChips.innerHTML = '<span class="evchip ev-src">Firm rules · official site · 18 Nov 2026</span>' + (m.minDays === null ? '<span class="evchip ev-pend">Min days · chưa kiểm chứng</span>' : "") + (/trailing|dynamic/i.test(m.maxType) ? '<span class="evchip ev-pend">Trailing max loss</span>' : '<span class="evchip ev-ok">Static max loss</span>') + (/equity/i.test(m.dailyBasis) ? '<span class="evchip ev-pend">Daily loss on equity</span>' : "");
+  }
+  function planCheck(o){
+    /* o: {targetPct, dailyPct, maxPct, maxType, minDays, cap, days, trades, wr, rrr} -> feasibility verdict */
+    var expR = o.wr * o.rrr - (1 - o.wr);
+    var effDays = Math.max(o.days, o.minDays || 0);
+    var dailyPct = o.targetPct / effDays;
+    var risk = null, worstPct = null;
+    if (expR > 0){ risk = dailyPct / (o.trades * expR); worstPct = o.trades * risk; }
+    var trailRoom = /trailing|dynamic/i.test(o.maxType) ? o.maxPct - o.targetPct : o.maxPct;
+    var capDays = o.cap ? Math.ceil(100 / o.cap) : 0;
+    var fails = [];
+    if (expR <= 0) fails.push({ rule:"Expectancy", why:"win rate × RRR gives " + expR.toFixed(2) + "R per trade — no positive edge to size from" });
+    if (dailyPct > o.dailyPct) fails.push({ rule:"Daily loss limit", why:"the plan must make " + dailyPct.toFixed(2) + "%/day but the daily loss limit is " + o.dailyPct + "% — one bad day at target pace ends it" });
+    if (worstPct !== null && worstPct > o.dailyPct) fails.push({ rule:"Daily loss limit", why:"if all " + o.trades + " trades stop out you lose " + worstPct.toFixed(2) + "% — beyond the " + o.dailyPct + "% daily limit" });
+    if (trailRoom <= 0) fails.push({ rule:"Trailing max loss", why:"the target (" + o.targetPct + "%) is larger than the trailing drawdown (" + o.maxPct + "%) — the plan must climb the full target while the floor sits only " + o.maxPct + "% under every balance peak, so one ordinary pullback after early gains ends it" });
+    if (capDays > effDays) fails.push({ rule:"Best-day cap " + o.cap + "%", why:"profit must be spread over at least " + capDays + " days, but the plan uses " + effDays });
+    if (risk !== null && risk > o.dailyPct) fails.push({ rule:"Daily loss limit", why:"a single trade risks " + risk.toFixed(2) + "% — more than the whole daily budget" });
+    return { expR:expR, effDays:effDays, dailyPct:dailyPct, riskPct:risk, worstPct:worstPct, trailRoom:trailRoom, capDays:capDays, fails:fails, ok:fails.length === 0 };
+  }
+  function plannerCalc(){
+    if (!plannerReady) return;
+    var m = plModel(); if (!m) return;
+    var size = parseFloat(pl.plSize.value) || 0;
+    var targetPct = parseFloat(pl.plTarget.value) || 0;
+    var dailyPct = parseFloat(pl.plDaily.value) || 0;
+    var maxPct = parseFloat(pl.plMax.value) || 0;
+    var minDays = parseInt(pl.plMinDays.value, 10) || 0;
+    var daysReq = Math.max(1, parseInt(pl.plDaysInput.value, 10) || 1);
+    var trades = Math.max(1, parseInt(pl.plTrades.value, 10) || 1);
+    var wr = (parseFloat(pl.plWR.value) || 0) / 100;
+    var rrr = parseFloat(pl.plRRR.value) || 0;
+    var sl = parseFloat(pl.plSL.value) || 0;
+    var unitVal = parseFloat(pl.plUnitVal.value) || 0;
+    var chk = planCheck({ targetPct:targetPct, dailyPct:dailyPct, maxPct:maxPct, maxType:m.maxType, minDays:(pl.plFirm.value === "Custom" ? minDays : (m.minDays === null ? minDays : m.minDays)), cap:m.cap, days:daysReq, trades:trades, wr:wr, rrr:rrr });
+    var effDays = chk.effDays;
+    var target$ = size * targetPct / 100;
+    var dayTarget$ = effDays ? target$ / effDays : 0;
+    var budget$ = size * dailyPct / 100;
+    var risk$ = chk.riskPct !== null ? size * chk.riskPct / 100 : null;
+    var exp$ = chk.expR > 0 && risk$ !== null ? chk.expR * risk$ : null;
+    var lot = risk$ !== null && sl > 0 && unitVal > 0 ? risk$ / (sl * unitVal) : null;
+    var worst$ = chk.worstPct !== null ? size * chk.worstPct / 100 : null;
+    /* binding constraint */
+    var bindHtml = "";
+    if (chk.ok){
+      bindHtml = '<div class="warn warn-ok"><b>Binding constraint: the daily loss limit.</b> On paper this plan is arithmetically compatible with ' + pl.plFirm.value + "'s rules — and the first rule that will test it is the " + dailyPct + "% daily loss budget (" + money(budget$) + '). Passing still depends on execution, costs and losing streaks; this is compatibility, not a promise.</div>';
+    } else {
+      var f0 = chk.fails[0];
+      bindHtml = '<div class="warn warn-red"><b>Binding constraint — the rule that kills this plan first: ' + f0.rule + '.</b> ' + f0.why + ". Fix that rule first; the max loss limit is not your problem yet.</div>";
+    }
+    pl.plBinding.innerHTML = bindHtml;
+    /* warnings + fixes */
+    var warns = [], fixes = [];
+    chk.fails.forEach(function(f){ if (f.rule !== (chk.fails[0] || {}).rule) warns.push('<div class="warn warn-red"><b>Not feasible — ' + f.rule + ':</b> ' + f.why + ".</div>"); });
+    if (chk.expR <= 0){
+      var needWR = 1 / (1 + rrr), needRRR = wr > 0 ? (1 - wr) / wr : 0;
+      fixes.push("Raise the win rate to at least " + Math.ceil(needWR * 100) + "% at this RRR, or raise RRR to at least " + needRRR.toFixed(2) + " at this win rate — breakeven comes before any plan.");
+    }
+    if (chk.dailyPct > dailyPct){
+      fixes.push("Give the plan at least " + Math.ceil(targetPct / dailyPct) + " days so the daily target falls under the daily loss limit — or accept a smaller account target per phase.");
+    }
+    if (chk.worstPct !== null && chk.worstPct > dailyPct && chk.expR > 0){
+      var capRisk$ = budget$ / trades;
+      var daysAtCap = Math.ceil(target$ / (trades * chk.expR * capRisk$));
+      fixes.push("Cap risk at " + money(capRisk$) + " per trade (the daily budget split across " + trades + " trades) — at that size the same target needs about " + daysAtCap + " days in expectation, so extend the plan to " + daysAtCap + "+ days.");
+    }
+    if (chk.capDays > effDays) fixes.push("Spread profit over at least " + chk.capDays + " days to respect the " + m.cap + "% best-day cap — set Days to " + chk.capDays + " or more.");
+    if (daysReq < ((m.minDays === null ? minDays : m.minDays) || 0)) warns.push('<div class="warn warn-amber"><b>Minimum trading days:</b> ' + pl.plFirm.value + " requires " + (m.minDays === null ? "a minimum that is not yet verified" : m.minDays + " days") + " — the plan has been stretched to " + effDays + " days.</div>");
+    if (chk.riskPct !== null && chk.riskPct > 2 && chk.worstPct <= dailyPct) warns.push('<div class="warn warn-amber"><b>Risk per trade is ' + chk.riskPct.toFixed(2) + '% of the account</b> — aggressive for a challenge. Most desks cap challenge risk at 0.5–1% per trade.</div>');
+    if (/trailing|dynamic/i.test(m.maxType) && chk.trailRoom > 0) warns.push('<div class="warn warn-amber"><b>Trailing max loss:</b> the floor sits ' + maxPct + '% below your highest balance at all times — gains do not buy extra room, and any pullback is measured from the peak, not from where the day started.</div>');
+    if (/equity/i.test(m.dailyBasis)) warns.push('<div class="warn warn-amber"><b>Daily loss is tested on live equity</b> at ' + pl.plFirm.value + ' — floating losses count. The budget below is measured against the day-start balance (' + m.reset.toLowerCase() + '), and open drawdown eats it before any trade closes.</div>');
+    pl.plWarnings.innerHTML = warns.join("") + (fixes.length ? '<div class="warn warn-fix"><b>How to fix this plan:</b><ul>' + fixes.map(function(x){ return "<li>" + x + "</li>"; }).join("") + "</ul></div>" : "");
+    /* stats */
+    var stats = [
+      ["Total target", money(target$) + " · " + targetPct + "%"],
+      ["Target per day", money(dayTarget$) + " · " + chk.dailyPct.toFixed(2) + "%"],
+      ["Trades / day (max)", String(trades)],
+      ["Risk per trade", risk$ !== null ? money(risk$) + " · " + chk.riskPct.toFixed(2) + "%" : "— edge first"],
+      ["Lot per trade (" + pl.plPair.value + ")", lot !== null ? lot.toFixed(2) + " lots" : "—"],
+      ["Expectancy / trade", (chk.expR > 0 ? "+" : "") + chk.expR.toFixed(2) + "R" + (exp$ !== null ? " · " + money(exp$) : "")],
+      ["Daily loss budget", money(budget$) + " · " + dailyPct + "%"],
+      ["Worst day (all stops)", worst$ !== null ? money(worst$) : "—"],
+      ["Plan length", effDays + " days" + ((m.minDays || minDays) ? " (min " + (m.minDays === null ? minDays : m.minDays) + ")" : "")],
+      ["Max-loss room at target", /trailing|dynamic/i.test(m.maxType) ? maxPct + "% below peak (trailing)" : maxPct + "% (static)"]
+    ];
+    pl.plStats.innerHTML = stats.map(function(s){ return '<div class="stat"><div class="k">' + s[0] + '</div><div class="v">' + s[1] + "</div></div>"; }).join("");
+    /* day table */
+    var rowsHtml = "", capNote = m.cap ? " Best day must stay ≤ " + m.cap + "% of total profit (" + money(target$ * m.cap / 100) + ")." : "";
+    var showDays = Math.min(effDays, 60);
+    for (var d = 1; d <= showDays; d++){
+      rowsHtml += "<tr><td class='mono'>Day " + d + "</td><td class='num'>" + money(dayTarget$) + "</td><td class='num'>" + money(dayTarget$ * d) + "</td><td class='num'>" + money(budget$) + "</td><td>Day P&amp;L reaches −" + money(budget$) + " (" + dailyPct + "% of initial)</td><td class='num'>" + trades + "</td></tr>";
+    }
+    if (effDays > showDays) rowsHtml += '<tr><td colspan="6" style="color:var(--muted)">… plan continues on the same daily numbers to day ' + effDays + ".</td></tr>";
+    pl.plDayBody.innerHTML = rowsHtml;
+    /* summary + cross-firm */
+    pl.plSummary.textContent = pl.plFirm.value + " " + m.label + " · " + money(size) + " account · Target " + targetPct + "% in " + effDays + " days · " + trades + " trades/day max · Win rate " + Math.round(wr * 100) + "% · RRR 1:" + rrr + " · Risk " + (risk$ !== null ? money(risk$) + "/trade" : "—") + " · " + (lot !== null ? lot.toFixed(2) + " lots " : "") + pl.plPair.value + " · Expectancy " + (chk.expR > 0 ? "+" : "") + chk.expR.toFixed(2) + "R · Verdict: " + (chk.ok ? "arithmetically compatible with the firm's rules" : "NOT feasible — first killer: " + chk.fails[0].rule) + "." + capNote;
+    renderCrossFirm({ size:size, days:daysReq, trades:trades, wr:wr, rrr:rrr });
+    var sl2 = document.getElementById("plShareLink");
+    if (sl2) sl2.textContent = BASE + "challenge-planner/?f=" + encodeURIComponent(pl.plFirm.value) + "&m=" + encodeURIComponent(pl.plModel.value) + "&ph=" + pl.plPhase.value + "&size=" + encodeURIComponent(pl.plSize.value) + "&days=" + encodeURIComponent(pl.plDaysInput.value) + "&tr=" + encodeURIComponent(pl.plTrades.value) + "&wr=" + encodeURIComponent(pl.plWR.value) + "&rrr=" + encodeURIComponent(pl.plRRR.value) + "&pair=" + encodeURIComponent(pl.plPair.value) + "&sl=" + encodeURIComponent(pl.plSL.value) + "&t=" + encodeURIComponent(pl.plTarget.value) + "&d=" + encodeURIComponent(pl.plDaily.value) + "&x=" + encodeURIComponent(pl.plMax.value);
+    renderFirmRulesActive(m);
+  }
+  function renderFirmRulesActive(){ /* rules panel already rendered on firm/model change */ }
+  function renderCrossFirm(inp){
+    if (!pl.plCrossFirm) return;
+    var html = "";
+    Object.keys(PLANNER_RULES).forEach(function(fname){
+      if (fname === "Custom") return;
+      var f = PLANNER_RULES[fname], m = f.models[0];
+      var chk = planCheck({ targetPct:m.t1, dailyPct:m.daily, maxPct:m.max, maxType:m.maxType, minDays:(m.minDays || 0), cap:m.cap, days:inp.days, trades:inp.trades, wr:inp.wr, rrr:inp.rrr });
+      html += '<span class="xf ' + (chk.ok ? "ok" : "bad") + '"><b>' + fname + "</b> — " + (chk.ok ? "plan fits its rules" : "fails: " + chk.fails[0].rule) + "</span>";
+    });
+    pl.plCrossFirm.innerHTML = html;
+  }
+  if (plannerReady){
+    pl.plFirm.innerHTML = Object.keys(PLANNER_RULES).map(function(k){ return '<option value="' + k + '">' + k + "</option>"; }).join("");
+    pl.plPair.innerHTML = Object.keys(INSTRUMENTS).map(function(k){ return '<option value="' + k + '">' + k + "</option>"; }).join("");
+    function pairChanged(){
+      var ins = INSTRUMENTS[pl.plPair.value];
+      pl.plSL.value = ins.sl; pl.plUnitVal.value = ins.unitVal;
+      pl.plSLLabel.textContent = ins.slLabel; pl.plPairNote.textContent = ins.note;
+      plannerCalc();
+    }
+    pl.plFirm.addEventListener("change", plannerFirmChanged);
+    pl.plModel.addEventListener("change", plannerModelChanged);
+    pl.plPhase.addEventListener("change", plannerModelChanged);
+    pl.plPair.addEventListener("change", pairChanged);
+    [pl.plTarget, pl.plDaily, pl.plMax, pl.plMinDays, pl.plSize, pl.plDaysInput, pl.plTrades, pl.plWR, pl.plRRR, pl.plSL, pl.plUnitVal].forEach(function(el){ if (el) el.addEventListener("input", plannerCalc); });
+    if (pl.plSize) pl.plSize.addEventListener("change", plannerModelChanged);
+    if (pl.plShare) pl.plShare.addEventListener("click", function(){
+      var m = plModel();
+      var qs = ["f=" + encodeURIComponent(pl.plFirm.value), "m=" + encodeURIComponent(pl.plModel.value), "ph=" + pl.plPhase.value,
+        "size=" + encodeURIComponent(pl.plSize.value), "days=" + encodeURIComponent(pl.plDaysInput.value), "tr=" + encodeURIComponent(pl.plTrades.value),
+        "wr=" + encodeURIComponent(pl.plWR.value), "rrr=" + encodeURIComponent(pl.plRRR.value), "pair=" + encodeURIComponent(pl.plPair.value),
+        "sl=" + encodeURIComponent(pl.plSL.value), "t=" + encodeURIComponent(pl.plTarget.value), "d=" + encodeURIComponent(pl.plDaily.value), "x=" + encodeURIComponent(pl.plMax.value)].join("&");
+      var url = BASE + "challenge-planner/?" + qs;
+      var linkEl = document.getElementById("plShareLink"); if (linkEl) linkEl.textContent = url;
+      function done(){ showToast("Plan summary copied — send it to a friend; the link under it opens this exact plan."); }
+      function fallback(){
+        var ta = document.createElement("textarea"); ta.value = (pl.plSummary ? pl.plSummary.textContent : ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch(e){ showToast("Copy failed — the plan link is in the summary above."); }
+        document.body.removeChild(ta);
+      }
+      var summaryText = (pl.plSummary ? pl.plSummary.textContent : "");
+      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(summaryText).then(done, fallback); }
+      else fallback();
+    });
+    plannerFirmChanged();
+    pairChanged();
+    /* deep-link params */
+    try {
+      var q = new URLSearchParams(window.location.search);
+      if (q.get("f") && PLANNER_RULES[q.get("f")]){ pl.plFirm.value = q.get("f"); plannerFirmChanged(); }
+      if (q.get("m")){ pl.plModel.value = q.get("m"); plannerModelChanged(); }
+      if (q.get("ph")) pl.plPhase.value = q.get("ph");
+      ["size:plSize","days:plDaysInput","tr:plTrades","wr:plWR","rrr:plRRR","sl:plSL","t:plTarget","d:plDaily","x:plMax"].forEach(function(pair){
+        var parts = pair.split(":"), v = q.get(parts[0]);
+        if (v !== null && pl[parts[1]]) pl[parts[1]].value = v;
+      });
+      if (q.get("pair") && INSTRUMENTS[q.get("pair")]){ pl.plPair.value = q.get("pair"); pairChanged(); }
+      plannerCalc();
+    } catch(e){}
+  }
+
 
   render(false);
 })();
