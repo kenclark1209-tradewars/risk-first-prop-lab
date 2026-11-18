@@ -512,6 +512,21 @@
     .article-body{min-width:0;max-width:100%}
     .article-body .tblwrap,.planner-out .tblwrap{overflow-x:auto}
   }
+  /* --- Tools dropdown in the main nav --- */
+  .navdrop{position:relative;display:inline-flex;flex:none}
+  .navdrop-btn{font:inherit;font-size:13.5px;font-weight:600;color:rgba(243,239,227,.78);background:none;border:0;padding:8px 10px;border-radius:8px;min-height:38px;display:inline-flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap}
+  .navdrop-btn:hover,.navdrop-btn[aria-expanded="true"]{color:var(--gold-soft);background:rgba(255,255,255,.06)}
+  .navdrop-btn .nd-caret{font-size:10px;line-height:1}
+  .navdrop-panel{position:absolute;top:calc(100% + 14px);right:0;width:272px;max-width:86vw;background:var(--navy-900);border:1px solid rgba(212,175,55,.35);border-radius:10px;box-shadow:var(--shadow);padding:8px;z-index:140;text-align:left}
+  .navdrop-panel a{display:block;padding:9px 11px;border-radius:7px;text-decoration:none;color:#E8ECF3}
+  .navdrop-panel a:hover{background:rgba(255,255,255,.06)}
+  .navdrop-panel a b{display:block;font-size:14px;font-family:"Archivo",sans-serif}
+  .navdrop-panel a span{display:block;font-size:12px;color:var(--muted);line-height:1.45;margin-top:1px}
+  .navdrop-panel a[aria-current="page"] b{color:var(--gold-soft)}
+  .toolslbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin:16px 0 2px}
+  .st-bad{color:#F0938F;border-color:rgba(214,69,65,.55);background:var(--red-bg)}
+  html[data-theme="light"] .st-bad{color:#A02C28}
+  .bignum{font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:600;color:var(--text);line-height:1.1}
 </style>
 <script>
 /* Route boot: resolve the route from the URL before first paint, then hide every
@@ -519,7 +534,7 @@
    over, so the correct view is on screen from the first frame — the homepage is
    never rendered above a sub-page on a direct open or reload. */
 (function(){
-  var ROUTES = ["home","directory","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","challenge-planner","prop-firm-match","trader-viet","community-reviews","payout-tracker","affiliate-disclosure","for-prop-firms","transparency","404"];
+  var ROUTES = ["home","directory","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","challenge-planner","gold-cost","prop-firm-match","trader-viet","community-reviews","payout-tracker","denial-index","affiliate-disclosure","for-prop-firms","transparency","404"];
   function slug(){
     var h = window.location.hash.replace(/^#\/?/, "").replace(/\/$/, "");
     if (h && ROUTES.indexOf(h.split("/")[0]) >= 0) return h.split("/")[0];
@@ -552,6 +567,17 @@
       <a href="/directory/" data-route="directory" data-nav="directory">Directory</a>
       <a href="/prop-firm-match/" data-route="prop-firm-match" data-nav="prop-firm-match">Match</a>
       <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner">Planner</a>
+      <div class="navdrop">
+        <button class="navdrop-btn" id="toolsBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="toolsPanel">Tools <span class="nd-caret" aria-hidden="true">▾</span></button>
+        <div class="navdrop-panel" id="toolsPanel" hidden>
+          <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner"><b>Challenge Pass Planner</b><span>A day-by-day pass plan from each firm's own rules and hidden rules.</span></a>
+          <a href="/gold-cost/" data-route="gold-cost" data-nav="gold-cost"><b>Gold Cost League Table</b><span>XAUUSD all-in cost measured on MT5 — plus the Your Gold Bleed calculator.</span></a>
+          <a href="/denial-index/" data-route="denial-index" data-nav="denial-index"><b>Payout Denial Index</b><span>The payouts that never arrived — verified denials, counted.</span></a>
+          <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd" data-nav="rule-trap-daily-dd"><b>Rule Trap: Daily Drawdown</b><span>Balance vs equity vs highest-of-both, worked in dollars.</span></a>
+          <a href="/country-check/" data-route="country-check" data-nav="country-check"><b>Country Check</b><span>Which firms ban your country — checked per product.</span></a>
+          <a href="/prop-firm-scorecard/" data-route="prop-firm-scorecard" data-nav="prop-firm-scorecard"><b>10-Point Scorecard</b><span>The criteria behind every Lab score.</span></a>
+        </div>
+      </div>
       <a href="/payout-tracker/" data-route="payout-tracker" data-nav="payout-tracker">Payout Tracker</a>
       <a href="/trader-viet/" data-route="trader-viet" data-nav="trader-viet">Trader Viet</a>
       <a href="/transparency/" data-route="transparency" data-nav="transparency">Method</a>
@@ -576,6 +602,11 @@
         <a href="/directory/" data-route="directory" data-nav="directory">Directory</a>
         <a href="/prop-firm-match/" data-route="prop-firm-match" data-nav="prop-firm-match">Match</a>
         <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner">Planner</a>
+        <p class="toolslbl">Tools</p>
+        <a href="/gold-cost/" data-route="gold-cost" data-nav="gold-cost">Gold Cost League Table</a>
+        <a href="/denial-index/" data-route="denial-index" data-nav="denial-index">Payout Denial Index</a>
+        <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd" data-nav="rule-trap-daily-dd">Rule Trap: Daily Drawdown</a>
+        <a href="/country-check/" data-route="country-check" data-nav="country-check">Country Check</a>
         <a href="/payout-tracker/" data-route="payout-tracker" data-nav="payout-tracker">Payout Tracker</a>
         <a href="/trader-viet/" data-route="trader-viet" data-nav="trader-viet">Trader Viet</a>
         <a href="/transparency/" data-route="transparency" data-nav="transparency">Method</a>
@@ -637,7 +668,7 @@
         <thead><tr><th class="sortable" data-sort="name">Firm ↕</th><th>Score</th><th>Model</th><th>Daily / Max loss</th><th class="num sortable" data-sort="split">Max split ↕</th><th class="num sortable" data-sort="price">Entry from ↕</th><th class="num">XAUUSD all-in cost</th><th class="optcol" data-col="country">Country · years</th><th class="optcol" data-col="platforms">Platforms</th><th class="optcol" data-col="vietnam">Vietnam</th><th>Actions</th></tr></thead>
         <tbody id="decisionBody"></tbody>
       </table></div>
-      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (48)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a><a class="btn btn-line" href="/challenge-planner/" data-route="challenge-planner">Plan your pass — Challenge Pass Planner</a></div>
+      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (48)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a><a class="btn btn-line" href="/challenge-planner/" data-route="challenge-planner">Plan your pass — Challenge Pass Planner</a><a class="btn btn-line" href="/gold-cost/" data-route="gold-cost">Gold Cost League Table — what gold really costs per firm</a><a class="btn btn-line" href="/denial-index/" data-route="denial-index">Payout Denial Index — payouts refused, counted</a></div>
     </section>
 
     <section class="blk" id="updates">
@@ -935,6 +966,7 @@
         <a href="/fundednext-review/" data-route="fundednext-review"><b>FundedNext Review</b><span>Easier targets, balance-based limits — but barred in Vietnam.</span></a>
         <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd"><b>Rule Trap: Daily Drawdown</b><span>Why FTMO's equity-based daily loss changes your sizing.</span></a>
         <a href="/directory/" data-route="directory"><b>All Prop Firms Directory</b><span>48 firms, filterable, with Lab status.</span></a>
+        <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>FTMO's all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
       </div>
     </div>
   </main>
@@ -1053,6 +1085,7 @@
         <a href="/fundednext-payout-test/" data-route="fundednext-payout-test"><b>FundedNext Payout Test</b><span>The timed withdrawal protocol for this firm.</span></a>
         <a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO Review</b><span>The benchmark firm, same template.</span></a>
         <a href="/the5ers-review/" data-route="the5ers-review"><b>The5ers Review</b><span>Static drawdown and scaling — and open to Vietnam.</span></a>
+        <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>FundedNext's all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
       </div>
     </div>
   </main>
@@ -1179,6 +1212,7 @@
         <a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO Review</b><span>The benchmark firm, same template.</span></a>
         <a href="/fundednext-review/" data-route="fundednext-review"><b>FundedNext Review</b><span>Faster structure — but closed to Vietnam.</span></a>
         <a href="/prop-firm-match/" data-route="prop-firm-match"><b>Prop Firm Match</b><span>Which model fits your style and budget?</span></a>
+        <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>The5ers' all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
       </div>
     </div>
   </main>
@@ -1313,6 +1347,7 @@
         <a href="/fundednext-review/" data-route="fundednext-review"><b>FundedNext Review</b><span>Simpler model menu, balance-based limits.</span></a>
         <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd"><b>Rule Trap: Daily Drawdown</b><span>Funding Pips' higher-of-both basis, worked in dollars.</span></a>
         <a href="/directory/" data-route="directory"><b>All Prop Firms Directory</b><span>Compare entry prices across 48 firms.</span></a>
+        <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>Funding Pips' all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
       </div>
     </div>
   </main>
@@ -1427,6 +1462,7 @@
         <a href="/alpha-capital-review/" data-route="alpha-capital-review"><b>Alpha Capital Review</b><span>The other configurable firm — static vs trailing by product line.</span></a>
         <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd"><b>Rule Trap: Daily Drawdown</b><span>How a trailing floor changes your sizing maths.</span></a>
         <a href="/directory/" data-route="directory"><b>All Prop Firms Directory</b><span>48 firms with Lab status.</span></a>
+        <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>E8 Markets' all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
       </div>
     </div>
   </main>
@@ -1559,6 +1595,7 @@
         <a href="/e8-markets-review/" data-route="e8-markets-review"><b>E8 Markets Review</b><span>Configurable the other way: trailing floors and buffers.</span></a>
         <a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO Review</b><span>The refundable-fee benchmark.</span></a>
         <a href="/country-check/" data-route="country-check"><b>Country Check</b><span>Alpha's excluded list in context.</span></a>
+        <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>Alpha Capital's all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
       </div>
     </div>
   </main>
@@ -2132,6 +2169,7 @@
         <thead><tr><th>Firm</th><th class="num">Verified payouts</th><th class="num">Total paid (verified)</th><th class="num">Largest</th><th class="num">Average</th><th class="num">Median time</th><th>Trend / regions</th></tr></thead>
         <tbody id="ptFirmBody"></tbody>
       </table></div>
+      <div class="callout"><h3>The other side of this table</h3><p>This tracker counts payouts that arrived. The <b>Payout Denial Index</b> counts the opposite — payouts that were requested and refused, each case graded by evidence and shown with the firm's response. A firm can look generous here and still refuse at the door; check both before you buy.</p><a class="btn btn-gold btn-sm" href="/denial-index/" data-route="denial-index">Open the Payout Denial Index →</a></div>
       <div class="callout"><h3>Add a record</h3><p>Post firm, date, amount, request-to-received time and proof in the Payout Proof topic. A moderator verifies the evidence, then the record appears here on the next site update — with the region split shown per firm.</p><a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Payout Proof topic ↗</a></div>
     </div>
   </main>
@@ -2371,6 +2409,147 @@
   </main>
 </div>
 
+<!-- ==================== VIEW: GOLD COST LEAGUE TABLE =================== -->
+<div data-view="gold-cost" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Tools</span> <span>›</span> <span>Gold Cost League Table</span></nav>
+      <h1>Gold Cost League Table: XAUUSD All-In Cost, Measured on MT5</h1>
+      <p class="standfirst">Every prop firm comparison online quotes a different gold spread, in different units, from a different session — and none of them show their working. This table is built differently: one gold system, one MT5 terminal setup, the same sessions, measured per firm — spread, commission and news slippage added into a single all-in $/lot, with the protocol and the raw log published next to every number.</p>
+      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Protocol v1.0 — published below</span><span>No measurement round has run yet — every firm starts as Pending MT5 log</span><span>The Lab never publishes an estimated spread</span></div>
+    </div>
+    <div class="article-body" style="max-width:960px">
+      <h2>Your Gold Bleed</h2>
+      <p>Spread and commission are not trivia — at real volume they are a second challenge fee you pay every month. Pick your firm and your monthly gold volume. When the Lab has a measured all-in cost for that firm, this calculator turns it into the dollars you bleed per month before you make a cent. Until a firm is measured, it says so — and calculates nothing.</p>
+      <form class="revform" id="gcForm" style="margin-bottom:14px">
+        <div><label for="gcFirm">Firm you trade gold with</label><select id="gcFirm">
+          <option>FTMO</option><option>FundedNext</option><option>The5ers</option><option>Funding Pips</option><option>E8 Markets</option><option>Alpha Capital Group</option>
+        </select></div>
+        <div><label for="gcLots">Gold volume — lots per month (XAUUSD)</label><input id="gcLots" type="number" step="1" min="0" value="20"></div>
+      </form>
+      <div id="gcOut" aria-live="polite"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0 4px">
+        <button class="btn btn-gold" id="gcShare" type="button">Share my result</button>
+        <span style="font-size:13.5px;color:var(--muted)">Copies a summary plus a link that re-opens this calculator with your firm and volume filled in. Runs entirely in your browser — nothing is stored or sent.</span>
+      </div>
+      <p class="mono" id="gcShareLink" style="word-break:break-all;font-size:12px;color:var(--muted);margin:8px 0 0"></p>
+
+      <h2>The league table</h2>
+      <p>Ranked by measured all-in cost once measurements exist — cheapest first. A firm with no MT5 log has no rank and no number: <span class="pending">Pending MT5 log</span> is a statement about evidence, not a score. Published commission figures from a firm's own pages live in its review; they are <b>not</b> entered here, because a published commission is not a measured cost.</p>
+      <div class="tblwrap"><table aria-label="Gold Cost League Table — XAUUSD all-in cost per firm" style="min-width:880px">
+        <thead><tr><th class="num">Rank</th><th>Firm</th><th class="num">Spread avg — London</th><th class="num">Spread p95</th><th class="num">Commission $/lot RT</th><th class="num">News slippage</th><th class="num">All-in $/lot</th><th class="num">All-in $/month @ 20 lots</th><th>Measured</th><th>Raw log</th></tr></thead>
+        <tbody>
+          <tr><td class="num pending">—</td><td><a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO</b></a></td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td><span class="statuschip st-pending">Not measured yet</span></td><td class="pending">No log yet</td></tr>
+          <tr><td class="num pending">—</td><td><a href="/fundednext-review/" data-route="fundednext-review"><b>FundedNext</b></a></td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td><span class="statuschip st-pending">Not measured yet</span></td><td class="pending">No log yet</td></tr>
+          <tr><td class="num pending">—</td><td><a href="/the5ers-review/" data-route="the5ers-review"><b>The5ers</b></a></td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td><span class="statuschip st-pending">Not measured yet</span></td><td class="pending">No log yet</td></tr>
+          <tr><td class="num pending">—</td><td><a href="/funding-pips-review/" data-route="funding-pips-review"><b>Funding Pips</b></a></td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td><span class="statuschip st-pending">Not measured yet</span></td><td class="pending">No log yet</td></tr>
+          <tr><td class="num pending">—</td><td><a href="/e8-markets-review/" data-route="e8-markets-review"><b>E8 Markets</b></a></td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td><span class="statuschip st-pending">Not measured yet</span></td><td class="pending">No log yet</td></tr>
+          <tr><td class="num pending">—</td><td><a href="/alpha-capital-review/" data-route="alpha-capital-review"><b>Alpha Capital Group</b></a></td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td><span class="statuschip st-pending">Not measured yet</span></td><td class="pending">No log yet</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Firms enter this table in the order the Lab measures them, not the order anyone pays for. Money never buys a position in this table — the same rule as every ranking on this site.</p>
+
+      <h2>Measurement protocol v1.0 — reproduce it yourself</h2>
+      <p>The point of publishing the protocol is that anyone with an MT5 terminal can run the same test and check the Lab's numbers. A measurement that cannot be reproduced is marketing.</p>
+      <ul class="checklist">
+        <li><span class="mark">1</span><span><b>One system, every firm.</b> The same gold system, the same lot sizing, the same terminal build — only the firm changes. No firm gets a friendlier setup.</span></li>
+        <li><span class="mark">2</span><span><b>Fixed sessions.</b> Spread is sampled tick by tick through the London open (07:00–09:00 UTC) and the New York open (13:00–15:00 UTC), the two windows a gold trader actually pays for.</span></li>
+        <li><span class="mark">3</span><span><b>One news event.</b> Each round includes one scheduled high-impact US release. News slippage is the gap between the requested price and the filled price on orders placed through the release — sampled, never guaranteed.</span></li>
+        <li><span class="mark">4</span><span><b>Commission from fills, not brochures.</b> The commission column is what the account was actually charged per round-turn lot, reconciled against the firm's published formula in its review.</span></li>
+        <li><span class="mark">5</span><span><b>Sample sizes published.</b> Every row carries its measurement date, session, tick count and trade count. An average without a sample size is not published.</span></li>
+        <li><span class="mark">6</span><span><b>Raw log published with the row.</b> The exported MT5 log behind each measurement is linked from the Raw log column, unedited. Disagree with a number? The log is right there — argue with the log, in the open.</span></li>
+        <li><span class="mark">7</span><span><b>Re-measured, not frozen.</b> Spreads move with liquidity, so a row is a dated measurement, not a permanent truth. Rounds repeat and old rows are replaced with the new date shown — never silently edited.</span></li>
+      </ul>
+      <div class="callout"><h3>Raw logs</h3><p>No measurement round has run yet, so there is no raw log to publish — the first round's log will be linked from the table above the day it is measured. Until then, every cell on this page stays <b>Pending MT5 log</b> rather than borrowing a snapshot from another site.</p><a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLabchat" target="_blank" rel="noopener">Follow measurement rounds in the group ↗</a></div>
+      <p class="note">Costs are one input, not a verdict: a cheap firm with a hostile drawdown rule can still cost you the whole fee. Pair this table with the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a> and each firm's <a href="/denial-index/" data-route="denial-index">denial record</a> before you buy.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ==================== VIEW: PAYOUT DENIAL INDEX =================== -->
+<div data-view="denial-index" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Tools</span> <span>›</span> <span>Payout Denial Index</span></nav>
+      <h1>Payout Denial Index: The Payouts That Never Arrived</h1>
+      <p class="standfirst">Every payout tracker on the internet counts money that left a firm. This index counts the opposite: payout requests that were refused after a trader passed, traded and asked to be paid. A firm can top every payout table and still refuse at the door — the refusal is the number that decides whether your payout ever arrives.</p>
+      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Starts empty — 0 verified cases</span><span>Evidence standard published below — rumours are never posted</span><span>Firms get a right of reply on every case</span></div>
+    </div>
+    <div class="article-body" style="max-width:960px">
+      <div class="stat-grid">
+        <div class="stat"><div class="k">Verified denial cases</div><div class="bignum">0</div></div>
+        <div class="stat"><div class="k">Awaiting verification</div><div class="bignum">0</div></div>
+        <div class="stat"><div class="k">Insufficient evidence</div><div class="bignum">0</div></div>
+        <div class="stat"><div class="k">Firms with a verified denial</div><div class="bignum">0</div></div>
+      </div>
+      <div class="warn warn-amber"><b>Honestly empty.</b> There is no verified denial case yet — no case has been submitted with evidence that passes the standard below, so this index publishes <b>0</b> and nothing else. Zero verified cases does <b>not</b> mean zero denials have happened anywhere; it means the Lab has no verified evidence yet. The first case appears only when a real report clears verification.</div>
+
+      <h2>Cases</h2>
+      <div class="tblwrap"><table aria-label="Verified payout denial cases" style="min-width:760px">
+        <thead><tr><th>Date of denial</th><th>Firm</th><th class="num">Amount refused</th><th>Reason given by the firm</th><th>Evidence level</th><th>Firm response</th></tr></thead>
+        <tbody>
+          <tr><td colspan="6" style="text-align:left;color:var(--muted)">No cases yet — nothing has been submitted and verified. Be the first to submit a case with evidence, using the form below.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>By firm</h2>
+      <div class="tblwrap"><table aria-label="Payout Denial Index by firm" style="min-width:680px">
+        <thead><tr><th>Firm</th><th class="num">Verified denials</th><th class="num">Awaiting verification</th><th>Denial rate</th><th>Median days, request → denial</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/fundednext-review/" data-route="fundednext-review"><b>FundedNext</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/the5ers-review/" data-route="the5ers-review"><b>The5ers</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/funding-pips-review/" data-route="funding-pips-review"><b>Funding Pips</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/e8-markets-review/" data-route="e8-markets-review"><b>E8 Markets</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/alpha-capital-review/" data-route="alpha-capital-review"><b>Alpha Capital Group</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">A denial rate is published only when a firm has enough verified cases <i>and</i> a meaningful count of verified payout requests to divide by — a rate built on one report is a weapon, not a statistic, and this index does not publish it. Compare with the <a href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a>, which counts the payouts that did arrive.</p>
+
+      <h2>The evidence standard — read before you submit</h2>
+      <p>A denial accusation can damage a firm and mislead traders, so this index grades evidence strictly and publishes the grade next to every case. The standard is the same for every firm, including firms the Lab earns affiliate commission from.</p>
+      <ul class="checklist">
+        <li><span class="mark">1</span><span><b>Four facts, always:</b> the firm, the date of the denial, the amount refused, and the reason the firm gave. A report missing any of the four cannot be verified.</span></li>
+        <li><span class="mark">2</span><span><b>Evidence, not adjectives:</b> a screenshot of the firm's denial email or dashboard notice, with personal information covered — name, email, account number and wallet details must be hidden <i>before</i> you send it. Never send an unedited screenshot.</span></li>
+        <li><span class="mark">3</span><span><b>First-hand only.</b> You report your own denial. “My friend was denied”, screenshots forwarded from another group, and stories without the firm's own words are <b>not posted</b> — not as cases, not as rumours, not at all.</span></li>
+        <li><span class="mark">4</span><span><b>The reason is checked against the rulebook.</b> Verification compares the firm's stated reason with the rule as published at the time — a denial under a rule that did not exist when the account was bought is flagged as exactly that.</span></li>
+        <li><span class="mark">5</span><span><b>The firm gets a right of reply.</b> Before a case is marked Verified, the firm is invited to respond; the response is published <b>alongside the case, unedited</b>, and a case the firm resolves is updated to say so.</span></li>
+      </ul>
+      <h3>How every case is labelled</h3>
+      <div class="tblwrap"><table aria-label="Denial Index evidence levels">
+        <thead><tr><th>Label</th><th>Meaning</th><th>Counts in the index?</th></tr></thead>
+        <tbody>
+          <tr><td><span class="statuschip st-bad">Verified</span></td><td>Firm, date, amount and reason confirmed against the firm's own denial notice; rulebook check done; firm invited to reply.</td><td><b>Yes</b> — the only level that enters counts and, when a sample exists, rates.</td></tr>
+          <tr><td><span class="statuschip st-pending">Awaiting verification</span></td><td>Report received with the four facts, evidence being checked or the firm has not yet had its reply window.</td><td>Counted separately, never merged into the verified count.</td></tr>
+          <tr><td><span class="statuschip st-pending">Insufficient evidence</span></td><td>Missing facts or no usable evidence. Listed as a count only — the claim itself is not published.</td><td>No — and the firm is not named by the claim.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="warn warn-red"><b>No rumours. No exceptions.</b> This page does not publish hearsay, anonymous accusations without the firm's own denial notice, or “a friend of mine was refused”. An unverified report never enters a count, a rate or a headline — and no firm can pay to remove a verified case, soften its label or delay its firm's reply window. Money buys display and speed on this site, never a verdict; on this page it does not even buy silence.</div>
+
+      <h2>Denial of the Week</h2>
+      <p>None yet. The first Denial of the Week is published only when a verified case exists — this slot is never filled with an unverified story to keep a schedule.</p>
+
+      <h2>Submit a denial report</h2>
+      <p>Fill in the form — it prepares a ready-to-send report and copies it for you. Then paste it into the Telegram group and attach your evidence screenshot (personal information covered). This page sends nothing and stores nothing; a moderator verifies the report against the standard above before anything appears here.</p>
+      <form class="revform" id="dnForm">
+        <div><label for="dnFirm">Firm</label><select id="dnFirm" required><option value="">Choose a firm…</option><option>FTMO</option><option>FundedNext</option><option>The5ers</option><option>Funding Pips</option><option>E8 Markets</option><option>Alpha Capital Group</option><option>Other (name it in the reason box)</option></select></div>
+        <div><label for="dnDate">Date of the denial</label><input id="dnDate" type="date" required></div>
+        <div><label for="dnAmount">Amount refused (USD)</label><input id="dnAmount" type="number" step="0.01" min="0" required placeholder="e.g. 2000"></div>
+        <div><label for="dnReason">Reason the firm gave</label><select id="dnReason" required><option value="">Choose the closest…</option><option>Consistency / best-day rule</option><option>One-sided betting / gambling</option><option>Account termination clause (e.g. Section 16)</option><option>IP / VPN / multiple accounts</option><option>Hedging</option><option>Copy trading</option><option>News trading</option><option>Other — quoted in the box below</option></select></div>
+        <div><label for="dnEvidence">Evidence screenshot</label><select id="dnEvidence" required><option value="">Choose…</option><option value="ready">Ready — denial email/dashboard screenshot, personal info covered</option><option value="notyet">Not ready yet — I will attach it in Telegram</option></select></div>
+        <div><label for="dnName">Nickname (optional, as shown publicly)</label><input id="dnName" maxlength="40" placeholder="e.g. GoldRunner88"></div>
+        <div class="full"><label for="dnText">What the firm said — quote the denial wording as exactly as you can</label><textarea id="dnText" required maxlength="1200" placeholder="Paste or type the firm's own words from the denial email or dashboard notice. Your own summary can follow, marked as yours. Do not include your name, email, account number or wallet details."></textarea></div>
+        <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-navy" type="submit">Copy my report text</button>
+          <a class="btn btn-gold" href="https://t.me/RiskFirstPropLabchat" target="_blank" rel="noopener">Open the Telegram group ↗</a>
+          <span style="font-size:13.5px;color:var(--muted)">Paste the copied text in the group + attach the covered screenshot. Nothing is posted or published by this page itself.</span>
+        </div>
+      </form>
+      <pre class="code" id="dnOutput" hidden style="margin-top:16px;white-space:pre-wrap"></pre>
+    </div>
+  </main>
+</div>
+
 <!-- ======================= VIEW: 404 =========================== -->
 <div data-view="404" hidden>
   <main class="wrap">
@@ -2406,6 +2585,9 @@
       <div><h4>Guides &amp; tools</h4>
         <a href="/directory/" data-route="directory">All Prop Firms Directory</a>
         <a href="/prop-firm-match/" data-route="prop-firm-match">Prop Firm Match</a>
+        <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a>
+        <a href="/gold-cost/" data-route="gold-cost">Gold Cost League Table</a>
+        <a href="/denial-index/" data-route="denial-index">Payout Denial Index</a>
         <a href="/prop-firm-scorecard/" data-route="prop-firm-scorecard">10-Point Scorecard</a>
         <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd">Rule Trap: Daily Drawdown</a>
         <a href="/country-check/" data-route="country-check">Country Check</a>
@@ -2467,10 +2649,12 @@
     "country-check": { path:"country-check/", title:"Country Check: Which Prop Firms Ban Your Country? | Risk First Prop Lab", desc:"Prop firm restricted countries explained: residency vs citizenship, product-by-product lists, and the checked Vietnam and US status of FTMO, FundedNext, The5ers, Funding Pips, E8 Markets and Alpha Capital.", type:"article", headline:"Country Check: Which Prop Firms Ban Your Country?" },
     "prop-firm-scorecard": { path:"prop-firm-scorecard/", title:"The 10-Point Prop Firm Scorecard | Risk First Prop Lab", desc:"The exact 10 criteria behind every Risk First Prop Lab score: XAUUSD spread, all-in cost, slippage, drawdown fairness, rule traps, payout speed and reliability, country clarity and support — and how interim documentation scores work.", type:"article", headline:"The 10-Point Prop Firm Scorecard Behind Every Lab Test" },
     "challenge-planner": { path:"challenge-planner/", title:"Challenge Pass Planner: Day-by-Day Prop Firm Pass Plan | Risk First Prop Lab", desc:"Free challenge pass planner: pick a firm and model, set your days, win rate and RRR, and get a day-by-day plan — daily profit target, risk per trade, lot size per instrument, daily loss budget and feasibility warnings. Client-side only, no pass promised.", type:"website" },
+    "gold-cost": { path:"gold-cost/", title:"Gold Cost League Table: XAUUSD All-In Cost Measured on MT5 | Risk First Prop Lab", desc:"The Gold Cost League Table: XAUUSD spread, commission and news slippage measured on a live MT5 terminal — same system, same sessions, published protocol and raw log. Every firm starts as Pending MT5 log; no estimated spreads are published. Plus the Your Gold Bleed calculator.", type:"website" },
     "prop-firm-match": { path:"prop-firm-match/", title:"Prop Firm Match: Find a Firm by Budget, Style & Country | Risk First Prop Lab", desc:"Answer five questions — challenge budget, trading style (gold, news, swing, scalping), country including Vietnam, payout priority and overnight holding — and get an honest shortlist of the six fully reviewed firms, plus a full comparison table.", type:"website" },
     "trader-viet": { path:"trader-viet/", title:"Trader Viet: Prop Firms from Vietnam — Eligibility, Payouts & Taxes | Risk First Prop Lab", desc:"For traders residing in Vietnam: which firms accept you (FTMO CFD, The5ers), which bar you (FundedNext, Funding Pips, Alpha Capital), the residency-vs-citizenship trap, payout rails that reach Vietnam, and tax paperwork to keep.", type:"article", headline:"Trader Viet: Prop Firms from Vietnam — Who Accepts You, Who Bars You, How Payouts Get Home" },
     "community-reviews": { path:"community-reviews/", title:"User Reviews: Community Ratings for Prop Firms | Risk First Prop Lab", desc:"Star ratings for rules, fees, payouts and support from traders in the Risk First community — moderated through the Telegram group, proof-labelled Verified or Not yet verified, never invented. Submit your own review.", type:"website" },
     "payout-tracker": { path:"payout-tracker/", title:"Payout Tracker: Proof-Backed Prop Firm Payouts | Risk First Prop Lab", desc:"Sortable tracker of proof-backed prop firm payouts from the Risk First community: totals, largest, average, median payout time and denials reported — by firm, timeframe and market. Empty means no evidence yet, never zero payouts.", type:"website" },
+    "denial-index": { path:"denial-index/", title:"Payout Denial Index: Prop Firm Payouts Refused, Counted | Risk First Prop Lab", desc:"The inverse of a payout tracker: the Payout Denial Index counts verified prop firm payout DENIALS — firm, date, amount, reason and evidence grade, with the firm's response shown alongside. Starts honestly empty: 0 verified cases. Strict evidence standard published; rumours are never posted.", type:"website" },
     "affiliate-disclosure": { path:"affiliate-disclosure/", title:"Affiliate Disclosure | Risk First Prop Lab", desc:"How affiliate links work on Risk First Prop Lab: commissions never raise the trader price, never change a score, ranking or verdict, and never reorder the Directory or Match results. Links are direct, with no hidden redirects.", type:"website" },
     "for-prop-firms": { path:"for-prop-firms/", title:"For Prop Firms: List Your Firm | Risk First Prop Lab", desc:"How prop firms get listed on Risk First Prop Lab: vetting first, then Basic, Featured, Sponsored Review and Advertising packages. Money buys display position and speed only — never scores, rankings, verdicts or reviews.", type:"website" },
     "transparency": { path:"transparency/", title:"Transparency & Methodology: How Rankings Are Built | Risk First Prop Lab", desc:"The five rankings explained — Lab Tested, Community Verified, Reviews & Ratings, Payout Tracker, Not Yet Verified — plus firm vetting, review moderation, commercial relationships, and what this site does not publish.", type:"article", headline:"Transparency & Methodology: How Every Ranking Here Is Built" },
@@ -2593,7 +2777,7 @@
   }
 
   /* ---------------- Deploy files: sitemap.xml, robots.txt, vercel.json ---------------- */
-  var SITEMAP_PATHS = ["", "directory/", "ftmo-review/", "fundednext-review/", "the5ers-review/", "funding-pips-review/", "e8-markets-review/", "alpha-capital-review/", "fundednext-payout-test/", "rule-trap-daily-dd/", "country-check/", "prop-firm-scorecard/", "prop-firm-match/", "challenge-planner/", "trader-viet/", "community-reviews/", "payout-tracker/", "transparency/", "for-prop-firms/", "affiliate-disclosure/"];
+  var SITEMAP_PATHS = ["", "directory/", "ftmo-review/", "fundednext-review/", "the5ers-review/", "funding-pips-review/", "e8-markets-review/", "alpha-capital-review/", "fundednext-payout-test/", "rule-trap-daily-dd/", "country-check/", "prop-firm-scorecard/", "prop-firm-match/", "challenge-planner/", "gold-cost/", "trader-viet/", "community-reviews/", "payout-tracker/", "denial-index/", "transparency/", "for-prop-firms/", "affiliate-disclosure/"];
   var SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + SITEMAP_PATHS.map(function(p){ return "  <url>\n    <loc>" + BASE + p + "</loc>\n    <lastmod>" + CHECKED + "</lastmod>\n  </url>"; }).join("\n")
     + "\n</urlset>";
@@ -2609,13 +2793,15 @@
     + "|- <route>/index.html           <- one real static file per route (directory/, ftmo-review/, ...)\n"
     + "|- all-prop-firms/index.html    <- redirect page -> /directory/\n"
     + "|- vercel.json                  <- one catch-all rewrite: /(.*) -> /index.html\n"
-    + "|- sitemap.xml                  <- 19 URLs\n"
+    + "|- sitemap.xml                  <- 22 URLs\n"
     + "|- robots.txt\n"
     + "Routes: / /directory/ /ftmo-review/ /fundednext-review/\n"
     + "/the5ers-review/ /funding-pips-review/ /e8-markets-review/\n"
     + "/alpha-capital-review/ /fundednext-payout-test/\n"
     + "/rule-trap-daily-dd/ /country-check/ /prop-firm-scorecard/\n"
-    + "/prop-firm-match/ /trader-viet/ /community-reviews/";
+    + "/prop-firm-match/ /trader-viet/ /community-reviews/\n"
+    + "/payout-tracker/ /challenge-planner/ /gold-cost/ /denial-index/\n"
+    + "/transparency/ /for-prop-firms/ /affiliate-disclosure/";
   var FILES = { sitemap: SITEMAP, robots: ROBOTS, vercel: VERCEL, tree: TREE };
   var preview = document.getElementById("filePreview");
   function showFile(name){
@@ -3958,6 +4144,126 @@
 
 
   render(false);
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var BASE = "https://riskproplab.vercel.app/";
+  var toastEl = document.getElementById("toast"), toastTimer = null;
+  function toast(msg){
+    if (!toastEl) return;
+    toastEl.textContent = msg; toastEl.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 2600);
+  }
+  function copyText(text, doneMsg, fallbackEl){
+    function done(){ toast(doneMsg); }
+    function fallback(){
+      if (fallbackEl){ fallbackEl.hidden = false; fallbackEl.textContent = text; }
+      toast("Copy blocked — the text is shown on the page instead");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, fallback); }
+    else fallback();
+  }
+
+  /* ---------- Tools dropdown (desktop nav) ---------- */
+  var toolsBtn = document.getElementById("toolsBtn"), toolsPanel = document.getElementById("toolsPanel");
+  function closeTools(){ if (toolsPanel){ toolsPanel.hidden = true; } if (toolsBtn){ toolsBtn.setAttribute("aria-expanded", "false"); } }
+  if (toolsBtn && toolsPanel){
+    toolsBtn.addEventListener("click", function(e){
+      e.stopPropagation();
+      var open = toolsPanel.hidden;
+      toolsPanel.hidden = !open;
+      toolsBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    toolsPanel.addEventListener("click", function(e){ if (e.target.closest("[data-route]")) closeTools(); });
+    document.addEventListener("click", function(e){ if (!toolsPanel.hidden && !e.target.closest(".navdrop")) closeTools(); });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeTools(); });
+  }
+
+  /* ---------- Gold Cost League Table: Your Gold Bleed ---------- */
+  /* Measured all-in XAUUSD cost per firm, $ per round-turn lot, from the Lab's
+     MT5 log. Every entry is null until a real measurement round runs — the
+     calculator must refuse to calculate rather than estimate. When a round is
+     published, fill in: { allIn: <$/lot>, date: "YYYY-MM-DD", session: "..." } */
+  var GOLD_COST = {
+    "FTMO": null,
+    "FundedNext": null,
+    "The5ers": null,
+    "Funding Pips": null,
+    "E8 Markets": null,
+    "Alpha Capital Group": null
+  };
+  var gcFirm = document.getElementById("gcFirm"), gcLots = document.getElementById("gcLots"),
+      gcOut = document.getElementById("gcOut"), gcShare = document.getElementById("gcShare"),
+      gcShareLink = document.getElementById("gcShareLink"), gcForm = document.getElementById("gcForm");
+  function money(n){ return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function gcCalc(){
+    if (!gcFirm || !gcOut) return null;
+    var firm = gcFirm.value;
+    var lots = parseFloat(gcLots.value);
+    if (isNaN(lots) || lots < 0) lots = 0;
+    var d = GOLD_COST[firm];
+    if (!d || typeof d.allIn !== "number"){
+      gcOut.innerHTML = '<div class="warn warn-amber"><b>No MT5 measurement yet for ' + firm + ' — this cannot be calculated yet.</b> The Lab has not measured ' + firm + "'s all-in gold cost on a live MT5 terminal, so there is no honest number to multiply your " + lots + ' lots by. The Lab does not estimate spreads, borrow another site\'s snapshot, or turn a published commission into a "cost". When the first measurement round runs, this calculator switches on for ' + firm + ' with the date, session and raw log attached.</div>';
+      return { firm: firm, lots: lots, bleed: null };
+    }
+    var bleed = lots * d.allIn;
+    var cheapest = null;
+    Object.keys(GOLD_COST).forEach(function(k){ var v = GOLD_COST[k]; if (v && typeof v.allIn === "number" && (!cheapest || v.allIn < cheapest.allIn)) cheapest = { firm: k, allIn: v.allIn }; });
+    var html = '<div class="stat-grid">'
+      + '<div class="stat"><div class="k">All-in cost — ' + firm + '</div><div class="bignum">' + money(d.allIn) + '<span style="font-size:14px;color:var(--muted)"> / lot</span></div></div>'
+      + '<div class="stat"><div class="k">Your volume</div><div class="bignum">' + lots + '<span style="font-size:14px;color:var(--muted)"> lots / month</span></div></div>'
+      + '<div class="stat"><div class="k">Your Gold Bleed</div><div class="bignum">' + money(bleed) + '<span style="font-size:14px;color:var(--muted)"> / month</span></div></div></div>'
+      + '<p class="note">Measured ' + d.date + ' · ' + d.session + ' · protocol v1.0 — raw log in the league table above. That is ' + money(bleed * 12) + ' a year paid to the firm before you make a cent.';
+    if (cheapest && cheapest.firm !== firm) html += ' At your volume, the cheapest measured firm (' + cheapest.firm + ', ' + money(cheapest.allIn) + '/lot) would cost ' + money(lots * cheapest.allIn) + '/month — a difference of ' + money(bleed - lots * cheapest.allIn) + '/month.';
+    html += '</p>';
+    gcOut.innerHTML = html;
+    return { firm: firm, lots: lots, bleed: bleed };
+  }
+  if (gcForm){
+    gcForm.addEventListener("submit", function(e){ e.preventDefault(); });
+    gcFirm.addEventListener("change", gcCalc);
+    gcLots.addEventListener("input", gcCalc);
+    try {
+      var q = new URLSearchParams(window.location.search);
+      if (q.get("firm") && Object.prototype.hasOwnProperty.call(GOLD_COST, q.get("firm"))) gcFirm.value = q.get("firm");
+      if (q.get("lots") !== null && !isNaN(parseFloat(q.get("lots")))) gcLots.value = q.get("lots");
+    } catch(e){}
+    gcCalc();
+  }
+  if (gcShare){
+    gcShare.addEventListener("click", function(){
+      var r = gcCalc(); if (!r) return;
+      var link = BASE + "gold-cost/?firm=" + encodeURIComponent(r.firm) + "&lots=" + encodeURIComponent(r.lots);
+      var text = (r.bleed === null)
+        ? "Your Gold Bleed — " + r.firm + ": no MT5 measurement yet, so the Lab will not calculate my bleed. " + r.lots + " lots/month of XAUUSD, and the honest answer is still \"Pending MT5 log\". Check the Gold Cost League Table: " + link
+        : "Your Gold Bleed — " + r.firm + ": I trade " + r.lots + " lots of XAUUSD a month and bleed " + money(r.bleed) + "/month in spread + commission (Lab-measured all-in cost). Check yours: " + link;
+      if (gcShareLink) gcShareLink.textContent = link;
+      copyText(text, "Result copied — paste it anywhere to share", gcShareLink);
+    });
+  }
+
+  /* ---------- Payout Denial Index: submission form ---------- */
+  var dnForm = document.getElementById("dnForm");
+  if (dnForm){
+    dnForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      function v(id){ var el = document.getElementById(id); return el ? el.value.trim() : ""; }
+      var evSel = document.getElementById("dnEvidence");
+      var evTxt = evSel && evSel.value ? evSel.options[evSel.selectedIndex].text : "";
+      var text = "PAYOUT DENIAL REPORT — Risk First Prop Lab Denial Index\n"
+        + "Firm: " + v("dnFirm") + "\n"
+        + "Date of denial: " + v("dnDate") + "\n"
+        + "Amount refused (USD): " + v("dnAmount") + "\n"
+        + "Reason given by the firm: " + v("dnReason") + "\n"
+        + "Evidence screenshot: " + evTxt + " (attached in this group, personal info covered)\n"
+        + (v("dnName") ? "Nickname: " + v("dnName") + "\n" : "")
+        + "The firm's own words:\n" + v("dnText") + "\n"
+        + "— Submitted for verification under the Denial Index evidence standard. First-hand report of my own denial.";
+      copyText(text, "Report copied — paste it in the Telegram group and attach your covered screenshot", document.getElementById("dnOutput"));
+    });
+  }
 })();
 </script>
 </body>
