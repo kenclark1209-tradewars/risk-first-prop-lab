@@ -438,7 +438,7 @@
     "code": "nordic-funder",
     "display_name": "Nordic Funder",
     "logo_path": "logos/nordic-funder.svg",
-    "notes": "MARK ONLY: the site renders its logo as an inline SVG mark + HTML text (no logo file exists). The mark was extracted verbatim from the nordicfunder.com homepage header; fill set to the site's own CSS brand teal #2fd6b4 (var(--brand-teal)). Teal on transparent — good on dark navy #0A1931.",
+    "notes": "MARK ONLY: the site renders its logo as an inline SVG mark + HTML text (no standalone logo file exists). Mark extracted verbatim from the nordicfunder.com homepage header; fill set to the site's own CSS brand teal #2fd6b4 (var(--brand-teal)). Teal on transparent — good on dark navy #0A1931. RE-DOWNLOADED 2026-11-18: old file lacked xmlns on the root <svg> so Chrome refused it as an <img>; new file is the same verbatim mark with xmlns=\"http://www.w3.org/2000/svg\" added (no artwork change). Verified: parses as valid XML, root in SVG namespace, renders in headless Chrome as <img> (naturalWidth 150, 10,400 non-transparent pixels).",
     "source_url": "https://nordicfunder.com/",
     "status": "verified"
   },
@@ -552,7 +552,7 @@
     "code": "wencrypto",
     "display_name": "WenCrypto",
     "logo_path": "logos/wencrypto.svg",
-    "notes": "White inline header SVG extracted verbatim from wencrypto.com homepage (no standalone logo file exists; the JSON-LD favicon.svg 404s). White on transparent — good on dark navy #0A1931. Note: wencrypto.net is a lookalike/affiliate site — not used.",
+    "notes": "White inline header SVG extracted verbatim from wencrypto.com homepage (no standalone logo file exists; the JSON-LD favicon.svg 404s). White on transparent — good on dark navy #0A1931. Note: wencrypto.net is a lookalike/affiliate site — not used. RE-DOWNLOADED 2026-11-18: old file carried the site's own malformed root tag (duplicate fill=\"none\" and duplicate xmlns attributes) so XML parsers rejected it; new file is the same verbatim artwork with duplicated root attributes removed (no artwork change). Verified: parses as valid XML, root in SVG namespace, renders in headless Chrome as <img> (naturalWidth 170, 2,771 non-transparent pixels).",
     "source_url": "https://wencrypto.com/",
     "status": "verified"
   },
