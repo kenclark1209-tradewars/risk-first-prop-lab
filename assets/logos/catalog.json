@@ -1,0 +1,657 @@
+[
+  {
+    "aliases": [],
+    "code": "ftmo",
+    "display_name": "FTMO",
+    "logo_path": "logos/ftmo.svg",
+    "notes": "White SVG wordmark from FTMO's own homepage HTML (ftmo.com). White on transparent — ideal on dark navy #0A1931.",
+    "source_url": "https://ftmo-frontend-prod.storage.googleapis.com/wp-content/uploads/2025/12/29102755/LOGO_WHITE-1.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "fundednext",
+    "display_name": "FundedNext",
+    "logo_path": "logos/fundednext.png",
+    "notes": "White PNG wordmark (898x87) from fundednext.com homepage. White on transparent — ideal on dark navy #0A1931.",
+    "source_url": "https://fundednext.com/images/fundednext-logo-white.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "the5ers",
+    "display_name": "The5ers",
+    "logo_path": "logos/the5ers.svg",
+    "notes": "White SVG full logo from the5ers.com homepage. White on transparent — ideal on dark navy #0A1931.",
+    "source_url": "https://wp.the5ers.com/wp-content/uploads/2025/12/white-full-logo-1.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "FundingPips"
+    ],
+    "code": "funding-pips",
+    "display_name": "Funding Pips",
+    "logo_path": "logos/funding-pips.svg",
+    "notes": "Wordmark vector extracted verbatim from FundingPips' own homepage header inline SVG (Wayback snapshot 2026-10-12; live site blocks curl with a Vercel security checkpoint and the footer-wordmark.svg file is not archived). Fills set to white: the firm renders this same vector in white on its dark headers/footers; the light-theme header color is dark blue (oklch 0.38 0.13 259.62), which would be invisible on navy. White on transparent — good on dark navy #0A1931.",
+    "source_url": "https://web.archive.org/web/20261012230206/https://fundingpips.com/",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "E8"
+    ],
+    "code": "e8-markets",
+    "display_name": "E8 Markets",
+    "logo_path": "logos/e8-markets.svg",
+    "notes": "White SVG wordmark from e8markets.com /images/logo.svg via Wayback snapshot 2026-11-18 (live site returns a security-check page to curl). All-white fills on transparent — ideal on dark navy #0A1931. Small viewBox (122x25) — scales as vector.",
+    "source_url": "https://web.archive.org/web/20261118023415im_/https://e8markets.com/images/logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "ACG"
+    ],
+    "code": "alpha-capital",
+    "display_name": "Alpha Capital Group",
+    "logo_path": "logos/alpha-capital.svg",
+    "notes": "White SVG logo from alphacapitalgroup.uk homepage. White on transparent — ideal on dark navy #0A1931.",
+    "source_url": "https://alphacapitalgroup.uk/images/Alpha-Capital-Logo-White.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "topstep",
+    "display_name": "Topstep",
+    "logo_path": "logos/topstep.webp",
+    "notes": "White WebP logo (3457x1043, large) from topstep.com homepage. White on transparent — ideal on dark navy #0A1931. Could be downscaled for web use.",
+    "source_url": "https://cdn.prod.website-files.com/69e902b0a74d3d99a517f56d/6a299fdfbdc3a918fdf4b3ff_topstep_logo-white.webp",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "MFFU"
+    ],
+    "code": "myfundedfutures",
+    "display_name": "MyFundedFutures",
+    "logo_path": "logos/myfundedfutures.svg",
+    "notes": "White SVG from myfundedfutures.com homepage JSON-LD logo. White on transparent — ideal on dark navy #0A1931.",
+    "source_url": "https://myfundedfutures.com/images/mffu/mffu-logo-white.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "tradeify",
+    "display_name": "Tradeify",
+    "logo_path": "logos/tradeify.svg",
+    "notes": "White wordmark + green #00FF51 accent; firm's JSON-LD declared logo (tradeify.co). Navbar currently shows an Inter Miami co-brand promo PNG; footer + JSON-LD use this standard logo. Good on dark navy #0A1931.",
+    "source_url": "https://cdn.prod.website-files.com/679b064a680c614548672a06/6a82f59b2b2b53f7c664d19e_logo-light%20(1).svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "TPT"
+    ],
+    "code": "take-profit-trader",
+    "display_name": "Take Profit Trader",
+    "logo_path": "logos/take-profit-trader.svg",
+    "notes": "White wordmark with red #EF4E34 / green #25BF7A accents; header desktop logo from takeprofittrader.com. Good on dark navy.",
+    "source_url": "https://takeprofittrader.com/assets/desktop-logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "E2T"
+    ],
+    "code": "earn2trade",
+    "display_name": "Earn2Trade",
+    "logo_path": "logos/earn2trade.svg",
+    "notes": "Light-grey #E0E6EB wordmark + orange #FB8401 accent; this is the firm's dark-theme variant (E2T_Logo.svg). A dark variant E2T_Logo_Dark.svg exists for light backgrounds. Good on dark navy.",
+    "source_url": "https://www.earn2trade.com/assets/E2T_Logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Lucid"
+    ],
+    "code": "lucid-trading",
+    "display_name": "Lucid Trading",
+    "logo_path": "logos/lucid-trading.png",
+    "notes": "White 'LUCID TRADING' wordmark + dark sphere mark on transparent (174x90). Confirmed as the firm's JSON-LD schema logo and Elementor theme-site-logo; live file downloaded 200 (site HTML itself is Cloudflare-blocked, logo found via archived homepage). Dark sphere blends into navy; white wordmark carries it. Good on dark navy. Rejected decoy: Logo-lockup.png on the same site is TradeSea's logo (a platform partner), not Lucid's.",
+    "source_url": "https://lucidtrading.com/wp-content/uploads/2025/02/Untitled-design-2025-10-22T181841.622.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Top One",
+      "TOT"
+    ],
+    "code": "top-one-trader",
+    "display_name": "Top One Trader",
+    "logo_path": "logos/top-one-trader.svg",
+    "notes": "All-white lockup ('TOT Main Logo White Full') from toponetrader.com. Good on dark navy.",
+    "source_url": "https://cdn.prod.website-files.com/6903c898abbf4652eee29160/6a567c67687d57d67fe915b4_7b35625cade2caffb5dfd664686bef7f_TOT%20Main%20Logo_White%20Full.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "TradeDay 2.0"
+    ],
+    "code": "tradeday",
+    "display_name": "TradeDay",
+    "logo_path": "logos/tradeday.svg",
+    "notes": "White wordmark + teal #48C3C8; firm's footer + payout-certificate logo (navbar uses a 'TRADE DAY 2.0' webp instead). Good on dark navy.",
+    "source_url": "https://cdn.prod.website-files.com/696509b94e1d014f63369766/69a7eba5be02d8b5211b0ae2_TradeDay%20logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "GFT"
+    ],
+    "code": "goat",
+    "display_name": "Goat Funded Trader",
+    "logo_path": "logos/goat.webp",
+    "notes": "Nav logo WebP (448x160) from goatfundedtrader.com homepage. White wordmark on a SOLID BLACK background (not transparent) — readable on dark navy #0A1931 but shows as a black tile. No transparent variant found on-site.",
+    "source_url": "https://cdn.prod.website-files.com/692d3a3e37a293dd19f3b43e/692e4dc2637f15bb6567ebea_Brand%20Nav%20Logo.webp",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "fxify",
+    "display_name": "FXIFY",
+    "logo_path": "logos/fxify.jpeg",
+    "notes": "Schema.org logo from fxify.com homepage JSON-LD (200x200 JPEG). White FXIFY text on a built-in dark navy background (not transparent) — reads fine on dark navy #0A1931 but shows as a dark tile; low resolution, and the header logo on-site is inline SVG (no downloadable file). Prefer this tile or re-extract the inline SVG later.",
+    "source_url": "https://fxify.com/wp-content/uploads/2025/07/fxify_logo.jpeg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "ForTraders"
+    ],
+    "code": "for-traders",
+    "display_name": "For Traders",
+    "logo_path": "logos/for-traders.svg",
+    "notes": "Off-white #F9F7F2 lockup; firm's JSON-LD declared logo (fortraders.com). Good on dark navy.",
+    "source_url": "https://fortraders.com/assets/logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "CTI"
+    ],
+    "code": "city-traders-imperium",
+    "display_name": "City Traders Imperium",
+    "logo_path": "logos/city-traders-imperium.png",
+    "notes": "500x500 transparent PNG, mark-only (no wordmark): dark circular badge with blue diamond + white arrow. The near-black disc reads as a dark disc on navy; the mark itself is high-contrast. Usable on dark navy, mark-only.",
+    "source_url": "https://citytradersimperium.com/wp-content/uploads/2020/03/City-Traders-Imperium-Logo-3.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "aquafunded",
+    "display_name": "AquaFunded",
+    "logo_path": "logos/aquafunded.svg",
+    "notes": "Standard white logo from aquafunded.com footer. Navbar currently uses a gold Black Friday variant (Brand-TypeWhite.svg) which was NOT used. Good on dark navy.",
+    "source_url": "https://aquafunded.com/images/footer-logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "brightfunded",
+    "display_name": "BrightFunded",
+    "logo_path": "logos/brightfunded.png",
+    "notes": "Mark-only: 3D chrome-blue 'B' on transparent (site's own asset, alt='BrightFunded logo'; converted webp->png and downscaled 3680px to 1200px). No wordmark in the file; mid-blue chrome is visible but lower contrast on navy than the white logos. The site's header wordmark is rendered as text, not an image file.",
+    "source_url": "https://framerusercontent.com/images/Ec3Kk1PGplYVnTZhY9LDXbesiUg.webp?width=3680&height=2556",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "HolaPrime"
+    ],
+    "code": "hola-prime",
+    "display_name": "Hola Prime",
+    "logo_path": "logos/hola-prime.png",
+    "notes": "White 'hola prime' wordmark + iridescent bubble 'o' on transparent (879x512), from the firm's own trader subdomain (trader.holaprime.com static assets; main site rate-limits this IP with 429). Good on dark navy. Note the firm's naming is inverted: 'dark-logo' is the white-text version; the sibling 'light-logo' is black text on a black card and was NOT used.",
+    "source_url": "https://trader.holaprime.com/static/images/hola-prime-dark-logo.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Maven"
+    ],
+    "code": "maven-trading",
+    "display_name": "Maven Trading",
+    "logo_path": "logos/maven-trading.svg",
+    "notes": "Inline SVG extracted verbatim from the maventrading.com homepage header (nav__logo): bar-chart mark + 'MAVEN' wordmark. No standalone logo file exists (JSON-LD favicon.svg 404s). It uses fill='currentColor', so it inherits text color: set color:#fff when rendering on dark navy; rendered with default black it would be dark-on-transparent.",
+    "source_url": "https://maventrading.com/",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Think Capital"
+    ],
+    "code": "thinkcapital",
+    "display_name": "ThinkCapital",
+    "logo_path": "logos/thinkcapital.svg",
+    "notes": "White wordmark + green #1ED760 mark (tc-logo.svg) from thinkcapital.com. Good on dark navy.",
+    "source_url": "https://edge.sitecorecloud.io/tfglobalmar2044-thinkmarketfd7d-thinkmarket63b1-bc8f/media/Project/tc/Media/Recovered/pages/tc-logo.svg?h=35&iar=0&w=203",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "instant-funding",
+    "display_name": "Instant Funding",
+    "logo_path": "logos/instant-funding.svg",
+    "notes": "CAUTION — dark logo: the firm's only logo file anywhere on its site (homepage, press and media pages all use it) is dark navy #132239 on transparent. Nearly invisible on dark navy #0A1931. Needs a white version from the firm, or display on a light tile. No light variant found on-site.",
+    "source_url": "https://instantfunding.com/wp-content/uploads/2023/10/if-logo-black.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "FT+",
+      "FTP"
+    ],
+    "code": "funded-trading-plus",
+    "display_name": "Funded Trading Plus",
+    "logo_path": "logos/funded-trading-plus.png",
+    "notes": "Mark-only: white FT+ monogram on baked dark-navy background, 180x180 app icon from fundedtradingplus.com. White-on-dark so it works on navy #0A1931, but no wordmark and only 180px. Full lockup could not be retrieved: live HTML blocked by Cloudflare 403, Wayback playback 429, translate proxy / wp-json / manifests all 403.",
+    "source_url": "https://www.fundedtradingplus.com/apple-touch-icon.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "TTP",
+      "TheTradingPit"
+    ],
+    "code": "the-trading-pit",
+    "display_name": "The Trading Pit",
+    "logo_path": "logos/the-trading-pit.svg",
+    "notes": "White + purple #a761ff; light variant (logo-light-4.svg) from thetradingpit.com. Good on dark navy.",
+    "source_url": "https://www.thetradingpit.com/assets/global/logo-light-4.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Ment"
+    ],
+    "code": "ment-funding",
+    "display_name": "Ment Funding",
+    "logo_path": "logos/ment-funding.png",
+    "notes": "Teal M mark + off-white 'MENT FUNDING' on baked #071324 navy (3168x378), mechanically cropped to the logo band of the firm's official og-image.png. Baked background is near-identical to navy #0A1931. Good on dark navy. Header logo is an inline SVG of the M mark only (no standalone file), so the og-image lockup is the complete official lockup.",
+    "source_url": "https://mentfunding.com/og-image.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Finotive"
+    ],
+    "code": "finotive-funding",
+    "display_name": "Finotive Funding",
+    "logo_path": "logos/finotive-funding.svg",
+    "notes": "White + pink #f31e90 lockup from finotivefunding.com. Good on dark navy.",
+    "source_url": "https://finotivefunding.com/landing/gta/recoloured/finotive-funding-logo-17-11-2026.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "CFT"
+    ],
+    "code": "crypto-fund-trader",
+    "display_name": "Crypto Fund Trader",
+    "logo_path": "logos/crypto-fund-trader.svg",
+    "notes": "Entire lockup ('CRYPTO' / 'FUND TRADER') in bright yellow #ffff39 on transparent, from cryptofundtrader.com. High contrast on dark navy. No rebrand found; cryptofundtrader.net / .in are alternate firm domains, .com is the primary.",
+    "source_url": "https://cryptofundtrader.com/wp-content/themes/cft-break2/recursos/logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Breakout"
+    ],
+    "code": "breakout",
+    "display_name": "Breakout Prop",
+    "logo_path": "logos/breakout.svg",
+    "notes": "White wordmark extracted verbatim from Breakout's own homepage header inline SVG (Wayback snapshot 2026-11-10; live site Cloudflare-blocks curl). All fills #fff on transparent — ideal on dark navy #0A1931. The schema.org logo (breakout-logo-square.png) is a dark-navy mark, unsuitable on dark — the white header wordmark is the right one.",
+    "source_url": "https://web.archive.org/web/20261110064840/https://www.breakoutprop.com/",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "wsfunded",
+    "display_name": "WSFunded",
+    "logo_path": "logos/wsfunded.svg",
+    "notes": "White SVG wordmark (#F5F6F7 fills) from wsfunded.com homepage. White on transparent — good on dark navy #0A1931.",
+    "source_url": "https://cdn.prod.website-files.com/6a01d4d9cc5f7d7ee9fffb50/6a338dcfcdce1a7be82d36b2_logo-web.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "moneta-funded",
+    "display_name": "Moneta Funded",
+    "logo_path": "logos/moneta-funded.svg",
+    "notes": "Green (#00FF51) + white SVG from monetafunded.com. Green/white on transparent — good on dark navy #0A1931. Homepage is Cloudflare-challenged for curl but static assets pass.",
+    "source_url": "https://www.monetafunded.com/wp-content/themes/Moneta/images/logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "blueberry-funded",
+    "display_name": "Blueberry Funded",
+    "logo_path": "logos/blueberry-funded.png",
+    "notes": "CAUTION — dark logo: the firm's only logotype in its WP media library is a BLACK horizontal wordmark (644x70) on transparent — nearly invisible on dark navy #0A1931; display on a light tile. No white variant exists on-site (media search 'white' = 0 hits). The 40x40 favicon (purple square) is saved alongside as blueberry-funded-favicon.png.",
+    "source_url": "https://blueberryfunded.com/wp-content/uploads/2025/07/BBFunded-V3-Logotype-horizontal-Black.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "fintokei",
+    "display_name": "Fintokei",
+    "logo_path": "logos/fintokei.svg",
+    "notes": "Violet (#5B3A96) SVG wordmark from fintokei.com homepage. Verified glyph-by-glyph as the Latin 'Fintokei' wordmark (F + i-dot/stem + n + t + o + k + e + i-dot/stem) despite the '_jp' filename. Violet on transparent — readable on dark navy #0A1931 but only moderate contrast; no light variant on-site.",
+    "source_url": "https://media.fintokei-web.purple-lab.dev/uploads/jpr_fintokei_logo_violet_jp_e5d8783594.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "atmos-funded",
+    "display_name": "Atmos Funded",
+    "logo_path": null,
+    "notes": "NO LOGO SAVED. The white logo is confirmed to exist on the firm's own site — Atmos-white-logo.svg (and a 300x65 PNG render) is listed in the site's WP media library (wp-json/wp/v2/media?search=logo) — but the origin returns Cloudflare error 520 to every download attempt (14+ tries, two UAs, www/bare, HTTP/1.1, SVG + PNG + black variant). The black variant logo-atmos-black.png (171x37) fails the same way. Retry when the origin recovers; candidate URL: https://atmosfunded.com/wp-content/uploads/2025/04/Atmos-white-logo.svg",
+    "source_url": null,
+    "status": "abbreviation"
+  },
+  {
+    "aliases": [],
+    "code": "orion-funded",
+    "display_name": "Orion Funded",
+    "logo_path": "logos/orion-funded.png",
+    "notes": "White PNG wordmark (480x89) from orionfunded.com. White on transparent — good on dark navy #0A1931.",
+    "source_url": "https://www.orionfunded.com/images/home-bf/orion-logo.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "leveraged",
+    "display_name": "Leveraged",
+    "logo_path": "logos/leveraged.svg",
+    "notes": "Light-green (#9AF5BD) SYMBOL/ICON only from getleveraged.com (the site's custom-logo img); the wordmark is HTML text, so no wordmark file exists. Icon on transparent — good on dark navy #0A1931.",
+    "source_url": "https://getleveraged.com/wp-content/uploads/2026/10/new_svg-light-symbol.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "bem-funding",
+    "display_name": "BEM Funding",
+    "logo_path": "logos/bem-funding.png",
+    "notes": "White mark on a SOLID near-black (#0A0A0A) square tile (512x512, opaque, not transparent) from bemfunding.com/logo.png. Reads fine on dark navy #0A1931 but shows as a dark tile.",
+    "source_url": "https://bemfunding.com/logo.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "audacity-capital",
+    "display_name": "Audacity Capital",
+    "logo_path": "logos/audacity-capital.png",
+    "notes": "Bronze/copper ICON only (146x138) from audacity.capital's homepage CDN (audacity.capital/logo.png is 404). Icon on transparent — mid-contrast on dark navy #0A1931. Current domain is audacity.capital (old: audacitycapital.co.uk).",
+    "source_url": "https://d155jn6047zdky.cloudfront.net/audacity-logo.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Axi"
+    ],
+    "code": "axi-select",
+    "display_name": "Axi Select",
+    "logo_path": "logos/axi-select.svg",
+    "notes": "White Axi brand SVG from axi.com. Axi Select is a program, not a separate brand, so the logo is the Axi wordmark. White on transparent — good on dark navy #0A1931.",
+    "source_url": "https://media.axiglobal.net/media/Logo_4_0f8a4620da.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "fundedelite",
+    "display_name": "FundedElite",
+    "logo_path": "logos/fundedelite.png",
+    "notes": "Light/white wordmark PNG (346x52, converted from the site's WebP) from fundedelite.com. Light on transparent — good on dark navy #0A1931. The favicon mark (dark-navy circle, teal-to-purple gradient) is saved alongside as fundedelite-mark.svg.",
+    "source_url": "https://fundedelite.com/_astro/fe-logo-lrg.BWiP70kq_Z2mEHjq.webp",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "lark-funding",
+    "display_name": "Lark Funding",
+    "logo_path": "logos/lark-funding.png",
+    "notes": "Light (yellow/white) logo PNG (600x600) from larkfunding.com assets (path found inside the site's JS chunk; the React SPA has no logo img in HTML). Light on transparent — good on dark navy #0A1931.",
+    "source_url": "https://larkfunding.com/assets/larkfunding-logo-mtLkMQzI.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "tradeify-fx",
+    "display_name": "Tradeify FX",
+    "logo_path": "logos/tradeify-fx.svg",
+    "notes": "White + cyan (#00DFFF) SVG from tradeifyfx.co. White/cyan on transparent — good on dark navy #0A1931.",
+    "source_url": "https://cdn.prod.website-files.com/6a1e68b17886472246c3aca3/6a844d469193fd83c05118d1_logo-light.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "nordic-funder",
+    "display_name": "Nordic Funder",
+    "logo_path": "logos/nordic-funder.svg",
+    "notes": "MARK ONLY: the site renders its logo as an inline SVG mark + HTML text (no logo file exists). The mark was extracted verbatim from the nordicfunder.com homepage header; fill set to the site's own CSS brand teal #2fd6b4 (var(--brand-teal)). Teal on transparent — good on dark navy #0A1931.",
+    "source_url": "https://nordicfunder.com/",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "futureselite",
+    "display_name": "FuturesElite",
+    "logo_path": "logos/futureselite.svg",
+    "notes": "White SVG wordmark from futureselite.com. White on transparent — good on dark navy #0A1931. Same team/owner (Quantum SRL, Italy) as FundedElite.",
+    "source_url": "https://futureselite.com/_astro/logo.DCL4Wk_c_Z24mbFI.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "daytraders",
+    "display_name": "DayTraders",
+    "logo_path": "logos/daytraders.svg",
+    "notes": "Light-gray (#A1A1AA) SVG from daytraders.com (light variant; a dark variant also exists). Light gray on transparent — readable on dark navy #0A1931.",
+    "source_url": "https://daytraders.com/assets/images/logo/logo-light.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "the-trading-pit-futures",
+    "display_name": "The Trading Pit Futures",
+    "logo_path": "logos/the-trading-pit-futures.svg",
+    "notes": "Purple (#a761ff) + white SVG from thetradingpit.com (light variant; a dark variant also exists). Good on dark navy #0A1931.",
+    "source_url": "https://www.thetradingpit.com/assets/global/logo-light-4.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "traders-launch",
+    "display_name": "Traders Launch",
+    "logo_path": "logos/traders-launch.png",
+    "notes": "White MARK (2500x2200) from traderslaunch.com; the header uses this white mark + HTML text, so no wordmark file exists. White on transparent — good on dark navy #0A1931. (The site's twitter-card file is a black-tile full lockup and was not used.)",
+    "source_url": "https://traderslaunch.com/images/traders-launch-mark-white.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Funded Futures Family"
+    ],
+    "code": "funded-futures-family",
+    "display_name": "Funded Family One",
+    "logo_path": "logos/funded-futures-family.png",
+    "notes": "REBRAND: Funded Futures Family renamed to Funded Family One on 2026-11-14; fundedfuturesfamily.com now redirects to fundedfamilyone.com. Current logo (787x258, mostly light-gray/white text with teal/gold accents) on transparent — good on dark navy #0A1931.",
+    "source_url": "https://fundedfamilyone.com/wp-content/themes/ff1-futures-v3-5/assets/logos/ff1-logo.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "finotive-futures",
+    "display_name": "Finotive Futures",
+    "logo_path": "logos/finotive-futures.svg",
+    "notes": "Gold (#FFC629) + white SVG from finotivefutures.com. Gold/white on transparent — good on dark navy #0A1931.",
+    "source_url": "https://finotivefutures.com/images/futures-logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "ylos-trading",
+    "display_name": "Ylos Trading",
+    "logo_path": "logos/ylos-trading.png",
+    "notes": "Tiny white/light ICON only (36x40) from ylostrading.com — the header mark; the wordmark is HTML text. No larger version exists on-site (all larger-path probes 404). Light on transparent — good on dark navy #0A1931 but very small.",
+    "source_url": "https://ylostrading.com/lp/images/LogoIcon.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "trade-the-pool",
+    "display_name": "Trade The Pool",
+    "logo_path": "logos/trade-the-pool.svg",
+    "notes": "Pink (#FF0871) + white SVG, confirmed as the header logo (inside <a class='header__logo'>) on tradethepool.com. Pink/white on transparent — good on dark navy #0A1931. (A newer dark 'new-logo-1.png' in the hero is a badge, not the header logo.)",
+    "source_url": "https://tradethepool.com/wp-content/uploads/2022/07/logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Kraken"
+    ],
+    "code": "kraken-prop",
+    "display_name": "Kraken Prop",
+    "logo_path": "logos/kraken-prop.svg",
+    "notes": "White Kraken wordmark SVG (650x101) from Kraken's own CMS CDN; program page kraken.com/pro/prop. The black variant of the same file was rejected — this is the white one. White on transparent — good on dark navy #0A1931.",
+    "source_url": "https://assets-cms.kraken.com/images/51n36hrp/facade/6b1b0a92eb0de8b2f5cc9b71ec64afdd95c7830b-650x101.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "E8 Markets"
+    ],
+    "code": "e8-perpetuals",
+    "display_name": "E8 Perpetuals",
+    "logo_path": "logos/e8-perpetuals.svg",
+    "notes": "White E8 Markets wordmark SVG (122x25) from e8markets.com/images/logo.svg, via the Wayback snapshot 2026-11-18 (live site returns a security-check page to curl; the same file was already verified for catalog A). White on transparent — good on dark navy #0A1931. Note: the homepage now presents as 'SimFi Trading Platform' (E8 rebrand in progress, Nov 2026), but the E8 Markets brand/mark is still live on the site's security page.",
+    "source_url": "https://web.archive.org/web/20261118023415im_/https://e8markets.com/images/logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "propr",
+    "display_name": "Propr",
+    "logo_path": "logos/propr.svg",
+    "notes": "White SVG from propr.xyz (Hyperliquid perps prop, SwissBorg-backed). White on transparent — good on dark navy #0A1931. Note: tradepropr.com is a DIFFERENT futures firm also called 'PROPR' — not used.",
+    "source_url": "https://www.propr.xyz/propr-logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "wencrypto",
+    "display_name": "WenCrypto",
+    "logo_path": "logos/wencrypto.svg",
+    "notes": "White inline header SVG extracted verbatim from wencrypto.com homepage (no standalone logo file exists; the JSON-LD favicon.svg 404s). White on transparent — good on dark navy #0A1931. Note: wencrypto.net is a lookalike/affiliate site — not used.",
+    "source_url": "https://wencrypto.com/",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "vest-markets",
+    "display_name": "Vest Markets",
+    "logo_path": "logos/vest-markets.png",
+    "notes": "CAUTION — white tile: the only logo on vestmarkets.com is logo.png (512x512) with a SOLID WHITE background (opaque, not transparent) — shows as a white square on dark navy #0A1931; display on a light tile. No light/dark variant exists on-site (all variant probes 404).",
+    "source_url": "https://www.vestmarkets.com/logo.png",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Funding Perpetuals"
+    ],
+    "code": "my-funded-perps",
+    "display_name": "My Funded Perps",
+    "logo_path": "logos/my-funded-perps.svg",
+    "notes": "Blue (#3A82F7) + gold (#D8AE5E/#F2CB80) SVG from myfundedperpetuals.com. Colorful on transparent — reads OK on dark navy #0A1931. REBRAND: formerly Funding Perpetuals, rebranded as MyFundedPerps 2026-09-03, joined the MyFundedFutures family.",
+    "source_url": "https://myfundedperpetuals.com/assets/mff-logo-DuWw_HpNXn.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Hantec Trader"
+    ],
+    "code": "rzr-funded",
+    "display_name": "RZR Funded",
+    "logo_path": "logos/rzr-funded.svg",
+    "notes": "White SVG from rzrfunded.com homepage (current RZR Funded brand; formerly Hantec Trader, kept as alias). All-white fills on transparent — ideal on dark navy #0A1931.",
+    "source_url": "https://rzrfunded.com/logo.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [
+      "Apex"
+    ],
+    "code": "apex",
+    "display_name": "Apex Trader Funding",
+    "logo_path": "logos/apex.svg",
+    "notes": "Light-variant SVG downloaded live from apextraderfunding.com (homepage itself Cloudflare-blocks curl; asset path found in Wayback homepage snapshot 2026-11-02 and confirmed live). All-white fills on transparent — ideal on dark navy #0A1931. Firm also has a /logos/ brand page.",
+    "source_url": "https://apextraderfunding.com/app/plugins/apex-features/assets/src/images/apex-logo-light.svg",
+    "status": "verified"
+  },
+  {
+    "aliases": [],
+    "code": "blue-guardian",
+    "display_name": "Blue Guardian",
+    "logo_path": "logos/blue-guardian.svg",
+    "notes": "Wordmark extracted verbatim from Blue Guardian's own homepage header inline SVG (live, blueguardian.com); original uses fill=currentColor with text color #efefef, preserved as #efefef fills. Light on transparent — ideal on dark navy #0A1931.",
+    "source_url": "https://blueguardian.com/",
+    "status": "verified"
+  },
+  {
+    "code": "myforexfunds",
+    "display_name": "MyForexFunds",
+    "aliases": [],
+    "logo_path": null,
+    "source_url": null,
+    "status": "abbreviation",
+    "notes": "Closed firm. Historical-logo research was refused by a safety policy and was not retried; no verified historical logo is on file. Use a neutral abbreviation."
+  },
+  {
+    "code": "true-forex-funds",
+    "display_name": "True Forex Funds",
+    "aliases": [],
+    "logo_path": null,
+    "source_url": null,
+    "status": "abbreviation",
+    "notes": "Closed firm. Historical-logo research was refused by a safety policy and was not retried; no verified historical logo is on file. Use a neutral abbreviation."
+  },
+  {
+    "code": "surgetrader",
+    "display_name": "SurgeTrader",
+    "aliases": [],
+    "logo_path": null,
+    "source_url": null,
+    "status": "abbreviation",
+    "notes": "Closed firm. Historical-logo research was refused by a safety policy and was not retried; no verified historical logo is on file. Use a neutral abbreviation."
+  },
+  {
+    "code": "myfundedfx",
+    "display_name": "MyFundedFX",
+    "aliases": [],
+    "logo_path": null,
+    "source_url": null,
+    "status": "abbreviation",
+    "notes": "Closed firm. Historical-logo research was refused by a safety policy and was not retried; no verified historical logo is on file. Use a neutral abbreviation. Brand later became SeacrestFunded — do NOT use a successor brand's logo."
+  },
+  {
+    "aliases": [
+      "TFT"
+    ],
+    "code": "the-funded-trader",
+    "display_name": "The Funded Trader",
+    "logo_path": "logos/the-funded-trader.png",
+    "notes": "HISTORICAL logo (firm is CLOSED — closure case study). White PNG (1561x486) from thefundedtrader.com via Wayback snapshot 2025-05-20; the live domain now returns 'DEPLOYMENT_DISABLED' (Vercel). White on transparent — ideal on dark navy #0A1931. Source is the firm's own archived site, not a third party.",
+    "source_url": "https://web.archive.org/web/20250520220411im_/https://thefundedtrader.com/wp-content/themes/tft-theme/img/tft-logo-white.png",
+    "status": "verified"
+  }
+]
