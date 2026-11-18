@@ -19,7 +19,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&display=swap" rel="stylesheet">
 <style>
   /* ============ RISK TERMINAL — design tokens ============ */
   :root{
@@ -734,6 +734,85 @@
   #mktTag{position:fixed;left:12px;bottom:10px;z-index:3;pointer-events:none;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:rgba(232,236,243,.42)}
   html[data-theme="light"] #mktTag{color:rgba(10,25,49,.45)}
   @media (prefers-reduced-motion:reduce){ #mktBg,#mktVeil,#mktTag{display:none} }
+
+  /* ============ Round 4 — reference redesign (visual only) ============
+     Deep navy-black base, cyan/teal glow, champagne-gold accents, glass
+     surfaces with a gold top hairline, serif display headings (Playfair
+     Display), a static annotated hero chart of the Lab's $86 sample, and
+     flowing wave lines along the featured cards' bottoms. No content,
+     logic or layout contracts change — every rule below is a restyle of
+     an existing surface or an additive hero visual. Dark mode carries
+     the full treatment; light mode keeps clean readable surfaces. */
+  :root{
+    --bg:#040B1C; --bg-page:#040B1C; --bg-band:#071630;
+    --font-display:"Playfair Display","Source Serif 4",Georgia,serif;
+    --teal-glow:rgba(43,217,169,.55);
+  }
+  html:not([data-theme="light"]) body{background-image:radial-gradient(920px 480px at 86% -4%,rgba(38,198,178,.10),rgba(38,198,178,0) 62%),radial-gradient(720px 420px at 6% -2%,rgba(212,175,55,.055),rgba(212,175,55,0) 58%),linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(180deg,rgba(16,38,79,.40) 0,rgba(4,11,28,0) 540px)}
+  /* --- Serif display type: headings only; body/numbers/controls unchanged --- */
+  h1,h2{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em}
+  h2{font-size:30px;line-height:1.18}
+  .article-head h1{font-weight:600}
+  .hero h1{font-size:clamp(44px,5.4vw,64px);line-height:1.06;font-weight:600}
+  /* --- Champagne-gold CTA: soft vertical sheen over the existing gold --- */
+  .btn-gold{background:linear-gradient(180deg,#EFd488 0%,var(--gold) 58%,#C39A2E 100%)}
+  .btn-gold:hover{background:linear-gradient(180deg,#F6DE9C 0%,#DEC04A 58%,#CBA638 100%)}
+  /* --- Hero panel: deeper navy, teal + gold ambience, hairline top edge --- */
+  .hero-inner{background:radial-gradient(680px 340px at 88% -12%,rgba(38,198,178,.16),rgba(38,198,178,0) 62%),radial-gradient(520px 300px at -6% -18%,rgba(212,175,55,.10),rgba(212,175,55,0) 60%),linear-gradient(158deg,#0C2247 0%,#071630 58%,#040B1C 100%);border:1px solid rgba(212,175,55,.34);border-top:1px solid rgba(233,206,122,.75)}
+  .hero-inner::before{background-image:radial-gradient(560px 280px at 80% -10%,rgba(43,217,169,.07),rgba(43,217,169,0) 62%),linear-gradient(rgba(255,255,255,.030) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.030) 1px,transparent 1px)}
+  /* --- Hero layout: copy left, annotated chart right (stacked on mobile) --- */
+  .hero-grid.solo{grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);max-width:none;gap:38px}
+  .hero-visual{margin:0;min-width:0;align-self:center}
+  .hero-visual svg{width:100%;height:auto}
+  .hero-visual .hv-grid{stroke:rgba(255,255,255,.055);stroke-width:1}
+  .hero-visual .hv-globe{fill:rgba(20,80,86,.30);stroke:rgba(94,234,212,.5);stroke-width:1.2}
+  .hero-visual .hv-globe-line{fill:none;stroke:rgba(94,234,212,.34);stroke-width:1}
+  .hero-visual .hv-floor{stroke:var(--gold);stroke-width:1.6;stroke-dasharray:8 6;opacity:.9}
+  .hero-visual .hv-floor-lbl{font-family:var(--font-display);font-style:italic;font-weight:600;font-size:16.5px;fill:var(--gold-soft)}
+  .hero-visual .hv-eq-lbl{font-family:"Inter",sans-serif;font-size:13.5px;fill:rgba(210,226,242,.85)}
+  .hero-visual .hv-eq{font-family:var(--font-display);font-weight:600;font-size:24px;fill:#F5F1E4}
+  .hero-visual .hv-leader{stroke:rgba(232,236,243,.55);stroke-width:1.2}
+  .hero-visual .hv-bracket{stroke:rgba(232,236,243,.75);stroke-width:1.4;fill:none}
+  .hero-visual .hv-bracket-lbl{font-family:"Inter",sans-serif;font-size:13.5px;font-weight:600;fill:#F0B8B2}
+  .hero-visual .hv-sim{font-family:var(--font-display);font-style:italic;font-size:14.5px;fill:rgba(232,236,243,.55)}
+  .hero-visual .hv-wave-t{fill:none;stroke:rgba(45,212,191,.4);stroke-width:1.6}
+  .hero-visual .hv-wave-g{fill:none;stroke:rgba(212,175,55,.34);stroke-width:1.4}
+  .hero .statstrip{margin-top:30px;position:relative;z-index:1}
+  @media (max-width:1020px){
+    .hero-grid.solo{grid-template-columns:1fr;gap:26px}
+    .hero-visual{max-width:640px}
+  }
+  @media (max-width:760px){
+    .hero h1{font-size:38px}
+    h2{font-size:26px}
+    .hero-actions{flex-direction:column;align-items:stretch;gap:12px}
+    .hero-actions .btn{width:100%;justify-content:center}
+    .hero-actions .textlink{align-self:center;padding:6px 0}
+    .hero-visual{max-width:none}
+  }
+  /* --- Glass feature cards: Compare (decision) + Rule reviews header ---
+     Flowing wave lines sit in the card background (behind content), the
+     gold hairline is an inset top shadow, and dark mode gets real glass
+     (translucent fill + blur over the fixed market canvas). */
+  section.glass-sec{position:relative;border:1px solid var(--line);border-radius:14px;padding:30px 28px 36px;margin-top:26px;box-shadow:inset 0 1px 0 rgba(212,175,55,.65),var(--shadow-soft);background-color:var(--surface);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='150' viewBox='0 0 1200 150' preserveAspectRatio='none'%3E%3Cpath d='M0 96 C 180 56, 340 128, 560 96 S 940 52, 1200 92' fill='none' stroke='%232DD4BF' stroke-opacity='.20' stroke-width='1.6'/%3E%3Cpath d='M0 118 C 220 82, 420 142, 660 112 S 980 74, 1200 116' fill='none' stroke='%23D4AF37' stroke-opacity='.16' stroke-width='1.4'/%3E%3Cpath d='M0 74 C 200 40, 400 104, 640 76 S 960 34, 1200 70' fill='none' stroke='%232DD4BF' stroke-opacity='.10' stroke-width='1.3'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:bottom center;background-size:100% 150px}
+  html:not([data-theme="light"]) .glass-sec{background-color:rgba(13,28,54,.66);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:rgba(148,196,220,.16)}
+  html:not([data-theme="light"]) .glass-sec .tblwrap{background:rgba(4,11,28,.5)}
+  html:not([data-theme="light"]) .glass-sec thead th{background:rgba(16,38,79,.75)}
+  .glass-sec .sec-head .src-link{margin-left:auto;align-self:center}
+  .glass-head{border:1px solid var(--line);border-radius:14px;padding:24px 26px 8px;margin-bottom:26px;box-shadow:inset 0 1px 0 rgba(212,175,55,.65),var(--shadow-soft);background-color:var(--surface);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='130' viewBox='0 0 1200 130' preserveAspectRatio='none'%3E%3Cpath d='M0 84 C 200 48, 380 112, 600 84 S 960 44, 1200 80' fill='none' stroke='%232DD4BF' stroke-opacity='.18' stroke-width='1.5'/%3E%3Cpath d='M0 104 C 240 70, 440 124, 680 98 S 1000 62, 1200 100' fill='none' stroke='%23D4AF37' stroke-opacity='.14' stroke-width='1.3'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:bottom center;background-size:100% 130px}
+  html:not([data-theme="light"]) .glass-head{background-color:rgba(13,28,54,.66);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:rgba(148,196,220,.16)}
+  .glass-head .rule{margin-bottom:16px}
+  @media (max-width:760px){
+    section.glass-sec{padding:22px 16px 28px;margin-top:18px}
+    .glass-head{padding:18px 16px 4px}
+    .glass-sec .sec-head .src-link{margin-left:0}
+  }
+  /* --- SIMULATED MARKET DATA tag: on small screens it parks under the
+     sticky header at the right edge, so it can never sit on top of the
+     decision-table heading (left-aligned) or the compare tray. --- */
+  @media (max-width:760px){
+    #mktTag{left:auto;right:10px;bottom:auto;top:70px;font-size:9px;letter-spacing:.1em;opacity:.85}
+  }
 </style>
 <script>
 /* Route boot: resolve the route from the URL before first paint, then hide every
@@ -836,8 +915,6 @@
   <div class="ticker" aria-label="Lab numbers at a glance"><div class="wrap ticker-in"><span><b>16</b> FULL REVIEWS</span><i>◆</i><span><b>59</b> FIRMS IN DIRECTORY</span><i>◆</i><span><b>5</b> DENIAL CASES LOGGED</span><i>◆</i><span><b>$6,002.17</b> VERIFIED DENIED</span><i>◆</i><span><b>0</b> PAYOUTS VERIFIED YET</span></div></div>
   <div class="hero">
     <div class="wrap hero-inner">
-      <svg class="hero-chart" viewBox="0 0 620 150" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 122 L60 108 L120 116 L180 88 L240 98 L300 70 L360 80 L420 52 L480 62 L540 34 L620 22" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2"/><g fill="rgba(212,175,55,.5)" stroke="#D4AF37" stroke-width="1.5"><path d="M36 74v52"/><rect x="29" y="88" width="14" height="24"/><path d="M116 66v52"/><rect x="109" y="80" width="14" height="24"/><path d="M196 52v48"/><rect x="189" y="64" width="14" height="22"/><path d="M276 44v46"/><rect x="269" y="56" width="14" height="20"/><path d="M356 34v44"/><rect x="349" y="46" width="14" height="20"/><path d="M436 24v42"/><rect x="429" y="36" width="14" height="18"/><path d="M516 14v40"/><rect x="509" y="26" width="14" height="18"/></g></svg>
-      <span class="hero-cap">Decorative chart pattern — not market data</span>
       <div class="hero-grid solo">
         <div>
           <p class="eyebrow">RISK FIRST PROP LAB — TESTED, NOT RANKED</p>
@@ -851,20 +928,61 @@
           <div class="trustrow">
             <span><b>16</b> full reviews · <b>59</b> firms · <b>0</b> payouts verified yet — and we say so · Data updated <b>18 Nov 2026</b></span>
           </div>
-          <div class="statstrip" aria-label="The Lab in numbers">
-            <div class="st-it"><span class="st-n">16</span><span class="st-l">Full reviews</span></div>
-            <div class="st-it"><span class="st-n">59</span><span class="st-l">Firms in directory</span></div>
-            <div class="st-it"><span class="st-n">5</span><span class="st-l">Denial cases logged</span></div>
-            <div class="st-it"><span class="st-n">0</span><span class="st-l">Payouts verified yet</span></div>
-          </div>
         </div>
+        <figure class="hero-visual">
+          <svg viewBox="0 0 740 430" role="img" aria-label="Simulated example chart: equity of $196,714 against a daily floor of $196,800 — $86 below the limit" focusable="false">
+            <g aria-hidden="true">
+              <path class="hv-grid" d="M16 100H724M16 180H724M16 260H724M16 340H724M116 24V396M256 24V396M396 24V396M536 24V396M676 24V396"/>
+              <circle class="hv-globe" cx="664" cy="66" r="56"/>
+              <path class="hv-globe-line" d="M608 66h112M618 40h92M618 92h92M664 10c16 16 24 35 24 56s-8 40-24 56c-16-16-24-35-24-56s8-40 24-56zM664 10v112"/>
+              <path class="hv-wave-t" d="M0 398 C 150 372, 280 410, 430 392 S 640 366, 740 390"/>
+              <path class="hv-wave-g" d="M0 412 C 170 388, 320 420, 480 402 S 660 382, 740 404"/>
+              <line x1="40" y1="312" x2="40" y2="340" stroke="#2BD9A9" stroke-width="2"/><rect x="33" y="318" width="14" height="12" fill="#2BD9A9"/>
+              <line x1="66" y1="300" x2="66" y2="326" stroke="#2BD9A9" stroke-width="2"/><rect x="59" y="306" width="14" height="12" fill="#2BD9A9"/>
+              <line x1="92" y1="298" x2="92" y2="320" stroke="#F0564B" stroke-width="2"/><rect x="85" y="306" width="14" height="6" fill="#F0564B"/>
+              <line x1="118" y1="290" x2="118" y2="318" stroke="#2BD9A9" stroke-width="2"/><rect x="111" y="296" width="14" height="16" fill="#2BD9A9"/>
+              <line x1="144" y1="276" x2="144" y2="302" stroke="#2BD9A9" stroke-width="2"/><rect x="137" y="284" width="14" height="12" fill="#2BD9A9"/>
+              <line x1="170" y1="278" x2="170" y2="298" stroke="#F0564B" stroke-width="2"/><rect x="163" y="284" width="14" height="6" fill="#F0564B"/>
+              <line x1="196" y1="264" x2="196" y2="294" stroke="#2BD9A9" stroke-width="2"/><rect x="189" y="272" width="14" height="18" fill="#2BD9A9"/>
+              <line x1="222" y1="250" x2="222" y2="278" stroke="#2BD9A9" stroke-width="2"/><rect x="215" y="258" width="14" height="14" fill="#2BD9A9"/>
+              <line x1="248" y1="238" x2="248" y2="264" stroke="#2BD9A9" stroke-width="2"/><rect x="241" y="246" width="14" height="12" fill="#2BD9A9"/>
+              <line x1="274" y1="240" x2="274" y2="262" stroke="#F0564B" stroke-width="2"/><rect x="267" y="246" width="14" height="8" fill="#F0564B"/>
+              <line x1="300" y1="228" x2="300" y2="258" stroke="#2BD9A9" stroke-width="2"/><rect x="293" y="236" width="14" height="18" fill="#2BD9A9"/>
+              <line x1="326" y1="212" x2="326" y2="242" stroke="#2BD9A9" stroke-width="2"/><rect x="319" y="220" width="14" height="16" fill="#2BD9A9"/>
+              <line x1="352" y1="198" x2="352" y2="226" stroke="#2BD9A9" stroke-width="2"/><rect x="345" y="206" width="14" height="14" fill="#2BD9A9"/>
+              <line x1="378" y1="200" x2="378" y2="222" stroke="#F0564B" stroke-width="2"/><rect x="371" y="206" width="14" height="8" fill="#F0564B"/>
+              <line x1="404" y1="184" x2="404" y2="218" stroke="#2BD9A9" stroke-width="2"/><rect x="397" y="192" width="14" height="22" fill="#2BD9A9"/>
+              <line x1="430" y1="166" x2="430" y2="198" stroke="#2BD9A9" stroke-width="2"/><rect x="423" y="176" width="14" height="16" fill="#2BD9A9"/>
+              <line x1="456" y1="168" x2="456" y2="196" stroke="#F0564B" stroke-width="2"/><rect x="449" y="176" width="14" height="12" fill="#F0564B"/>
+              <line x1="482" y1="182" x2="482" y2="212" stroke="#F0564B" stroke-width="2"/><rect x="475" y="188" width="14" height="16" fill="#F0564B"/>
+              <line x1="508" y1="190" x2="508" y2="214" stroke="#2BD9A9" stroke-width="2"/><rect x="501" y="196" width="14" height="8" fill="#2BD9A9"/>
+              <line x1="534" y1="190" x2="534" y2="232" stroke="#F0564B" stroke-width="2"/><rect x="527" y="196" width="14" height="28" fill="#F0564B"/>
+              <line x1="560" y1="218" x2="560" y2="270" stroke="#F0564B" stroke-width="2"/><rect x="553" y="224" width="14" height="38" fill="#F0564B"/>
+              <line x1="586" y1="256" x2="586" y2="348" stroke="#F0564B" stroke-width="2"/><rect x="579" y="262" width="14" height="60" fill="#F0564B" style="filter:drop-shadow(0 0 7px rgba(240,86,75,.5))"/>
+              <line class="hv-floor" x1="16" y1="300" x2="724" y2="300"/>
+              <text class="hv-floor-lbl" x="222" y="290">Daily floor $196,800</text>
+              <text class="hv-eq-lbl" x="606" y="152">Equity</text>
+              <text class="hv-eq" x="606" y="180">$196,714</text>
+              <line class="hv-leader" x1="600" y1="188" x2="590" y2="250"/>
+              <path class="hv-bracket" d="M604 300h8M604 344h8M608 300v44"/>
+              <text class="hv-bracket-lbl" x="620" y="327">$86 below limit</text>
+              <text class="hv-sim" x="724" y="424" text-anchor="end">Simulated example</text>
+            </g>
+          </svg>
+        </figure>
+      </div>
+      <div class="statstrip" aria-label="The Lab in numbers">
+        <div class="st-it"><span class="st-n">16</span><span class="st-l">Full reviews</span></div>
+        <div class="st-it"><span class="st-n">59</span><span class="st-l">Firms in directory</span></div>
+        <div class="st-it"><span class="st-n">5</span><span class="st-l">Denial cases logged</span></div>
+        <div class="st-it"><span class="st-n">0</span><span class="st-l">Payouts verified yet</span></div>
       </div>
     </div>
   </div>
 
   <main class="wrap">
-    <section class="blk" id="decision" style="padding-top:38px">
-      <div class="sec-head"><span class="sec-no">DECIDE</span><h2>Start here: the decision table</h2></div>
+    <section class="blk glass-sec" id="decision" style="padding-top:38px">
+      <div class="sec-head"><span class="sec-no">DECIDE</span><h2>Start here: the decision table</h2><a class="textlink src-link" href="/transparency/" data-route="transparency">Sources &amp; methodology</a></div>
       <div class="rule"></div>
       <p class="sec-sub">The sixteen fully reviewed firms, side by side — not a blog feed. The Funded Trader is not in this table: it is offline, and its review is a closure case study. Click a column heading to sort. Rule, price and payout figures are each firm's own published terms, checked against its official site on 18 Nov 2026; gold cost is marked <span class="pending">Awaiting measurement</span> until the Lab measures it. <span class="mono" id="dataUpdated">Data updated 18 Nov 2026 · Next full re-check 18 Dec 2026</span></p>
             
@@ -916,9 +1034,11 @@
     </section>
 
     <section class="blk" id="latest">
+      <div class="glass-head">
       <div class="sec-head"><span class="sec-no">LAB</span><h2>Full firm reviews</h2></div>
       <div class="rule"></div>
       <p class="sec-sub">Sixteen firms, sixteen full-length reviews — overview, challenge rules, fees and all-in XAUUSD cost, payout terms, the Lab experience log, pros and cons, who should use each firm, and a Risk First verdict. Every figure is either sourced from the firm's own published material with a source and check date, or marked <span class="pending">Awaiting measurement</span>. Nothing is estimated.</p>
+      </div>
       <div class="post-grid">
         <a class="post" href="/ftmo-review/" data-route="ftmo-review">
           <div class="kicker"><span class="tagcat">Full Review</span><span class="path">/ftmo-review/</span></div>
