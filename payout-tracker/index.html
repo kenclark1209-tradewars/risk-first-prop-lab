@@ -807,11 +807,11 @@
     .glass-head{padding:18px 16px 4px}
     .glass-sec .sec-head .src-link{margin-left:0}
   }
-  /* --- SIMULATED MARKET DATA tag: on small screens it parks under the
-     sticky header at the right edge, so it can never sit on top of the
-     decision-table heading (left-aligned) or the compare tray. --- */
+  /* --- SIMULATED MARKET DATA tag: hidden on small screens — at ≤760px the
+     ~284px tag overlapped the ticker strip and section headings when parked
+     under the header, so it only renders on desktop (bottom-left). --- */
   @media (max-width:760px){
-    #mktTag{left:auto;right:10px;bottom:auto;top:70px;font-size:9px;letter-spacing:.1em;opacity:.85}
+    #mktTag{display:none}
   }
 </style>
 <script>
@@ -7726,137 +7726,298 @@
 })();
 </script>
 <script>
-/* ============ Animated market background — simulated candles (visual only) ============
-   Fully isolated: synthetic OHLC data generated and consumed inside this IIFE.
-   It never reads or writes any simulator, comparison or application state. */
+/* ============ Animated market background v2 — seeded regime candlestick engine (visual only) ============
+   Fully isolated: synthetic OHLC data is generated and consumed inside this IIFE.
+   It never reads or writes any simulator, comparison or application state.
+
+   Engine design (deterministic, reproducible):
+   - PRNG: mulberry32 with fixed seed CFG.seed — same seed, same series.
+   - Regime machine: trend-up / trend-down / range / pullback / breakout /
+     volatility-burst states, each with its own drift, volatility and
+     mean-reversion, held for a seeded number of candles — so the series
+     trends, chops sideways, pulls back and breaks out instead of walking
+     mechanically. Historical candles are rendered immediately on load.
+   - The forming candle ticks every CFG.tickMs (body + wicks update live);
+     a new candle closes every CFG.candleMs (configurable) and the rolling
+     window eases one slot left. The price scale eases toward its target so
+     there are no sudden visual jumps. OHLC validity holds by construction:
+     high/low are tracked from every tick of the forming candle.
+   Paint order on this one canvas (Layers 1–3): drifting teal light +
+   subtle grid, flowing waves + gentle particles, then the candlestick
+   chart with a gold moving average. The #mktVeil gradient above the
+   canvas is Layer 4 (readability); page content is Layer 5. A horizontal
+   alpha mask keeps candles faint under the headline (left) and clearer
+   in the open right/lower hero field. */
 (function(){
+  "use strict";
   var canvas = document.getElementById("mktBg");
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext("2d");
   if (!ctx) return;
-  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) return; /* CSS also hides the layers in this case */
+  var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (mq && mq.matches) return; /* CSS also hides the layers in this case */
 
-  var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-  var W = 0, H = 0;
+  var CFG = { seed: 20261118, tickMs: 120, candleMs: 2600, basePrice: 2650, baseVol: 1.15 };
+  var TICKS_PER_CANDLE = Math.max(6, Math.round(CFG.candleMs / CFG.tickMs));
 
-  /* --- synthetic OHLC series (gold-like price, mean-reverting random walk) --- */
-  var STEP = 16;              /* px per candle slot */
-  var TICK_MS = 130;          /* price tick cadence */
-  var CANDLE_MS = 2600;       /* new candle every ~2.6s */
+  /* Low-power tier: no particles, DPR 1, ~30fps redraws, wider candle slots. */
+  var LOW = !!((navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) ||
+               (navigator.deviceMemory && navigator.deviceMemory <= 2));
+
+  /* ---------------- seeded PRNG (mulberry32) ---------------- */
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var rnd = mulberry32(CFG.seed);
+  function rr(a, b){ return a + rnd() * (b - a); }
+  function gauss(){ return (rnd() + rnd() + rnd() - 1.5) / 1.5; } /* bell curve, ~[-1,1] */
+
+  /* ---------------- regime machine ---------------- */
+  var REGIMES = {
+    trendUp:   { vol: 1.00, revert: 0,      min: 6, max: 13 },
+    trendDown: { vol: 1.00, revert: 0,      min: 6, max: 13 },
+    range:     { vol: 0.62, revert: 0.0120, min: 8, max: 16 },
+    pullback:  { vol: 1.05, revert: 0.0020, min: 3, max: 6 },
+    breakout:  { vol: 1.55, revert: 0,      min: 4, max: 8 },
+    burst:     { vol: 2.60, revert: 0.0020, min: 2, max: 5 }
+  };
+  var price = CFG.basePrice;
+  var state = { name: "range", drift: 0, anchor: price, left: 10 };
+  var lastTrendDir = 1;
+
+  function enterRegime(name, dir){
+    var def = REGIMES[name];
+    state.name = name;
+    state.anchor = price;
+    state.left = Math.round(rr(def.min, def.max));
+    if (name === "trendUp"){ state.drift = 0.15 * rr(0.7, 1.3); lastTrendDir = 1; }
+    else if (name === "trendDown"){ state.drift = -0.15 * rr(0.7, 1.3); lastTrendDir = -1; }
+    else if (name === "pullback"){ state.drift = -lastTrendDir * 0.11 * rr(0.7, 1.3); }
+    else if (name === "breakout"){
+      var d = dir || (rnd() < 0.5 ? -lastTrendDir : lastTrendDir);
+      state.drift = d * 0.30 * rr(0.8, 1.25); lastTrendDir = d;
+    }
+    else if (name === "burst"){ state.drift = rr(-0.05, 0.05); }
+    else { state.drift = 0; }
+  }
+  function nextRegime(){
+    var n = state.name, r = rnd(), name, dir;
+    if (n === "trendUp" || n === "trendDown"){
+      name = r < 0.40 ? "pullback" : r < 0.70 ? "range" : r < 0.85 ? "burst" : (n === "trendUp" ? "trendDown" : "trendUp");
+    } else if (n === "range"){
+      if (r < 0.45){ name = "breakout"; dir = rnd() < 0.6 ? lastTrendDir : -lastTrendDir; }
+      else if (r < 0.80){ name = rnd() < 0.5 ? "trendUp" : "trendDown"; }
+      else name = "burst";
+    } else if (n === "pullback"){
+      name = r < 0.55 ? (lastTrendDir > 0 ? "trendUp" : "trendDown") : r < 0.85 ? "range" : "burst";
+    } else if (n === "breakout"){
+      name = r < 0.50 ? (lastTrendDir > 0 ? "trendUp" : "trendDown") : r < 0.80 ? "range" : "burst";
+    } else { /* burst */
+      name = r < 0.45 ? "range" : r < 0.80 ? (rnd() < 0.5 ? "trendUp" : "trendDown") : "pullback";
+    }
+    enterRegime(name, dir);
+  }
+  function stepPrice(){
+    var def = REGIMES[state.name];
+    price += state.drift + gauss() * CFG.baseVol * def.vol + (state.anchor - price) * def.revert;
+    if (price < 100) price = 100; /* safety floor; never reached in practice */
+  }
+  function regimeCandleDone(){
+    state.left--;
+    if (state.left <= 0) nextRegime();
+  }
+
+  /* ---------------- candles ---------------- */
+  var W = 0, H = 0, STEP = 16, mobile = false, bandTop = 0, bandBot = 0;
   var candles = [];
-  var price = 2650, drift = 0;
-  var live = null;            /* currently forming candle */
-  var liveStart = 0, lastTick = 0, shift = 0, shiftFrom = 0, shiftT = 1;
-
-  function stepPrice(p){
-    drift += (Math.random() - 0.5) * 0.012;
-    drift *= 0.94;
-    drift += (2650 - p) * 0.00004;               /* gentle mean reversion */
-    var shock = (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
-    return p + drift * 9 + shock * 1.35;         /* realistic small volatility */
+  var live = null;
+  function newCandle(o){ return { o: o, h: o, l: o, c: o }; }
+  function simCandle(){
+    var c = newCandle(price);
+    for (var k = 0; k < TICKS_PER_CANDLE; k++){
+      stepPrice();
+      c.c = price; if (price > c.h) c.h = price; if (price < c.l) c.l = price;
+    }
+    regimeCandleDone();
+    return c;
   }
-  function newCandle(o, t){
-    return { o:o, h:o, l:o, c:o, born:t };
-  }
-  function seed(now){
+  function maxCandles(){ return Math.ceil(W / STEP) + 3; }
+  function buildHistory(){
     candles = [];
-    var n = Math.ceil(W / STEP) + 3;
-    var p = price;
-    for (var i = 0; i < n; i++){
-      var c = newCandle(p, now);
-      var ticks = 6 + (i % 4);
-      for (var k = 0; k < ticks; k++){
-        p = stepPrice(p);
-        c.c = p; if (p > c.h) c.h = p; if (p < c.l) c.l = p;
-      }
-      candles.push(c);
-      p = c.c;
-    }
-    price = p;
-    live = newCandle(price, now);
-    liveStart = now; lastTick = now; shift = 0; shiftFrom = 0; shiftT = 1;
+    var n = maxCandles();
+    for (var i = 0; i < n; i++) candles.push(simCandle());
+    live = newCandle(price);
   }
-  function tick(now){
-    price = stepPrice(price);
-    live.c = price;
-    if (price > live.h) live.h = price;
-    if (price < live.l) live.l = price;
-    if (now - liveStart >= CANDLE_MS){
-      candles.push(live);
-      var maxN = Math.ceil(W / STEP) + 3;
-      while (candles.length > maxN) candles.shift();
-      live = newCandle(price, now);
-      liveStart = now;
-      shiftFrom = STEP; shiftT = 0;              /* smooth left shift */
+  function ensureHistory(){
+    var n = maxCandles();
+    while (candles.length > n) candles.shift();
+    if (live && candles.length < n){
+      /* Window widened: simulate extra older candles, then shift them so the
+         series stays continuous at the join (a uniform shift preserves every
+         OHLC relationship). Regime state is restored untouched afterwards. */
+      var savedPrice = price, savedDir = lastTrendDir;
+      var savedState = { name: state.name, drift: state.drift, anchor: state.anchor, left: state.left };
+      var hist = [], m = n - candles.length + 2;
+      for (var i = 0; i < m; i++) hist.push(simCandle());
+      var join = candles.length ? candles[0].o : live.o;
+      var delta = join - hist[hist.length - 1].c;
+      for (i = 0; i < hist.length; i++){ hist[i].o += delta; hist[i].h += delta; hist[i].l += delta; hist[i].c += delta; }
+      candles = hist.concat(candles);
+      while (candles.length > n) candles.shift();
+      price = savedPrice; state = savedState; lastTrendDir = savedDir;
     }
   }
 
+  /* ---------------- particles (Layer 2, very gentle drift) ---------------- */
+  var particles = [];
+  function initParticles(){
+    particles = [];
+    var n = LOW ? 0 : (mobile ? 10 : 26);
+    for (var i = 0; i < n; i++){
+      particles.push({ x: rnd(), y: rnd(), r: rr(0.8, 1.9), sp: rr(0.004, 0.012), ph: rr(0, 6.283), gold: rnd() < 0.3 });
+    }
+  }
+
+  /* ---------------- layout / resize ---------------- */
+  var DPR = LOW ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+  function layout(){
+    mobile = W <= 760;
+    STEP = LOW ? 20 : (mobile ? 22 : 16);
+    bandTop = mobile ? H * 0.34 : H * 0.05;
+    bandBot = mobile ? H * 0.78 : H * 0.54;
+  }
   function resize(){
     W = window.innerWidth; H = window.innerHeight;
     canvas.width = Math.round(W * DPR);
     canvas.height = Math.round(H * DPR);
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    if (!candles.length) seed(performance.now());
-    else {
-      var maxN = Math.ceil(W / STEP) + 3;
-      while (candles.length > maxN) candles.shift();
+    layout();
+    if (!candles.length){ buildHistory(); initParticles(); }
+    else ensureHistory();
+  }
+
+  /* Horizontal alpha mask: candles stay faint under the headline on the
+     left and read clearly in the open right-hand field. Mobile is uniform. */
+  function maskX(x){
+    if (mobile) return 0.88;
+    var t = (x - W * 0.04) / (W * 0.48);
+    t = t < 0 ? 0 : t > 1 ? 1 : t;
+    t = t * t * (3 - 2 * t); /* smoothstep */
+    return 0.34 + 0.66 * t;
+  }
+
+  /* ---------------- tick / candle timing ---------------- */
+  var lastTick = 0, liveStart = 0, shiftStart = -1;
+  function stepLive(){
+    stepPrice();
+    live.c = price;
+    if (price > live.h) live.h = price;
+    if (price < live.l) live.l = price;
+  }
+  function tick(now){
+    var steps = 0;
+    while (now - lastTick >= CFG.tickMs && steps < 4){ stepLive(); lastTick += CFG.tickMs; steps++; }
+    if (steps === 4) lastTick = now; /* drop backlog after a long stall */
+    if (now - liveStart >= CFG.candleMs){
+      candles.push(live);
+      while (candles.length > maxCandles()) candles.shift();
+      regimeCandleDone();
+      live = newCandle(price);
+      liveStart = now;
+      shiftStart = now; /* window eases one slot left over ~420ms */
     }
   }
 
+  /* ---------------- render ---------------- */
+  var dispHi = null, dispLo = null;
   function draw(now){
     var light = document.documentElement.getAttribute("data-theme") === "light";
+    var t = now * 0.001;
     ctx.clearRect(0, 0, W, H);
 
-    /* ambient flowing waves (3D-like depth) */
-    var t = now * 0.00016;
+    /* Layer 1 — slowly drifting teal light */
+    var lx = W * (0.80 + 0.05 * Math.sin(t * 0.11));
+    var ly = H * (0.08 + 0.03 * Math.cos(t * 0.07));
+    var grd = ctx.createRadialGradient(lx, ly, 0, lx, ly, W * 0.42);
+    grd.addColorStop(0, light ? "rgba(15,118,110,0.05)" : "rgba(45,212,191,0.055)");
+    grd.addColorStop(1, "rgba(45,212,191,0)");
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W, bandBot + 60);
+
+    /* Layer 2 — flowing waves (slight scroll parallax for depth) */
+    var par = Math.min(60, (window.scrollY || 0) * 0.03);
     var waves = [
-      { y:0.66, amp:26, len:0.0035, sp:1.0, col: light ? "rgba(15,118,110,0.10)" : "rgba(45,212,191,0.07)" },
-      { y:0.74, amp:34, len:0.0026, sp:0.7, col: light ? "rgba(169,134,42,0.10)" : "rgba(212,175,55,0.05)" },
-      { y:0.58, amp:20, len:0.0046, sp:1.35, col: light ? "rgba(10,25,49,0.07)" : "rgba(78,125,217,0.06)" }
+      { y: 0.66, amp: 26, len: 0.0035, sp: 1.0,  col: light ? "rgba(15,118,110,0.10)" : "rgba(45,212,191,0.07)" },
+      { y: 0.74, amp: 34, len: 0.0026, sp: 0.7,  col: light ? "rgba(169,134,42,0.10)" : "rgba(212,175,55,0.05)" },
+      { y: 0.58, amp: 20, len: 0.0046, sp: 1.35, col: light ? "rgba(10,25,49,0.07)" : "rgba(78,125,217,0.06)" }
     ];
     for (var wi = 0; wi < waves.length; wi++){
       var wv = waves[wi];
       ctx.beginPath();
       for (var x = 0; x <= W; x += 14){
-        var y = H * wv.y + Math.sin(x * wv.len + t * wv.sp * 2) * wv.amp
-              + Math.sin(x * wv.len * 0.5 - t * wv.sp) * wv.amp * 0.5;
+        var y = H * wv.y - par + Math.sin(x * wv.len + t * wv.sp * 0.32) * wv.amp
+              + Math.sin(x * wv.len * 0.5 - t * wv.sp * 0.16) * wv.amp * 0.5;
         if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
       ctx.strokeStyle = wv.col; ctx.lineWidth = 1.4; ctx.stroke();
     }
 
-    /* price scale from visible series */
+    /* Layer 2 — particles: slow upward drift, soft twinkle */
+    for (var pi = 0; pi < particles.length; pi++){
+      var p = particles[pi];
+      p.y -= p.sp * 0.016;
+      if (p.y < -0.02){ p.y = 1.02; p.x = rnd(); }
+      var px = p.x * W + Math.sin(t * 0.24 + p.ph) * 9;
+      var py = p.y * H;
+      var tw = 0.5 + 0.5 * Math.sin(t * 0.6 + p.ph * 2);
+      ctx.beginPath();
+      ctx.arc(px, py, p.r, 0, 6.2832);
+      ctx.fillStyle = p.gold
+        ? "rgba(212,175,55," + (0.05 + 0.09 * tw) + ")"
+        : (light ? "rgba(15,118,110," + (0.05 + 0.08 * tw) + ")" : "rgba(94,234,212," + (0.05 + 0.09 * tw) + ")");
+      ctx.fill();
+    }
+
+    /* price scale — eased toward target so the scale never jumps */
     var all = candles.concat([live]);
     var hi = -Infinity, lo = Infinity, i, c;
     for (i = 0; i < all.length; i++){ if (all[i].h > hi) hi = all[i].h; if (all[i].l < lo) lo = all[i].l; }
     if (!(hi > lo)) { hi = price + 5; lo = price - 5; }
     var pad = (hi - lo) * 0.25 + 0.5; hi += pad; lo -= pad;
-    var top = H * 0.06, bot = H * 0.52;           /* chart lives in the upper field */
-    function Y(p){ return top + (hi - p) / (hi - lo) * (bot - top); }
+    if (dispHi === null){ dispHi = hi; dispLo = lo; }
+    dispHi += (hi - dispHi) * 0.07;
+    dispLo += (lo - dispLo) * 0.07;
+    function Y(pv){ return bandTop + (dispHi - pv) / (dispHi - dispLo) * (bandBot - bandTop); }
 
-    /* subtle horizontal market grid */
+    /* Layer 1 — subtle horizontal market grid inside the chart band */
     ctx.lineWidth = 1;
     ctx.strokeStyle = light ? "rgba(10,25,49,0.05)" : "rgba(148,197,255,0.05)";
     ctx.beginPath();
     for (var g = 1; g <= 4; g++){
-      var gy = top + (bot - top) * g / 5;
+      var gy = bandTop + (bandBot - bandTop) * g / 5;
       ctx.moveTo(0, gy); ctx.lineTo(W, gy);
     }
     ctx.stroke();
 
-    /* smooth shift easing */
-    if (shiftT < 1){
-      shiftT = Math.min(1, shiftT + 0.045);
-      var e = 1 - Math.pow(1 - shiftT, 3);
-      shift = shiftFrom * (1 - e);
-    } else shift = 0;
+    /* smooth horizontal shift as new candles arrive */
+    var shift = 0;
+    if (shiftStart >= 0){
+      var st = (now - shiftStart) / 420;
+      if (st >= 1){ shift = 0; shiftStart = -1; }
+      else { var e = 1 - Math.pow(1 - st, 3); shift = STEP * (1 - e); }
+    }
 
-    var upCol   = light ? "rgba(13,148,136,0.50)" : "rgba(45,212,191,0.55)";
-    var dnCol   = light ? "rgba(176,51,46,0.38)" : "rgba(224,101,95,0.42)";
-    var upFill  = light ? "rgba(13,148,136,0.28)" : "rgba(45,212,191,0.30)";
-    var dnFill  = light ? "rgba(176,51,46,0.22)" : "rgba(224,101,95,0.24)";
-    var bw = 9;                                   /* candle body width */
+    /* Layer 3 — candlesticks */
+    var upCol  = light ? "rgba(13,148,136,0.50)" : "rgba(45,212,191,0.55)";
+    var dnCol  = light ? "rgba(176,51,46,0.38)" : "rgba(224,101,95,0.42)";
+    var upFill = light ? "rgba(13,148,136,0.28)" : "rgba(45,212,191,0.30)";
+    var dnFill = light ? "rgba(176,51,46,0.22)" : "rgba(224,101,95,0.24)";
+    var bw = mobile ? 10 : 9;
     function drawCandle(cd, cx){
       var up = cd.c >= cd.o;
       ctx.strokeStyle = up ? upCol : dnCol;
@@ -7870,44 +8031,52 @@
       ctx.fillRect(cx - bw / 2, yTop, bw, hgt);
       ctx.strokeRect(cx - bw / 2, yTop, bw, hgt);
     }
-    var baseX = W - 26 + shift;                   /* right-anchored, newest at right */
+    var baseX = W - 26 + shift; /* right-anchored, newest at right */
     for (i = all.length - 1; i >= 0; i--){
       var cx = baseX - (all.length - 1 - i) * STEP;
       if (cx < -STEP) break;
+      ctx.globalAlpha = maskX(cx);
       drawCandle(all[i], cx);
     }
+    ctx.globalAlpha = 1;
 
     /* champagne-gold moving average (8-candle sliding window over closes) */
     var ps = [0];
     for (i = 0; i < all.length; i++) ps.push(ps[i] + all[i].c);
-    ctx.beginPath();
-    var started = false;
-    for (i = 7; i < all.length; i++){
-      var ma = (ps[i + 1] - ps[i + 1 - 8]) / 8;
-      var mx = baseX - (all.length - 1 - i) * STEP;
-      if (mx < -STEP) { started = false; continue; }
-      if (!started){ ctx.moveTo(mx, Y(ma)); started = true; } else ctx.lineTo(mx, Y(ma));
-    }
     ctx.strokeStyle = light ? "rgba(169,134,42,0.35)" : "rgba(212,175,55,0.32)";
-    ctx.lineWidth = 1.3; ctx.stroke();
+    ctx.lineWidth = 1.3;
+    for (i = 8; i < all.length; i++){
+      var ma1 = (ps[i] - ps[i - 8]) / 8, ma2 = (ps[i + 1] - ps[i + 1 - 8]) / 8;
+      var x1 = baseX - (all.length - i) * STEP, x2 = baseX - (all.length - 1 - i) * STEP;
+      if (x2 < -STEP) continue;
+      ctx.globalAlpha = maskX(x2);
+      ctx.beginPath(); ctx.moveTo(x1, Y(ma1)); ctx.lineTo(x2, Y(ma2)); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
 
-    /* live price dashed line */
+    /* live price dashed line, faded toward the left by the same mask */
+    var lg = ctx.createLinearGradient(0, 0, W, 0);
+    var lc = light ? "15,118,110" : "45,212,191";
+    lg.addColorStop(0, "rgba(" + lc + "," + (0.25 * maskX(0)) + ")");
+    lg.addColorStop(0.52, "rgba(" + lc + "," + (0.25 * maskX(W * 0.52)) + ")");
+    lg.addColorStop(1, "rgba(" + lc + ",0.25)");
     ctx.beginPath();
     ctx.setLineDash([5, 6]);
     ctx.moveTo(0, Y(price)); ctx.lineTo(W, Y(price));
-    ctx.strokeStyle = light ? "rgba(15,118,110,0.28)" : "rgba(45,212,191,0.25)";
-    ctx.lineWidth = 1; ctx.stroke();
+    ctx.strokeStyle = lg; ctx.lineWidth = 1; ctx.stroke();
     ctx.setLineDash([]);
   }
-  var raf = 0, running = false;
+
+  /* ---------------- run loop, lifecycle, disposal ---------------- */
+  var raf = 0, running = false, lastDraw = 0;
   function frame(now){
     if (!running) return;
-    if (now - lastTick >= TICK_MS){ tick(now); lastTick = now; }
-    draw(now);
+    tick(now);
+    if (!LOW || now - lastDraw >= 33){ draw(now); lastDraw = now; }
     raf = requestAnimationFrame(frame);
   }
   function start(){
-    if (running || reduceMotion) return;
+    if (running) return;
     running = true;
     raf = requestAnimationFrame(frame);
   }
@@ -7916,16 +8085,44 @@
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
   }
-  document.addEventListener("visibilitychange", function(){
-    if (document.hidden) stop(); else { lastTick = performance.now(); start(); }
-  });
+  function onVisibility(){
+    if (document.hidden) stop();
+    else { var n = performance.now(); lastTick = n; liveStart = n; start(); }
+  }
   var rzTimer = 0;
-  window.addEventListener("resize", function(){
+  function onResize(){
     clearTimeout(rzTimer);
     rzTimer = setTimeout(resize, 160);
-  });
+  }
+  function dispose(){
+    stop();
+    clearTimeout(rzTimer);
+    document.removeEventListener("visibilitychange", onVisibility);
+    window.removeEventListener("resize", onResize);
+    window.removeEventListener("pagehide", dispose);
+  }
+  document.addEventListener("visibilitychange", onVisibility);
+  window.addEventListener("resize", onResize);
+  window.addEventListener("pagehide", dispose);
+
+  /* Read-only test handle: lets acceptance checks verify OHLC invariants and
+     regime behaviour. Nothing in the app reads this — it is write-only from
+     the engine's side and purely observational. */
+  window.MktBgSim = {
+    config: CFG,
+    snapshot: function(){
+      return {
+        regime: state.name,
+        price: price,
+        live: { o: live.o, h: live.h, l: live.l, c: live.c },
+        candles: candles.map(function(cd){ return { o: cd.o, h: cd.h, l: cd.l, c: cd.c }; })
+      };
+    }
+  };
 
   resize();
+  var t0 = performance.now();
+  lastTick = t0; liveStart = t0;
   start();
 })();
 </script>
