@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
 <title>Payout Denial Index: Prop Firm Payouts Refused, Counted | Risk First Prop Lab</title>
-<meta name="description" content="The inverse of a payout tracker: the Payout Denial Index counts verified prop firm payout DENIALS — firm, date, amount, reason and evidence grade, with the firm's response shown alongside. Starts honestly empty: 0 verified cases. Strict evidence standard published; rumours are never posted." />
+<meta name="description" content="The inverse of a payout tracker: the Payout Denial Index counts verified prop firm payout DENIALS — firm, date, amount, reason and evidence grade, with the firm's response shown alongside. First cases published 18 Nov 2026: 2 verified denials totalling $6,002.17, 3 cases awaiting verification. Strict evidence standard published; rumours are never posted." />
 <link rel="canonical" href="https://riskproplab.vercel.app/denial-index/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Risk First Prop Lab" />
 <meta property="og:title" content="Payout Denial Index: Prop Firm Payouts Refused, Counted | Risk First Prop Lab" />
-<meta property="og:description" content="The inverse of a payout tracker: the Payout Denial Index counts verified prop firm payout DENIALS — firm, date, amount, reason and evidence grade, with the firm's response shown alongside. Starts honestly empty: 0 verified cases. Strict evidence standard published; rumours are never posted." />
+<meta property="og:description" content="The inverse of a payout tracker: the Payout Denial Index counts verified prop firm payout DENIALS — firm, date, amount, reason and evidence grade, with the firm's response shown alongside. First cases published 18 Nov 2026: 2 verified denials totalling $6,002.17, 3 cases awaiting verification. Strict evidence standard published; rumours are never posted." />
 <meta property="og:url" content="https://riskproplab.vercel.app/denial-index/" />
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 105'%3E%3Cpath d='M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z' fill='%230A1931' stroke='%23D4AF37' stroke-width='4'/%3E%3Cpath fill='%23D4AF37' fill-rule='evenodd' d='M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z'/%3E%3C/svg%3E" />
@@ -527,6 +527,51 @@
   .st-bad{color:#F0938F;border-color:rgba(214,69,65,.55);background:var(--red-bg)}
   html[data-theme="light"] .st-bad{color:#A02C28}
   .bignum{font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:600;color:var(--text);line-height:1.1}
+  /* --- Rule Trap Simulator --- */
+  .sim-verdict{border-radius:10px;padding:20px 22px;margin-bottom:16px;border:1px solid var(--line);background:var(--surface)}
+  .sim-verdict .sv-k{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .sim-verdict .sv-t{font-family:"Archivo",sans-serif;font-size:25px;font-weight:700;line-height:1.25}
+  .sim-verdict .sv-s{font-size:14.5px;margin-top:7px;line-height:1.55}
+  .sim-verdict.ok{background:var(--green-bg);border-color:rgba(47,163,107,.55)}
+  .sim-verdict.ok .sv-t{color:#6FCB9C}
+  .sim-verdict.bad{background:var(--red-bg);border-color:rgba(214,69,65,.55)}
+  .sim-verdict.bad .sv-t{color:#F0938F}
+  .sim-verdict.warn{background:var(--amber-bg);border-color:rgba(217,164,65,.55)}
+  .sim-verdict.warn .sv-t{color:var(--amber)}
+  html[data-theme="light"] .sim-verdict.ok .sv-t{color:#1E7A4C}
+  html[data-theme="light"] .sim-verdict.bad .sv-t{color:#A02C28}
+  html[data-theme="light"] .sim-verdict.warn .sv-t{color:#8A6414}
+  .sim-story{background:var(--navy-900);color:#E8ECF3;border:1px solid rgba(212,175,55,.4);border-radius:10px;padding:20px 22px;margin-bottom:20px}
+  .sim-story .lbl{color:var(--gold-soft)}
+  .sim-story p{font-size:14.5px;line-height:1.65;margin:0 0 10px;font-family:"Inter",sans-serif}
+  .sim-story .sim-lesson{border-top:1px solid rgba(232,236,243,.14);padding-top:10px;margin-bottom:0}
+  .sim-story .sim-lesson b{color:var(--gold-soft)}
+  .sim-story .pnote{color:rgba(232,236,243,.6)}
+  .sim-log{width:100%;border-collapse:collapse}
+  .sim-log th{font-size:11px;text-align:left;padding:6px 6px;color:var(--muted);font-family:"IBM Plex Mono",monospace;letter-spacing:.04em}
+  .sim-log td{padding:4px 6px;vertical-align:middle}
+  .sim-log input[type="number"]{width:100%;min-width:74px;padding:8px 9px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--text);font-size:14px;font-family:inherit;min-height:38px}
+  .sim-log input[type="checkbox"]{width:19px;height:19px;accent-color:var(--gold-deep);cursor:pointer}
+  .sim-log .sim-dayno{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);white-space:nowrap}
+  .sim-rm{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;line-height:1}
+  .sim-rm:hover{color:#F0938F;border-color:rgba(214,69,65,.55)}
+  .sim-res-bad td{background:var(--red-bg)}
+  .sim-res-warn td{background:var(--amber-bg)}
+  .sim-check{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid var(--line-soft);font-size:14px;align-items:baseline}
+  .sim-check span:last-child{text-align:right;max-width:64%}
+  @media (max-width:560px){ .sim-verdict .sv-t{font-size:21px} .sim-log input[type="number"]{min-width:62px;padding:7px 6px} }
+  /* --- Denial Index case files --- */
+  .casefile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:22px 24px;margin-bottom:16px}
+  .casefile .cf-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+  .casefile .cf-head b{font-size:18px;font-family:"Archivo",sans-serif}
+  .casefile .cf-meta{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);line-height:1.6}
+  .casefile .cf-amt{font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:600;color:var(--text)}
+  .casefile dl{margin:14px 0 0;display:grid;gap:12px}
+  .casefile dt{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .casefile dd{margin:0;font-size:14.8px;line-height:1.6;font-family:"Inter",sans-serif}
+  .casefile dd a{color:var(--gold-soft);font-weight:600}
+  html[data-theme="light"] .casefile dd a{color:var(--gold-deep)}
+  @media (max-width:480px){ .casefile{padding:18px 16px} }
 </style>
 <script>
 /* Route boot: resolve the route from the URL before first paint, then hide every
@@ -534,7 +579,7 @@
    over, so the correct view is on screen from the first frame — the homepage is
    never rendered above a sub-page on a direct open or reload. */
 (function(){
-  var ROUTES = ["home","directory","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","challenge-planner","gold-cost","prop-firm-match","trader-viet","community-reviews","payout-tracker","denial-index","affiliate-disclosure","for-prop-firms","transparency","the-funded-trader-review","fxify-review","blue-guardian-review","instant-funding-review","apex-review","myfundedfutures-review","breakout-review","goat-funded-review","hantec-rzr-review","topstep-review","404"];
+  var ROUTES = ["home","directory","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","challenge-planner","true-cost-to-funded","rule-trap-simulator","gold-cost","prop-firm-match","trader-viet","withdraw-to-vietnam","community-reviews","payout-tracker","denial-index","affiliate-disclosure","for-prop-firms","transparency","the-funded-trader-review","fxify-review","blue-guardian-review","instant-funding-review","apex-review","myfundedfutures-review","breakout-review","goat-funded-review","hantec-rzr-review","topstep-review","404"];
   function slug(){
     var h = window.location.hash.replace(/^#\/?/, "").replace(/\/$/, "");
     if (h && ROUTES.indexOf(h.split("/")[0]) >= 0) return h.split("/")[0];
@@ -571,6 +616,8 @@
         <button class="navdrop-btn" id="toolsBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="toolsPanel">Tools <span class="nd-caret" aria-hidden="true">▾</span></button>
         <div class="navdrop-panel" id="toolsPanel" hidden>
           <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner"><b>Challenge Pass Planner</b><span>A day-by-day pass plan from each firm's own rules and hidden rules.</span></a>
+          <a href="/true-cost-to-funded/" data-route="true-cost-to-funded" data-nav="true-cost-to-funded"><b>True Cost to Get Funded</b><span>What getting funded really costs: your pass probability per attempt, expected attempts and expected total cost — not the sticker price.</span></a>
+          <a href="/rule-trap-simulator/" data-route="rule-trap-simulator" data-nav="rule-trap-simulator"><b>Rule Trap Simulator</b><span>Break the rules on paper first — run a day-by-day log against each firm's real loss rules.</span></a>
           <a href="/gold-cost/" data-route="gold-cost" data-nav="gold-cost"><b>Gold Cost League Table</b><span>XAUUSD all-in cost measured on MT5 — plus the Your Gold Bleed calculator.</span></a>
           <a href="/denial-index/" data-route="denial-index" data-nav="denial-index"><b>Payout Denial Index</b><span>The payouts that never arrived — verified denials, counted.</span></a>
           <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd" data-nav="rule-trap-daily-dd"><b>Rule Trap: Daily Drawdown</b><span>Balance vs equity vs highest-of-both, worked in dollars.</span></a>
@@ -603,6 +650,8 @@
         <a href="/prop-firm-match/" data-route="prop-firm-match" data-nav="prop-firm-match">Match</a>
         <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner">Planner</a>
         <p class="toolslbl">Tools</p>
+        <a href="/true-cost-to-funded/" data-route="true-cost-to-funded" data-nav="true-cost-to-funded">True Cost to Get Funded</a>
+        <a href="/rule-trap-simulator/" data-route="rule-trap-simulator" data-nav="rule-trap-simulator">Rule Trap Simulator</a>
         <a href="/gold-cost/" data-route="gold-cost" data-nav="gold-cost">Gold Cost League Table</a>
         <a href="/denial-index/" data-route="denial-index" data-nav="denial-index">Payout Denial Index</a>
         <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd" data-nav="rule-trap-daily-dd">Rule Trap: Daily Drawdown</a>
@@ -668,7 +717,7 @@
         <thead><tr><th class="sortable" data-sort="name">Firm ↕</th><th>Score</th><th>Model</th><th>Daily / Max loss</th><th class="num sortable" data-sort="split">Max split ↕</th><th class="num sortable" data-sort="price">Entry from ↕</th><th class="num">XAUUSD all-in cost</th><th class="optcol" data-col="country">Country · years</th><th class="optcol" data-col="platforms">Platforms</th><th class="optcol" data-col="vietnam">Vietnam</th><th>Actions</th></tr></thead>
         <tbody id="decisionBody"></tbody>
       </table></div>
-      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (59)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a><a class="btn btn-line" href="/challenge-planner/" data-route="challenge-planner">Plan your pass — Challenge Pass Planner</a><a class="btn btn-line" href="/gold-cost/" data-route="gold-cost">Gold Cost League Table — what gold really costs per firm</a><a class="btn btn-line" href="/denial-index/" data-route="denial-index">Payout Denial Index — payouts refused, counted</a></div>
+      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (59)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a><a class="btn btn-line" href="/challenge-planner/" data-route="challenge-planner">Plan your pass — Challenge Pass Planner</a><a class="btn btn-line" href="/true-cost-to-funded/" data-route="true-cost-to-funded">True Cost to Get Funded — what a challenge really costs</a><a class="btn btn-line" href="/rule-trap-simulator/" data-route="rule-trap-simulator">Break the rules on paper — Rule Trap Simulator</a><a class="btn btn-line" href="/gold-cost/" data-route="gold-cost">Gold Cost League Table — what gold really costs per firm</a><a class="btn btn-line" href="/denial-index/" data-route="denial-index">Payout Denial Index — payouts refused, counted</a></div>
     </section>
 
     <section class="blk" id="updates">
@@ -834,6 +883,18 @@
           <h3>Prop Firm Match: Shortlist by Budget, Style &amp; Country</h3>
           <p>Five questions, one honest shortlist from the fifteen firms in the Match pool, and a full comparison table — confirmed, excluded, or still to verify on every criterion.</p>
           <span class="go">Start the Match quiz →</span>
+        </a>
+        <a class="post" href="/true-cost-to-funded/" data-route="true-cost-to-funded">
+          <div class="kicker"><span class="tagcat">Tool · Calculator</span><span class="path">/true-cost-to-funded/</span></div>
+          <h3>True Cost to Get Funded: What a Challenge Really Costs</h3>
+          <p>The sticker price buys one attempt — most traders need several. Enter your win rate, RRR and risk per trade and the calculator models your pass probability per attempt, the expected number of attempts, and the expected total, remaining and sunk cost of getting funded — set against the industry reality that only ~14% of challenge buyers ever pass. A €540 challenge at a 14% pass rate is a €3,857 decision, not a €540 one.</p>
+          <span class="go">Price your attempts →</span>
+        </a>
+        <a class="post" href="/rule-trap-simulator/" data-route="rule-trap-simulator">
+          <div class="kicker"><span class="tagcat">Tool · Simulator</span><span class="path">/rule-trap-simulator/</span></div>
+          <h3>Rule Trap Simulator: Break the Rules on Paper Before You Pay</h3>
+          <p>Pick a firm and model, type in a day-by-day trading log, and the simulator runs it against that firm's real daily-loss basis, trailing max loss, best-day cap and news/weekend rules — naming the exact day and rule that would close the account. Includes three reconstructed real cases: an $86 breach, a closure one day before payout, and a $144 equity gap.</p>
+          <span class="go">Run the simulator →</span>
         </a>
         <a class="post" href="/trader-viet/" data-route="trader-viet">
           <div class="kicker"><span class="tagcat">Trader Viet</span><span class="path">/trader-viet/</span></div>
@@ -1283,6 +1344,7 @@
         <a href="/fundednext-review/" data-route="fundednext-review"><b>FundedNext Review</b><span>Faster structure — but closed to Vietnam.</span></a>
         <a href="/prop-firm-match/" data-route="prop-firm-match"><b>Prop Firm Match</b><span>Which model fits your style and budget?</span></a>
         <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>The5ers' all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
+        <a href="/withdraw-to-vietnam/" data-route="withdraw-to-vietnam"><b>Withdraw to Vietnam — Rút tiền về Việt Nam</b><span>Step by step: The5ers payouts home via Rise, crypto or bank transfer — $150 minimum, 3.5% fee.</span></a>
       </div>
     </div>
   </main>
@@ -1533,6 +1595,7 @@
         <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd"><b>Rule Trap: Daily Drawdown</b><span>How a trailing floor changes your sizing maths.</span></a>
         <a href="/directory/" data-route="directory"><b>All Prop Firms Directory</b><span>59 firms with Lab status.</span></a>
         <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>E8 Markets' all-in XAUUSD cost, measured on MT5 against every other firm — pending the first log.</span></a>
+        <a href="/withdraw-to-vietnam/" data-route="withdraw-to-vietnam"><b>Withdraw to Vietnam — Rút tiền về Việt Nam</b><span>Step by step: E8 payouts home via Rise or WorkMarket — $100 net minimum, no firm fee.</span></a>
       </div>
     </div>
   </main>
@@ -2121,7 +2184,141 @@
       <div class="related">
         <a href="/country-check/" data-route="country-check"><b>Country Check</b><span>The two-minute verification method for any firm.</span></a>
         <a href="/directory/" data-route="directory"><b>All Prop Firms Directory</b><span>Filter all 59 firms by Vietnam access.</span></a>
+        <a href="/withdraw-to-vietnam/" data-route="withdraw-to-vietnam"><b>Withdraw to Vietnam — Rút tiền về Việt Nam</b><span>Step by step: getting a payout home from E8 Markets, The5ers and Breakout Prop.</span></a>
         <a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO Review</b><span>The strongest open door for Vietnam-based CFD traders.</span></a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== VIEW: WITHDRAW TO VIETNAM ===================== -->
+<div data-view="withdraw-to-vietnam" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Guides</span> <span>›</span> <span>Withdraw to Vietnam</span></nav>
+      <h1>Withdraw to Vietnam — Rút tiền về Việt Nam: How to Get Your Prop Payout Home</h1>
+      <p class="standfirst">You passed, you are funded, the account is in profit — now the money has to actually reach Vietnam. This guide walks the payout through, step by step, for the three firms on this site that a Vietnam-resident trader can use: E8 Markets, The5ers and Breakout Prop. Every figure below is per the firm's official docs, checked 18 Nov 2026. The Lab has not itself withdrawn from any of these three firms, so each step is marked for what it is: the firm's published process, not a Lab-tested one.</p>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Facts checked 18 Nov 2026</span><span>Series: Trader Viet #002</span><span>Last updated 18 Nov 2026</span><span>Next review 18 Dec 2026</span></div>
+    </div>
+    <div class="article-body">
+      <div class="warn warn-amber"><b>Read this first.</b> Payout terms change often — re-check the firm's own pages before you buy, and again before you request. The Lab has not itself withdrawn from E8 Markets, The5ers or Breakout Prop, so every step on this page is per the firm's official docs — the Lab has not done this step itself — unless stated otherwise. If anything on this page conflicts with the firm's live pages, the firm's live pages win.</div>
+
+      <h2>1 · Ba quỹ, ba đường tiền — the three firms at a glance</h2>
+      <p>Only firms a Vietnam-resident trader can actually use are on this page — no firm that bans Vietnam appears here. The detail behind each row is in the firm's own section below and in its full review.</p>
+      <div class="tblwrap"><table aria-label="Payout comparison for traders in Vietnam">
+        <thead><tr><th>Firm</th><th>Rail from Vietnam</th><th>Minimum</th><th>Firm fee</th><th>First payout</th><th>Frequency</th><th>Vietnam note</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/e8-markets-review/" data-route="e8-markets-review"><span class="fname">E8 Markets</span></a></td><td>Rise (cash or crypto) or WorkMarket bank transfer. Aeropay is US bank accounts only — not usable from Vietnam. No direct crypto payout; crypto goes through Rise.</td><td class="num">$100 net</td><td>No payout fee of its own; the payment processor may charge its own fee</td><td>From 3 days into the funded (performance) stage, once the product's conditions are met; a payout buffer applies on E8 One</td><td>On request; no weekend processing</td><td>Accepted for Classic / Perpetuals. <b>Futures is not for Vietnam.</b></td></tr>
+          <tr><td><a href="/the5ers-review/" data-route="the5ers-review"><span class="fname">The5ers</span></a></td><td>Rise, cryptocurrency (USDT TRC20, USDC ERC20, ETH, LTC), bank transfer, Hub Credits. Wise is <b>not</b> listed as a withdrawal method.</td><td class="num">$150 profit after split</td><td>3.5% per withdrawal on Rise, crypto and bank transfer (plus receiving-bank charges on bank transfers). Hub Credits: no commission, but not cash</td><td>14 days after the funded account is activated</td><td>Every 2 weeks from the last approved withdrawal</td><td>Accepted. Practical routes: crypto to a personal wallet, then to VND, or bank transfer.</td></tr>
+          <tr><td><a href="/breakout-review/" data-route="breakout-review"><span class="fname">Breakout Prop</span></a></td><td>Crypto <b>only</b> — USDC on the ERC-20 network. No bank transfer, no Rise, no Wise.</td><td class="num">$50</td><td>ERC-20 network fees apply on top of the payout</td><td>On demand, from the day the account is funded</td><td>On demand, 24/7</td><td>Not on the firm's current restricted-country list — <b>re-verify at checkout before buying</b>. You must hold a personal crypto wallet.</td></tr>
+        </tbody></table></div>
+      <p class="srcnote">Basis: each firm's official payout pages, help articles and FAQs, checked 18 Nov 2026 — linked inside the <a href="/e8-markets-review/" data-route="e8-markets-review">E8 Markets review</a>, <a href="/the5ers-review/" data-route="the5ers-review">The5ers review</a> and <a href="/breakout-review/" data-route="breakout-review">Breakout Prop review</a>. Figures the Lab could not independently confirm are labelled <span class="pending">Chưa kiểm chứng / Not verified</span> where they appear.</p>
+
+      <h2>2 · E8 Markets — rút tiền qua Rise hoặc WorkMarket</h2>
+      <p><b>Vietnam status:</b> accepted for Classic / Perpetuals. <b>Futures is not for Vietnam</b> — do not buy a Futures product expecting this guide to apply.</p>
+      <div class="tblwrap"><table aria-label="E8 Markets payout facts">
+        <thead><tr><th>Item</th><th>Per E8's official docs</th></tr></thead>
+        <tbody>
+          <tr><td>Payout rails</td><td>WorkMarket (bank transfer), Rise (cash or crypto), Aeropay (US bank accounts only — not usable from Vietnam). E8 has <b>no direct crypto payout</b>; crypto goes through Rise.</td></tr>
+          <tr><td>Fees</td><td>E8 charges no payout fee of its own. The payment processor may charge its own fee.</td></tr>
+          <tr><td>Minimum</td><td>$100 net per request. At an 80% split, you must request at least $125 gross to clear $100 net.</td></tr>
+          <tr><td>Timing</td><td>Firm-published medians, January–May 2026 — <span class="pending">Chưa kiểm chứng / Not verified</span> by the Lab: 11 hours from request to approval; 24 hours from request to funds arriving in Rise or WorkMarket; in some cases up to 5 business days. No weekend processing.</td></tr>
+          <tr><td>First payout</td><td>From 3 days into the performance (funded) stage, once the product's conditions are met. A payout buffer applies before withdrawal on E8 One.</td></tr>
+        </tbody></table></div>
+      <h3>Các bước rút tiền — the steps</h3>
+      <p>Per E8's help articles and the E8X dashboard flow — the Lab has not done this step itself.</p>
+      <div class="steps">
+        <div><b>Step 1.</b> Reach the funded / performance stage and meet the payout conditions for your product.</div>
+        <div><b>Step 2.</b> Request the payout from the E8X dashboard. Challenge accounts never pay — the request only exists on a funded account.</div>
+        <div><b>Step 3.</b> On the first request, complete onboarding with the payout provider (WorkMarket or Rise): agreement, tax form, sometimes proof of address. KYC is required, and the KYC document sets your country for eligibility — if you cannot complete provider onboarding, E8 states it cannot issue a payout.</div>
+        <div><b>Step 4.</b> Receive the funds in Rise (then onward to bank or crypto) or in WorkMarket (bank transfer to your own bank account).</div>
+      </div>
+      <div class="vnbox"><h3>Ghi chú cho trader Việt — Vietnam note</h3><ul>
+        <li>From Vietnam, the realistic rails are <b>Rise</b> or <b>WorkMarket bank transfer</b>. Aeropay is US-only.</li>
+        <li>A Vietnamese bank receiving an international transfer may charge its own incoming fee and ask for the source of funds — <b>keep the payout confirmation</b>.</li>
+      </ul></div>
+
+      <h2>3 · The5ers — rút tiền qua Rise, crypto hoặc chuyển khoản</h2>
+      <p><b>Vietnam status:</b> accepted, per the firm's own “Who can join” FAQ — see the <a href="/the5ers-review/" data-route="the5ers-review">The5ers review</a>.</p>
+      <div class="tblwrap"><table aria-label="The5ers payout facts">
+        <thead><tr><th>Item</th><th>Per The5ers' official docs</th></tr></thead>
+        <tbody>
+          <tr><td>Payout methods</td><td>Rise, cryptocurrency (USDT TRC20, USDC ERC20, ETH, LTC), bank transfer, Hub Credits. Wise is <b>not</b> listed as a withdrawal method.</td></tr>
+          <tr><td>Fees</td><td>3.5% commission per withdrawal on Rise, crypto and bank transfer, plus any receiving-bank charges on bank transfers. Hub Credits carry no commission but are <b>not cash</b> — they can only be used to buy new programs.</td></tr>
+          <tr><td>Minimum</td><td>$150 in profit after the profit split. High Stakes accounts have their own thresholds: the $50K tier needs at least $300 P&amp;L with a $3,000 cap per payout; the $100K tier needs $500 P&amp;L with a $4,000 cap.</td></tr>
+          <tr><td>Timing</td><td>First withdrawal 14 days after the funded account is activated; then every 2 weeks from the last approved withdrawal. Approved requests are typically processed within up to 3 business days; Risk Team review usually takes 24–48 business hours. If an account scales, the 14-day timer restarts from the scaling date.</td></tr>
+          <tr><td>Crypto limit</td><td>$1,500 per withdrawal request.</td></tr>
+        </tbody></table></div>
+      <h3>Các bước rút tiền — the steps</h3>
+      <p>Per The5ers' withdrawals FAQ (last updated 24 Aug 2026, as published by the firm) — the Lab has not done this step itself.</p>
+      <div class="steps">
+        <div><b>Step 1.</b> Reach the funded stage. Evaluation accounts cannot withdraw.</div>
+        <div><b>Step 2.</b> Wait 14 days from the funded account's activation.</div>
+        <div><b>Step 3.</b> Close <b>all</b> open trades before submitting — this is required for every payout request.</div>
+        <div><b>Step 4.</b> Submit the request in the Hub. The Withdrawal button appears only after funded status plus the 14-day wait.</div>
+        <div><b>Step 5.</b> Choose <b>one</b> method per request — a withdrawal cannot be split between two methods. For Rise, the Rise Works email must match the email on your The5ers account.</div>
+        <div><b>Step 6.</b> Wait for Risk Team review, then processing.</div>
+      </div>
+      <div class="vnbox"><h3>Ghi chú cho trader Việt — Vietnam note</h3><ul>
+        <li>The practical routes from Vietnam are <b>crypto</b> (USDT TRC20 / USDC ERC20) to a personal wallet, then a local exchange to VND — or <b>bank transfer</b> with the 3.5% fee plus receiving-bank charges.</li>
+        <li>Do the maths before choosing: on a $150 withdrawal, the 3.5% fee is $5.25.</li>
+      </ul></div>
+
+      <h2>4 · Breakout Prop — chỉ rút được bằng USDC</h2>
+      <p><b>Vietnam status:</b> not on the firm's current restricted-country list — <b>re-verify at checkout before buying</b>; the firm's lists have changed before (see the <a href="/breakout-review/" data-route="breakout-review">Breakout Prop review</a>).</p>
+      <div class="tblwrap"><table aria-label="Breakout Prop payout facts">
+        <thead><tr><th>Item</th><th>Per Breakout Prop's published payout terms</th></tr></thead>
+        <tbody>
+          <tr><td>Payout rail</td><td>Crypto <b>only</b> — USDC on the ERC-20 network. No bank transfer, no Rise, no Wise.</td></tr>
+          <tr><td>Minimum</td><td>$50.</td></tr>
+          <tr><td>Frequency</td><td>On demand, from the day the account is funded, 24/7.</td></tr>
+          <tr><td>Split</td><td>80% (90% with a paid upgrade).</td></tr>
+        </tbody></table></div>
+      <h3>Các bước rút tiền — the steps</h3>
+      <p>Per the firm's published payout terms — the Lab has not done this step itself.</p>
+      <div class="steps">
+        <div><b>Step 1.</b> Reach the funded stage.</div>
+        <div><b>Step 2.</b> Request a payout on demand from the dashboard.</div>
+        <div><b>Step 3.</b> Receive USDC (ERC-20) to your own wallet address.</div>
+      </div>
+      <div class="vnbox"><h3>Ghi chú cho trader Việt — Vietnam note</h3><ul>
+        <li>You <b>must</b> have a personal crypto wallet and a way to convert USDC to VND (a local or international exchange) before this firm can pay you at all.</li>
+        <li>ERC-20 network fees apply on top of the payout — check the network fee before requesting a small payout.</li>
+        <li>The funded contract is with a separate BVI company — read it before buying.</li>
+      </ul></div>
+
+      <h2>5 · Trước lần rút đầu tiên — before your first payout, anywhere</h2>
+      <p>Whichever firm you use, have these five things settled <i>before</i> the first request — most first-payout delays are paperwork, not trading.</p>
+      <ul class="checklist">
+        <li><span class="mark">✓</span><span><b>KYC / ID ready.</b> The identity document you will verify with is valid, unexpired, and in your own name — at E8 it is the KYC document that sets your country for eligibility.</span></li>
+        <li><span class="mark">✓</span><span><b>Payout-provider account in your own name, with a matching email.</b> Open the Rise / WorkMarket account under your own name, and keep the email identical to your firm account — The5ers requires the Rise Works email to match the account email exactly.</span></li>
+        <li><span class="mark">✓</span><span><b>Tax form understood.</b> Some firms require a W-8BEN before the first payout — for example Topstep, which is <b>not</b> one of the three firms on this page and is named only as an example of the requirement. Know which form your firm asks for before the money is waiting on it.</span></li>
+        <li><span class="mark">✓</span><span><b>Never share a live / funded account password with anyone</b> — not a “payout helper”, not a group admin, not support by DM. No legitimate payout step needs it.</span></li>
+        <li><span class="mark">✓</span><span><b>Keep the payout confirmation for the bank.</b> A Vietnamese bank receiving an international transfer may ask for the source of funds; the payout confirmation, the firm agreement and the payout statement are your answer. See the paperwork file in <a href="/trader-viet/" data-route="trader-viet">Trader Viet, section 4</a>.</span></li>
+      </ul>
+
+      <h2>6 · Đường nào rẻ nhất từ Việt Nam? — which rail is cheapest?</h2>
+      <p>Using only the figures the firms themselves publish above — no exchange rates and no bank fees are invented here, because the Lab has not measured them:</p>
+      <ul>
+        <li><b>Breakout Prop</b> has the lowest entry point — a $50 minimum — but it is crypto-only, and ERC-20 network fees come out of the payout on top. On a small payout, check the network fee first: it is a fixed cost against a small amount.</li>
+        <li><b>E8 Markets</b> charges no payout fee of its own, so on the firm's own numbers it is the cheapest cash route — but the payment processor may charge its own fee, and E8 does not publish that figure, so the true cost is <span class="pending">Chưa kiểm chứng / Not verified</span> until a real payout lands.</li>
+        <li><b>The5ers</b> is the most predictable: 3.5% on every cash method (Rise, crypto, bank transfer), plus receiving-bank charges on bank transfers. Predictable is not free — $5.25 on a $150 withdrawal, $35 on $1,000 — but you can compute it to the cent before you request.</li>
+      </ul>
+      <p>The honest summary: E8 is cheapest on paper if the processor fee is small, The5ers is the one you can price exactly in advance, and Breakout is cheapest to start with but only works if you already live in crypto. Your bank's own incoming fee — which no firm publishes — can outweigh all three differences, so ask your bank before your first international payout, not after.</p>
+
+      <div class="callout"><h3>Cảnh báo — before you rely on any of this</h3>
+        <p>· Payout terms change often — re-check the firm's own pages before buying, and again before requesting.</p>
+        <p>· The Lab has not itself withdrawn from any of these three firms, so every step above is per the firm's official docs unless stated otherwise.</p>
+        <p style="margin-bottom:0">· If a step on this page conflicts with the firm's live pages, the firm's live pages win — and tell the Lab in the Telegram group so the page gets corrected with a date.</p>
+      </div>
+
+      <h2>Keep reading</h2>
+      <div class="related">
+        <a href="/trader-viet/" data-route="trader-viet"><b>Trader Viet</b><span>Who accepts Vietnam, who bars it, and the paperwork to keep from day one.</span></a>
+        <a href="/e8-markets-review/" data-route="e8-markets-review"><b>E8 Markets Review</b><span>E8 One, dynamic drawdown and the payout buffer, audited in full.</span></a>
+        <a href="/the5ers-review/" data-route="the5ers-review"><b>The5ers Review</b><span>High Stakes rules, scaling model and payout terms.</span></a>
+        <a href="/breakout-review/" data-route="breakout-review"><b>Breakout Prop Review</b><span>Static drawdown and on-demand USDC payouts, audited in full.</span></a>
+        <a href="/payout-tracker/" data-route="payout-tracker"><b>Payout Tracker</b><span>Proof-backed payouts from the community — a payout counts when it lands.</span></a>
       </div>
     </div>
   </main>
@@ -2511,6 +2708,18 @@
       </div>
     </div>
 
+    <p class="note" style="margin:22px 0 0">One input this plan cannot price yet is your trading cost per firm — spread and commission are deliberately left out of the maths above until the Lab has measured them. <a href="/gold-cost/" data-route="gold-cost">Costs here are still pending measurement — see the Round 1 run-book</a> on the Gold Cost League Table.</p>
+
+    <div class="planner-cta" style="max-width:none;margin:26px 0 0">
+      <div><b>Try breaking these rules on paper first</b><span>The Planner builds the pass. The Simulator stress-tests it: enter the messy days — the floating dip, the news spike, the weekend hold — and see which rule closes the account, on which day, by how much.</span></div>
+      <a class="btn btn-gold btn-sm" href="/rule-trap-simulator/" data-route="rule-trap-simulator">Rule Trap Simulator →</a>
+    </div>
+
+    <div class="planner-cta" style="max-width:none;margin:14px 0 0">
+      <div><b>Now price the attempts, not the sticker</b><span>This plan assumes you pass. Most traders need several attempts — the True Cost to Get Funded calculator turns your win rate, RRR and risk per trade into a pass probability per attempt, the expected number of attempts, and the expected total cost of getting funded at this firm.</span></div>
+      <a class="btn btn-gold btn-sm" href="/true-cost-to-funded/" data-route="true-cost-to-funded">True Cost to Get Funded →</a>
+    </div>
+
     <section class="blk" style="padding-top:40px">
       <div class="sec-head"><span class="sec-no">HIDDEN RULES</span><h2>Hidden rules, firm by firm</h2></div>
       <div class="rule"></div>
@@ -2531,6 +2740,131 @@
   </main>
 </div>
 
+<!-- ==================== VIEW: RULE TRAP SIMULATOR =================== -->
+<div data-view="rule-trap-simulator" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Tools</span> <span>›</span> <span>Rule Trap Simulator</span></nav>
+      <h1>Rule Trap Simulator</h1>
+      <p class="standfirst">Most challenges do not die on strategy — they die on one rule, on one day, often by a few dollars. Pick a firm and model, type in the messy week you are afraid of, and this simulator runs it against that firm's real rules: does the account survive, or does it close — on which day, and by exactly which rule?</p>
+      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Firm rules checked 18 Nov 2026 — same rule data as the Challenge Pass Planner</span><span>Runs entirely in your browser — nothing is stored or sent</span><span>Educational only — no pass is promised</span></div>
+    </div>
+
+    <div class="sim-story" id="simStory" hidden>
+      <div class="lbl" id="simStoryKicker">Reported case — reconstructed</div>
+      <p id="simStoryBody"></p>
+      <p class="sim-lesson" id="simStoryLesson"></p>
+      <p class="pnote" style="margin:0">Reconstructed illustrative scenario from published reports — the breach amounts and rules are as reported; the day-by-day trade detail is illustrative, not the trader's real log.</p>
+    </div>
+
+    <div class="planner-grid">
+      <div class="card">
+        <div class="lbl">1 · Firm &amp; challenge</div>
+        <div class="pfield"><label for="simFirm">Firm</label><select id="simFirm"></select></div>
+        <div class="pfield"><label for="simModel">Challenge model</label><select id="simModel"></select></div>
+        <div class="pfield"><label for="simSize">Account size</label><select id="simSize">
+          <option value="10000">$10K</option>
+          <option value="25000">$25K</option>
+          <option value="50000">$50K</option>
+          <option value="100000" selected>$100K</option>
+          <option value="200000">$200K</option>
+        </select></div>
+        <div class="pfield"><label for="simPreset">Load example — reported cases, reconstructed</label><select id="simPreset">
+          <option value="">— No example —</option>
+          <option value="fundedsquad">FundedSquad $200K — the $86 UTC trap</option>
+          <option value="fundingpips">FundingPips — closed 1 day before payout</option>
+          <option value="upcomers">Upcomers — the $144 equity gap</option>
+        </select><span class="pnote">Loads the firm, model, account size and day rows, then runs the simulation.</span></div>
+
+        <div id="simCustom" hidden>
+          <div class="lbl" style="margin-top:20px">Custom rules — your numbers only</div>
+          <div class="pgrid2">
+            <div class="pfield"><label for="simCTarget">Profit target %</label><input id="simCTarget" type="number" step="0.1" min="0" value="10"></div>
+            <div class="pfield"><label for="simCDaily">Daily loss limit %</label><input id="simCDaily" type="number" step="0.1" min="0" value="5"></div>
+            <div class="pfield"><label for="simCDailyMode">Daily loss is measured on</label><select id="simCDailyMode"><option value="equity">Live equity (floating counts)</option><option value="balance">Closed balance only</option></select></div>
+            <div class="pfield"><label for="simCMax">Max loss limit %</label><input id="simCMax" type="number" step="0.1" min="0" value="10"></div>
+            <div class="pfield"><label for="simCMaxMode">Max loss floor type</label><select id="simCMaxMode"><option value="static">Static — never moves</option><option value="eod">End-of-day trailing</option><option value="dynamic">Dynamic trailing (intraday)</option></select></div>
+            <div class="pfield"><label for="simCMinDays">Min trading days</label><input id="simCMinDays" type="number" step="1" min="0" value="0"></div>
+            <div class="pfield"><label for="simCCap">Best-day cap % of total profit (blank = none)</label><input id="simCCap" type="number" step="1" min="1" max="100" placeholder="None"></div>
+          </div>
+          <p class="pnote">Custom mode uses only the numbers on this card — no firm data, no firm verdict.</p>
+        </div>
+
+        <div class="lbl" style="margin-top:20px">2 · Your day-by-day log</div>
+        <p class="pnote" style="margin-top:0">One row per trading day. <b>Closed P/L</b> is what the day finished at. <b>Worst floating dip</b> is how far live equity fell <i>below that day's starting balance</i> at the worst moment — open positions included, even if they later recovered (enter 0 if equity never went under the day's start). On equity-based rules this dip, not the closed P/L, is the number that kills accounts. Leave a row fully blank to skip that day.</p>
+        <div class="tblwrap"><table class="sim-log" aria-label="Day by day trading log">
+          <thead><tr><th>Day</th><th>Closed P/L $</th><th>Worst floating dip $</th><th title="Traded around a high-impact news release">News?</th><th title="Held a position over the weekend">Weekend?</th><th aria-label="Remove row"></th></tr></thead>
+          <tbody id="simDayBody"></tbody>
+        </table></div>
+        <button class="btn btn-line btn-sm" id="simAddDay" type="button">+ Add a day</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+          <button class="btn btn-gold" id="simRun" type="button">Run simulation</button>
+          <button class="btn btn-line" id="simClear" type="button">Clear</button>
+        </div>
+      </div>
+
+      <div class="planner-out">
+        <div class="card" id="simRules" style="margin-bottom:16px"></div>
+        <div class="card" id="simEmpty">
+          <div class="lbl">No run yet</div>
+          <p style="font-size:15px;line-height:1.65;margin:0">Pick a firm, type a few days — or load one of the three reported cases above — and press <b>Run simulation</b>. The account lives or dies here, on paper, for free. Planning the pass instead? Use the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a>.</p>
+        </div>
+        <div id="simResults" hidden>
+          <div class="sim-verdict" id="simVerdict"></div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="lbl">The exact rule, with numbers</div>
+            <p id="simKill" style="font-size:15px;line-height:1.65;margin:0"></p>
+          </div>
+          <div class="lbl">Day by day</div>
+          <div class="tblwrap" style="margin-bottom:16px"><table class="planner-table" aria-label="Simulation results by day">
+            <thead><tr><th>Day</th><th class="num">Start balance</th><th class="num">Closed P/L</th><th class="num">Worst equity</th><th class="num">Daily floor</th><th class="num">Max-loss floor</th><th>Status</th></tr></thead>
+            <tbody id="simResBody"></tbody>
+          </table></div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="lbl">Other checks — consistency, minimum days, news &amp; weekend</div>
+            <div id="simChecks"></div>
+          </div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="lbl">How to survive it</div>
+            <ul class="formula-list" id="simFix"></ul>
+          </div>
+          <div class="card">
+            <div class="lbl">Result summary — share it</div>
+            <p id="simSummary" style="font-size:15px;line-height:1.65;margin:0 0 14px"></p>
+            <button class="btn btn-gold" id="simCopy" type="button">Copy result summary</button>
+            <span class="pnote" style="margin-left:10px">Copies a plain-text summary of this run — firm, rules, verdict and the day-by-day table.</span>
+            <pre id="simCopyOut" hidden style="white-space:pre-wrap;word-break:break-word;font-size:12.5px;margin:14px 0 0"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="blk" style="padding-top:40px">
+      <div class="sec-head"><span class="sec-no">METHOD</span><h2>How the simulation works</h2></div>
+      <div class="rule"></div>
+      <p class="sec-sub">Every formula and assumption is on the table. The rule values come from the same Lab rule table as the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a> — each firm's published terms, checked 18 Nov 2026. Where a rule is marked <span class="pending">Chưa kiểm chứng / Not verified</span> in that data, the simulator shows it, labels it, and does <b>not</b> enforce it.</p>
+      <div class="card">
+        <ul class="formula-list">
+          <li><b>Daily loss — equity-based firms</b> (basis text says live equity / floating losses count, e.g. FTMO 2-Step): <span class="mono">daily floor = start-of-day balance − daily% × initial balance</span>. The day's worst equity is <span class="mono">start-of-day balance − worst floating dip you entered</span>. If worst equity falls below the floor at any moment, the account is closed that day — even if the day later closes in profit.</li>
+          <li><b>Daily loss — balance-based firms</b>: only the closed day counts. The account breaches if <span class="mono">closed P/L &lt; −(daily% × initial balance)</span>. The floating dip is still shown, but it cannot close the account under this basis.</li>
+          <li><b>Daily loss — soft limits</b>: where the published rule pauses the session instead of failing the account (Apex EOD plans), the simulator reports a pause, not a closure. Models with no daily limit (MyFundedFutures Rapid, Topstep Combine default) show “No daily loss limit”.</li>
+          <li><b>Max loss — static</b>: <span class="mono">floor = initial balance − max% × initial balance</span>, tested against both worst intraday equity and the closing balance. <b>End-of-day trailing</b>: <span class="mono">floor = highest end-of-day balance so far − max% × initial balance</span>, tested at the close (Topstep's limit is published as enforced in real time on unrealised P&amp;L, so the intraday dip is tested too). <b>Dynamic trailing</b>: <span class="mono">floor = highest balance reached (intraday, approximated by the best closing balance so far) − max% × initial balance</span>, tested against worst intraday equity.</li>
+          <li><b>Profit target</b>: reached on the first day the closing balance reaches <span class="mono">initial balance × (1 + target%)</span>. Phase 1 is simulated; where the model has a Phase 2 target it is shown in the rules panel, not simulated.</li>
+          <li><b>Best-day / consistency cap</b>: at the end of the log, if the model has a cap and the best single day's profit is more than <span class="mono">cap% × total profit</span>, the phase fails the consistency rule — the day and both numbers are named. Topstep's cap is measured against the profit <i>target</i> instead, and breaching it raises the target rather than failing the account, per its published rule. Models with no cap say so.</li>
+          <li><b>Minimum trading days</b>: days with any entry in the log count as traded days. If the target is reached in fewer days than the model's minimum, the verdict reads “target reached but min-days not met”.</li>
+          <li><b>News &amp; weekend flags</b>: if you tick news trading or weekend holding on a model whose published rules restrict it, the day is flagged <b>“rule violation — account at risk / flagged”</b>. These are warnings, not automatic closures, unless the firm's published rule says closure — the flag names the rule text so you can judge.</li>
+          <li><b>Approximations, stated plainly</b>: intraday equity is approximated from the single worst floating dip you enter per day — the simulator cannot see real tick data, the order of the dip versus the day's trades, spread widening, slippage, commissions or swap. One dip number per day is a simplification of a curve. Best-day cap treatment follows the firm's published rule as recorded in the Lab rule table.</li>
+          <li><b>Results are educational.</b> Surviving this simulation does not mean you will pass the real challenge, and dying here does not mean you would have — it means the <i>shape</i> of those days collides with the <i>published</i> rules. Rules change by announcement; re-confirm on the firm's site before buying.</li>
+        </ul>
+      </div>
+      <div class="callout">
+        <h3>What this tool cannot do</h3>
+        <p>It cannot see your broker's tick data, so it cannot replay what your equity <i>actually</i> did minute by minute — only the worst dip you tell it. It does not model spread, commission, slippage, swap, partial fills, or a firm's discretionary reviews (risk-team audits, “gambling” or hedging clauses, payout-stage re-checks like retrospective per-trade risk rules). It simulates the challenge phase only — funded-stage rules (payout buffers, weekend/news bans that start at funding, drawdown switches) are named in each firm's <a href="/directory/" data-route="directory">review</a> but are not enforced here. And where the Lab could not verify a rule on an official page, the simulator refuses to guess: the rule is shown as Not verified and left unenforced.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
 <!-- ==================== VIEW: GOLD COST LEAGUE TABLE =================== -->
 <div data-view="gold-cost" hidden>
   <main class="wrap">
@@ -2541,6 +2875,15 @@
       <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Protocol v1.0 — published below</span><span>No measurement round has run yet — every firm starts as Pending MT5 log</span><span>The Lab never publishes an estimated spread</span></div>
     </div>
     <div class="article-body" style="max-width:960px">
+      <div class="warn warn-amber" role="status" style="margin-top:22px">
+        <b style="font-family:'IBM Plex Mono',monospace;letter-spacing:.03em">MEASUREMENT ROUND 1 — STATUS: PENDING.</b>
+        <p style="margin:8px 0 0">No live MT5 measurement has run yet. All figures on this page remain <b>Pending MT5 log</b>. The table below shows the framework, not results.</p>
+      </div>
+      <div class="callout"><h3>Why Round 1 has not run yet</h3>
+        <p>The Lab's only MT5 terminal on this machine runs the live forward-test EAs — <b>E2, P2 and T1b on demo account 42901406</b> — and it must never be disturbed: backtests and extra charts opened on that terminal have killed live forwards before. Nothing is loaded onto it, ever, while the forwards are running.</p>
+        <p>There is a second problem: that terminal is connected to the <b>Admirals demo server</b> — not to FTMO, E8 Markets or The5ers. Its spreads are Admirals' spreads, not those firms' spreads, and publishing them under a firm's name would be exactly the borrowed-number practice this page exists to refuse.</p>
+        <p style="margin-bottom:0">Measuring the three firms needs <b>demo MT5 accounts on each firm's own server</b>. The Lab does not yet hold those accounts — so Round 1 waits, and every figure stays Pending MT5 log until it runs. The full run-book is published below, ready to execute the moment the accounts exist.</p>
+      </div>
       <h2>Your Gold Bleed</h2>
       <p>Spread and commission are not trivia — at real volume they are a second challenge fee you pay every month. Pick your firm and your monthly gold volume. When the Lab has a measured all-in cost for that firm, this calculator turns it into the dollars you bleed per month before you make a cent. Until a firm is measured, it says so — and calculates nothing.</p>
       <form class="revform" id="gcForm" style="margin-bottom:14px">
@@ -2592,7 +2935,141 @@
         <li><span class="mark">7</span><span><b>Re-measured, not frozen.</b> Spreads move with liquidity, so a row is a dated measurement, not a permanent truth. Rounds repeat and old rows are replaced with the new date shown — never silently edited.</span></li>
       </ul>
       <div class="callout"><h3>Raw logs</h3><p>No measurement round has run yet, so there is no raw log to publish — the first round's log will be linked from the table above the day it is measured. Until then, every cell on this page stays <b>Pending MT5 log</b> rather than borrowing a snapshot from another site.</p><a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLabchat" target="_blank" rel="noopener">Follow measurement rounds in the group ↗</a></div>
-      <p class="note">Costs are one input, not a verdict: a cheap firm with a hostile drawdown rule can still cost you the whole fee. Pair this table with the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a> and each firm's <a href="/denial-index/" data-route="denial-index">denial record</a> before you buy.</p>
+
+      <h2>Round 1 run-book — ready to run</h2>
+      <p>This is the exact procedure Round 1 will follow. It is published before a single number exists, so the method cannot be quietly adjusted after the results are known. The moment demo accounts at the three firms exist, measurement starts with step 1 of the checklist — nothing else on this page changes first.</p>
+      <h3>The firms</h3>
+      <p>Round 1 measures three firms: <a href="/ftmo-review/" data-route="ftmo-review"><b>FTMO</b></a>, <a href="/e8-markets-review/" data-route="e8-markets-review"><b>E8 Markets</b></a> and <a href="/the5ers-review/" data-route="the5ers-review"><b>The5ers</b></a> — the three Vietnam-usable firms with full Lab reviews. Every other firm joins in a later round, in the order the Lab can open demo accounts on its own server.</p>
+      <h3>Sessions</h3>
+      <ul>
+        <li><b>London:</b> 08:00–10:00 UTC.</li>
+        <li><b>New York:</b> 13:00–15:00 UTC.</li>
+        <li>All three firms are measured on the <b>same calendar days</b>, in the same two windows — no firm gets a quieter day than another.</li>
+        <li><b>One scheduled high-impact USD news event</b> (for example CPI or NFP) is measured separately and labelled <b>news slippage</b>. News figures are never mixed into the normal spread average.</li>
+      </ul>
+      <h3>What is recorded per snapshot</h3>
+      <ul>
+        <li>Timestamp (UTC).</li>
+        <li>Firm.</li>
+        <li>XAUUSD bid and ask.</li>
+        <li>Spread in $ per oz.</li>
+        <li>Spread in $ per 1.00 lot.</li>
+        <li>Commission per lot from the firm's published schedule — labelled <b>published, not measured</b>, until a real fill is logged on the account.</li>
+        <li>On the news event: slippage — the requested price versus the fill price.</li>
+      </ul>
+      <h3>Sample size</h3>
+      <p><b>20 spread snapshots per session per firm</b> — one every 6 minutes — which is 40 snapshots per firm per day, over <b>3 trading days</b>: <b>120 snapshots per firm</b>. The snapshot count is published with the results; an average without its count is not published.</p>
+      <h3>The measurement terminal</h3>
+      <p>Measurement runs on a <b>separate portable MT5 install — a separate Wine prefix</b> — from the forward-test terminal. The forwards are never touched: no measurement chart is ever opened on the live terminal, and no measurement login ever replaces a forward-test login. If the two setups cannot be kept fully separate, the measurement waits — the forwards do not.</p>
+      <h3>Step-by-step checklist</h3>
+      <ul class="checklist">
+        <li><span class="mark">1</span><span><b>Create demo accounts</b> at FTMO, E8 Markets and The5ers — demo MT5 accounts on each firm's own server.</span></li>
+        <li><span class="mark">2</span><span><b>Install the separate measurement terminal</b> — portable MT5 install / separate Wine prefix, fully apart from the forward-test terminal.</span></li>
+        <li><span class="mark">3</span><span><b>Log in to each demo in turn</b> on the measurement terminal and confirm the server name matches the firm being measured.</span></li>
+        <li><span class="mark">4</span><span><b>Record the snapshots</b> per the table below — London and New York windows, same days for all three firms, plus the one news event kept separate.</span></li>
+        <li><span class="mark">5</span><span><b>Save the raw log</b> — the unedited snapshot file, exactly as recorded.</span></li>
+        <li><span class="mark">6</span><span><b>Publish the log with the table</b> — the league table figures and the raw log behind them go live together, with the snapshot count shown.</span></li>
+      </ul>
+      <h3>Raw log — template</h3>
+      <p>This is the exact table the raw log will be published in. It is blank by design: every cell stays <span class="pending">Pending MT5 log</span> until the first real snapshot is recorded.</p>
+      <div class="tblwrap"><table aria-label="Round 1 raw log template — blank until the first measurement" style="min-width:880px">
+        <thead><tr><th>Timestamp UTC</th><th>Firm</th><th>Session</th><th class="num">Bid</th><th class="num">Ask</th><th class="num">Spread $/oz</th><th class="num">Spread $/lot</th><th class="num">Commission $/lot</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="pending">Pending MT5 log</td><td>FTMO</td><td class="pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="pending">Pending MT5 log</td></tr>
+          <tr><td class="pending">Pending MT5 log</td><td>E8 Markets</td><td class="pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="pending">Pending MT5 log</td></tr>
+          <tr><td class="pending">Pending MT5 log</td><td>The5ers</td><td class="pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="num pending">Pending MT5 log</td><td class="pending">Pending MT5 log</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">The raw log file itself will be published alongside the first results — the same day the first figures enter the league table, not after.</p>
+
+      <div class="callout"><h3>What we need from the owner</h3>
+        <p>Round 1 is blocked on exactly one thing: <b>demo MT5 logins for FTMO, E8 Markets and The5ers</b>. The owner creates the demo accounts at the three firms and shares only the demo login details — <b>never a live account, and never a password for a funded account</b>. Demo logins are all this measurement needs and all it will ever ask for.</p>
+        <p style="margin-bottom:0">Alternatively, the owner runs this run-book on his own machine and sends the Lab the raw log — the table above is the format, and the log is published with the results either way. One rule does not bend: <b>no measurement will be faked, and none will be estimated from other sites.</b> If the accounts never arrive, this page stays Pending MT5 log — that is the honest state, and it is the state you are reading now.</p>
+      </div>
+      <p class="note">Costs are one input, not a verdict: a cheap firm with a hostile drawdown rule can still cost you the whole fee. Pair this table with the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a> and each firm's <a href="/denial-index/" data-route="denial-index">denial record</a> before you buy — and price the fee itself with the <a href="/true-cost-to-funded/" data-route="true-cost-to-funded">True Cost to Get Funded</a> calculator: one attempt is rarely the whole bill.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ==================== VIEW: TRUE COST TO GET FUNDED =================== -->
+<div data-view="true-cost-to-funded" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Tools</span> <span>›</span> <span>True Cost to Get Funded</span></nav>
+      <h1>True Cost to Get Funded</h1>
+      <p class="standfirst">The price on the checkout page buys you <b>one attempt</b>. Most traders need several — and each failed attempt costs the full fee again. This calculator turns your own win rate, RRR and risk per trade into a model pass probability per attempt, the expected number of attempts, and the expected total cost of actually getting funded. It will not flatter you, and it never promises a pass.</p>
+      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Prices &amp; rules from Lab data, checked 18 Nov 2026</span><span>Runs entirely in your browser — nothing is stored or sent</span><span>No pass is promised — the model is optimistic by construction</span></div>
+    </div>
+
+    <div class="planner-grid">
+      <div class="card planner-form">
+        <div class="lbl">1 · Firm &amp; challenge</div>
+        <div class="pfield"><label for="tcFirm">Firm</label><select id="tcFirm"></select></div>
+        <div class="pfield"><label for="tcModel">Challenge model</label><select id="tcModel"></select></div>
+        <div class="pfield"><label for="tcSize">Account size</label><select id="tcSize">
+          <option value="10000">$10K</option>
+          <option value="25000">$25K</option>
+          <option value="50000">$50K</option>
+          <option value="100000" selected>$100K</option>
+          <option value="200000">$200K</option>
+        </select></div>
+        <div class="pfield"><label for="tcPrice">Challenge price — one attempt</label><input id="tcPrice" type="text" inputmode="decimal" placeholder="e.g. €540"><span class="pnote" id="tcPriceNote"></span></div>
+        <p class="pnote" id="tcRuleNote"></p>
+        <div class="evrow" id="tcRuleChips"></div>
+        <div class="lbl" style="margin-top:20px">2 · Your edge — be honest</div>
+        <div class="pgrid2">
+          <div class="pfield"><label for="tcWR">Win rate %</label><input id="tcWR" type="number" step="1" min="1" max="99" value="60"></div>
+          <div class="pfield"><label for="tcRRR">Average RRR (win = ×R)</label><input id="tcRRR" type="number" step="0.1" min="0.1" value="1.5"></div>
+          <div class="pfield"><label for="tcRisk">Risk per trade % of account</label><input id="tcRisk" type="number" step="0.1" min="0.1" value="1"></div>
+        </div>
+        <p class="pnote">Use the win rate and RRR from your last 100+ real trades — not the backtest you are proudest of. The model below is only as honest as these three numbers.</p>
+        <div class="lbl" style="margin-top:20px">3 · Already spent</div>
+        <div class="pfield"><label for="tcBought">Attempts already bought / resets already paid for</label><input id="tcBought" type="number" step="1" min="0" value="0"><span class="pnote">That money is gone either way, so it is counted as <b>sunk cost</b> and kept separate — it is never added to the expected remaining cost.</span></div>
+      </div>
+
+      <div class="planner-out">
+        <div id="tcAlert"></div>
+        <div class="stat-grid" id="tcStats"></div>
+        <div class="callout" id="tcAnchor"></div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="lbl">Same trader, every firm with a Lab price — <span id="tcCmpSize">$100K</span></div>
+          <p class="pnote" style="margin:0 0 10px">Your win rate, RRR and risk per trade, re-run against every model in the Lab rule table that has a published price for this account size. Sorted by expected total cost, cheapest first.</p>
+          <div class="tblwrap"><table class="planner-table" aria-label="Expected cost to get funded, by firm">
+            <thead><tr><th>Firm</th><th>Model</th><th class="num">Price</th><th>Target</th><th class="num">Max DD</th><th class="num">Model pass %</th><th class="num">Expected attempts</th><th class="num">Expected total cost</th></tr></thead>
+            <tbody id="tcCompareBody"></tbody>
+          </table></div>
+          <p class="pnote">Prices are shown and computed in each firm's own currency (€ or $) exactly as stored in Lab data — <b>EUR and USD figures are never converted</b>, so compare totals within one currency. A firm whose checkout price differs from the Lab figure should be re-priced above with the checkout number.</p>
+        </div>
+        <div class="card">
+          <div class="lbl">Formulas &amp; assumptions — read before you believe any number here</div>
+          <ul class="formula-list">
+            <li><span class="mono">Expectancy per trade E = win rate × RRR − (1 − win rate) × 1</span>, in R units (average win = RRR × R, average loss = 1R). At 60% and 1:1.5 that is <span class="mono">0.60 × 1.5 − 0.40 = +0.50R</span>. <b>If E ≤ 0 you have no edge</b> and the model pass probability is ~0 — no challenge price is cheap enough to fix that.</li>
+            <li><span class="mono">Model pass probability (one attempt) = (1 − e^(−2μd/σ²)) ÷ (1 − e^(−2μ(d+t)/σ²))</span> — a diffusion (Brownian) approximation of your trade-by-trade random walk with drift, where <span class="mono">μ = E</span>, <span class="mono">σ² = win rate × (RRR − μ)² + (1 − win rate) × (−1 − μ)²</span>, <span class="mono">d = max drawdown % ÷ risk per trade %</span> and <span class="mono">t = profit target % ÷ risk per trade %</span>. If μ = 0 the formula reduces to <span class="mono">d ÷ (d + t)</span>. For two-step models the attempt probability is the product of the two phase probabilities — you must survive both barriers in sequence, on the same max-drawdown room.</li>
+            <li><span class="mono">Expected attempts = 1 ÷ P</span> · <span class="mono">Expected total cost = price × expected attempts</span> · <span class="mono">Expected remaining cost = price × max(0, expected attempts − attempts already bought)</span> · <span class="mono">Sunk cost = price × attempts already bought</span>.</li>
+            <li>This pass probability is a <b>model estimate built from your own win rate and RRR — it is not the firm's real pass rate</b>, and no firm publishes one you can audit. Treat it as an upper bound, not a forecast.</li>
+            <li><b>The model is optimistic by construction.</b> It ignores the daily drawdown limit, consistency and best-day caps, news and weekend rules, minimum trading days, spread, slippage and psychology — every one of those can only push your real probability <b>below</b> the number shown. Test the rules that actually close accounts in the <a href="/rule-trap-simulator/" data-route="rule-trap-simulator">Rule Trap Simulator</a>, and build the day-by-day plan in the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a>.</li>
+            <li>Prices, profit targets and max drawdowns come from the same Lab rule table as the Planner (each firm's published terms, checked 18 Nov 2026). Where the Lab holds no price for a firm and size, the price field stays empty and is marked <span class="pending">Chưa kiểm chứng / Not verified</span> — the Lab does not invent prices; enter the figure from the firm's own checkout.</li>
+            <li>If the firm changes the price at checkout — a discount, an add-on, a different tier — <b>re-enter the checkout price</b>; every result on this page follows the number in the price field.</li>
+            <li><b>No pass is promised or implied.</b> An expectation is an average over many attempts, not a schedule: you can fail more times in a row than the average suggests, and the expected cost is money genuinely at risk of being spent in full.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <section class="blk" style="padding-top:40px">
+      <div class="sec-head"><span class="sec-no">REALITY</span><h2>Why the sticker price lies</h2></div>
+      <div class="rule"></div>
+      <p class="sec-sub">A challenge fee is priced like a product and sold like a lottery ticket. The number on the pricing page is the cost of <i>one</i> attempt — but a funded account is what you are actually buying, and the two prices are only equal if you pass first time.</p>
+      <div class="article-body" style="max-width:860px">
+        <p>Work it through with the most-bought challenge in the industry. A <b>$100K FTMO 2-Step costs €540</b>. At the industry pass rate of ~14% (FPFX dataset, ~300,000 accounts), the expected number of attempts before one trader gets funded is <span class="mono">1 ÷ 0.14 ≈ 7.1</span> — so the <b>expected cost of getting funded is €540 × 7.1 ≈ €3,857</b>. Not €540. And that is before resets, add-ons, and the months of trading time those seven attempts take.</p>
+        <p>Three things follow. First, comparing firms on sticker price alone is meaningless: a €540 challenge you pass one time in seven costs more than a €700 challenge whose drawdown rules fit your strategy well enough to pass one time in three. Second, the cheapest way to cut the true cost is not a discount code — it is raising the per-attempt pass probability: a drawdown model that fits your losing streaks, and risk per trade small enough that the max-loss barrier sits many trades away. Third, money already spent on failed attempts is gone — it is a sunk cost, and it should never be the reason you buy the next attempt. This page keeps it in its own box for exactly that reason.</p>
+        <p>Run your own numbers above. If the expected total cost surprises you, that surprise is the point: the sticker price was never the price of a funded account.</p>
+      </div>
+    </section>
+
+    <div class="planner-cta" style="max-width:none;margin:26px 0 0">
+      <div><b>Know what kills the attempt before you price it</b><span>The expected cost assumes the only barrier is the max drawdown. Real accounts also die on daily loss limits, best-day caps and news rules — run your worst week against the firm's actual rules first.</span></div>
+      <a class="btn btn-gold btn-sm" href="/rule-trap-simulator/" data-route="rule-trap-simulator">Rule Trap Simulator →</a>
     </div>
   </main>
 </div>
@@ -2604,24 +3081,91 @@
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Tools</span> <span>›</span> <span>Payout Denial Index</span></nav>
       <h1>Payout Denial Index: The Payouts That Never Arrived</h1>
       <p class="standfirst">Every payout tracker on the internet counts money that left a firm. This index counts the opposite: payout requests that were refused after a trader passed, traded and asked to be paid. A firm can top every payout table and still refuse at the door — the refusal is the number that decides whether your payout ever arrives.</p>
-      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>Starts empty — 0 verified cases</span><span>Evidence standard published below — rumours are never posted</span><span>Firms get a right of reply on every case</span></div>
+      <div class="byline"><span>Tool · Risk First Prop Lab</span><span>First cases published 18 Nov 2026 — 2 verified, 3 awaiting verification</span><span>Evidence standard published below — rumours are never posted</span><span>Firms get a right of reply on every case</span></div>
     </div>
     <div class="article-body" style="max-width:960px">
       <div class="stat-grid">
-        <div class="stat"><div class="k">Verified denial cases</div><div class="bignum">0</div></div>
-        <div class="stat"><div class="k">Awaiting verification</div><div class="bignum">0</div></div>
+        <div class="stat"><div class="k">Verified denial cases</div><div class="bignum">2</div></div>
+        <div class="stat"><div class="k">Total verified amount denied</div><div class="bignum">$6,002.17</div></div>
+        <div class="stat"><div class="k">Awaiting verification</div><div class="bignum">3</div></div>
+        <div class="stat"><div class="k">Firms with a verified denial</div><div class="bignum">2</div></div>
         <div class="stat"><div class="k">Insufficient evidence</div><div class="bignum">0</div></div>
-        <div class="stat"><div class="k">Firms with a verified denial</div><div class="bignum">0</div></div>
       </div>
-      <div class="warn warn-amber"><b>Honestly empty.</b> There is no verified denial case yet — no case has been submitted with evidence that passes the standard below, so this index publishes <b>0</b> and nothing else. Zero verified cases does <b>not</b> mean zero denials have happened anywhere; it means the Lab has no verified evidence yet. The first case appears only when a real report clears verification.</div>
+      <div class="warn warn-amber"><b>First cases published — 18 Nov 2026.</b> Five cases are listed below: <b>2 Verified denials</b> totalling <b>$6,002.17</b> refused, and <b>3 cases Awaiting verification</b>, which are shown for transparency but never enter the totals. One of the five is a payout <b>delay</b>, not a denial — the headline count on this page covers Verified <b>denials</b> only. Every case links to its public source, checked 18 Nov 2026.</div>
 
       <h2>Cases</h2>
-      <div class="tblwrap"><table aria-label="Verified payout denial cases" style="min-width:760px">
-        <thead><tr><th>Date of denial</th><th>Firm</th><th class="num">Amount refused</th><th>Reason given by the firm</th><th>Evidence level</th><th>Firm response</th></tr></thead>
+      <div class="tblwrap"><table aria-label="Payout Denial Index cases" style="min-width:760px">
+        <thead><tr><th>Date reported</th><th>Firm</th><th class="num">Amount refused</th><th>Reason given by the firm</th><th>Evidence level</th><th>Firm response</th></tr></thead>
         <tbody>
-          <tr><td colspan="6" style="text-align:left;color:var(--muted)">No cases yet — nothing has been submitted and verified. Be the first to submit a case with evidence, using the form below.</td></tr>
+          <tr><td>15 Jun 2026</td><td><a href="/instant-funding-review/" data-route="instant-funding-review"><b>Instant Funding</b></a></td><td class="num">$2,002.17</td><td>Breach of the “1% Risk per Trade Idea / Gambling Rule”, found in a retrospective payout-phase audit</td><td><span class="statuschip st-bad">Verified</span></td><td>Replied publicly on Trustpilot — shown in Case 1 below</td></tr>
+          <tr><td>21 Oct 2026</td><td><a href="/fxify-review/" data-route="fxify-review"><b>FXIFY</b></a></td><td class="num">$4,000</td><td>Activity “found to fall within prohibited practices relating to latency arbitrage”, per the firm's Terms &amp; Conditions</td><td><span class="statuschip st-bad">Verified</span></td><td>Replied publicly on Trustpilot — shown in Case 2 below</td></tr>
+          <tr><td>15 Oct 2026 (review published)</td><td><a href="/fxify-review/" data-route="fxify-review"><b>FXIFY</b></a></td><td class="num">~$20,000</td><td>“Latency arbitrage” (as reported second-hand)</td><td><span class="statuschip st-pending">Awaiting verification</span></td><td>—</td></tr>
+          <tr><td>7 Nov 2026</td><td><a href="/goat-funded-review/" data-route="goat-funded-review"><b>Goat Funded Trader</b></a></td><td class="num">~$7,000</td><td>“Coordinated group trading” / copy trading (as reported)</td><td><span class="statuschip st-pending">Awaiting verification</span></td><td>Right-of-reply invitation pending</td></tr>
+          <tr><td>2 Oct 2026</td><td><a href="/blue-guardian-review/" data-route="blue-guardian-review"><b>Blue Guardian</b></a></td><td class="num">$250</td><td><b>Delay, not a denial</b> — KYC-related error at payout; support cited a technical issue</td><td><span class="statuschip st-pending">Awaiting verification</span></td><td>Replied on Trustpilot — escalated to its Risk &amp; Payout team</td></tr>
         </tbody>
       </table></div>
+      <p class="note">Full case files follow — the firm's stated reason, the trader's side, the evidence and the source for every case. Cases marked Awaiting verification do <b>not</b> count in the Index totals above.</p>
+
+      <h2>Case files</h2>
+
+      <div class="casefile">
+        <div class="cf-head"><b>Case 1 — Instant Funding</b><span class="statuschip st-bad">Verified</span></div>
+        <div class="cf-meta">Payout denied · <span class="cf-amt">$2,002.17</span> · Date reported: 15 June 2026 · Trader account 8099441 (as published by the trader)</div>
+        <dl>
+          <div><dt>Firm's stated reason</dt><dd>Breach of the “1% Risk per Trade Idea / Gambling Rule”, found in a retrospective payout-phase audit of the full trading history. The firm says its system monitors peak floating drawdown millisecond by millisecond, and a breach logged on the backend invalidates payout eligibility even if the account later recovered into profit.</dd></div>
+          <div><dt>Trader's side (as reported)</dt><dd>First payout ever requested after buying 15+ accounts; the payout was rejected without a valid reason given at the time, according to the trader.</dd></div>
+          <div><dt>Evidence</dt><dd>First-hand Trustpilot review (the reviewer published the account number and the amount) plus a public reply from Instant Funding on the same Trustpilot thread confirming the rule and the audit.</dd></div>
+          <div><dt>Firm right of reply</dt><dd>The firm has already replied publicly on the record — its reply is the firm's stated reason shown above.</dd></div>
+          <div><dt>Source</dt><dd><a href="https://ie.trustpilot.com/review/instantfunding.com?page=5" target="_blank" rel="noopener">Trustpilot — Instant Funding reviews, page 5 ↗</a> · Checked 18 Nov 2026</dd></div>
+        </dl>
+      </div>
+
+      <div class="casefile">
+        <div class="cf-head"><b>Case 2 — FXIFY</b><span class="statuschip st-bad">Verified</span></div>
+        <div class="cf-meta">Payout denied · <span class="cf-amt">$4,000</span> · Date reported: 21 October 2026</div>
+        <dl>
+          <div><dt>Firm's stated reason</dt><dd>Account activity “found to fall within prohibited practices relating to latency arbitrage”, with action taken in accordance with the firm's Terms &amp; Conditions; earlier payouts do not prevent a later review.</dd></div>
+          <div><dt>Trader's side (as reported)</dt><dd>Third payout, after two previous successful $4,000 withdrawals; all trades manual, no EAs or bots; waited 22 days for a response; asked for the specific trades as evidence and was not shown any.</dd></div>
+          <div><dt>Evidence</dt><dd>First-hand Trustpilot review plus a public reply from FXIFY on the same thread.</dd></div>
+          <div><dt>Firm right of reply</dt><dd>The firm has already replied publicly on the record — its reply is the firm's stated reason shown above.</dd></div>
+          <div><dt>Source</dt><dd><a href="https://uk.trustpilot.com/review/fxify.com?page=8" target="_blank" rel="noopener">Trustpilot — FXIFY reviews, page 8 ↗</a> · Checked 18 Nov 2026</dd></div>
+        </dl>
+      </div>
+
+      <div class="casefile">
+        <div class="cf-head"><b>Case 3 — FXIFY</b><span class="statuschip st-pending">Awaiting verification</span></div>
+        <div class="cf-meta">Payout denied · <span class="cf-amt">~$20,000</span> (reported as “near $20,000”) · Date: reported in a review published 15 October 2026</div>
+        <dl>
+          <div><dt>Firm's stated reason (as reported second-hand)</dt><dd>“Latency arbitrage”, after a three-week wait.</dd></div>
+          <div><dt>Evidence</dt><dd>Second-hand report via an independent review site summarising Trustpilot complaints — not the trader's own first-hand post as seen by the Lab.</dd></div>
+          <div><dt>Note on this case</dt><dd>Second-hand: the Lab has not seen the original first-hand report, so this case stays Awaiting verification and does <b>not</b> count in the Index totals.</dd></div>
+          <div><dt>Source</dt><dd><a href="https://traderverified.com/fxify-review-2026/" target="_blank" rel="noopener">TraderVerified — FXIFY review 2026 ↗</a> · Checked 18 Nov 2026</dd></div>
+        </dl>
+      </div>
+
+      <div class="casefile">
+        <div class="cf-head"><b>Case 4 — Goat Funded Trader</b><span class="statuschip st-pending">Awaiting verification</span></div>
+        <div class="cf-meta">Payout denied · <span class="cf-amt">~$7,000</span> · Date reported: 7 November 2026 · Trader: Bharat Raj Hulimavu · Account 315380902 (as published by the trader)</div>
+        <dl>
+          <div><dt>Firm's stated reason (as reported)</dt><dd>“Coordinated group trading” / copy trading, based on matching trades between 28 October and 4 November 2026.</dd></div>
+          <div><dt>Trader's side (as reported)</dt><dd>Denies copy trading and group trading; says the firm has not provided convincing evidence identifying the matching trades, accounts or devices.</dd></div>
+          <div><dt>Evidence</dt><dd>First-hand Trustpilot complaint plus an independent news roundup noting the cluster of 6–7 November 2026 complaints and that the cases remain unverified customer allegations.</dd></div>
+          <div><dt>Firm right of reply</dt><dd><b>Right-of-reply invitation pending</b> — not yet invited by the Lab. This case does <b>not</b> count in the Index totals until/unless it is Verified.</dd></div>
+          <div><dt>Sources</dt><dd><a href="https://www.trustpilot.com/review/goatfunded.com" target="_blank" rel="noopener">Trustpilot — Goat Funded Trader reviews ↗</a> · <a href="https://davefinances.com/goat-funded-trader-faces-copy-trading-allegations-as-black-vault-and-hypernova-revise-account-rules/" target="_blank" rel="noopener">DaveFinances — copy-trading allegations roundup ↗</a> · Checked 18 Nov 2026</dd></div>
+        </dl>
+      </div>
+
+      <div class="casefile">
+        <div class="cf-head"><b>Case 5 — Blue Guardian</b><span class="statuschip st-pending">Awaiting verification</span></div>
+        <div class="cf-meta"><span class="statuschip st-pending">Delay — not a denial</span> · Payout delayed · <span class="cf-amt">$250</span> · Date reported: 2 October 2026 · Trader account 541908 (as published by the trader)</div>
+        <dl>
+          <div><dt>What happened (as reported)</dt><dd>Payout requested after meeting requirements; a KYC-related error appeared at payout although the trader had been told KYC was not required for the Instant Starter account; support cited a technical issue; 30+ days waiting with no resolution or timeframe.</dd></div>
+          <div><dt>Firm's side</dt><dd>The firm replied on Trustpilot saying it had reached out to its Risk &amp; Payout team for an immediate status update.</dd></div>
+          <div><dt>Evidence</dt><dd>First-hand Trustpilot review on the Blue Guardian Futures profile plus the firm's public reply.</dd></div>
+          <div><dt>Note on this case</dt><dd>This is a delay case. Delays are listed for transparency, but the Index headline denial count counts Verified <b>denials</b> only.</dd></div>
+          <div><dt>Source</dt><dd><a href="https://ie.trustpilot.com/review/blueguardianfutures.com?page=2" target="_blank" rel="noopener">Trustpilot — Blue Guardian Futures reviews, page 2 ↗</a> · Checked 18 Nov 2026</dd></div>
+        </dl>
+      </div>
 
       <h2>By firm</h2>
       <div class="tblwrap"><table aria-label="Payout Denial Index by firm" style="min-width:680px">
@@ -2633,13 +3177,13 @@
           <tr><td><a href="/funding-pips-review/" data-route="funding-pips-review"><b>Funding Pips</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
           <tr><td><a href="/e8-markets-review/" data-route="e8-markets-review"><b>E8 Markets</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
           <tr><td><a href="/alpha-capital-review/" data-route="alpha-capital-review"><b>Alpha Capital Group</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
-          <tr><td><a href="/fxify-review/" data-route="fxify-review"><b>FXIFY</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
-          <tr><td><a href="/blue-guardian-review/" data-route="blue-guardian-review"><b>Blue Guardian</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
-          <tr><td><a href="/instant-funding-review/" data-route="instant-funding-review"><b>Instant Funding</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/fxify-review/" data-route="fxify-review"><b>FXIFY</b></a></td><td class="num">1</td><td class="num">1</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/blue-guardian-review/" data-route="blue-guardian-review"><b>Blue Guardian</b></a></td><td class="num">0</td><td class="num">1</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/instant-funding-review/" data-route="instant-funding-review"><b>Instant Funding</b></a></td><td class="num">1</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
           <tr><td><a href="/apex-review/" data-route="apex-review"><b>Apex Trader Funding</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
           <tr><td><a href="/myfundedfutures-review/" data-route="myfundedfutures-review"><b>MyFundedFutures</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
           <tr><td><a href="/breakout-review/" data-route="breakout-review"><b>Breakout Prop</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
-          <tr><td><a href="/goat-funded-review/" data-route="goat-funded-review"><b>Goat Funded Trader</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
+          <tr><td><a href="/goat-funded-review/" data-route="goat-funded-review"><b>Goat Funded Trader</b></a></td><td class="num">0</td><td class="num">1</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
           <tr><td><a href="/hantec-rzr-review/" data-route="hantec-rzr-review"><b>Hantec Trader (RZR Funded)</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
           <tr><td><a href="/topstep-review/" data-route="topstep-review"><b>Topstep</b></a></td><td class="num">0</td><td class="num">0</td><td class="pending">Not published — no verified sample</td><td class="pending">Not published — no verified sample</td></tr>
         </tbody>
@@ -3609,6 +4153,7 @@
         <a href="/instant-funding-review/" data-route="instant-funding-review"><b>Instant Funding Review</b><span>Instant access with a retrospective audit — the opposite philosophy.</span></a>
         <a href="/directory/" data-route="directory"><b>All Prop Firms Directory</b><span>59 firms, filterable, with Lab status.</span></a>
         <a href="/gold-cost/" data-route="gold-cost"><b>Gold Cost League Table</b><span>Breakout trades gold as an RWA on its own terminal — its MT5 row is N/A by design.</span></a>
+        <a href="/withdraw-to-vietnam/" data-route="withdraw-to-vietnam"><b>Withdraw to Vietnam — Rút tiền về Việt Nam</b><span>Step by step: Breakout's USDC (ERC-20) payouts home — $50 minimum, on demand.</span></a>
       </div>
     </div>
   </main>
@@ -4064,12 +4609,14 @@
         <a href="/directory/" data-route="directory">All Prop Firms Directory</a>
         <a href="/prop-firm-match/" data-route="prop-firm-match">Prop Firm Match</a>
         <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a>
+        <a href="/true-cost-to-funded/" data-route="true-cost-to-funded">True Cost to Get Funded</a>
         <a href="/gold-cost/" data-route="gold-cost">Gold Cost League Table</a>
         <a href="/denial-index/" data-route="denial-index">Payout Denial Index</a>
         <a href="/prop-firm-scorecard/" data-route="prop-firm-scorecard">10-Point Scorecard</a>
         <a href="/rule-trap-daily-dd/" data-route="rule-trap-daily-dd">Rule Trap: Daily Drawdown</a>
         <a href="/country-check/" data-route="country-check">Country Check</a>
         <a href="/trader-viet/" data-route="trader-viet">Trader Viet</a>
+        <a href="/withdraw-to-vietnam/" data-route="withdraw-to-vietnam">Withdraw to Vietnam</a>
       </div>
       <div><h4>Community</h4>
         <a href="/community-reviews/" data-route="community-reviews">User Reviews</a>
@@ -4127,12 +4674,15 @@
     "country-check": { path:"country-check/", title:"Country Check: Which Prop Firms Ban Your Country? | Risk First Prop Lab", desc:"Prop firm restricted countries explained: residency vs citizenship, product-by-product lists, and the checked Vietnam and US status of FTMO, FundedNext, The5ers, Funding Pips, E8 Markets and Alpha Capital, plus the Batch 2 firms — FXIFY, Blue Guardian, Instant Funding, Apex, MyFundedFutures, Breakout Prop, Goat Funded Trader, RZR Funded, Topstep and the closed The Funded Trader.", type:"article", headline:"Country Check: Which Prop Firms Ban Your Country?" },
     "prop-firm-scorecard": { path:"prop-firm-scorecard/", title:"The 10-Point Prop Firm Scorecard | Risk First Prop Lab", desc:"The exact 10 criteria behind every Risk First Prop Lab score: XAUUSD spread, all-in cost, slippage, drawdown fairness, rule traps, payout speed and reliability, country clarity and support — and how interim documentation scores work.", type:"article", headline:"The 10-Point Prop Firm Scorecard Behind Every Lab Test" },
     "challenge-planner": { path:"challenge-planner/", title:"Challenge Pass Planner: Day-by-Day Prop Firm Pass Plan | Risk First Prop Lab", desc:"Free challenge pass planner: pick a firm and model, set your days, win rate and RRR, and get a day-by-day plan — daily profit target, risk per trade, lot size per instrument, daily loss budget and feasibility warnings. Client-side only, no pass promised.", type:"website" },
+    "true-cost-to-funded": { path:"true-cost-to-funded/", title:"True Cost to Get Funded — What a Challenge Really Costs | Risk First Prop Lab", desc:"The sticker price buys one attempt — most traders need several. Enter a firm, account size, your win rate, RRR and risk per trade: the calculator models your pass probability per attempt, expected attempts, and the expected total, remaining and sunk cost of getting funded, set against the FPFX industry anchor (~14% of buyers ever pass, ~7% ever get paid). Prices come from Lab data only; a missing price is never invented. Client-side only, no pass promised.", type:"website" },
+    "rule-trap-simulator": { path:"rule-trap-simulator/", title:"Rule Trap Simulator — Break the Rules on Paper Before You Pay | Risk First Prop Lab", desc:"Free rule trap simulator: pick a prop firm and model, enter a day-by-day trading log — closed P/L, worst floating dip, news and weekend flags — and run it against the firm's real rules: equity vs balance daily loss, static and trailing max loss, best-day caps, minimum days. See the exact day and rule that would close the account, plus three reconstructed reported cases. Client-side only, educational, no pass promised.", type:"website" },
     "gold-cost": { path:"gold-cost/", title:"Gold Cost League Table: XAUUSD All-In Cost Measured on MT5 | Risk First Prop Lab", desc:"The Gold Cost League Table: XAUUSD spread, commission and news slippage measured on a live MT5 terminal — same system, same sessions, published protocol and raw log. Every firm starts as Pending MT5 log; no estimated spreads are published. Plus the Your Gold Bleed calculator.", type:"website" },
     "prop-firm-match": { path:"prop-firm-match/", title:"Prop Firm Match: Find a Firm by Budget, Style & Country | Risk First Prop Lab", desc:"Answer five questions — challenge budget, trading style (gold, news, swing, scalping), country including Vietnam, payout priority and overnight holding — and get an honest shortlist of the fifteen fully reviewed firms in the Match pool, plus a full comparison table.", type:"website" },
     "trader-viet": { path:"trader-viet/", title:"Trader Viet: Prop Firms from Vietnam — Eligibility, Payouts & Taxes | Risk First Prop Lab", desc:"For traders residing in Vietnam: which firms accept you (FTMO CFD, The5ers, Breakout Prop, Topstep Combine + Express Funded), which bar you (FundedNext, Funding Pips, Alpha Capital, FXIFY, Blue Guardian, Apex, MyFundedFutures, RZR Funded), the residency-vs-citizenship trap, payout rails that reach Vietnam, and tax paperwork to keep.", type:"article", headline:"Trader Viet: Prop Firms from Vietnam — Who Accepts You, Who Bars You, How Payouts Get Home" },
+    "withdraw-to-vietnam": { path:"withdraw-to-vietnam/", title:"Withdraw to Vietnam — How to Get Your Prop Payout Home | Risk First Prop Lab", desc:"Step by step: how a Vietnam-resident trader withdraws a prop firm payout from E8 Markets (Rise / WorkMarket, $100 net minimum, no firm fee), The5ers (Rise, crypto or bank transfer, $150 minimum, 3.5% fee) and Breakout Prop (USDC ERC-20 only, $50 minimum, on demand) — rails, fees, timing and the exact steps, per each firm's official docs, checked 18 Nov 2026. The Lab has not withdrawn from these firms itself.", type:"article", headline:"Withdraw to Vietnam — Rút tiền về Việt Nam: How to Get Your Prop Payout Home" },
     "community-reviews": { path:"community-reviews/", title:"User Reviews: Community Ratings for Prop Firms | Risk First Prop Lab", desc:"Star ratings for rules, fees, payouts and support from traders in the Risk First community — moderated through the Telegram group, proof-labelled Verified or Not yet verified, never invented. Submit your own review.", type:"website" },
     "payout-tracker": { path:"payout-tracker/", title:"Payout Tracker: Proof-Backed Prop Firm Payouts | Risk First Prop Lab", desc:"Sortable tracker of proof-backed prop firm payouts from the Risk First community: totals, largest, average, median payout time and denials reported — by firm, timeframe and market. Empty means no evidence yet, never zero payouts.", type:"website" },
-    "denial-index": { path:"denial-index/", title:"Payout Denial Index: Prop Firm Payouts Refused, Counted | Risk First Prop Lab", desc:"The inverse of a payout tracker: the Payout Denial Index counts verified prop firm payout DENIALS — firm, date, amount, reason and evidence grade, with the firm's response shown alongside. Starts honestly empty: 0 verified cases. Strict evidence standard published; rumours are never posted.", type:"website" },
+    "denial-index": { path:"denial-index/", title:"Payout Denial Index: Prop Firm Payouts Refused, Counted | Risk First Prop Lab", desc:"The inverse of a payout tracker: the Payout Denial Index counts verified prop firm payout DENIALS — firm, date, amount, reason and evidence grade, with the firm's response shown alongside. First cases published 18 Nov 2026: 2 verified denials totalling $6,002.17, 3 cases awaiting verification. Strict evidence standard published; rumours are never posted.", type:"website" },
     "affiliate-disclosure": { path:"affiliate-disclosure/", title:"Affiliate Disclosure | Risk First Prop Lab", desc:"How affiliate links work on Risk First Prop Lab: commissions never raise the trader price, never change a score, ranking or verdict, and never reorder the Directory or Match results. Links are direct, with no hidden redirects.", type:"website" },
     "for-prop-firms": { path:"for-prop-firms/", title:"For Prop Firms: List Your Firm | Risk First Prop Lab", desc:"How prop firms get listed on Risk First Prop Lab: vetting first, then Basic, Featured, Sponsored Review and Advertising packages. Money buys display position and speed only — never scores, rankings, verdicts or reviews.", type:"website" },
     "transparency": { path:"transparency/", title:"Transparency & Methodology: How Rankings Are Built | Risk First Prop Lab", desc:"The five rankings explained — Lab Tested, Community Verified, Reviews & Ratings, Payout Tracker, Not Yet Verified — plus firm vetting, review moderation, commercial relationships, and what this site does not publish.", type:"article", headline:"Transparency & Methodology: How Every Ranking Here Is Built" },
@@ -4265,7 +4815,7 @@
   }
 
   /* ---------------- Deploy files: sitemap.xml, robots.txt, vercel.json ---------------- */
-  var SITEMAP_PATHS = ["", "directory/", "ftmo-review/", "fundednext-review/", "the5ers-review/", "funding-pips-review/", "e8-markets-review/", "alpha-capital-review/", "fundednext-payout-test/", "rule-trap-daily-dd/", "country-check/", "prop-firm-scorecard/", "prop-firm-match/", "challenge-planner/", "gold-cost/", "trader-viet/", "community-reviews/", "payout-tracker/", "denial-index/", "transparency/", "for-prop-firms/", "affiliate-disclosure/", "the-funded-trader-review/", "fxify-review/", "blue-guardian-review/", "instant-funding-review/", "apex-review/", "myfundedfutures-review/", "breakout-review/", "goat-funded-review/", "hantec-rzr-review/", "topstep-review/"];
+  var SITEMAP_PATHS = ["", "directory/", "ftmo-review/", "fundednext-review/", "the5ers-review/", "funding-pips-review/", "e8-markets-review/", "alpha-capital-review/", "fundednext-payout-test/", "rule-trap-daily-dd/", "country-check/", "prop-firm-scorecard/", "prop-firm-match/", "challenge-planner/", "true-cost-to-funded/", "rule-trap-simulator/", "gold-cost/", "trader-viet/", "withdraw-to-vietnam/", "community-reviews/", "payout-tracker/", "denial-index/", "transparency/", "for-prop-firms/", "affiliate-disclosure/", "the-funded-trader-review/", "fxify-review/", "blue-guardian-review/", "instant-funding-review/", "apex-review/", "myfundedfutures-review/", "breakout-review/", "goat-funded-review/", "hantec-rzr-review/", "topstep-review/"];
   var SITEMAP = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + SITEMAP_PATHS.map(function(p){ return "  <url>\n    <loc>" + BASE + p + "</loc>\n    <lastmod>" + CHECKED + "</lastmod>\n  </url>"; }).join("\n")
     + "\n</urlset>";
@@ -4281,14 +4831,14 @@
     + "|- <route>/index.html           <- one real static file per route (directory/, ftmo-review/, ...)\n"
     + "|- all-prop-firms/index.html    <- redirect page -> /directory/\n"
     + "|- vercel.json                  <- one catch-all rewrite: /(.*) -> /index.html\n"
-    + "|- sitemap.xml                  <- 32 URLs\n"
+    + "|- sitemap.xml                  <- 35 URLs\n"
     + "|- robots.txt\n"
     + "Routes: / /directory/ /ftmo-review/ /fundednext-review/\n"
     + "/the5ers-review/ /funding-pips-review/ /e8-markets-review/\n"
     + "/alpha-capital-review/ /fundednext-payout-test/\n"
     + "/rule-trap-daily-dd/ /country-check/ /prop-firm-scorecard/\n"
-    + "/prop-firm-match/ /trader-viet/ /community-reviews/\n"
-    + "/payout-tracker/ /challenge-planner/ /gold-cost/ /denial-index/\n"
+    + "/prop-firm-match/ /trader-viet/ /withdraw-to-vietnam/ /community-reviews/\n"
+    + "/payout-tracker/ /challenge-planner/ /true-cost-to-funded/ /rule-trap-simulator/ /gold-cost/ /denial-index/\n"
     + "/transparency/ /for-prop-firms/ /affiliate-disclosure/\n"
     + "/the-funded-trader-review/ /fxify-review/ /blue-guardian-review/\n"
     + "/instant-funding-review/ /apex-review/ /myfundedfutures-review/\n"
@@ -4789,6 +5339,10 @@
      One row per change/firm — append a row, the pages render themselves.
      src must be the firm's OWN official page (or Trustpilot for trust notes). */
   var CHANGELOG = [
+    {date:"2026-11-18", firm:"Risk First Prop Lab", type:"Site", text:"New guide — Withdraw to Vietnam (Rút tiền về Việt Nam): step-by-step payout instructions for Vietnam-resident traders at the three Vietnam-usable firms with full Lab reviews — E8 Markets (Rise / WorkMarket, $100 net minimum, no firm fee, Classic / Perpetuals only), The5ers (Rise, crypto or bank transfer, $150 minimum, 3.5% fee, 14-day first withdrawal) and Breakout Prop (USDC ERC-20 only, $50 minimum, on demand) — with a side-by-side comparison, a before-your-first-payout checklist and a cheapest-rail explainer. Every step is per the firm's official docs, checked 18 Nov 2026; the Lab has not itself withdrawn from these firms and the page says so.", src:"https://riskproplab.vercel.app/withdraw-to-vietnam/", srcLabel:"Withdraw to Vietnam"},
+    {date:"2026-11-18", firm:"Payout Denial Index", type:"Site", text:"Denial Index: first 5 cases published (2 Verified, 3 Awaiting verification)", src:"https://riskproplab.vercel.app/denial-index/", srcLabel:"Payout Denial Index"},
+    {date:"2026-11-18", firm:"Risk First Prop Lab", type:"Site", text:"New tool — True Cost to Get Funded: the expected-cost calculator. Pick a firm, model and account size, enter your win rate, RRR and risk per trade, and it models your pass probability per attempt (diffusion approximation, all formulas printed on the page), the expected number of attempts, and the expected total, remaining and sunk cost of getting funded — set against the FPFX industry anchor (~14% of ~300,000 challenge buyers ever pass, ~7% ever get paid). Prices come only from Lab fee data; where a firm has no Lab price for a size the field stays empty for the checkout price, marked Chưa kiểm chứng. No pass is promised — the model ignores daily drawdown and consistency caps, so it flatters you, and the page says so.", src:"https://riskproplab.vercel.app/true-cost-to-funded/", srcLabel:"True Cost to Get Funded"},
+    {date:"2026-11-18", firm:"Risk First Prop Lab", type:"Site", text:"Gold Cost Round 1 run-book published; measurement pending demo accounts. The run-book fixes the firms (FTMO, E8 Markets, The5ers), the London and New York sessions, the sample size (120 snapshots per firm over 3 trading days) and the blank raw-log template — and states plainly why Round 1 has not run: the Lab's only MT5 terminal runs live forward tests and is on the Admirals demo server, not the firms'. No figure on the Gold Cost page changes until a real MT5 log exists.", src:"https://riskproplab.vercel.app/gold-cost/", srcLabel:"Gold Cost League Table — Round 1 run-book"},
     {date:"2026-11-18", firm:"Risk First Prop Lab", type:"Site", text:"Batch 2 published: ten new full reviews — FXIFY, Blue Guardian, Instant Funding, Apex Trader Funding, MyFundedFutures, Breakout Prop, Goat Funded Trader, Hantec Trader (now RZR Funded) and Topstep, plus a closure case study of The Funded Trader (offline since Sep 2026, no score). Figures from the Batch 2 research dossiers, checked against official pages + Trustpilot on 18 Nov 2026; unverified fields stay marked “Chưa kiểm chứng”. Directory grows to 59 vetted brands; 16 full reviews live.", src:"https://riskproplab.vercel.app/transparency/", srcLabel:"Method: Transparency page"},
     {date:"2026-11-18", firm:"Risk First Prop Lab", type:"Site", text:"Source audit completed: every rule / fee / payout figure on the six full reviews and the Directory re-checked against each firm's own official homepage, FAQ, Help Centre or Terms. Figures that could not be confirmed on an official page are now marked “Chưa kiểm chứng — Not yet verified” instead of carrying third-party numbers; all aggregator source links removed.", src:"https://ftmo.com/", srcLabel:"Method: Transparency page"},
     {date:"2026-11-17", firm:"E8 Markets", type:"Rule", text:"Help Centre “Daily Drawdown” article updated (16 Nov 2026): daily loss is a fixed $ amount from the initial balance. The article's preset (3% daily / 4% dynamic) still differs from the checkout configurator preset (4% daily / 6% dynamic) — flagged in the review.", src:"https://help.e8markets.com/en/articles/11769446-daily-drawdown", srcLabel:"E8 Help Centre — Daily Drawdown"},
@@ -5525,6 +6079,40 @@
     box.querySelector("[data-route]").addEventListener("click", function(e){ e.preventDefault(); pendingPlannerFirm = c.name; navigate("challenge-planner"); setTimeout(applyPendingFirm, 60); });
   });
 
+  /* simulator deep-links from reviews: CTA at the end of every firm review */
+  var pendingSimFirm = null;
+  document.addEventListener("click", function(e){
+    var a = e.target.closest ? e.target.closest("[data-sim-firm]") : null;
+    if (a){ pendingSimFirm = a.getAttribute("data-sim-firm"); setTimeout(applyPendingSimFirm, 60); }
+  }, true);
+  function applyPendingSimFirm(){
+    if (!pendingSimFirm) return;
+    var sel = document.getElementById("simFirm");
+    if (sel && PLANNER_RULES[pendingSimFirm]){ sel.value = pendingSimFirm; simFirmChanged(); }
+    pendingSimFirm = null;
+  }
+  function simCtaFor(view, firmName){
+    if (!view) return;
+    var rel = view.querySelector(".related"); if (!rel) return;
+    var box = document.createElement("div"); box.className = "planner-cta"; box.style.maxWidth = "none";
+    if (firmName){
+      box.innerHTML = "<div><b>Break " + firmName + "'s rules on paper first</b><span>Run a day-by-day log against " + firmName + "'s real daily-loss basis, max-loss floor and hidden rules in the Rule Trap Simulator — find the day the account would close before the fee does.</span></div>"
+        + '<a class="btn btn-gold btn-sm" href="/rule-trap-simulator/" data-route="rule-trap-simulator" data-sim-firm="' + firmName + '">Open the Simulator →</a>';
+    } else {
+      box.innerHTML = "<div><b>Break the rules on paper first</b><span>Run a day-by-day log against a firm's real daily-loss basis, max-loss floor and hidden rules in the Rule Trap Simulator — find the day the account would close before you pay for a challenge.</span></div>"
+        + '<a class="btn btn-gold btn-sm" href="/rule-trap-simulator/" data-route="rule-trap-simulator">Open the Simulator →</a>';
+    }
+    rel.parentNode.insertBefore(box, rel.nextSibling);
+    box.querySelector("[data-route]").addEventListener("click", function(e){
+      e.preventDefault();
+      if (firmName) pendingSimFirm = firmName;
+      navigate("rule-trap-simulator");
+      if (firmName) setTimeout(applyPendingSimFirm, 60);
+    });
+  }
+  COMPARER.forEach(function(c){ simCtaFor(document.querySelector('[data-view="' + c.slug + '"]'), c.name); });
+  simCtaFor(document.querySelector('[data-view="the-funded-trader-review"]'), null);
+
   if (document.getElementById("dirBody")) renderDirectory();
   if (document.getElementById("dirLabBody")) renderDirectoryExtras();
 
@@ -5848,6 +6436,571 @@
     } catch(e){}
   }
 
+
+  /* ================= TRUE COST TO GET FUNDED =================
+     Expected-cost model. Prices, profit targets and max drawdowns come from
+     PLANNER_RULES — the same Lab rule table as the Planner; no second copy.
+     A fee only counts as a Lab price when the stored string is one plain
+     currency amount (e.g. "€540"); anything else (e.g. a subscription string)
+     or a missing entry leaves the price field empty for the checkout price. */
+  var tc = {};
+  ["tcFirm","tcModel","tcSize","tcPrice","tcPriceNote","tcRuleNote","tcRuleChips","tcWR","tcRRR","tcRisk","tcBought","tcAlert","tcStats","tcAnchor","tcCmpSize","tcCompareBody"].forEach(function(id){ tc[id] = document.getElementById(id); });
+  var tcReady = !!tc.tcFirm;
+  function tcModel(){
+    var f = PLANNER_RULES[tc.tcFirm.value]; if (!f) return null;
+    for (var i = 0; i < f.models.length; i++) if (f.models[i].id === tc.tcModel.value) return f.models[i];
+    return f.models[0];
+  }
+  function tcLabFee(str){
+    if (!str) return null;
+    var m = /^\s*([€$])\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s*$/.exec(str);
+    if (!m) return null;
+    return { cur:m[1], amt:parseFloat(m[2].replace(/,/g, "")) };
+  }
+  function tcParsePrice(str){
+    if (!str) return null;
+    var cur = str.indexOf("€") >= 0 ? "€" : "$";
+    var num = parseFloat(String(str).replace(/[^0-9.]/g, ""));
+    if (isNaN(num) || num <= 0) return null;
+    return { cur:cur, amt:num };
+  }
+  function tcCur(n, cur){ return cur + Math.round(n).toLocaleString("en-US"); }
+  function tcAtt(a){ return a >= 100 ? String(Math.round(a)) : a.toFixed(1); }
+  /* Diffusion (Brownian) hitting probability: drift mu, variance varr per trade,
+     barrier d risk-units below, target t risk-units above. */
+  function tcPassProb(mu, varr, d, t){
+    if (d <= 0 || t <= 0 || varr <= 0) return 0;
+    if (Math.abs(mu) < 1e-12) return d / (d + t);
+    var a = -2 * mu / varr;
+    var den = 1 - Math.exp(a * (d + t));
+    if (den === 0) return 0;
+    var p = (1 - Math.exp(a * d)) / den;
+    return Math.min(1, Math.max(0, p));
+  }
+  function tcAttempt(m, wr, rrr, risk){
+    var E = wr * rrr - (1 - wr);
+    if (!(E > 1e-9) || risk <= 0 || !(m.max > 0)) return { E:E, p:0 };
+    var mu = E;
+    var varr = wr * Math.pow(rrr - mu, 2) + (1 - wr) * Math.pow(-1 - mu, 2);
+    var d = m.max / risk;
+    var p = tcPassProb(mu, varr, d, m.t1 / risk);
+    if (m.t2 !== null && m.t2 !== undefined) p *= tcPassProb(mu, varr, d, m.t2 / risk);
+    return { E:E, p:p };
+  }
+  function tcFirmChanged(){
+    var f = PLANNER_RULES[tc.tcFirm.value]; if (!f) return;
+    tc.tcModel.innerHTML = f.models.map(function(m){ return '<option value="' + m.id + '">' + m.label + "</option>"; }).join("");
+    tcModelChanged();
+  }
+  function tcModelChanged(){
+    var m = tcModel(); if (!m) return;
+    var sizeKey = String(parseInt(tc.tcSize.value, 10) || "");
+    var fee = tcLabFee(m.fees[sizeKey]);
+    if (fee){
+      tc.tcPrice.value = m.fees[sizeKey];
+      tc.tcPriceNote.textContent = "Lab price for this size, from the firm's published fees (" + m.basis + "). Editable — if checkout shows a different figure, type that instead.";
+    } else {
+      tc.tcPrice.value = "";
+      tc.tcPriceNote.innerHTML = '<span class="pending">Not in Lab data — enter the price from the firm\'s checkout.</span> The Lab holds no verified price for this firm and size, and does not invent one.' + (m.fees[sizeKey] ? " (Lab data holds “" + m.fees[sizeKey] + "” for this size — a subscription/activation structure, not a one-off challenge price.)" : "");
+    }
+    tc.tcRuleNote.textContent = "Model maths uses this model's own rules: profit target " + m.t1 + "%" + (m.t2 !== null ? " + " + m.t2 + "% (phase 2)" : "") + " · max drawdown " + m.max + "% — " + m.maxType + ". Basis: " + m.basis + ".";
+    tc.tcRuleChips.innerHTML = '<span class="evchip ev-src">Firm rules · official site · 18 Nov 2026</span>'
+      + (fee ? '<span class="evchip ev-ok">Price in Lab data</span>' : '<span class="evchip ev-pend">Price · Chưa kiểm chứng / Not verified</span>')
+      + (/trailing|dynamic/i.test(m.maxType) ? '<span class="evchip ev-pend">Trailing max loss — the model uses a fixed barrier, so it flatters this firm further</span>' : '<span class="evchip ev-ok">Static max loss</span>');
+    tcCalc();
+  }
+  function tcCalc(){
+    if (!tcReady) return;
+    var m = tcModel(); if (!m) return;
+    var wr = (parseFloat(tc.tcWR.value) || 0) / 100;
+    var rrr = parseFloat(tc.tcRRR.value) || 0;
+    var risk = parseFloat(tc.tcRisk.value) || 0;
+    var bought = Math.max(0, parseInt(tc.tcBought.value, 10) || 0);
+    var price = tcParsePrice(tc.tcPrice.value);
+    var sizeKey = String(parseInt(tc.tcSize.value, 10) || "");
+    var r = tcAttempt(m, wr, rrr, risk);
+    var E = r.E, p = r.p;
+    var noEdge = !(E > 1e-9);
+    var att = p > 0 ? 1 / p : Infinity;
+    /* alerts */
+    var alerts = "";
+    if (noEdge){
+      alerts = '<div class="warn warn-red"><b>No edge — the model stops here.</b> At a ' + Math.round(wr * 100) + '% win rate and RRR 1:' + rrr + ', expectancy is ' + E.toFixed(2) + 'R per trade. A random walk with no drift does not climb to the target before it finds the drawdown barrier: the model pass probability is ~0 and there is no finite expected cost — every attempt is, in expectation, a donation. Fix the edge first; no challenge is cheap enough to fix this.</div>';
+    } else if (!price){
+      alerts = '<div class="warn warn-amber"><b>No price entered yet.</b> The pass probability and expected attempts below are live, but the costs need a price: type the figure from the firm\'s checkout into the price field.</div>';
+    } else if (p >= 0.9){
+      alerts = '<div class="warn warn-amber"><b>Read this number with suspicion.</b> Your inputs imply a near-certain pass per attempt — that says more about the model\'s blind spots (no daily drawdown limit, no consistency cap, no news rule, no psychology) than about your real chances. The industry anchor under the results is the colder number.</div>';
+    }
+    tc.tcAlert.innerHTML = alerts;
+    /* result cards */
+    var total = (price && att !== Infinity) ? price.amt * att : null;
+    var sunk = price ? price.amt * bought : null;
+    var remain = (price && att !== Infinity) ? price.amt * Math.max(0, att - bought) : null;
+    var stats = [
+      ["Expectancy per trade (your inputs)", (E > 0 ? "+" : "") + E.toFixed(2) + "R"],
+      ["Model pass probability / attempt", noEdge ? "~0%" : (p * 100).toFixed(1) + "%"],
+      ["Expected attempts to pass", noEdge ? "∞ — no edge" : tcAtt(att)],
+      ["Expected total cost", total !== null ? tcCur(total, price.cur) : "— enter a price"],
+      ["Expected remaining cost", remain !== null ? tcCur(remain, price.cur) : "—"],
+      ["Sunk cost — already spent", sunk !== null ? tcCur(sunk, price.cur) + " (" + bought + " bought)" : "—"]
+    ];
+    tc.tcStats.innerHTML = stats.map(function(s){ return '<div class="stat"><div class="k">' + s[0] + '</div><div class="v">' + s[1] + "</div></div>"; }).join("");
+    /* industry anchor */
+    var anchorNums;
+    if (price){
+      anchorNums = 'At this price (' + tcCur(price.amt, price.cur) + ' per attempt): the <b>industry anchor</b> puts the expected cost of getting funded at <b>' + tcCur(price.amt / 0.14, price.cur) + '</b>' + (total !== null ? ', against <b>' + tcCur(total, price.cur) + '</b> from your model inputs above' : '') + '. Whichever number you believe, neither of them is ' + tcCur(price.amt, price.cur) + '.';
+    } else {
+      anchorNums = "Enter a challenge price and this box prices the anchor for it: expected cost = price ÷ 0.14.";
+    }
+    tc.tcAnchor.innerHTML = "<h3>The industry reality check</h3>"
+      + "<p>The industry reality: across the FPFX dataset of ~300,000 accounts, only ~14% of challenge buyers ever pass and ~7% ever get paid. If your true pass rate is 14%, expected attempts = 7.1 and expected cost = price ÷ 0.14.</p>"
+      + '<p style="margin-bottom:0">' + anchorNums + "</p>";
+    /* comparison table: every PLANNER_RULES model with a Lab price at this size */
+    tc.tcCmpSize.textContent = "$" + (parseInt(tc.tcSize.value, 10) / 1000) + "K";
+    var rows = [], excluded = [];
+    Object.keys(PLANNER_RULES).forEach(function(fname){
+      if (fname === "Custom") return;
+      PLANNER_RULES[fname].models.forEach(function(mm){
+        var fee = tcLabFee(mm.fees[sizeKey]);
+        if (!fee){ excluded.push(fname + " — " + mm.label); return; }
+        var rr = tcAttempt(mm, wr, rrr, risk);
+        var a2 = rr.p > 0 ? 1 / rr.p : Infinity;
+        rows.push({ fname:fname, label:mm.label, feeStr:mm.fees[sizeKey], cur:fee.cur, target:mm.t1 + "%" + (mm.t2 !== null ? " + " + mm.t2 + "%" : ""), max:mm.max, p:rr.p, att:a2, total:(a2 === Infinity ? Infinity : fee.amt * a2) });
+      });
+    });
+    rows.sort(function(a, b){ return a.total - b.total; });
+    var html = rows.map(function(x){
+      return "<tr><td><b>" + x.fname + "</b></td><td>" + x.label + "</td><td class='num'>" + x.feeStr + "</td><td>" + x.target + "</td><td class='num'>" + x.max + "%</td><td class='num'>" + (noEdge ? "~0%" : (x.p * 100).toFixed(1) + "%") + "</td><td class='num'>" + (x.att === Infinity ? "∞" : tcAtt(x.att)) + "</td><td class='num'><b>" + (x.total === Infinity ? "—" : tcCur(x.total, x.cur)) + "</b></td></tr>";
+    }).join("");
+    if (!rows.length) html = '<tr><td colspan="8" style="color:var(--muted)">No firm in the Lab rule table has a published price for this account size yet.</td></tr>';
+    if (excluded.length) html += '<tr><td colspan="8" style="color:var(--muted)"><span class="pending">Not in Lab data:</span> ' + excluded.join(" · ") + " — no Lab price published for this size, so these are excluded from the table until you select the firm above and enter its checkout price yourself.</td></tr>";
+    tc.tcCompareBody.innerHTML = html;
+  }
+  if (tcReady){
+    tc.tcFirm.innerHTML = Object.keys(PLANNER_RULES).map(function(k){ return '<option value="' + k + '">' + k + "</option>"; }).join("");
+    tc.tcFirm.addEventListener("change", tcFirmChanged);
+    tc.tcModel.addEventListener("change", tcModelChanged);
+    tc.tcSize.addEventListener("change", tcModelChanged);
+    [tc.tcPrice, tc.tcWR, tc.tcRRR, tc.tcRisk, tc.tcBought].forEach(function(el){ if (el) el.addEventListener("input", tcCalc); });
+    tcFirmChanged();
+  }
+
+
+  /* ================= RULE TRAP SIMULATOR =================
+     Runs a user-entered day-by-day log against PLANNER_RULES — the same rule
+     table as the Challenge Pass Planner; no second copy of any firm's rules.
+     A rule whose PLANNER_RULES text is marked "Chưa kiểm chứng" is shown as
+     Not verified and is NOT enforced. */
+  var sim = {};
+  ["simFirm","simModel","simSize","simPreset","simCustom","simCTarget","simCDaily","simCDailyMode","simCMax","simCMaxMode","simCMinDays","simCCap","simDayBody","simAddDay","simRun","simClear","simRules","simEmpty","simResults","simVerdict","simKill","simResBody","simChecks","simFix","simSummary","simCopy","simCopyOut","simStory","simStoryBody","simStoryLesson"].forEach(function(id){ sim[id] = document.getElementById(id); });
+  var simReady = !!sim.simFirm;
+  var SIM_NV = /Chưa kiểm chứng/;
+  var simForceDaily = null; /* set only by the FundingPips reported-case preset */
+  var simLastText = "";
+  function simNum(v, dflt){ var n = parseFloat(v); return isNaN(n) ? dflt : n; }
+  function simMoney(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+  function simSigned(n){ if (n === 0) return "$0"; return (n > 0 ? "+" : "-") + "$" + Math.abs(Math.round(n)).toLocaleString("en-US"); }
+  function simModelObj(){
+    var f = PLANNER_RULES[sim.simFirm.value]; if (!f) return null;
+    for (var i = 0; i < f.models.length; i++) if (f.models[i].id === sim.simModel.value) return f.models[i];
+    return f.models[0];
+  }
+  /* Effective rules, interpreted from the PLANNER_RULES text of the model.
+     dailyMode: "equity" | "balance" | "pause" | "none" | "nv" (not verified).
+     maxMode: "static" | "eod" | "dynamic". */
+  function simRulesObj(){
+    var fname = sim.simFirm.value, m = simModelObj(); if (!m) return null;
+    if (fname === "Custom"){
+      var capV = parseFloat(sim.simCCap.value);
+      return { custom:true, label:m.label, t1:simNum(sim.simCTarget.value, 10), t2:null,
+        daily:simNum(sim.simCDaily.value, 0), dailyMode:(simNum(sim.simCDaily.value, 0) > 0 ? sim.simCDailyMode.value : "none"),
+        dailyBasis:"Your assumption", reset:"Your assumption",
+        max:simNum(sim.simCMax.value, 0), maxMode:sim.simCMaxMode.value, maxType:"Your assumption", maxRealTime:false,
+        minDays:simNum(sim.simCMinDays.value, 0), minDaysNote:"Set by you", minDaysNV:false,
+        cap:isNaN(capV) ? null : capV, capBase:"profit", capNV:false, capLabel:isNaN(capV) ? "None" : "Best day ≤ " + capV + "% of total profit (your number)",
+        newsNV:true, newsRestr:false, news:"—", weekendNV:true, weekendRestr:false, weekend:"—",
+        basis:"Your own rules — no firm data used" };
+    }
+    var dailyNV = SIM_NV.test(m.dailyBasis || "");
+    var dailyMode;
+    if (!m.daily || m.daily <= 0) dailyMode = "none";
+    else if (dailyNV) dailyMode = "nv";
+    else if (/pauses you|pauses the session|session pause|soft pause|soft-pause/i.test(m.dailyBasis)) dailyMode = "pause";
+    else if (/equity|floating/i.test(m.dailyBasis)) dailyMode = "equity";
+    else dailyMode = "balance";
+    if (simForceDaily && dailyMode === "nv") dailyMode = simForceDaily;
+    var maxMode = /end-of-day trailing|EOD trailing/i.test(m.maxType) ? "eod" : (/trailing|dynamic/i.test(m.maxType) ? "dynamic" : "static");
+    return { custom:false, label:m.label, t1:m.t1, t2:m.t2,
+      daily:m.daily, dailyMode:dailyMode, dailyBasis:m.dailyBasis, reset:m.reset,
+      max:m.max, maxMode:maxMode, maxType:m.maxType, maxRealTime:/enforced in real time/i.test(m.maxType),
+      minDays:m.minDays, minDaysNote:m.minDaysNote, minDaysNV:(m.minDays === null && SIM_NV.test(m.minDaysNote || "")),
+      cap:m.cap, capBase:(m.cap && /of the profit target/i.test(m.capLabel || "")) ? "target" : "profit",
+      capNV:(m.cap === null && SIM_NV.test(m.capLabel || "")), capLabel:m.capLabel,
+      newsNV:SIM_NV.test(m.news || ""), newsRestr:(!SIM_NV.test(m.news || "") && /restrictions apply|restricted|not allowed|no opening|no new/i.test(m.news || "") && !/^(allowed|fully allowed|permitted)/i.test(m.news || "")),
+      news:m.news,
+      weekendNV:SIM_NV.test(m.weekend || ""), weekendRestr:(!SIM_NV.test(m.weekend || "") && /restrictions apply|flat|not allowed|no weekend|futures hours/i.test(m.weekend || "")),
+      weekend:m.weekend, basis:m.basis };
+  }
+  function simDailyText(R, size){
+    var d$ = simMoney(R.daily / 100 * size);
+    if (R.dailyMode === "none") return "No daily loss limit on this model — the max-loss floor is the only guardrail";
+    if (R.dailyMode === "nv") return R.daily + "% published, but the basis is <span class='pending'>Chưa kiểm chứng / Not verified</span> — shown, NOT enforced here. Basis text: " + R.dailyBasis;
+    if (R.dailyMode === "pause") return R.daily + "% — breach pauses the session under the published rule; it does not close the account. " + R.dailyBasis;
+    if (R.dailyMode === "equity") return R.daily + "% of the initial balance, tested on live equity — daily floor = start-of-day balance − " + d$ + ". Floating losses count. Basis: " + R.dailyBasis;
+    return R.daily + "% of the initial balance, balance-based — the day breaches only if closed P/L &lt; −" + d$ + ". Floating dips are shown but cannot close the account. Basis: " + R.dailyBasis;
+  }
+  function simMaxText(R, size){
+    var m$ = simMoney(R.max / 100 * size);
+    var head = R.maxMode === "static" ? R.max + "% static — floor = initial balance − " + m$ + " = " + simMoney(size - R.max / 100 * size) + " on this account size; the floor never moves"
+      : R.maxMode === "eod" ? R.max + "% end-of-day trailing — floor = highest end-of-day balance so far − " + m$
+      : R.max + "% dynamic trailing — floor = highest balance reached − " + m$;
+    return head + ". Firm's wording: " + R.maxType;
+  }
+  function simRenderRules(){
+    if (!simReady || !sim.simRules) return;
+    var R = simRulesObj(); if (!R) return;
+    var fname = sim.simFirm.value, f = PLANNER_RULES[fname];
+    var size = parseInt(sim.simSize.value, 10) || 100000;
+    var minTxt = R.custom ? (R.minDays > 0 ? R.minDays + " trading days (your number)" : "None (your number)")
+      : R.minDays === null ? (R.minDaysNV ? "<span class='pending'>Chưa kiểm chứng / Not verified</span> — not enforced. " + R.minDaysNote : R.minDaysNote + " — no confirmed number in the Lab rule data; not enforced")
+      : R.minDays === 0 ? R.minDaysNote : R.minDaysNote + " (" + R.minDays + ")";
+    var capTxt = R.cap !== null && R.cap !== undefined ? R.capLabel
+      : R.capNV ? "<span class='pending'>Chưa kiểm chứng / Not verified</span> — " + R.capLabel
+      : R.capLabel;
+    var rows = [
+      ["Profit target", "Phase 1: " + R.t1 + "%" + (R.t2 !== null && R.t2 !== undefined ? " · Phase 2: " + R.t2 + "% (shown, not simulated)" : " · single phase") + " — target balance " + simMoney(size * (1 + R.t1 / 100))],
+      ["Daily loss", simDailyText(R, size)],
+      ["Daily reset", R.reset],
+      ["Max loss", simMaxText(R, size)],
+      ["Min trading days", minTxt],
+      ["Consistency / best-day", capTxt],
+      ["News trading", R.custom ? "Not set — Custom mode carries no news rule; News? ticks are recorded but never enforced" : R.news + (R.newsNV ? " — <span class='pending'>Not verified</span>; news flags are not enforced for this model" : "")],
+      ["Weekend holding", R.custom ? "Not set — Custom mode carries no weekend rule; Weekend? ticks are recorded but never enforced" : R.weekend + (R.weekendNV ? " — <span class='pending'>Not verified</span>; weekend flags are not enforced for this model" : "")]
+    ];
+    var formula = "";
+    if (R.dailyMode === "equity") formula = "Formula used for " + fname + " — daily floor = start-of-day balance − " + R.daily + "% × " + simMoney(size) + " initial; worst equity = start-of-day balance − your worst floating dip; below the floor at any moment = closed that day.";
+    else if (R.dailyMode === "balance") formula = "Formula used for " + fname + " — the day breaches only if closed P/L &lt; −" + simMoney(R.daily / 100 * size) + " (" + R.daily + "% of the initial balance); the floating dip cannot close the account under this basis.";
+    else if (R.dailyMode === "pause") formula = "Formula used for " + fname + " — the daily limit (" + R.daily + "% of initial) pauses the session when hit, per the published rule; only the max-loss floor can close this account here.";
+    else if (R.dailyMode === "nv") formula = "Formula used for " + fname + " — the daily-loss basis is Not verified in the Lab rule data, so no daily floor is enforced; only the max-loss floor (" + R.max + "%, " + R.maxMode + ") is simulated.";
+    else formula = "Formula used for " + fname + " — no daily loss limit on this model; only the max-loss floor (" + R.max + "%, " + R.maxMode + ") is simulated.";
+    if (simForceDaily) formula += " Scenario override: this reported case is run with an equity-based daily floor, as described in the published report of the case — outside this preset, the Not verified basis is not enforced.";
+    var chips = '<span class="evchip ev-src">Firm rules · official site · 18 Nov 2026</span>'
+      + (R.dailyMode === "nv" ? '<span class="evchip ev-pend">Daily basis · not verified — not enforced</span>' : "")
+      + (R.minDaysNV ? '<span class="evchip ev-pend">Min days · not verified</span>' : "")
+      + (R.capNV ? '<span class="evchip ev-pend">Best-day cap · not verified</span>' : "")
+      + (simForceDaily ? '<span class="evchip ev-pend">Preset override · daily basis per case report</span>' : "");
+    sim.simRules.innerHTML = '<div class="lbl">' + fname + " — " + R.label + ": rules in force</div>"
+      + rows.map(function(r){ return '<div class="crit"><span style="color:var(--muted)">' + r[0] + '</span><span style="text-align:right;max-width:62%">' + r[1] + "</span></div>"; }).join("")
+      + '<p class="pnote" style="margin:12px 0 0">' + formula + "</p>"
+      + '<p class="pnote" style="margin:6px 0 0">Basis: ' + R.basis + (f && f.review ? ' · <a href="/' + f.review + '/" data-route="' + f.review + '">Full ' + fname + " review</a>" : "") + "</p>"
+      + '<div class="evrow" style="margin-top:10px">' + chips + "</div>";
+    sim.simRules.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); navigate(a.getAttribute("data-route")); }); });
+  }
+  function simFirmChanged(){
+    var f = PLANNER_RULES[sim.simFirm.value]; if (!f) return;
+    sim.simModel.innerHTML = f.models.map(function(m){ return '<option value="' + m.id + '">' + m.label + "</option>"; }).join("");
+    simModelChanged();
+  }
+  function simModelChanged(){
+    if (sim.simCustom) sim.simCustom.hidden = sim.simFirm.value !== "Custom";
+    simRenderRules();
+  }
+  /* ----- day log rows ----- */
+  function simRenumber(){
+    var n = 0;
+    sim.simDayBody.querySelectorAll("tr").forEach(function(tr){ n++; var c = tr.querySelector(".sim-dayno"); if (c) c.textContent = "Day " + n; });
+  }
+  function simAddRow(pl, dip, news, wknd){
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<td class="sim-dayno"></td>'
+      + '<td><input type="number" step="any" class="sim-pl" placeholder="0" aria-label="Closed profit or loss for the day, in dollars"></td>'
+      + '<td><input type="number" step="any" class="sim-dip" placeholder="0" aria-label="Worst intraday floating drawdown for the day, in dollars"></td>'
+      + '<td style="text-align:center"><input type="checkbox" class="sim-news" aria-label="Traded around news this day"></td>'
+      + '<td style="text-align:center"><input type="checkbox" class="sim-wknd" aria-label="Held a position over the weekend this day"></td>'
+      + '<td><button type="button" class="sim-rm" aria-label="Remove this day row">✕</button></td>';
+    if (pl !== undefined && pl !== null && pl !== "") tr.querySelector(".sim-pl").value = pl;
+    if (dip !== undefined && dip !== null && dip !== "") tr.querySelector(".sim-dip").value = dip;
+    if (news) tr.querySelector(".sim-news").checked = true;
+    if (wknd) tr.querySelector(".sim-wknd").checked = true;
+    tr.querySelector(".sim-rm").addEventListener("click", function(){ tr.parentNode.removeChild(tr); simRenumber(); });
+    sim.simDayBody.appendChild(tr);
+    simRenumber();
+  }
+  function simReadDays(){
+    var out = [];
+    sim.simDayBody.querySelectorAll("tr").forEach(function(tr){
+      var plV = tr.querySelector(".sim-pl").value, dipV = tr.querySelector(".sim-dip").value;
+      var news = tr.querySelector(".sim-news").checked, wk = tr.querySelector(".sim-wknd").checked;
+      if (plV === "" && dipV === "" && !news && !wk) return;
+      out.push({ pl:parseFloat(plV) || 0, dip:Math.abs(parseFloat(dipV) || 0), news:news, wknd:wk });
+    });
+    return out;
+  }
+  function simResetLog(n){
+    sim.simDayBody.innerHTML = "";
+    for (var i = 0; i < (n || 10); i++) simAddRow();
+  }
+  /* ----- presets: reported cases, reconstructed ----- */
+  var SIM_PRESETS = {
+    fundedsquad: { firm:"Custom", size:200000,
+      custom:{ target:8, daily:5, dailyMode:"equity", max:10, maxMode:"static", minDays:0, cap:"" },
+      days:[[2400,1200,false,false],[1800,900,false,false],[2600,1500,false,false],[-3200,10086,false,false]],
+      story:"What happened (as reported): a $200K account was closed after breaching its loss limit by $86. The firm's daily limit resets at UTC midnight — in the middle of the trader's active session — so the new day's floor was recalculated from a balance the trader was not watching, and a floating dip that crossed that fresh floor by $86 ended the account. FundedSquad is not one of the Lab's reviewed firms, so this preset runs on the Custom frame (5% daily, equity-based · 10% max, static) purely to stage the reported mechanics: the reported facts are the $86 margin and the UTC-midnight reset; the percentages are reconstruction staging, not the firm's published rulebook.",
+      lesson:"Know your reset clock. If the daily floor resets mid-session (UTC midnight, 5pm EST, midnight CE(S)T), the floor you must defend changes while you are still in a trade." },
+    fundingpips: { firm:"Funding Pips", model:"std2", size:100000, forceDailyMode:"equity",
+      days:[[1900,800,false,false],[2200,1100,false,false],[1600,950,false,false],[-1300,5145,false,false]],
+      story:"What happened (as reported): the account was closed one day before its payout date, when a floating loss pushed live equity below the daily equity floor — the final margin past the floor was $145. The Lab's rule table marks Funding Pips' daily-loss basis as Not verified (not confirmed on an official page checked 18 Nov 2026), so this preset applies the equity basis described in the published case report; outside this preset, the simulator does not enforce a daily floor for Funding Pips.",
+      lesson:"The day before payout is still a trading day. On an equity floor a floating loss counts exactly like a closed one — defending the payout means defending equity, not the closing balance." },
+    upcomers: { firm:"Custom", size:50000,
+      custom:{ target:10, daily:5, dailyMode:"equity", max:10, maxMode:"static", minDays:0, cap:"" },
+      days:[[850,400,false,false],[720,380,false,false],[410,2644,false,false]],
+      story:"What happened (as reported): an intraday equity gap of $144 liquidated the account even though the day's closed trades finished in profit (+$410 in this reconstruction). The firm's system saw the gap through the floor, not the profitable close. Upcomers is not one of the Lab's reviewed firms, so this preset runs on the Custom frame (5% daily, equity-based · 10% max, static) to stage the reported mechanics; the reported fact is the $144 gap past the floor.",
+      lesson:"On equity-based rules you are your worst tick, not your closing balance. News gaps and spread spikes are measured at their worst print — leave room for the gap, not just for your stop." }
+  };
+  function simLoadPreset(key){
+    var p = SIM_PRESETS[key];
+    simForceDaily = null;
+    if (!p){ sim.simStory.hidden = true; simRenderRules(); return; }
+    sim.simFirm.value = p.firm; simFirmChanged();
+    if (p.model){ sim.simModel.value = p.model; simModelChanged(); }
+    if (p.custom){
+      sim.simCTarget.value = p.custom.target; sim.simCDaily.value = p.custom.daily; sim.simCDailyMode.value = p.custom.dailyMode;
+      sim.simCMax.value = p.custom.max; sim.simCMaxMode.value = p.custom.maxMode; sim.simCMinDays.value = p.custom.minDays; sim.simCCap.value = p.custom.cap;
+    }
+    sim.simSize.value = String(p.size);
+    if (p.forceDailyMode) simForceDaily = p.forceDailyMode;
+    sim.simDayBody.innerHTML = "";
+    p.days.forEach(function(d){ simAddRow(d[0], d[1], d[2], d[3]); });
+    while (sim.simDayBody.querySelectorAll("tr").length < 10) simAddRow();
+    sim.simStoryBody.textContent = p.story;
+    sim.simStoryLesson.innerHTML = "<b>Lesson:</b> " + p.lesson;
+    sim.simStory.hidden = false;
+    simRenderRules();
+    simRun();
+  }
+  /* ----- the engine ----- */
+  function simRun(){
+    if (!simReady) return;
+    var R = simRulesObj(); if (!R) return;
+    var fname = sim.simFirm.value;
+    var size = parseInt(sim.simSize.value, 10) || 100000;
+    var days = simReadDays();
+    sim.simEmpty.hidden = true; sim.simResults.hidden = false;
+    if (!days.length){
+      sim.simVerdict.className = "sim-verdict warn";
+      sim.simVerdict.innerHTML = '<div class="sv-k">Simulation result</div><div class="sv-t">Nothing to run — the log is empty</div><div class="sv-s">Every row is blank, so there is no day to test. Type a closed P/L or a worst floating dip into at least one row — or load one of the three reported cases — and run again.</div>';
+      sim.simKill.textContent = "No days were simulated.";
+      sim.simResBody.innerHTML = ""; sim.simChecks.innerHTML = ""; sim.simFix.innerHTML = "";
+      sim.simSummary.textContent = "Empty log — nothing simulated.";
+      simLastText = "";
+      return;
+    }
+    var daily$ = R.daily / 100 * size, max$ = R.max / 100 * size;
+    var targetBal = size * (1 + R.t1 / 100), targetProfit$ = size * R.t1 / 100;
+    var bal = size, peakEOD = size, peakIntra = size, lastEnd = size;
+    var closedInfo = null, targetDay = 0, processed = 0;
+    var best = { pl:-Infinity, day:0 }, minHead = null, minHeadDay = 0;
+    var newsFlags = [], wkndFlags = [], pausedDays = [];
+    var rowsHtml = "", dayLines = [];
+    for (var i = 0; i < days.length; i++){
+      var d = days[i], dayNo = i + 1;
+      var start = bal, worstEq = start - d.dip, end = start + d.pl;
+      lastEnd = end;
+      var dailyFloor = (R.dailyMode === "equity" || R.dailyMode === "balance" || R.dailyMode === "pause") ? start - daily$ : null;
+      var maxFloor, pkDyn = Math.max(peakIntra, end);
+      if (R.maxMode === "static") maxFloor = size - max$;
+      else if (R.maxMode === "eod") maxFloor = peakEOD - max$;
+      else maxFloor = pkDyn - max$;
+      var parts = [], cls = "", kill = null;
+      if (R.dailyMode === "equity" && worstEq < dailyFloor){
+        kill = { kind:"daily", text:"Day " + dayNo + ": worst intraday equity fell to " + simMoney(worstEq) + " — below the daily floor of " + simMoney(dailyFloor) + " (start-of-day balance " + simMoney(start) + " − " + R.daily + "% of the initial " + simMoney(size) + " = " + simMoney(daily$) + "). The account is closed on day " + dayNo + " by the daily loss rule — " + simMoney(dailyFloor - worstEq) + " past the floor. The day's closed P/L (" + simSigned(d.pl) + ") never got a vote: on an equity-based rule the floating dip is the verdict." };
+      } else if (R.dailyMode === "balance" && d.pl < -daily$){
+        kill = { kind:"daily", text:"Day " + dayNo + ": closed P/L of " + simSigned(d.pl) + " breached the daily loss limit of −" + simMoney(daily$) + " (" + R.daily + "% of the initial " + simMoney(size) + ") by " + simMoney(-daily$ - d.pl) + ". The account is closed on day " + dayNo + " by the daily loss rule. Under this balance-based rule the floating dip (" + simMoney(d.dip) + ") could not close the account — the close did." };
+      } else if (R.dailyMode === "pause" && worstEq < dailyFloor){
+        parts.push("Daily limit hit — session paused (published rule: pause, not closure)"); cls = "sim-res-warn"; pausedDays.push(dayNo);
+      }
+      if (!kill){
+        var breachMax = false, breachEq = null;
+        if (R.maxMode === "static"){ breachMax = (worstEq < maxFloor || end < maxFloor); breachEq = Math.min(worstEq, end); }
+        else if (R.maxMode === "eod"){ breachMax = (end < maxFloor) || (R.maxRealTime && worstEq < maxFloor); breachEq = (end < maxFloor) ? end : worstEq; }
+        else { breachMax = (worstEq < maxFloor); breachEq = worstEq; }
+        if (breachMax){
+          var maxDesc = R.maxMode === "static" ? "the static max-loss floor of " + simMoney(maxFloor) + " (initial " + simMoney(size) + " − " + R.max + "% = " + simMoney(max$) + ")"
+            : R.maxMode === "eod" ? "the end-of-day trailing max-loss floor of " + simMoney(maxFloor) + " (peak end-of-day balance " + simMoney(peakEOD) + " − " + R.max + "% of initial = " + simMoney(max$) + ")"
+            : "the dynamic trailing max-loss floor of " + simMoney(maxFloor) + " (peak balance " + simMoney(pkDyn) + " − " + R.max + "% of initial = " + simMoney(max$) + ")";
+          kill = { kind:"max", text:"Day " + dayNo + ": " + (R.maxMode === "eod" && end < maxFloor ? "the closing balance fell to " + simMoney(end) : "worst intraday equity fell to " + simMoney(breachEq)) + " — below " + maxDesc + ". The account is closed on day " + dayNo + " by the max loss rule — " + simMoney(maxFloor - breachEq) + " past the floor." };
+        }
+      }
+      if (d.news && R.newsRestr){ newsFlags.push(dayNo); parts.push("News flag"); if (!cls) cls = "sim-res-warn"; }
+      if (d.wknd && R.weekendRestr){ wkndFlags.push(dayNo); parts.push("Weekend flag"); if (!cls) cls = "sim-res-warn"; }
+      if (kill){ parts = ["CLOSED — " + (kill.kind === "daily" ? "daily loss rule" : "max loss rule")]; cls = "sim-res-bad"; closedInfo = { day:dayNo, kind:kill.kind, text:kill.text }; }
+      else if (!parts.length) parts = ["OK"];
+      processed = dayNo;
+      if (d.pl > best.pl) best = { pl:d.pl, day:dayNo };
+      if (!kill){
+        var heads = [];
+        if (dailyFloor !== null && R.dailyMode === "equity") heads.push(worstEq - dailyFloor);
+        if (R.maxMode !== "eod" || R.maxRealTime) heads.push(worstEq - maxFloor); else heads.push(end - maxFloor);
+        var h = Math.min.apply(null, heads);
+        if (minHead === null || h < minHead){ minHead = h; minHeadDay = dayNo; }
+      }
+      rowsHtml += '<tr class="' + cls + '"><td class="mono">Day ' + dayNo + '</td><td class="num">' + simMoney(start) + '</td><td class="num">' + simSigned(d.pl) + '</td><td class="num">' + simMoney(worstEq) + '</td><td class="num">' + (dailyFloor === null ? "—" : simMoney(dailyFloor)) + '</td><td class="num">' + simMoney(maxFloor) + "</td><td>" + parts.join(" · ") + "</td></tr>";
+      dayLines.push("Day " + dayNo + ": start " + simMoney(start) + " · closed " + simSigned(d.pl) + " · worst equity " + simMoney(worstEq) + " · daily floor " + (dailyFloor === null ? "n/a" : simMoney(dailyFloor)) + " · max-loss floor " + simMoney(maxFloor) + " · " + parts.join(" · "));
+      if (kill) break;
+      bal = end;
+      if (end > peakEOD) peakEOD = end;
+      if (pkDyn > peakIntra) peakIntra = pkDyn;
+      if (!targetDay && end >= targetBal) targetDay = dayNo;
+    }
+    if (closedInfo && days.length > processed){
+      rowsHtml += '<tr><td colspan="7" style="color:var(--muted)">Account closed on day ' + closedInfo.day + " — the remaining " + (days.length - processed) + " logged day(s) were not simulated.</td></tr>";
+    }
+    sim.simResBody.innerHTML = rowsHtml;
+    var finalBal = lastEnd;
+    var totalProfit = finalBal - size;
+    /* consistency / best-day */
+    var consFail = false, consText = "", consRise = false;
+    if (R.cap !== null && R.cap !== undefined){
+      var capBase$ = R.capBase === "target" ? targetProfit$ : totalProfit;
+      if (best.pl > 0 && capBase$ > 0 && best.pl > R.cap / 100 * capBase$){
+        if (R.capBase === "target"){
+          consRise = true;
+          consText = "Best day (day " + best.day + ", " + simSigned(best.pl) + ") exceeds " + R.cap + "% of the profit target (" + simMoney(R.cap / 100 * targetProfit$) + " of " + simMoney(targetProfit$) + ") — under this model's published rule the target itself rises to " + simMoney(best.pl / (R.cap / 100)) + " of required profit. The goalposts move; the account does not fail.";
+        } else {
+          consFail = true;
+          consText = "FAIL — best day (day " + best.day + ", " + simSigned(best.pl) + ") is " + Math.round(best.pl / totalProfit * 100) + "% of total profit (" + simMoney(totalProfit) + "); the cap allows at most " + R.cap + "% = " + simMoney(R.cap / 100 * totalProfit) + ". The phase fails the consistency rule even though no loss rule was breached.";
+        }
+      } else if (totalProfit > 0){
+        consText = "Pass — best day (day " + best.day + ", " + simSigned(best.pl) + ") is " + Math.round(best.pl / capBase$ * 100) + "% of " + (R.capBase === "target" ? "the profit target" : "total profit") + "; the cap is " + R.cap + "% (" + simMoney(R.cap / 100 * capBase$) + ").";
+      } else {
+        consText = "Not triggered — the log ends without net profit, so there is no profit distribution for the " + R.cap + "% best-day cap to judge.";
+      }
+    } else if (R.capNV){
+      consText = "<span class='pending'>Chưa kiểm chứng / Not verified</span> — the Lab could not confirm a best-day cap for this model (" + R.capLabel + "), so none is enforced.";
+    } else {
+      consText = "No best-day / consistency cap on this model — " + R.capLabel + ".";
+    }
+    /* min days */
+    var minEnforced = (!R.custom && R.minDays !== null && R.minDays !== undefined) || (R.custom && R.minDays > 0);
+    var minMet = !minEnforced || processed >= R.minDays;
+    var minText = R.custom ? (R.minDays > 0 ? processed + " day(s) traded vs your minimum of " + R.minDays + " — " + (minMet ? "met" : "NOT met") : "No minimum set")
+      : R.minDays === null ? (R.minDaysNV ? "<span class='pending'>Chưa kiểm chứng / Not verified</span> — not enforced. " + R.minDaysNote : R.minDaysNote + " — no confirmed number; not enforced")
+      : R.minDays === 0 ? "No minimum — " + R.minDaysNote
+      : processed + " day(s) traded vs " + R.minDays + " required — " + (minMet ? "met" : "NOT met") + " (" + R.minDaysNote + ")";
+    /* verdict */
+    var vCls, vTitle, vSub;
+    if (closedInfo){
+      vCls = "bad"; vTitle = "ACCOUNT CLOSED — Day " + closedInfo.day;
+      vSub = (closedInfo.kind === "daily" ? "Killed by the daily loss rule" : "Killed by the max loss rule") + " at " + fname + " (" + R.label + ") on a " + simMoney(size) + " account. The fee is gone; the lesson is below.";
+    } else if (consFail){
+      vCls = "bad"; vTitle = "FAILED — Best-Day / Consistency Rule";
+      vSub = "The account survives every loss rule in this log — and still fails the phase, because one day carried too much of the profit at " + fname + " (" + R.label + ").";
+    } else if (targetDay && !minMet){
+      vCls = "warn"; vTitle = "SURVIVED — Target Reached, Min-Days Not Met";
+      vSub = "The balance crossed the Phase 1 target (" + simMoney(targetBal) + ") on day " + targetDay + ", but only " + processed + " day(s) were traded against a " + R.minDays + "-day minimum. The phase is not complete.";
+    } else if (targetDay){
+      vCls = "ok"; vTitle = "SURVIVED — Target Reached on Day " + targetDay;
+      vSub = fname + " (" + R.label + "), " + simMoney(size) + " account: the log reaches the Phase 1 target balance of " + simMoney(targetBal) + " without breaching a single enforced rule." + (R.t2 ? " Phase 2 would then ask for " + R.t2 + "% — not simulated here." : "");
+    } else {
+      vCls = "ok"; vTitle = "SURVIVED — Account Alive, Target Not Reached";
+      vSub = "No enforced rule was breached in " + processed + " day(s). Final balance " + simMoney(finalBal) + " vs the Phase 1 target of " + simMoney(targetBal) + " — alive is not the same as passed.";
+    }
+    if (consRise && !closedInfo){ vSub += " Note: the best-day rule raises this model's target — see the consistency check."; }
+    if (newsFlags.length || wkndFlags.length){ vSub += " " + (newsFlags.length + wkndFlags.length) + " rule-violation flag(s) below — account at risk / flagged, not an automatic closure."; }
+    sim.simVerdict.className = "sim-verdict " + vCls;
+    sim.simVerdict.innerHTML = '<div class="sv-k">Simulation result · ' + fname + " — " + R.label + " · " + simMoney(size) + ' account</div><div class="sv-t">' + vTitle + '</div><div class="sv-s">' + vSub + "</div>";
+    sim.simKill.textContent = closedInfo ? closedInfo.text
+      : consFail ? consText
+      : "No rule closed this account. The tightest moment was day " + minHeadDay + ", which finished " + simMoney(Math.max(minHead, 0)) + " above the binding floor. Final balance " + simMoney(finalBal) + " (started " + simMoney(size) + ", Phase 1 target " + simMoney(targetBal) + ").";
+    /* checks */
+    var checks = [
+      ["Profit target (Phase 1)", targetDay ? "Reached on day " + targetDay + " — balance crossed " + simMoney(targetBal) : "Not reached — final balance " + simMoney(finalBal) + " of " + simMoney(targetBal) + " needed (" + simMoney(Math.max(targetBal - finalBal, 0)) + " short)"],
+      ["Best-day / consistency", consText],
+      ["Minimum trading days", minText],
+      ["News trading", R.custom ? "Not set in Custom mode — ticks recorded, never enforced" : R.newsNV ? "<span class='pending'>Not verified</span> for this model — flags not enforced (" + R.news + ")" : newsFlags.length ? "Rule violation — account at risk / flagged on day(s) " + newsFlags.join(", ") + ". Rule: " + R.news : R.newsRestr ? "No restricted news days ticked. Rule: " + R.news : "No restriction on this model. Rule: " + R.news],
+      ["Weekend holding", R.custom ? "Not set in Custom mode — ticks recorded, never enforced" : R.weekendNV ? "<span class='pending'>Not verified</span> for this model — flags not enforced (" + R.weekend + ")" : wkndFlags.length ? "Rule violation — account at risk / flagged on day(s) " + wkndFlags.join(", ") + ". Rule: " + R.weekend : R.weekendRestr ? "No restricted weekend holds ticked. Rule: " + R.weekend : "No restriction on this model. Rule: " + R.weekend]
+    ];
+    if (pausedDays.length) checks.push(["Daily-limit pauses", "Session paused on day(s) " + pausedDays.join(", ") + " — under the published rule this pauses trading; it does not close the account."]);
+    if (R.dailyMode === "nv") checks.push(["Daily loss basis", "<span class='pending'>Chưa kiểm chứng / Not verified</span> — the daily floor was NOT enforced in this run. Only the max-loss floor was simulated."]);
+    sim.simChecks.innerHTML = checks.map(function(c){ return '<div class="sim-check"><span style="color:var(--muted)">' + c[0] + "</span><span>" + c[1] + "</span></div>"; }).join("");
+    /* fixes */
+    var fixes = [];
+    if (closedInfo && closedInfo.kind === "daily" && R.dailyMode === "equity"){
+      fixes.push("Cap the dip, not just the day: on this equity-based rule the worst floating dip must stay under " + simMoney(daily$) + " from the day's start (" + R.daily + "% of initial). Trade with a hard intraday equity stop at roughly " + simMoney(daily$ * 0.8) + " of floating loss to keep a buffer — the killing day dipped " + simMoney(days[closedInfo.day - 1].dip) + ".");
+    }
+    if (closedInfo && closedInfo.kind === "daily" && R.dailyMode === "balance"){
+      fixes.push("Stop the close earlier: the closed day lost " + simMoney(-days[closedInfo.day - 1].pl) + " against a " + simMoney(daily$) + " daily budget. A daily stop-out at " + simMoney(daily$ * 0.8) + " of closed loss keeps a buffer under the limit.");
+    }
+    if (closedInfo && closedInfo.kind === "max" && R.maxMode === "static"){
+      fixes.push("Rebuild the cushion: the static floor sits at " + simMoney(size - max$) + ". Once the balance is within " + simMoney(max$) + " of it there is no room for a normal losing day — reduce size until a worst-case day uses less than a third of the remaining distance to the floor.");
+    }
+    if (closedInfo && closedInfo.kind === "max" && R.maxMode !== "static"){
+      fixes.push("Respect the trailing floor: every dollar of profit banked raises the floor by a dollar, so your real room is always the last " + simMoney(max$) + " under your peak. After a strong run, cut size or bank a flat day — the floor keeps the profit, you keep the risk.");
+    }
+    if (consFail){
+      fixes.push("Spread the hero day: the best day (" + simMoney(best.pl) + ") must be at most " + R.cap + "% of total profit. Either grow total profit to at least " + simMoney(best.pl / (R.cap / 100)) + " before finishing the phase, or split that day's trades across at least " + Math.ceil(100 / R.cap) + " separate days.");
+    }
+    if (targetDay && !minMet){
+      fixes.push("Add " + (R.minDays - processed) + " more trading day(s): small, controlled days count toward the minimum — the target is already banked, so the only job left is not breaching a floor while the calendar fills.");
+    }
+    if (newsFlags.length) fixes.push("Stay out of the restricted news window on this model (" + R.news + ") — the flagged day(s) " + newsFlags.join(", ") + " would put the account at risk even with a green balance.");
+    if (wkndFlags.length) fixes.push("Flatten before the weekend on this model (" + R.weekend + ") — the flagged day(s) " + wkndFlags.join(", ") + " held risk the rulebook does not allow.");
+    if (R.dailyMode === "equity" && !closedInfo) fixes.push("Keep every day's worst floating dip below " + simMoney(daily$) + " (" + R.daily + "% of the initial balance) — that is the whole daily budget this floor gives you, and it is measured at the worst tick, not the close.");
+    if (!closedInfo && !consFail && minHead !== null) fixes.push("Closest call: day " + minHeadDay + " left " + simMoney(Math.max(minHead, 0)) + " above the binding floor. A dip " + simMoney(Math.max(minHead, 0)) + " deeper that day would have closed the account — size for the dip you cannot predict, not the one you plan.");
+    if (!fixes.length) fixes.push("No fix needed for the loss rules in this log — but re-run it with your worst realistic week, not your average one. Challenges die on the tail days.");
+    sim.simFix.innerHTML = fixes.map(function(x){ return "<li>" + x + "</li>"; }).join("");
+    /* summary + copy text */
+    var verdictLine = closedInfo ? "ACCOUNT CLOSED on day " + closedInfo.day + " (" + (closedInfo.kind === "daily" ? "daily loss rule" : "max loss rule") + ")"
+      : consFail ? "FAILED the best-day / consistency rule"
+      : targetDay ? (minMet ? "SURVIVED — Phase 1 target reached on day " + targetDay : "SURVIVED — target reached but min-days not met")
+      : "SURVIVED — account alive, target not reached";
+    sim.simSummary.textContent = fname + " " + R.label + " · " + simMoney(size) + " account · " + verdictLine + ". Final balance " + simMoney(finalBal) + " after " + processed + " simulated day(s); best day " + simSigned(best.pl) + " (day " + best.day + ").";
+    simLastText = "RULE TRAP SIMULATOR — Risk First Prop Lab\n"
+      + fname + " · " + R.label + " · " + simMoney(size) + " account\n"
+      + "Rules: target " + R.t1 + "%" + (R.t2 ? " / " + R.t2 + "%" : "") + " · daily " + (R.dailyMode === "none" ? "no limit" : R.dailyMode === "nv" ? R.daily + "% (basis not verified — not enforced)" : R.daily + "% (" + R.dailyMode + ")") + " · max " + R.max + "% (" + R.maxMode + ") · best-day cap " + (R.cap ? R.cap + "%" : "none") + " · min days " + (R.minDays === null ? "not verified" : R.minDays) + "\n"
+      + "Verdict: " + verdictLine + "\n"
+      + (closedInfo ? closedInfo.text + "\n" : "No rule closed this account. Tightest day: day " + minHeadDay + ", " + simMoney(Math.max(minHead, 0)) + " above the binding floor.\n")
+      + "Consistency: " + consText.replace(/<[^>]+>/g, "") + "\n"
+      + "Minimum days: " + minText.replace(/<[^>]+>/g, "") + "\n"
+      + dayLines.join("\n")
+      + "\n— Simulated on paper against published rules (checked 18 Nov 2026). Educational only; no pass is promised. https://riskproplab.vercel.app/rule-trap-simulator/";
+  }
+  if (simReady){
+    sim.simFirm.innerHTML = Object.keys(PLANNER_RULES).map(function(k){ return '<option value="' + k + '">' + k + "</option>"; }).join("");
+    simResetLog(10);
+    sim.simFirm.addEventListener("change", function(){ simForceDaily = null; sim.simPreset.value = ""; sim.simStory.hidden = true; simFirmChanged(); });
+    sim.simModel.addEventListener("change", simModelChanged);
+    sim.simSize.addEventListener("change", simRenderRules);
+    [sim.simCTarget, sim.simCDaily, sim.simCMax, sim.simCMinDays, sim.simCCap].forEach(function(el){ if (el) el.addEventListener("input", simRenderRules); });
+    [sim.simCDailyMode, sim.simCMaxMode].forEach(function(el){ if (el) el.addEventListener("change", simRenderRules); });
+    sim.simAddDay.addEventListener("click", function(){ simAddRow(); });
+    sim.simPreset.addEventListener("change", function(){ simLoadPreset(sim.simPreset.value); });
+    sim.simRun.addEventListener("click", simRun);
+    sim.simClear.addEventListener("click", function(){
+      simForceDaily = null; sim.simPreset.value = ""; sim.simStory.hidden = true;
+      simResetLog(10);
+      sim.simResults.hidden = true; sim.simEmpty.hidden = false;
+      showToast("Simulator cleared — fresh log, same rules");
+    });
+    sim.simCopy.addEventListener("click", function(){
+      if (!simLastText){ showToast("Run the simulation first — there is no result to copy yet"); return; }
+      function done(){ showToast("Result summary copied — paste it anywhere to share"); }
+      function fallback(){
+        sim.simCopyOut.hidden = false; sim.simCopyOut.textContent = simLastText;
+        showToast("Copy blocked — the full summary is shown under the button instead");
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(simLastText).then(done, fallback); }
+      else fallback();
+    });
+    simFirmChanged();
+    /* deep-link params, same convention as the Planner */
+    try {
+      var sq = new URLSearchParams(window.location.search);
+      if (sq.get("f") && PLANNER_RULES[sq.get("f")]){ sim.simFirm.value = sq.get("f"); simFirmChanged(); }
+      if (sq.get("m")){ sim.simModel.value = sq.get("m"); simModelChanged(); }
+      if (sq.get("size")){ sim.simSize.value = sq.get("size"); simRenderRules(); }
+    } catch(e){}
+  }
 
   render(false);
 })();
