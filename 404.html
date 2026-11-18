@@ -724,6 +724,16 @@
     #h2hResult th,#h2hResult td{padding:8px 7px;overflow-wrap:break-word}
     #h2hResult td:first-child{width:23%}
   }
+  /* ============ Animated market background (visual only, additive) ============
+     Layer order: body base -> #mktBg canvas (candles + waves) -> #mktVeil
+     (readability gradient) -> page content. Both layers are fixed, inert and
+     sit behind all in-flow content via negative z-index. */
+  #mktBg{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
+  #mktVeil{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(5,13,29,0) 0%,rgba(5,13,29,.38) 46%,rgba(5,13,29,.78) 100%)}
+  html[data-theme="light"] #mktVeil{background:linear-gradient(180deg,rgba(246,243,236,0) 0%,rgba(246,243,236,.45) 46%,rgba(246,243,236,.82) 100%)}
+  #mktTag{position:fixed;left:12px;bottom:10px;z-index:3;pointer-events:none;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:rgba(232,236,243,.42)}
+  html[data-theme="light"] #mktTag{color:rgba(10,25,49,.45)}
+  @media (prefers-reduced-motion:reduce){ #mktBg,#mktVeil,#mktTag{display:none} }
 </style>
 <script>
 /* Route boot: resolve the route from the URL before first paint, then hide every
@@ -753,6 +763,10 @@
 </script>
 </head>
 <body>
+
+<canvas id="mktBg" aria-hidden="true"></canvas>
+<div id="mktVeil" aria-hidden="true"></div>
+<div id="mktTag" aria-hidden="true">SIMULATED MARKET DATA · DECORATIVE BACKGROUND</div>
 
 <header class="sitehead">
   <div class="wrap headbar">
@@ -7589,6 +7603,210 @@
       copyText(text, "Report copied — paste it in the Telegram group and attach your covered screenshot", document.getElementById("dnOutput"));
     });
   }
+})();
+</script>
+<script>
+/* ============ Animated market background — simulated candles (visual only) ============
+   Fully isolated: synthetic OHLC data generated and consumed inside this IIFE.
+   It never reads or writes any simulator, comparison or application state. */
+(function(){
+  var canvas = document.getElementById("mktBg");
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return; /* CSS also hides the layers in this case */
+
+  var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+  var W = 0, H = 0;
+
+  /* --- synthetic OHLC series (gold-like price, mean-reverting random walk) --- */
+  var STEP = 16;              /* px per candle slot */
+  var TICK_MS = 130;          /* price tick cadence */
+  var CANDLE_MS = 2600;       /* new candle every ~2.6s */
+  var candles = [];
+  var price = 2650, drift = 0;
+  var live = null;            /* currently forming candle */
+  var liveStart = 0, lastTick = 0, shift = 0, shiftFrom = 0, shiftT = 1;
+
+  function stepPrice(p){
+    drift += (Math.random() - 0.5) * 0.012;
+    drift *= 0.94;
+    drift += (2650 - p) * 0.00004;               /* gentle mean reversion */
+    var shock = (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+    return p + drift * 9 + shock * 1.35;         /* realistic small volatility */
+  }
+  function newCandle(o, t){
+    return { o:o, h:o, l:o, c:o, born:t };
+  }
+  function seed(now){
+    candles = [];
+    var n = Math.ceil(W / STEP) + 3;
+    var p = price;
+    for (var i = 0; i < n; i++){
+      var c = newCandle(p, now);
+      var ticks = 6 + (i % 4);
+      for (var k = 0; k < ticks; k++){
+        p = stepPrice(p);
+        c.c = p; if (p > c.h) c.h = p; if (p < c.l) c.l = p;
+      }
+      candles.push(c);
+      p = c.c;
+    }
+    price = p;
+    live = newCandle(price, now);
+    liveStart = now; lastTick = now; shift = 0; shiftFrom = 0; shiftT = 1;
+  }
+  function tick(now){
+    price = stepPrice(price);
+    live.c = price;
+    if (price > live.h) live.h = price;
+    if (price < live.l) live.l = price;
+    if (now - liveStart >= CANDLE_MS){
+      candles.push(live);
+      var maxN = Math.ceil(W / STEP) + 3;
+      while (candles.length > maxN) candles.shift();
+      live = newCandle(price, now);
+      liveStart = now;
+      shiftFrom = STEP; shiftT = 0;              /* smooth left shift */
+    }
+  }
+
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W * DPR);
+    canvas.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    if (!candles.length) seed(performance.now());
+    else {
+      var maxN = Math.ceil(W / STEP) + 3;
+      while (candles.length > maxN) candles.shift();
+    }
+  }
+
+  function draw(now){
+    var light = document.documentElement.getAttribute("data-theme") === "light";
+    ctx.clearRect(0, 0, W, H);
+
+    /* ambient flowing waves (3D-like depth) */
+    var t = now * 0.00016;
+    var waves = [
+      { y:0.66, amp:26, len:0.0035, sp:1.0, col: light ? "rgba(15,118,110,0.10)" : "rgba(45,212,191,0.07)" },
+      { y:0.74, amp:34, len:0.0026, sp:0.7, col: light ? "rgba(169,134,42,0.10)" : "rgba(212,175,55,0.05)" },
+      { y:0.58, amp:20, len:0.0046, sp:1.35, col: light ? "rgba(10,25,49,0.07)" : "rgba(78,125,217,0.06)" }
+    ];
+    for (var wi = 0; wi < waves.length; wi++){
+      var wv = waves[wi];
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 14){
+        var y = H * wv.y + Math.sin(x * wv.len + t * wv.sp * 2) * wv.amp
+              + Math.sin(x * wv.len * 0.5 - t * wv.sp) * wv.amp * 0.5;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = wv.col; ctx.lineWidth = 1.4; ctx.stroke();
+    }
+
+    /* price scale from visible series */
+    var all = candles.concat([live]);
+    var hi = -Infinity, lo = Infinity, i, c;
+    for (i = 0; i < all.length; i++){ if (all[i].h > hi) hi = all[i].h; if (all[i].l < lo) lo = all[i].l; }
+    if (!(hi > lo)) { hi = price + 5; lo = price - 5; }
+    var pad = (hi - lo) * 0.25 + 0.5; hi += pad; lo -= pad;
+    var top = H * 0.06, bot = H * 0.52;           /* chart lives in the upper field */
+    function Y(p){ return top + (hi - p) / (hi - lo) * (bot - top); }
+
+    /* subtle horizontal market grid */
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = light ? "rgba(10,25,49,0.05)" : "rgba(148,197,255,0.05)";
+    ctx.beginPath();
+    for (var g = 1; g <= 4; g++){
+      var gy = top + (bot - top) * g / 5;
+      ctx.moveTo(0, gy); ctx.lineTo(W, gy);
+    }
+    ctx.stroke();
+
+    /* smooth shift easing */
+    if (shiftT < 1){
+      shiftT = Math.min(1, shiftT + 0.045);
+      var e = 1 - Math.pow(1 - shiftT, 3);
+      shift = shiftFrom * (1 - e);
+    } else shift = 0;
+
+    var upCol   = light ? "rgba(13,148,136,0.50)" : "rgba(45,212,191,0.55)";
+    var dnCol   = light ? "rgba(176,51,46,0.38)" : "rgba(224,101,95,0.42)";
+    var upFill  = light ? "rgba(13,148,136,0.28)" : "rgba(45,212,191,0.30)";
+    var dnFill  = light ? "rgba(176,51,46,0.22)" : "rgba(224,101,95,0.24)";
+    var bw = 9;                                   /* candle body width */
+    function drawCandle(cd, cx){
+      var up = cd.c >= cd.o;
+      ctx.strokeStyle = up ? upCol : dnCol;
+      ctx.fillStyle = up ? upFill : dnFill;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(cx, Y(cd.h)); ctx.lineTo(cx, Y(cd.l));
+      ctx.stroke();
+      var yO = Y(cd.o), yC = Y(cd.c);
+      var yTop = Math.min(yO, yC), hgt = Math.max(1.4, Math.abs(yC - yO));
+      ctx.fillRect(cx - bw / 2, yTop, bw, hgt);
+      ctx.strokeRect(cx - bw / 2, yTop, bw, hgt);
+    }
+    var baseX = W - 26 + shift;                   /* right-anchored, newest at right */
+    for (i = all.length - 1; i >= 0; i--){
+      var cx = baseX - (all.length - 1 - i) * STEP;
+      if (cx < -STEP) break;
+      drawCandle(all[i], cx);
+    }
+
+    /* champagne-gold moving average (8-candle sliding window over closes) */
+    var ps = [0];
+    for (i = 0; i < all.length; i++) ps.push(ps[i] + all[i].c);
+    ctx.beginPath();
+    var started = false;
+    for (i = 7; i < all.length; i++){
+      var ma = (ps[i + 1] - ps[i + 1 - 8]) / 8;
+      var mx = baseX - (all.length - 1 - i) * STEP;
+      if (mx < -STEP) { started = false; continue; }
+      if (!started){ ctx.moveTo(mx, Y(ma)); started = true; } else ctx.lineTo(mx, Y(ma));
+    }
+    ctx.strokeStyle = light ? "rgba(169,134,42,0.35)" : "rgba(212,175,55,0.32)";
+    ctx.lineWidth = 1.3; ctx.stroke();
+
+    /* live price dashed line */
+    ctx.beginPath();
+    ctx.setLineDash([5, 6]);
+    ctx.moveTo(0, Y(price)); ctx.lineTo(W, Y(price));
+    ctx.strokeStyle = light ? "rgba(15,118,110,0.28)" : "rgba(45,212,191,0.25)";
+    ctx.lineWidth = 1; ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  var raf = 0, running = false;
+  function frame(now){
+    if (!running) return;
+    if (now - lastTick >= TICK_MS){ tick(now); lastTick = now; }
+    draw(now);
+    raf = requestAnimationFrame(frame);
+  }
+  function start(){
+    if (running || reduceMotion) return;
+    running = true;
+    raf = requestAnimationFrame(frame);
+  }
+  function stop(){
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  }
+  document.addEventListener("visibilitychange", function(){
+    if (document.hidden) stop(); else { lastTick = performance.now(); start(); }
+  });
+  var rzTimer = 0;
+  window.addEventListener("resize", function(){
+    clearTimeout(rzTimer);
+    rzTimer = setTimeout(resize, 160);
+  });
+
+  resize();
+  start();
 })();
 </script>
 </body>
