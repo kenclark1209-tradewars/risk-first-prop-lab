@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-default-view="home">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
 <title>FundedNext Review 2026: Stellar Rules, Costs, Payouts &amp; Vietnam Ban | Risk First Prop Lab</title>
-<meta name="description" content="FundedNext Stellar 2-Step audited: 8%/5% targets, balance-based 5% daily and 10% static max loss, splits to 95%, payout cycles — and the firm&#x27;s own terms barring Vietnam residents and citizens from CFD." />
+<meta name="description" content="FundedNext Stellar 2-Step audited: 8%/5% targets, balance-based 5% daily and 10% static max loss, splits to 95%, payout cycles — and the firm's own terms barring Vietnam residents and citizens from CFD." />
 <link rel="canonical" href="https://riskproplab.vercel.app/fundednext-review/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Risk First Prop Lab" />
 <meta property="og:title" content="FundedNext Review 2026: Stellar Rules, Costs, Payouts &amp; Vietnam Ban | Risk First Prop Lab" />
-<meta property="og:description" content="FundedNext Stellar 2-Step audited: 8%/5% targets, balance-based 5% daily and 10% static max loss, splits to 95%, payout cycles — and the firm&#x27;s own terms barring Vietnam residents and citizens from CFD." />
+<meta property="og:description" content="FundedNext Stellar 2-Step audited: 8%/5% targets, balance-based 5% daily and 10% static max loss, splits to 95%, payout cycles — and the firm's own terms barring Vietnam residents and citizens from CFD." />
 <meta property="og:url" content="https://riskproplab.vercel.app/fundednext-review/" />
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 105'%3E%3Cpath d='M50 3 L91 16.5 V51 C91 75.5 73.5 92 50 102 C26.5 92 9 75.5 9 51 V16.5 Z' fill='%230A1931' stroke='%23D4AF37' stroke-width='4'/%3E%3Cpath fill='%23D4AF37' fill-rule='evenodd' d='M37 74 V29 H56.5 C67 29 73.5 35.5 73.5 44.5 C73.5 51 69.8 56 63.5 58.2 L75 74 H61.8 L51.6 59.5 H47.5 V74 Z M47.5 38.2 V50.3 H55.8 C60 50.3 63 47.8 63 44.3 C63 40.8 60 38.2 55.8 38.2 Z'/%3E%3C/svg%3E" />
@@ -44,8 +44,8 @@
     --shadow:0 8px 32px rgba(5,13,29,.18);
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  html{scroll-behavior:smooth;overflow-x:clip}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;max-width:100%}
   button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
   button{font-family:inherit;cursor:pointer}
   img,svg{display:block;max-width:100%}
@@ -148,7 +148,7 @@
   .post .go{font-weight:700;font-size:14px;color:var(--gold-soft)}
   html[data-theme="light"] .post .go{color:var(--gold-deep)}
   /* ============ Tables ============ */
-  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-table);background:var(--surface)}
+  .tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;border:1px solid var(--line);border-radius:var(--r-table);background:var(--surface)}
   table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
   th,td{padding:12px 16px;text-align:left;border-top:1px solid var(--line-soft);vertical-align:top;line-height:1.5}
   thead th{border-top:0;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--sunken);font-weight:600}
@@ -422,12 +422,15 @@
   @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
 
   /* ============ Challenge Pass Planner ============ */
-  .planner-grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start;padding-bottom:8px}
+  .planner-grid{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:20px;align-items:start;padding-bottom:8px}
+  .planner-grid>*{min-width:0;max-width:100%}
   .planner-form{position:sticky;top:84px}
   .pfield{margin-bottom:12px}
   .pfield label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
   .pfield input,.pfield select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font-size:14.5px;font-family:inherit;min-height:44px}
-  .pgrid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+  .pgrid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+  .pgrid2>.pfield{min-width:0}
+  .pfield input,.pfield select{min-width:0;max-width:100%}
   .pnote{font-size:12.5px;color:var(--muted);line-height:1.55;display:block;margin-top:5px}
   .warn{border-radius:10px;padding:14px 16px;margin-bottom:12px;font-size:14.5px;line-height:1.6;border:1px solid var(--line)}
   .warn-red{background:var(--red-bg);border-color:rgba(214,69,65,.55)}
@@ -451,8 +454,91 @@
   .planner-cta b{display:block;font-size:16px;font-family:"Archivo",sans-serif;margin-bottom:3px}
   .planner-cta span{font-size:13.5px;color:rgba(232,236,243,.75);line-height:1.5;display:block;max-width:520px}
   .planner-table{min-width:640px}
-  @media (max-width:960px){ .planner-grid{grid-template-columns:1fr} .planner-form{position:static} }
+  @media (max-width:960px){ .planner-grid{grid-template-columns:minmax(0,1fr)} .planner-form{position:static} }
+
+  /* ============ Narrow phones (<=480px) — nothing wider than the viewport ============
+     Page never scrolls sideways: cards, forms and filters fit the viewport exactly;
+     Directory / decision tables are already stacked cards (<=760px) and are tightened
+     here so a label + value row can never push out; the wide data tables that stay
+     tabular (day-by-day plan, hidden-rules matrix, review tables) scroll sideways
+     ONLY inside their own .tblwrap frame. */
+  @media (max-width:480px){
+    .wrap{padding:0 16px}
+    .sitehead .headbar{padding-left:16px;padding-right:16px}
+    section.blk{padding-top:36px}
+    .card{padding:18px 16px}
+    .callout,.affcta,.vnbox,.verdictbox{padding:18px 16px}
+    /* every layout grid hands its children a shrinkable track */
+    .grid2>*,.grid3>*,.proscons>*,.stat-grid>*,.post-grid>*,.topics>*,.related>*,.filters>*,form.revform>*,.rev-scores>*{min-width:0}
+    .post-grid,.topics,.related,.rev-scores{grid-template-columns:minmax(0,1fr)}
+    .stat-grid{grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr))}
+    .btn{max-width:100%}
+    .dl-row .btn,.hero-actions .btn{white-space:normal;text-align:center;justify-content:center}
+    .dl-row .btn{flex:1 1 100%}
+    .chg-item .t{min-width:0;flex:1 1 100%}
+    .chg-item a{white-space:normal}
+    pre.code{max-width:100%}
+    .searchbox{max-width:100%}
+    .crit>*{min-width:0;overflow-wrap:break-word}
+    /* --- Planner: form card fits, every input/select full-width --- */
+    .planner-grid{gap:16px}
+    .planner-form{padding:18px 16px}
+    .pgrid2{grid-template-columns:minmax(0,1fr)}
+    .pfield input,.pfield select{width:100%}
+    .planner-out{min-width:0;max-width:100%}
+    .planner-out .card{max-width:100%}
+    .planner-cta{max-width:100%;padding:16px}
+    .planner-cta span{max-width:100%}
+    .xf-chips .xf{min-width:0;max-width:100%;overflow-wrap:break-word}
+    #plShareLink{overflow-wrap:anywhere}
+    /* --- Directory & filters: one full-width column, controls never overflow --- */
+    .filters{grid-template-columns:minmax(0,1fr)}
+    .filters select,.filters input{min-width:0;max-width:100%;width:100%}
+    form.revform input,form.revform select,form.revform textarea{min-width:0;max-width:100%}
+    .colchooser{gap:8px 12px}
+    /* long status / evidence chips wrap inside the pill instead of stretching the page */
+    .statuschip,.evchip{white-space:normal;overflow-wrap:break-word;max-width:100%}
+    /* --- Directory / decision stacked cards: label + value always fit one row-width --- */
+    table.decision td,table.dir td{white-space:normal!important;min-width:0;flex-wrap:wrap}
+    table.decision td>*,table.dir td>*{min-width:0;max-width:100%}
+    table.decision td .mono,table.dir td .mono{white-space:normal;overflow-wrap:break-word}
+    table.decision .statuschip,table.dir .statuschip,table.decision .evchip,table.dir .evchip{white-space:normal;overflow-wrap:break-word;text-align:left}
+    table.decision .sb-basis,table.dir .sb-basis{overflow-wrap:break-word}
+    table.decision td:first-child,table.dir td:first-child{flex-wrap:nowrap}
+    .cmp-pick{min-width:0}
+    .cmp-pick>span{min-width:0;overflow-wrap:break-word}
+    /* --- Tables that stay tabular scroll inside their frame only --- */
+    .tblwrap{width:100%}
+    .article-body{min-width:0;max-width:100%}
+    .article-body .tblwrap,.planner-out .tblwrap{overflow-x:auto}
+  }
 </style>
+<script>
+/* Route boot: resolve the route from the URL before first paint, then hide every
+   view except the resolved one. The main router removes this style when it takes
+   over, so the correct view is on screen from the first frame — the homepage is
+   never rendered above a sub-page on a direct open or reload. */
+(function(){
+  var ROUTES = ["home","directory","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","challenge-planner","prop-firm-match","trader-viet","community-reviews","payout-tracker","affiliate-disclosure","for-prop-firms","transparency","404"];
+  function slug(){
+    var h = window.location.hash.replace(/^#\/?/, "").replace(/\/$/, "");
+    if (h && ROUTES.indexOf(h.split("/")[0]) >= 0) return h.split("/")[0];
+    if (h === "latest" || h === "forum" || h === "seo-files") return "home";
+    var parts = window.location.pathname.split("/").filter(function(s){ return s && !/\.html$/.test(s); });
+    for (var i = parts.length - 1; i >= 0; i--){ if (ROUTES.indexOf(parts[i]) >= 0 && parts[i] !== "home") return parts[i]; }
+    if (parts.length && parts[parts.length-1] === "404") return "404";
+    var d = document.documentElement.getAttribute("data-default-view");
+    if (d && ROUTES.indexOf(d) >= 0) return d;
+    return "home";
+  }
+  var key = slug();
+  document.documentElement.setAttribute("data-boot-view", key);
+  var st = document.createElement("style");
+  st.id = "bootViewCss";
+  st.textContent = "[data-view]{display:none!important}[data-view=\"" + key + "\"]{display:block!important}";
+  document.head.appendChild(st);
+})();
+</script>
 </head>
 <body>
 
@@ -535,7 +621,7 @@
       <div class="sec-head"><span class="sec-no">DECIDE</span><h2>Start here: the decision table</h2></div>
       <div class="rule"></div>
       <p class="sec-sub">The six fully reviewed firms, side by side — not a blog feed. Click a column heading to sort. Rule, price and payout figures are each firm's own published terms, checked against its official site on 18 Nov 2026; gold cost stays <span class="pending">Pending MT5 log</span> until the Lab measures it. <span class="mono" id="dataUpdated">Data updated 18 Nov 2026 · Next full re-check 18 Dec 2026</span></p>
-            </div>
+            
       <div class="tabs" role="group" aria-label="Decision table filter">
         <button id="vnToggleHome" aria-pressed="false">Vietnam-accepted only</button>
         <button id="cfdFutToggle" aria-pressed="false">Include Futures firms (Directory)</button>
@@ -2452,6 +2538,7 @@
   function render(push){
     var key = slugFromLocation();
     Object.keys(views).forEach(function(k){ views[k].hidden = (k !== key); });
+    var bootCss = document.getElementById("bootViewCss"); if (bootCss && bootCss.parentNode) bootCss.parentNode.removeChild(bootCss);
     applySEO(key);
     document.querySelectorAll("[data-nav]").forEach(function(a){
       if (a.getAttribute("data-nav") === key) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
@@ -2470,6 +2557,7 @@
     if (!PAGES[key]) key = "404";
     try { history.pushState({route:key}, "", basePath() + (key === "home" ? "" : key + "/")); } catch(e){}
     Object.keys(views).forEach(function(k){ views[k].hidden = (k !== key); });
+    var bootCss = document.getElementById("bootViewCss"); if (bootCss && bootCss.parentNode) bootCss.parentNode.removeChild(bootCss);
     applySEO(key);
     document.querySelectorAll("[data-nav]").forEach(function(a){
       if (a.getAttribute("data-nav") === key) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
