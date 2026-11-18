@@ -230,6 +230,27 @@
   .firm-top{display:none;align-items:center;gap:9px;flex-wrap:wrap;margin-top:8px}
   .firm-top .fm-model{font-size:13px;color:var(--muted)}
   .sb-basis{font-size:12.5px;color:var(--muted);line-height:1.45;display:block;margin-top:5px}
+  /* ============ Firm logos (official assets, catalog-checked 18 Nov 2026) ============ */
+  .firm-logo{display:inline-flex;align-items:center;justify-content:center;flex:none;vertical-align:middle;margin-right:9px;line-height:0}
+  .firm-logo img{height:26px;width:auto;max-width:118px;object-fit:contain}
+  .firm-logo.tile{background:#F5F2EA;border:1px solid rgba(10,25,49,.12);border-radius:6px;padding:3px 7px}
+  .firm-logo.tile img{height:20px;max-width:104px}
+  .firm-logo.small img{height:20px;max-width:84px}
+  .firm-logo.big img{height:34px;max-width:170px}
+  .firm-logo.big.tile img{height:26px}
+  .firm-abbr{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:32px;height:26px;padding:0 7px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.06em;vertical-align:middle;margin-right:9px}
+  .firm-title-logo{display:inline-flex;vertical-align:middle;margin:0 14px 6px 0}
+  .searchres .firm-logo{margin-right:8px}
+  .searchres .firm-logo img{height:22px;max-width:96px}
+  /* Light theme: most verified logos are the firms' white-on-transparent
+     variants (chosen for navy) — sit them on a navy tile so they stay
+     readable on light surfaces. Logos flagged .tile are dark/black marks:
+     they keep their light tile in both themes. */
+  html[data-theme="light"] .firm-logo:not(.tile){background:var(--navy-900);border-radius:6px;padding:3px 7px}
+  html[data-theme="light"] .firm-logo:not(.tile) img{height:20px;max-width:104px}
+  html[data-theme="light"] .firm-logo.big:not(.tile) img{height:26px}
+  #cmpTable th .firm-logo{margin-bottom:6px}
+  @media (max-width:760px){ .firm-logo img{height:22px;max-width:96px} .firm-logo.big img{height:28px;max-width:140px} }
   .evrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
   .evchip{display:inline-flex;align-items:center;gap:5px;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.02em;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
   .evchip.ev-src{border-color:rgba(78,125,217,.5);color:#9DB9EC;background:var(--blue-bg)}
@@ -2963,8 +2984,9 @@
 
         <div class="lbl" style="margin-top:20px">2 · Your day-by-day log</div>
         <p class="pnote" style="margin-top:0">One row per trading day. <b>Closed P/L</b> is what the day finished at. <b>Worst floating dip</b> is how far live equity fell <i>below that day's starting balance</i> at the worst moment — open positions included, even if they later recovered (enter 0 if equity never went under the day's start). On equity-based rules this dip, not the closed P/L, is the number that kills accounts. Leave a row fully blank to skip that day.</p>
+        <p class="pnote" id="simEqResetNote" hidden style="margin-top:0"><b>Equity at reset:</b> this firm's daily floor is set from whichever is higher at the reset — balance or equity — so each day also needs the equity figure at the reset moment (5:00 PM New York for Blue Guardian). Leave a day's reset equity blank and that day's daily rule reports <b>Insufficient data</b> instead of a guessed floor; the max-loss floor still runs.</p>
         <div class="tblwrap"><table class="sim-log" aria-label="Day by day trading log">
-          <thead><tr><th>Day</th><th>Closed P/L $</th><th>Worst floating dip $</th><th title="Traded around a high-impact news release">News?</th><th title="Held a position over the weekend">Weekend?</th><th aria-label="Remove row"></th></tr></thead>
+          <thead><tr><th>Day</th><th>Closed P/L $</th><th>Worst floating dip $</th><th id="simEqResetTh" hidden>Equity at reset $</th><th title="Traded around a high-impact news release">News?</th><th title="Held a position over the weekend">Weekend?</th><th aria-label="Remove row"></th></tr></thead>
           <tbody id="simDayBody"></tbody>
         </table></div>
         <button class="btn btn-line btn-sm" id="simAddDay" type="button">+ Add a day</button>
@@ -3018,6 +3040,7 @@
         <ul class="formula-list">
           <li><b>Daily loss — equity-based firms</b> (basis text says live equity / floating losses count, e.g. FTMO 2-Step): <span class="mono">daily floor = start-of-day balance − daily% × initial balance</span>. The day's worst equity is <span class="mono">start-of-day balance − worst floating dip you entered</span>. If worst equity falls below the floor at any moment, the account is closed that day — even if the day later closes in profit.</li>
           <li><b>Daily loss — balance-based firms</b>: only the closed day counts. The account breaches if <span class="mono">closed P/L &lt; −(daily% × initial balance)</span>. The floating dip is still shown, but it cannot close the account under this basis.</li>
+          <li><b>Daily loss — highest-of-both firms</b> (Blue Guardian 2-Step and 1-Step Standard): <span class="mono">daily floor = max(balance, equity) at the 5:00 PM New York reset − daily% × starting balance</span>. Verified against the Blue Guardian Help Centre (2-Step Standard rules, updated 13 Nov 2026; checked 18 Nov 2026) — its own worked example: $100K with $2,000 floating profit → equity $102,000 → floor $98,000. Built-in check: starting balance $100,000, balance at reset $100,000, equity at reset $103,000 → floor $99,000, and equity of $98,000 breaches by $1,000. If you do not enter a day's equity at reset, that day's daily rule reports <b>Insufficient data</b> — no floor is guessed.</li>
           <li><b>Daily loss — soft limits</b>: where the published rule pauses the session instead of failing the account (Apex EOD plans), the simulator reports a pause, not a closure. Models with no daily limit (MyFundedFutures Rapid, Topstep Combine default) show “No daily loss limit”.</li>
           <li><b>Max loss — static</b>: <span class="mono">floor = initial balance − max% × initial balance</span>, tested against both worst intraday equity and the closing balance. <b>End-of-day trailing</b>: <span class="mono">floor = highest end-of-day balance so far − max% × initial balance</span>, tested at the close (Topstep's limit is published as enforced in real time on unrealised P&amp;L, so the intraday dip is tested too). <b>Dynamic trailing</b>: <span class="mono">floor = highest balance reached (intraday, approximated by the best closing balance so far) − max% × initial balance</span>, tested against worst intraday equity.</li>
           <li><b>Profit target</b>: reached on the first day the closing balance reaches <span class="mono">initial balance × (1 + target%)</span>. Phase 1 is simulated; where the model has a Phase 2 target it is shown in the rules panel, not simulated.</li>
@@ -3214,8 +3237,8 @@
         <div class="card">
           <div class="lbl">Formulas &amp; assumptions — read before you believe any number here</div>
           <ul class="formula-list">
-            <li><span class="mono">Expectancy per trade E = win rate × RRR − (1 − win rate) × 1</span>, in R units (average win = RRR × R, average loss = 1R). At 60% and 1:1.5 that is <span class="mono">0.60 × 1.5 − 0.40 = +0.50R</span>. <b>If E ≤ 0 you have no edge</b> and the model pass probability is ~0 — no challenge price is cheap enough to fix that.</li>
-            <li><span class="mono">Model pass probability (one attempt) = (1 − e^(−2μd/σ²)) ÷ (1 − e^(−2μ(d+t)/σ²))</span> — a diffusion (Brownian) approximation of your trade-by-trade random walk with drift, where <span class="mono">μ = E</span>, <span class="mono">σ² = win rate × (RRR − μ)² + (1 − win rate) × (−1 − μ)²</span>, <span class="mono">d = max drawdown % ÷ risk per trade %</span> and <span class="mono">t = profit target % ÷ risk per trade %</span>. At μ = 0 the walk has no drift, so the Lab reports the pass probability as ~0 — the formula's driftless limit <span class="mono">d ÷ (d + t)</span> would print a positive number for a trader with no edge, and a positive number there is meaningless. For two-step models the attempt probability is the product of the two phase probabilities — you must survive both barriers in sequence, on the same max-drawdown room.</li>
+            <li><span class="mono">Expectancy per trade E = win rate × RRR − (1 − win rate) × 1</span>, in R units (average win = RRR × R, average loss = 1R). At 60% and 1:1.5 that is <span class="mono">0.60 × 1.5 − 0.40 = +0.50R</span>. <b>If E ≤ 0 you have no positive expectancy</b> — the page shows that as its own warning, separate from the probability: no challenge price is cheap enough to fix a missing edge, but the warning never replaces the number.</li>
+            <li><span class="mono">Model pass probability (one attempt) = (1 − e^(−2μd/σ²)) ÷ (1 − e^(−2μ(d+t)/σ²))</span> — a diffusion (Brownian) approximation of your trade-by-trade random walk with drift, where <span class="mono">μ = E</span>, <span class="mono">σ² = win rate × (RRR − μ)² + (1 − win rate) × (−1 − μ)²</span>, <span class="mono">d = max drawdown % ÷ risk per trade %</span> and <span class="mono">t = profit target % ÷ risk per trade %</span>. At μ = 0 the formula itself is 0/0, so the tool uses its zero-drift limit <span class="mono">P = d ÷ (d + t)</span> — the starting point's fractional distance between the barriers. Check it on the symmetric case: one phase, barriers ±10%, each trade ±1% with equal probability, no time limit → <span class="mono">d = t = 10</span>, so <span class="mono">P = 10 ÷ 20 = 50%</span> (discrete gambler's ruin agrees). A driftless walk is a coin flip between the barriers, not a ~0% chance. For two-step models the attempt probability is the product of the two phase probabilities — you must survive both barriers in sequence, on the same max-drawdown room. Where a case is not estimated at all, this page shows <b>Not estimated</b> in the main result, the attempts, the cost and the comparison table — the same words in all four places.</li>
             <li><span class="mono">Expected attempts = 1 ÷ P</span> · <span class="mono">Expected total cost = price × expected attempts</span> · <span class="mono">Expected remaining cost = price × max(0, expected attempts − attempts already bought)</span> · <span class="mono">Sunk cost = price × attempts already bought</span>.</li>
             <li>This pass probability is a <b>model estimate built from your own win rate and RRR — it is not the firm's real pass rate</b>, and no firm publishes one you can audit. Treat it as an upper bound, not a forecast.</li>
             <li><b>The model is optimistic by construction.</b> It ignores the daily drawdown limit, consistency and best-day caps, news and weekend rules, minimum trading days, spread, slippage and psychology — every one of those can only push your real probability <b>below</b> the number shown. Test the rules that actually close accounts in the <a href="/rule-trap-simulator/" data-route="rule-trap-simulator">Rule Trap Simulator</a>, and build the day-by-day plan in the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a>.</li>
@@ -3708,7 +3731,7 @@
         <thead><tr><th>Rule</th><th>How it works</th></tr></thead>
         <tbody>
           <tr><td>Max drawdown</td><td><b>8%, static</b> — the friendliest mainstream structure, and this firm's best feature. (The 1-Step and Instant lines trail instead.)</td></tr>
-          <tr><td>Daily loss</td><td>4% of the initial balance, measured from the <b>higher of balance or equity at 5pm EST</b>, resetting at 5pm EST (Help Centre via aggregators). Floating losses count against that higher baseline.</td></tr>
+          <tr><td>Daily loss</td><td>4% of the starting balance, measured from <b>whichever is higher at the 5:00 PM New York reset: balance or equity</b> — floor = max(balance, equity) − 4% × starting balance (Blue Guardian Help Centre — 2-Step Standard rules, updated 13 Nov 2026; checked 18 Nov 2026). The Help Centre's own worked example: $100K with $2,000 floating profit → equity $102,000 → the next day's floor is $98,000. The same wording applies identically to the 1-Step Standard. Floating losses count against that higher baseline.</td></tr>
           <tr><td>Guardian Shield</td><td>An automatic close-all triggers at <b>2% floating loss</b> (1% on Instant). First trigger: your split is cut to <b>50%</b>. Second trigger: the account is <b>breached</b>. This rule — not the daily limit — is what ends most Blue Guardian accounts, per aggregator reviews of the Help Centre.</td></tr>
           <tr><td>News trading</td><td>Allowed in the challenge. <b>Banned on funded accounts</b>: no opening/closing from 5 minutes before to 5 minutes after high-impact releases and FOMC — and a violation on funded <b>deletes the profit</b>, not just a warning.</td></tr>
           <tr><td>EA / holding</td><td>EAs and bots allowed; overnight and weekend holding allowed; minimum hold 2 minutes per trade (aggregator record of Help Centre rules).</td></tr>
@@ -3770,7 +3793,7 @@
       <h2>Pros &amp; cons</h2>
       <div class="proscons">
         <div class="card"><h3>Strengths</h3><ul class="pc-list">
-          <li><span class="pc-mark">+</span><span><b>Static 8% max DD on the 2-Step</b> — easier to survive than the trailing floors most rivals use (Help Centre via aggregators).</span></li>
+          <li><span class="pc-mark">+</span><span><b>Static 8% max DD on the 2-Step</b> — easier to survive than the trailing floors most rivals use (Blue Guardian Help Centre, updated 13 Nov 2026).</span></li>
           <li><span class="pc-mark">+</span><span><b>EAs allowed, news allowed in the challenge, weekend/overnight holding allowed</b> (aggregator record of Help Centre rules).</span></li>
           <li><span class="pc-mark">+</span><span><b>Fast payout claims with a public ledger</b>: ~1-hour average processing, 24-hour futures guarantee (homepage).</span></li>
           <li><span class="pc-mark">+</span><span><b>The most transparent affiliate ladder in this batch</b> — 10% / 12.5% / 15% tiers published in the Help Centre (13 Nov 2026) — and <b>US traders are accepted</b>.</span></li>
@@ -5084,6 +5107,87 @@
      split/price/maxfund: firm-published figures confirmed for the sixteen reviewed
      firms (checked 18 Nov 2026, sourced in their reviews). For the rest, only
      basics the Lab could confirm are filled; null = "Unverified". */
+  /* ================= Firm logos — official assets only =================
+     Catalog: prop-lab-launch-kit/logos/catalog.json (checked 18 Nov 2026).
+     Every "verified" file was taken from the firm's own site / brand assets;
+     firms with no verified logo (status "abbreviation" in the catalog) get a
+     neutral initials badge — no logo is drawn, substituted or generated.
+     Flags: tile = render on a light tile (dark/black logo or solid white
+     background — unreadable directly on navy #0A1931); small = low-res or
+     oversized source, referenced at small display size only. Maven Trading's
+     SVG uses currentColor, which resolves to black inside an <img>, so it
+     also sits on a light tile to stay readable in both themes. */
+  var FIRM_LOGOS = {
+    "FTMO":["ftmo.svg",""], "FundedNext":["fundednext.png",""], "The5ers":["the5ers.svg",""],
+    "Funding Pips":["funding-pips.svg",""], "E8 Markets":["e8-markets.svg",""],
+    "Alpha Capital Group":["alpha-capital.svg",""], "Alpha Capital":["alpha-capital.svg",""],
+    "Topstep":["topstep.webp",""], "MyFundedFutures":["myfundedfutures.svg",""],
+    "Tradeify":["tradeify.svg",""], "Take Profit Trader":["take-profit-trader.svg",""],
+    "Earn2Trade":["earn2trade.svg",""], "Lucid Trading":["lucid-trading.png",""],
+    "Top One Trader":["top-one-trader.svg",""], "TradeDay":["tradeday.svg",""],
+    "Goat Funded Trader":["goat.webp","tile"], "FXIFY":["fxify.jpeg","tile small"],
+    "For Traders":["for-traders.svg",""], "City Traders Imperium":["city-traders-imperium.png",""],
+    "AquaFunded":["aquafunded.svg",""], "BrightFunded":["brightfunded.png",""],
+    "Hola Prime":["hola-prime.png",""], "Maven Trading":["maven-trading.svg","tile"],
+    "ThinkCapital":["thinkcapital.svg",""], "Instant Funding":["instant-funding.svg","tile"],
+    "Funded Trading Plus":["funded-trading-plus.png",""], "The Trading Pit":["the-trading-pit.svg",""],
+    "Ment Funding":["ment-funding.png",""], "Finotive Funding":["finotive-funding.svg",""],
+    "Crypto Fund Trader":["crypto-fund-trader.svg",""], "Breakout Prop":["breakout.svg",""],
+    "WSFunded":["wsfunded.svg",""], "Moneta Funded":["moneta-funded.svg",""],
+    "Blueberry Funded":["blueberry-funded.png","tile"], "Fintokei":["fintokei.svg",""],
+    "Orion Funded":["orion-funded.png",""], "Leveraged":["leveraged.svg",""],
+    "BEM Funding":["bem-funding.png","tile"], "Audacity Capital":["audacity-capital.png",""],
+    "Axi Select":["axi-select.svg",""], "FundedElite":["fundedelite.png",""],
+    "Lark Funding":["lark-funding.png",""], "Tradeify FX":["tradeify-fx.svg",""],
+    "Nordic Funder":["nordic-funder.svg",""], "FuturesElite":["futureselite.svg",""],
+    "DayTraders":["daytraders.svg",""], "The Trading Pit Futures":["the-trading-pit-futures.svg",""],
+    "Traders Launch":["traders-launch.png",""], "Funded Futures Family":["funded-futures-family.png",""],
+    "Funded Family One":["funded-futures-family.png",""], "Finotive Futures":["finotive-futures.svg",""],
+    "Ylos Trading":["ylos-trading.png",""], "Trade The Pool":["trade-the-pool.svg",""],
+    "Kraken Prop":["kraken-prop.svg",""], "E8 Perpetuals":["e8-perpetuals.svg",""],
+    "Propr":["propr.svg",""], "WenCrypto":["wencrypto.svg",""],
+    "Vest Markets":["vest-markets.png","tile"], "My Funded Perps":["my-funded-perps.svg",""],
+    "Hantec Trader (RZR Funded)":["rzr-funded.svg",""], "RZR Funded":["rzr-funded.svg",""],
+    "Hantec Trader":["rzr-funded.svg",""], "Apex Trader Funding":["apex.svg",""],
+    "Blue Guardian":["blue-guardian.svg",""], "The Funded Trader":["the-funded-trader.png",""]
+  };
+  /* Catalog status "abbreviation" — no verified logo on file (Atmos Funded:
+     official logo exists but its origin returned Cloudflare 520 at check
+     time; the four closed firms have no verified historical logo). */
+  var FIRM_LOGO_ABBR = { "Atmos Funded":1, "MyForexFunds":1, "True Forex Funds":1, "SurgeTrader":1, "MyFundedFX":1 };
+  var FIRM_ALIASES = {
+    "Hantec Trader (RZR Funded)":["RZR Funded","Hantec Trader"],
+    "Funded Futures Family":["Funded Family One"],
+    "My Funded Perps":["Funding Perpetuals","My Funded Perpetuals","MyFundedPerps"],
+    "E8 Markets":["E8"], "E8 Perpetuals":["E8"],
+    "Alpha Capital Group":["Alpha Capital"], "The Funded Trader":["TFT"],
+    "Apex Trader Funding":["Apex"]
+  };
+  function firmInitials(name){
+    var words = String(name).replace(/([a-z])([A-Z])/g, "$1 $2").split(/[\s()]+/).filter(Boolean);
+    var ini = words.slice(0, 3).map(function(w){ return w.charAt(0).toUpperCase(); }).join("");
+    return ini.length >= 2 ? ini : String(name).slice(0, 2).toUpperCase();
+  }
+  function firmAbbrHTML(name, big){
+    return '<span class="firm-abbr" aria-hidden="true">' + firmInitials(name) + "</span>";
+  }
+  function firmLogoHTML(name, big){
+    if (FIRM_LOGO_ABBR[name] || !FIRM_LOGOS[name]) return firmAbbrHTML(name, big);
+    var e = FIRM_LOGOS[name];
+    var cls = "firm-logo" + (e[1] ? " " + e[1] : "") + (big ? " big" : "");
+    return '<span class="' + cls + '"><img src="' + basePath() + "assets/logos/" + e[0] + '" alt="" loading="lazy" data-abbr="' + firmInitials(name) + '" onerror="logoImgFail(this)"></span>';
+  }
+  window.logoImgFail = function(img){
+    var s = document.createElement("span");
+    s.className = "firm-abbr"; s.setAttribute("aria-hidden", "true");
+    s.textContent = img.getAttribute("data-abbr") || "—";
+    if (img.parentNode) img.parentNode.replaceWith(s);
+  };
+  function firmSearchText(f){
+    var extra = (FIRM_ALIASES[f.name] || []).join(" ");
+    return (f.name + " " + f.type + " " + f.hq + " " + extra).toLowerCase();
+  }
+
   var NV = "Unverified";
   var DIRECTORY = [
     {name:"FTMO", type:"CFD", hq:"Czechia", founded:2015, maxfund:"$200K accounts", split:90, splitLabel:"80% → 90%", price:89, priceLabel:"€89 ($10K 2-Step)", vn:"yes", status:"Testing", review:"ftmo-review", src:"https://ftmo.com/"},
@@ -5191,7 +5295,7 @@
       var cmpF = (typeof COMPARER !== "undefined") ? cmpByName(f.name) : null;
       var scoreBadge = "";
       if (cmpF){ var sm2 = /(\d+(?:\.\d+)?)\s*\/\s*10/.exec(cmpF.rankBasis); if (sm2) scoreBadge = '<br><span class="score-mini"><span class="sb-num">' + sm2[1] + '</span><span class="sb-den">/10</span></span> <span class="sb-basis" style="display:inline">' + cmpF.rankBasis + "</span>"; }
-      var nameCell = '<label class="cmp-pick"><input type="checkbox" class="cmp-check" data-cmp="' + f.name + '" aria-label="Select ' + f.name + ' to compare"><span><span class="fname">' + f.name + "</span>" + (f.closedNote ? '<br><span style="font-size:12.5px;color:var(--red)">' + f.closedNote + "</span>" : "") + scoreBadge + "</span></label>";
+      var nameCell = '<label class="cmp-pick"><input type="checkbox" class="cmp-check" data-cmp="' + f.name + '" aria-label="Select ' + f.name + ' to compare">' + firmLogoHTML(f.name) + '<span><span class="fname">' + f.name + "</span>" + (f.closedNote ? '<br><span style="font-size:12.5px;color:var(--red)">' + f.closedNote + "</span>" : "") + scoreBadge + "</span></label>";
       tr.innerHTML = "<td data-label='Firm'>" + nameCell + "</td>"
         + '<td class="optcol" data-col="market" data-label="Market">' + f.type + "</td>"
         + '<td class="optcol" data-col="hq" data-label="HQ">' + f.hq + "</td>"
@@ -5219,7 +5323,7 @@
     var fSplit = document.getElementById("dirSplit").value;
     var fPrice = document.getElementById("dirPrice").value;
     var rows = DIRECTORY.filter(function(f){
-      if (q && (f.name + " " + f.type + " " + f.hq).toLowerCase().indexOf(q) < 0) return false;
+      if (q && firmSearchText(f).indexOf(q) < 0) return false;
       if (fType && f.type !== fType) return false;
       if (fVN && f.vn !== fVN) return false;
       if (fStatus && f.status !== fStatus) return false;
@@ -5550,7 +5654,7 @@
   var UNLISTED = ["FundYourFX","Atlas Funded","Sure Leverage","Upcomers","TradeXProp","SFX Funded","Tribe Funded","TX3 Funding","OneFunded","AuraFunded","GetCryptoFunded","Equity Edge","WeMasterTrade","Nostro","1of1 Funding","Funding Frontier","Funded7","MyFxCapital","FundedSquad","AlphaPropTraders","Funder Pro","Syndicate Funded","FXCI","Dei Funded","FXRK","Forexive","Only Funds","MyFundedCapital","Inspire Funding","DNA Funded","Aeon Funded","Trade Amber","OFP Funding","FundedHive","MiFunder","RebelsFunding","Fundings4u","Alpine Funded"];
   var ub = document.getElementById("unlistedBody");
   if (ub) ub.innerHTML = UNLISTED.map(function(n){
-    return "<tr><td><b>" + n + "</b></td><td><span class=\"statuschip st-pending\">Unlisted — PropFirmMatch không niêm yết, không trình bày như quỹ mua được</span></td><td>Unverified — No Lab review, no score</td><td><a href=\"https://propfirmmatch.com/unlisted-firms\" target=\"_blank\" rel=\"noopener\">PropFirmMatch unlisted page ↗</a></td></tr>";
+    return "<tr><td>" + firmLogoHTML(n) + "<b>" + n + "</b></td><td><span class=\"statuschip st-pending\">Unlisted — PropFirmMatch không niêm yết, không trình bày như quỹ mua được</span></td><td>Unverified — No Lab review, no score</td><td><a href=\"https://propfirmmatch.com/unlisted-firms\" target=\"_blank\" rel=\"noopener\">PropFirmMatch unlisted page ↗</a></td></tr>";
   }).join("");
 
   /* Directory rows gain Last updated / Next review from one place */
@@ -5572,7 +5676,7 @@
     {name:"E8 Markets", slug:"e8-markets-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 5/10", country:"United States", founded:2021, broker:"E8 Funding LLC (simulated, SimFi)", steps:[1], stepsLabel:"E8 One · Pro · Signature — all 1-step", target:"1.5× drawdown (6%–21%)", daily:"3% (Help Centre preset) · 4% (configurator preset) · fixed $ amount", max:"4%–6% by preset · dynamic trailing (dial to 14%)", ddType:"trailing", minDays:"None", platforms:["MT5","cTrader","Match-Trader","TradeLocker"], split:100, splitLabel:"80% / 90% / 100% (config)", sizes:[5000,10000,25000,50000,100000], price:null, priceLabel:NVV + " (configurator)", xau:true, goldCost:"Awaiting measurement", goldComm:NVV, leverage:NVV, vn:"unknown", payoutVN:["rise"], payoutFirst:"8 days (homepage claim — unverified)", payoutFreq:"On-demand within cycle rules", refund:"No", news:"Funded Performance: restricted window", ea:"Allowed per Help Centre policies", scaling:"Config-based", reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"https://help.e8markets.com/en/articles/11782996-dynamic-drawdown"},
     {name:"Alpha Capital Group", slug:"alpha-capital-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 6/10", country:"United Kingdom", founded:2021, broker:"Alpha Capital Group Ltd via ACG Markets (simulated)", steps:[1,2,3,"instant"], stepsLabel:"Alpha Pro 2-Step · Swing · One 1-Step · Three 3-Step · Direct (instant)", target:"8% / 5% (Pro 8%)", daily:"4% · balance-based (Pro 8%)", max:"8% · static (Pro 8%)", ddType:"static", minDays:"3 per phase (Pro)", platforms:["MT5","cTrader","DXtrade","TradeLocker"], split:90, splitLabel:"80% (90% add-on)", sizes:[5000,10000,25000,100000,200000], price:27, priceLabel:"$27 ($5K Pro 6%)", xau:true, goldCost:"Awaiting measurement", goldComm:NVV, leverage:"FX 1:100 · Metals 1:30 · Indices 1:20 · Oil 1:10", vn:"no", payoutVN:[], payoutFirst:"Bi-weekly: 14 days · On-demand: at 2% profit", payoutFreq:"Bi-weekly or on-demand (fixed at checkout)", refund:"No — non-refundable (Help Centre)", news:"Eval: allowed · Qualified: ±5 min ban (Pro/One/Direct)", ea:"MT5 only, risk tools, pre-approval required", scaling:"Yes — split to 90%", reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"http://alphacapitalgroup.uk/resources/alpha-capital-2026-plan-pricing-update"},
     {name:"FXIFY", slug:"fxify-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 7.4/10 · proposed range 7.0–7.8 · payout awaiting measurement", country:"Mauritius (entity per aggregator records)", founded:2023, broker:"Prime Intermarket Group Eurasia Ltd with FXPIG (simulated)", steps:[1,2,3,"instant"], stepsLabel:"2-Phase · 1-Phase · 3-Phase · Lightning · Instant · Futures", target:"10% / 5% (2-Phase Standard)", daily:"4% · basis Unverified (aggregator: balance)", max:"10% · trailing (Standard) · static (Classic)", ddType:"trailing", minDays:"None per homepage (aggregator conflict on funded payouts)", platforms:["MT4","MT5","DXtrade"], split:100, splitLabel:"80% → 90% (add-on) · 100% on Classic/Futures", sizes:[5000,10000,25000,50000,100000,200000,400000], price:39, priceLabel:"$39 (homepage — full table Unverified)", xau:true, goldCost:"Awaiting measurement", goldComm:NVV, leverage:NVV, vn:"no", payoutVN:[], payoutFirst:"On demand (first payout)", payoutFreq:"Monthly default · bi-weekly add-on", refund:NVV, news:"Not allowed (aggregator record — verify per program)", ea:"Not allowed (aggregator record)", scaling:"To $400K CFD · $450K futures (simulated)", reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"https://fxify.com/"},
-    {name:"Blue Guardian", slug:"blue-guardian-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 6.5/10 · proposed range 6.0–7.0 · payout awaiting measurement", country:"UAE (entity per aggregator records)", founded:"—", broker:"Iconic Exchange FZCO (simulated — Help Centre states demo/simulated)", steps:[1,2,"instant"], stepsLabel:"2-Step · 1-Step · Instant · Futures (Elite/Zero/Direct)", target:"8% / 4% (2-Step Standard)", daily:"4% · higher of balance/equity at 5pm EST (Help Centre via aggregators)", max:"8% · static (2-Step)", ddType:"static", minDays:"3 profitable days ≥0.5% (2-Step)", platforms:["Unverified"], split:85, splitLabel:"85% (2-Step/1-Step) · 80% Instant · 90% futures", sizes:[10000,25000,50000,100000,200000,300000,400000], price:32, priceLabel:"$32–$2,200 (aggregator-recorded)", xau:true, goldCost:"Awaiting measurement", goldComm:NVV, leverage:NVV, vn:"no", payoutVN:[], payoutFirst:"14 days (2-Step) · on demand after 5 profitable days (Instant)", payoutFreq:"Every 14 days · futures Elite every 3 days", refund:NVV, news:NVV, ea:NVV, scaling:NVV, reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"https://blueguardian.com/"},
+    {name:"Blue Guardian", slug:"blue-guardian-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 6.5/10 · proposed range 6.0–7.0 · payout awaiting measurement", country:"UAE (entity per aggregator records)", founded:"—", broker:"Iconic Exchange FZCO (simulated — Help Centre states demo/simulated)", steps:[1,2,"instant"], stepsLabel:"2-Step · 1-Step · Instant · Futures (Elite/Zero/Direct)", target:"8% / 4% (2-Step Standard)", daily:"4% · higher of balance/equity at the 5:00 PM New York reset (Blue Guardian Help Centre, updated 13 Nov 2026)", max:"8% · static (2-Step)", ddType:"static", minDays:"3 profitable days ≥0.5% (2-Step)", platforms:["Unverified"], split:85, splitLabel:"85% (2-Step/1-Step) · 80% Instant · 90% futures", sizes:[10000,25000,50000,100000,200000,300000,400000], price:32, priceLabel:"$32–$2,200 (aggregator-recorded)", xau:true, goldCost:"Awaiting measurement", goldComm:NVV, leverage:NVV, vn:"no", payoutVN:[], payoutFirst:"14 days (2-Step) · on demand after 5 profitable days (Instant)", payoutFreq:"Every 14 days · futures Elite every 3 days", refund:NVV, news:NVV, ea:NVV, scaling:NVV, reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"https://blueguardian.com/"},
     {name:"Instant Funding", slug:"instant-funding-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 5.8/10 · proposed range 5.0–6.5 · payout awaiting measurement", country:"Saint Lucia", founded:"—", broker:"IF Pro Ltd (simulated)", steps:["instant",1,2], stepsLabel:"Instant PRO · Instant Lite · One-Phase · Two-Phase · IF1", target:"None (Instant PRO) · 10% One-Phase PRO · 8% / 5% Two-Phase", daily:"None (PRO) · 4% (Lite) · 3% (One-Phase PRO)", max:"10% Smart Drawdown — tightens to 5% at +5% (PRO)", ddType:"trailing", minDays:"None (instant models)", platforms:["MT5","cTrader","Match-Trader"], split:90, splitLabel:"80% (90% add-on)", sizes:[625,2500,5000,10000,25000,50000,100000], price:null, priceLabel:NVV, xau:true, goldCost:"Awaiting measurement", goldComm:NVV, leverage:"1:100 FX · 1:20 commodities (funded metals cut to 1:5 per homepage notice)", vn:"unknown", payoutVN:[], payoutFirst:"14 days after first trade (PRO)", payoutFreq:"Every 7 days (PRO) · on demand (phase models)", refund:NVV, news:NVV, ea:NVV, scaling:"PRO doubles at 10% profit, to $1.28M", reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"https://instantfunding.com/"},
     {name:"Apex Trader Funding", slug:"apex-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 7.5/10 · proposed range 7.0–8.0 · payout awaiting measurement", country:"United States", founded:2021, broker:"Apex Trader Funding Inc. (simulated futures)", steps:[1], stepsLabel:"1-step evaluation (Intraday / EOD trail)", target:"6% ($1,500–$9,000 by size)", daily:"EOD daily limit $500–$2,000 by size (soft pause on EOD)", max:"Trailing threshold $1,000–$4,500 by size", ddType:"trailing", minDays:"None — one day can pass", platforms:["Rithmic","Tradovate","NinjaTrader","WealthCharts"], split:100, splitLabel:"100% of first payouts → 90% (lifetime cap — see review)", sizes:[25000,50000,100000,150000], price:167, priceLabel:"$167 list (25K Intraday) — 50–90% coupons common", xau:false, goldCost:"Not applicable — futures firm, no MT5", goldComm:"Not applicable", leverage:"Futures margins", vn:"no", payoutVN:[], payoutFirst:"After PA activation (fee due within 7 days of passing)", payoutFreq:"Per PA schedule · new evaluation after every 6th payout", refund:"No — 30-day evaluation, no reset", news:NVV, ea:NVV, scaling:NVV, reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"https://apextraderfunding.com/"},
     {name:"MyFundedFutures", slug:"myfundedfutures-review", rank:"Full review — Lab payout · awaiting measurement", rankBasis:"Interim 8/10 · proposed range 7.5–8.5 · payout awaiting measurement", country:"United States", founded:2022, broker:"MyFunded Futures, LLC (simulated; Live path via Blue Row Capital by invitation)", steps:[1], stepsLabel:"Builder · Rapid · Rapid EOD · Pro · Studio (all 1-step)", target:"6% (all plans)", daily:"None (Rapid/Pro) · soft-pause $600–$2,500 (Builder)", max:"EOD trailing (Builder 4% / 3%) — Rapid switches to intraday trailing when funded", ddType:"trailing", minDays:"1 (Builder) · 2 (Rapid/Pro) · 4 (Rapid EOD)", platforms:["NinjaTrader","Tradovate","TradingView"], split:90, splitLabel:"90% (Rapid/Pro) · 80% (Builder)", sizes:[25000,50000,100000,150000], price:105, priceLabel:"$105 (Builder 25K list)", xau:false, goldCost:"Not applicable — futures firm, no MT5", goldComm:"Not applicable", leverage:"Futures margins", vn:"no", payoutVN:[], payoutFirst:"24h after first funded trade (Rapid) · 48h (Builder)", payoutFreq:"Daily (Rapid) · per cycle (Builder, $2,000 cap)", refund:"No activation fee — one-time payment", news:"Restricted around major releases (see review)", ea:NVV, scaling:"Live path by invitation (Blue Row Capital)", reviews:0, updated:"18 Nov 2026", next:"18 Dec 2026", src:"https://myfundedfutures.com/"},
@@ -5603,7 +5707,7 @@
       var badge = sm ? "<span class='score-mini" + (parseFloat(sm[1]) >= 7.5 ? " hot" : "") + "'><span class='sb-num'>" + sm[1] + "</span><span class='sb-den'>/10</span></span>" : "";
       var chips = "<span class='evrow'><span class='evchip ev-src'>Firm-published · checked 18 Nov 2026</span>" + (/awaiting measurement/i.test(f.rankBasis) ? "<span class='evchip ev-pend'>Payout · awaiting measurement</span>" : "") + "</span>";
       return "<tr" + (topNames.indexOf(f.name) >= 0 ? " class='top-row'" : "") + ">"
-        + "<td data-label='Firm'><label class='cmp-pick'><input type='checkbox' class='cmp-check' data-cmp='" + f.name + "' aria-label='Select " + f.name + " to compare'><span><b>" + f.name + "</b><br><span style='color:var(--muted);font-size:12.5px'>" + f.rank + "</span><span class='firm-top'>" + badge + "<span class='fm-model'>" + f.stepsLabel.split("·")[0] + "</span></span></span></label></td>"
+        + "<td data-label='Firm'><label class='cmp-pick'><input type='checkbox' class='cmp-check' data-cmp='" + f.name + "' aria-label='Select " + f.name + " to compare'><span>" + firmLogoHTML(f.name) + "<b>" + f.name + "</b><br><span style='color:var(--muted);font-size:12.5px'>" + f.rank + "</span><span class='firm-top'>" + badge + "<span class='fm-model'>" + f.stepsLabel.split("·")[0] + "</span></span></span></label></td>"
         + "<td data-label='Score'>" + badge + "<span class='sb-basis'>" + f.rankBasis + " · " + f.reviews + " verified reviews</span>" + chips + "</td>"
         + "<td data-label='Model'>" + f.stepsLabel.split("·")[0] + "</td>"
         + "<td data-label='Daily / Max loss'><span class='mono'>" + f.daily.split("·")[0] + " / " + f.max + "</span></td>"
@@ -5636,10 +5740,10 @@
     hs.addEventListener("input", function(){
       var q = hs.value.trim().toLowerCase();
       if (!q){ hsr.hidden = true; hsr.innerHTML = ""; return; }
-      var hits = DIRECTORY_ALL.filter(function(f){ return f.name.toLowerCase().indexOf(q) >= 0; }).slice(0, 6);
+      var hits = DIRECTORY_ALL.filter(function(f){ return firmSearchText(f).indexOf(q) >= 0; }).slice(0, 6);
       if (!hits.length){ hsr.innerHTML = '<a href="/directory/" data-route="directory">No match — open the full Directory</a>'; }
       else hsr.innerHTML = hits.map(function(f){
-        return '<a href="' + (f.review ? "/" + f.review + "/" : "/directory/") + '" data-route="' + (f.review || "directory") + '"><span><b>' + f.name + "</b> · " + f.type + "</span><span>" + f.status + "</span></a>";
+        return '<a href="' + (f.review ? "/" + f.review + "/" : "/directory/") + '" data-route="' + (f.review || "directory") + '"><span>' + firmLogoHTML(f.name) + "<b>" + f.name + "</b> · " + f.type + "</span><span>" + f.status + "</span></a>";
       }).join("");
       hsr.hidden = false;
       hsr.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); hsr.hidden = true; navigate(a.getAttribute("data-route")); }); });
@@ -5763,7 +5867,7 @@
     var A = cmpByName(hA.value), B = cmpByName(hB.value);
     if (!A || !B || A === B){ out.innerHTML = '<p class="note">Pick two different firms.</p>'; return; }
     function fee100(f){ return f.priceLabel; }
-    function headCell(f){ return f.name + '<span class="cmp-prog" style="display:block;font-size:12.5px;color:var(--muted);margin-top:3px">' + f.stepsLabel + '</span><span class="cmp-sizes" style="display:block;font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--muted);margin-top:2px">Accounts: ' + f.sizes.map(function(x){ return "$" + (x/1000) + "K"; }).join(" – ") + "</span>"; }
+    function headCell(f){ return firmLogoHTML(f.name) + f.name + '<span class="cmp-prog" style="display:block;font-size:12.5px;color:var(--muted);margin-top:3px">' + f.stepsLabel + '</span><span class="cmp-sizes" style="display:block;font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--muted);margin-top:2px">Accounts: ' + f.sizes.map(function(x){ return "$" + (x/1000) + "K"; }).join(" – ") + "</span>"; }
     function billOf(f){ var monthly = /\/mo\b|per month|subscription/i.test(f.priceLabel + " " + f.stepsLabel); var act = /activation/i.test(f.priceLabel) ? " · activation fee applies (in price)" : ""; return monthly ? "Monthly subscription" + act : "One-time fee" + act; }
     function sizeOf(f){ var m = /(\d+(?:\.\d+)?)\s*K\b/.exec(f.priceLabel || ""); return m ? parseFloat(m[1]) : null; }
     var h2hFlags = [];
@@ -5896,7 +6000,7 @@
     "Blue Guardian": {
       vn: ["STOP — Blue Guardian restricts Vietnam: the restricted lists quoting its Terms / Help Centre name Vietnam as not accepted (checked Nov 2026).", "Do not buy from Vietnam, and do not use a VPN or someone else's documents — the check repeats at KYC and at payout.", "The firm's Trustpilot rating is currently withdrawn, so there is no independent star rating to fall back on either.", "Vietnam-eligible alternatives: Breakout Prop (re-verify at checkout), Topstep (Combine + XFA), FTMO (CFD), The5ers.", "US traders: futures lines are the firm's current storefront focus; CFD availability by state is Unverified — confirm before paying."],
       buy: ["The headline CFD route is the 2-Step Standard: 8% then 4%, 4% daily, 8% static max DD, 85% split.", "The current homepage barely documents CFD — pull the program's Help Centre pages and screenshot them; they are your contract.", "Fees are aggregator-recorded at $32–$2,200 for CFD; the full per-size table is Unverified — price your exact size at checkout.", "Instant models trail and lock: after +6% the floor locks at the start balance, and a 1% buffer must stay behind at payout."],
-      pass: ["The 2-Step needs 3 profitable days per phase, each at least 0.5% of the initial balance.", "Daily loss is a fixed % of the initial balance, measured from the higher of balance or equity at 5pm EST (Help Centre via aggregator records).", "No consistency rule is published on the 1-/2-Step Standard; Instant Standard carries a 20% best-day rule."],
+      pass: ["The 2-Step needs 3 profitable days per phase, each at least 0.5% of the initial balance.", "Daily loss is 4% of the starting balance, measured from whichever is higher at the 5:00 PM New York reset — balance or equity (Blue Guardian Help Centre, updated 13 Nov 2026; checked 18 Nov 2026).", "No consistency rule is published on the 1-/2-Step Standard; Instant Standard carries a 20% best-day rule."],
       funded: ["Pass → funded at an 85% split (2-Step/1-Step) under the Guardian Shield terms in the Help Centre.", "Instant funded: first payout on demand after 5 profitable days, with the 20% consistency rule applied."],
       payout: ["2-Step: first payout 14 days after funding, then every 14 days.", "Firm-reported payout totals are self-published, and Trustpilot's rating is withdrawn — the Lab weights only documented cases, tabled in the review.", "Lab status: NOT yet run by the Lab — steps follow the firm's Help Centre as recorded by aggregators, linked under the rules table."],
       rivals: ["FXIFY", "Instant Funding"],
@@ -6136,11 +6240,11 @@
     input.addEventListener("input", function(){
       var q = input.value.trim().toLowerCase();
       if (!q){ results.hidden = true; results.innerHTML = ""; return; }
-      var hits = DIRECTORY_ALL.filter(function(f){ return f.name.toLowerCase().indexOf(q) >= 0; }).slice(0, 6);
+      var hits = DIRECTORY_ALL.filter(function(f){ return firmSearchText(f).indexOf(q) >= 0; }).slice(0, 6);
       results.innerHTML = hits.length ? hits.map(function(f){
         var route = f.review || "directory";
         var sc = f.review ? scoreOf((cmpByName(f.name) || {}).rankBasis) : null;
-        return '<a href="/' + route + '/" data-route="' + route + '"><span><b>' + f.name + "</b> · " + f.type + '</span><span class="mono" style="font-size:12.5px;color:var(--muted)">' + (sc ? "Score " + sc + "/10 · interim" : f.status) + "</span></a>";
+        return '<a href="/' + route + '/" data-route="' + route + '"><span>' + firmLogoHTML(f.name) + "<b>" + f.name + "</b> · " + f.type + '</span><span class="mono" style="font-size:12.5px;color:var(--muted)">' + (sc ? "Score " + sc + "/10 · interim" : f.status) + "</span></a>";
       }).join("") : '<a href="/directory/" data-route="directory">No match — open the full Directory</a>';
       results.hidden = false;
       results.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); results.hidden = true; input.value = ""; closeMobileMenu(); navigate(a.getAttribute("data-route")); }); });
@@ -6181,6 +6285,30 @@
       + '<span class="evrow"><span class="evchip ev-src">Firm-published · checked 18 Nov 2026</span>' + (/pending Lab test/i.test(vs.textContent) ? '<span class="evchip ev-pend">Payout · awaiting measurement</span>' : "") + "</span></div>";
     var vl = box.querySelector(".vlabel");
     if (vl && vl.nextSibling) box.insertBefore(wrap, vl.nextSibling); else box.insertBefore(wrap, box.firstChild);
+  });
+
+  /* ---- Firm logos on review titles + the homepage scoreboard ---- */
+  var REVIEW_LOGO_FIRM = {
+    "ftmo-review":"FTMO", "fundednext-review":"FundedNext", "the5ers-review":"The5ers",
+    "funding-pips-review":"Funding Pips", "e8-markets-review":"E8 Markets",
+    "alpha-capital-review":"Alpha Capital Group", "fxify-review":"FXIFY",
+    "blue-guardian-review":"Blue Guardian", "instant-funding-review":"Instant Funding",
+    "apex-review":"Apex Trader Funding", "myfundedfutures-review":"MyFundedFutures",
+    "breakout-review":"Breakout Prop", "goat-funded-review":"Goat Funded Trader",
+    "hantec-rzr-review":"RZR Funded", "topstep-review":"Topstep",
+    "the-funded-trader-review":"The Funded Trader"
+  };
+  Object.keys(REVIEW_LOGO_FIRM).forEach(function(slug){
+    var view = document.querySelector('[data-view="' + slug + '"]'); if (!view) return;
+    var h1 = view.querySelector(".article-head h1"); if (!h1) return;
+    var s = document.createElement("span");
+    s.className = "firm-title-logo"; s.innerHTML = firmLogoHTML(REVIEW_LOGO_FIRM[slug], true);
+    h1.insertBefore(s, h1.firstChild);
+  });
+  document.querySelectorAll("table.scoreboard tbody td:first-child a[data-route]").forEach(function(a){
+    var firm = REVIEW_LOGO_FIRM[a.getAttribute("data-route")]; if (!firm) return;
+    var s = document.createElement("span"); s.innerHTML = firmLogoHTML(firm);
+    a.insertBefore(s, a.firstChild);
   });
 
   /* ================= Compare tray — up to 3 firms, differences highlighted ================= */
@@ -6255,7 +6383,7 @@
     ];
     var html = "<thead><tr><th></th>" + firms.map(function(f){
       var nm = f.slug ? "<a href='/" + f.slug + "/' data-route='" + f.slug + "'>" + f.name + " — read the review →</a>" : f.name;
-      return "<th>" + nm + "<span class='cmp-prog'>" + f.model + "</span><span class='cmp-sizes'>Accounts: " + f.sizes + "</span></th>";
+      return "<th>" + firmLogoHTML(f.name) + "<br>" + nm + "<span class='cmp-prog'>" + f.model + "</span><span class='cmp-sizes'>Accounts: " + f.sizes + "</span></th>";
     }).join("") + "</tr></thead><tbody>";
     groups.forEach(function(g){
       html += "<tr class='cmp-group'><td colspan='" + (firms.length + 1) + "'>" + g[0] + "</td></tr>";
@@ -6395,10 +6523,16 @@
           { rule:"Trailing drawdown on Standard", detail:"The Standard 2-Phase trails its 10% max DD; the Classic variant is static. Same firm, same headline target, different survival maths.", verified:true },
           { rule:"Vietnam + US banned", detail:"Both are on the 33-country restricted list in the firm's Terms.", verified:true } ] } ] },
     "Blue Guardian": { review:"blue-guardian-review", models:[
-      { id:"2step", label:"2-Step Standard", t1:8, t2:4, daily:4, dailyBasis:"Fixed % of the initial balance, measured from the higher of balance/equity at 5pm EST (Help Centre via aggregator records)", reset:"5pm EST", max:8, maxType:"Static", minDays:3, minDaysNote:"3 profitable days (≥0.5%) required per phase", cap:null, capLabel:"None published on 2-Step Standard · 20% best-day on Instant Standard", news:"Unverified — see the firm’s own terms and re-read them before you buy", weekend:"Unverified — see the firm’s own terms and re-read them before you buy", timeLimit:"Unverified", fees:{}, feeFrom:"$32 (aggregator range)", payout:"First payout 14 days after funding, then every 14 days · 85% split", basis:"Blue Guardian Help Centre as recorded by aggregators, checked 18 Nov 2026 — the homepage barely documents CFD; see the review",
+      { id:"2step", label:"2-Step Standard", t1:8, t2:4, daily:4, dailyBasis:"4% of the starting balance, measured from whichever is higher at the 5:00 PM New York reset: balance or equity (Blue Guardian Help Centre)", reset:"5:00 PM New York", max:8, maxType:"Static", minDays:3, minDaysNote:"3 profitable days (≥0.5%) required per phase", cap:null, capLabel:"None published on 2-Step Standard · 20% best-day on Instant Standard", news:"Unverified — see the firm’s own terms and re-read them before you buy", weekend:"Unverified — see the firm’s own terms and re-read them before you buy", timeLimit:"Unverified", fees:{}, feeFrom:"$32 (aggregator range)", payout:"First payout 14 days after funding, then every 14 days · 85% split", basis:"Blue Guardian Help Centre — 2-Step Standard rules (updated 13 Nov 2026), checked 18 Nov 2026",
         hidden:[
+          { rule:"Daily floor uses the higher of balance or equity at reset", detail:"At the 5:00 PM New York reset the day's floor is set from whichever is higher — balance or equity — minus 4% of the starting balance. The Help Centre's own example: $100K with $2,000 floating profit → equity $102,000 → floor $98,000. Anchor the floor to the balance alone and you understate it whenever floating profit is open at reset.", verified:true },
           { rule:"Trustpilot rating withdrawn", detail:"Trustpilot removed the rating over guideline breaches — there is no independent star rating for this firm right now.", verified:true },
           { rule:"Trailing lock + 1% buffer on 1-Step/Instant", detail:"After +6% the floor locks at the start balance, and 1% must stay behind at payout — you cannot withdraw down to the initial balance.", verified:true },
+          { rule:"Vietnam banned", detail:"Restricted lists quoting the firm's Terms / Help Centre name Vietnam as not accepted.", verified:true } ] },
+      { id:"1step", label:"1-Step Standard", t1:9, t2:null, daily:4, dailyBasis:"4% of the starting balance, measured from whichever is higher at the 5:00 PM New York reset: balance or equity (Blue Guardian Help Centre)", reset:"5:00 PM New York", max:6, maxType:"End-of-day trailing — 6% below the highest closed balance; locks at the starting balance once +6% is reached", minDays:null, minDaysNote:"Unverified — not stated in the Help Centre articles checked 18 Nov 2026", cap:null, capLabel:"None published on 1-Step Standard", news:"Unverified — see the firm’s own terms and re-read them before you buy", weekend:"Unverified — see the firm’s own terms and re-read them before you buy", timeLimit:"Unverified", fees:{}, feeFrom:"", payout:"85% split · first payout 14 days", basis:"Blue Guardian Help Centre — 1-Step Standard rules (updated 13 Nov 2026), checked 18 Nov 2026",
+        hidden:[
+          { rule:"Daily floor uses the higher of balance or equity at reset", detail:"Same verified wording as the 2-Step Standard: 4% of the starting balance, measured from whichever is higher at the 5:00 PM New York reset — balance or equity (Blue Guardian Help Centre, updated 13 Nov 2026).", verified:true },
+          { rule:"Trailing max loss locks at +6%", detail:"The 6% max loss trails the highest closed balance; once the account reaches +6% the floor locks at the starting balance and stops trailing (Help Centre).", verified:true },
           { rule:"Vietnam banned", detail:"Restricted lists quoting the firm's Terms / Help Centre name Vietnam as not accepted.", verified:true } ] } ] },
     "Instant Funding": { review:"instant-funding-review", models:[
       { id:"onephasepro", label:"One-Phase PRO", t1:10, t2:null, daily:3, dailyBasis:"Unverified — basis not confirmed on an official page; read the firm's terms before buying", reset:"17:00 EST (Help Centre via aggregator)", max:8, maxType:"Static (One-Phase PRO) — the Instant PRO uses a Smart Drawdown instead", minDays:0, minDaysNote:"0 — on-demand payout model", cap:40, capLabel:"Best day ≤ 40% of total profit (phase programs)", news:"Unverified — see the firm’s own terms and re-read them before you buy", weekend:"Unverified — see the firm’s own terms and re-read them before you buy", timeLimit:"60 days without a trade closes the account (One-Phase)", fees:{}, feeFrom:"", payout:"On demand · minimum $25 or 1.5% of the balance", basis:"Instant Funding homepage + AML Policy, checked 18 Nov 2026",
@@ -6701,22 +6835,30 @@
      barrier d risk-units below, target t risk-units above. */
   function tcPassProb(mu, varr, d, t){
     if (d <= 0 || t <= 0 || varr <= 0) return 0;
-    /* Zero drift means no edge: the Lab reports ~0, NOT the diffusion formula's
-       driftless limit d/(d+t) — a positive number at zero expectancy would be
-       meaningless. tcAttempt already stops at E <= 0; this keeps the function
-       itself consistent with that policy for any caller. */
-    if (Math.abs(mu) < 1e-12) return 0;
+    /* Zero drift: the exponential form is 0/0 at mu = 0, so use its limit
+       (L'Hôpital): P = (x − a)/(b − a) = d/(d + t) for a walk starting
+       between a lower barrier d risk-units below and an upper barrier t
+       risk-units above. Symmetric barriers ±10% at 1% risk therefore give
+       10/(10 + 10) = 50% — a driftless walk is a coin flip between the
+       barriers, NOT a ~0% chance. The "No positive expectancy" warning is
+       displayed separately and never replaces this number. */
+    if (Math.abs(mu) < 1e-9) return d / (d + t);
     var a = -2 * mu / varr;
     var den = 1 - Math.exp(a * (d + t));
-    if (den === 0) return 0;
+    if (den === 0) return d / (d + t);
     var p = (1 - Math.exp(a * d)) / den;
     return Math.min(1, Math.max(0, p));
   }
   function tcAttempt(m, wr, rrr, risk){
     var E = wr * rrr - (1 - wr);
-    if (!(E > 1e-9) || risk <= 0 || !(m.max > 0)) return { E:E, p:0 };
+    /* Not estimated (p === null) only when the model itself cannot run:
+       no risk figure, no drawdown room or no target. Expectancy — positive,
+       zero or negative — is always estimated: E = 0 takes the zero-drift
+       limit in tcPassProb, E < 0 takes the same diffusion formula. */
+    if (risk <= 0 || !(m.max > 0) || !(m.t1 > 0)) return { E:E, p:null };
     var mu = E;
     var varr = wr * Math.pow(rrr - mu, 2) + (1 - wr) * Math.pow(-1 - mu, 2);
+    if (!(varr > 0)) return { E:E, p:null };
     var d = m.max / risk;
     var p = tcPassProb(mu, varr, d, m.t1 / risk);
     if (m.t2 !== null && m.t2 !== undefined) p *= tcPassProb(mu, varr, d, m.t2 / risk);
@@ -6756,11 +6898,15 @@
     var r = tcAttempt(m, wr, rrr, risk);
     var E = r.E, p = r.p;
     var noEdge = !(E > 1e-9);
-    var att = p > 0 ? 1 / p : Infinity;
-    /* alerts */
+    var notEst = (p === null || !(p > 0));
+    var att = notEst ? Infinity : 1 / p;
+    /* alerts — the "No positive expectancy" warning is its own warning.
+       It never replaces the probability: at zero drift the barrier model
+       still returns a real number (50% for symmetric barriers), and the
+       attempts and costs below are computed from it. */
     var alerts = "";
     if (noEdge){
-      alerts = '<div class="warn warn-red"><b>No edge — the model stops here.</b> At a ' + Math.round(wr * 100) + '% win rate and RRR 1:' + rrr + ', expectancy is ' + E.toFixed(2) + 'R per trade. A random walk with no drift does not climb to the target before it finds the drawdown barrier: the model pass probability is ~0 and there is no finite expected cost — every attempt is, in expectation, a donation. Fix the edge first; no challenge is cheap enough to fix this.</div>';
+      alerts = '<div class="warn warn-red"><b>No positive expectancy.</b> At a ' + Math.round(wr * 100) + '% win rate and RRR 1:' + rrr + ', expectancy is ' + E.toFixed(2) + 'R per trade — these inputs carry no edge, and that warning stands on its own. It does not zero the maths: the pass probability below is still computed from the barrier model (at exactly zero drift, a walk between symmetric barriers is a coin flip — 50% in the ±10% barriers / 1% risk case — and a negative drift lowers it from there, never to a stand-in ~0%). Read the two together: a coin-flip pass chance with the full fee charged on every attempt is a priced bad buy. Fix the edge first; no challenge is cheap enough to fix that.</div>';
     } else if (!price){
       alerts = '<div class="warn warn-amber"><b>No price entered yet.</b> The pass probability and expected attempts below are live, but the costs need a price: type the figure from the firm\'s checkout into the price field.</div>';
     } else if (p >= 0.9){
@@ -6773,11 +6919,11 @@
     var remain = (price && att !== Infinity) ? price.amt * Math.max(0, att - bought) : null;
     var stats = [
       ["Expectancy per trade (your inputs)", (E > 0 ? "+" : "") + E.toFixed(2) + "R"],
-      ["Model pass probability / attempt", noEdge ? "~0%" : (p * 100).toFixed(1) + "%"],
-      ["Expected attempts to pass", noEdge ? "∞ — no edge" : tcAtt(att)],
-      ["Expected total cost", total !== null ? tcCur(total, price.cur) : "— enter a price"],
-      ["Expected remaining cost", remain !== null ? tcCur(remain, price.cur) : "—"],
-      ["Sunk cost — already spent", sunk !== null ? tcCur(sunk, price.cur) + " (" + bought + " bought)" : "—"]
+      ["Model pass probability / attempt", notEst ? "Not estimated" : (p * 100).toFixed(1) + "%"],
+      ["Expected attempts to pass", notEst ? "Not estimated" : tcAtt(att)],
+      ["Expected total cost", total !== null ? tcCur(total, price.cur) : "Not estimated"],
+      ["Expected remaining cost", remain !== null ? tcCur(remain, price.cur) : "Not estimated"],
+      ["Sunk cost — already spent", sunk !== null ? tcCur(sunk, price.cur) + " (" + bought + " bought)" : "Not estimated"]
     ];
     tc.tcStats.innerHTML = stats.map(function(s){ return '<div class="stat"><div class="k">' + s[0] + '</div><div class="v">' + s[1] + "</div></div>"; }).join("");
     /* industry anchor */
@@ -6805,7 +6951,7 @@
     });
     rows.sort(function(a, b){ return a.total - b.total; });
     var html = rows.map(function(x){
-      return "<tr><td><b>" + x.fname + "</b></td><td>" + x.label + "</td><td class='num'>" + x.feeStr + "</td><td>" + x.target + "</td><td class='num'>" + x.max + "%</td><td class='num'>" + (noEdge ? "~0%" : (x.p * 100).toFixed(1) + "%") + "</td><td class='num'>" + (x.att === Infinity ? "∞" : tcAtt(x.att)) + "</td><td class='num'><b>" + (x.total === Infinity ? "—" : tcCur(x.total, x.cur)) + "</b></td></tr>";
+      return "<tr><td><b>" + x.fname + "</b></td><td>" + x.label + "</td><td class='num'>" + x.feeStr + "</td><td>" + x.target + "</td><td class='num'>" + x.max + "%</td><td class='num'>" + ((x.p === null || !(x.p > 0)) ? "Not estimated" : (x.p * 100).toFixed(1) + "%") + "</td><td class='num'>" + (x.att === Infinity ? "Not estimated" : tcAtt(x.att)) + "</td><td class='num'><b>" + (x.total === Infinity ? "Not estimated" : tcCur(x.total, x.cur)) + "</b></td></tr>";
     }).join("");
     if (!rows.length) html = '<tr><td colspan="8" style="color:var(--muted)">No firm in the Lab rule table has a published price for this account size yet.</td></tr>';
     if (excluded.length) html += '<tr><td colspan="8" style="color:var(--muted)"><span class="pending">Not in Lab data:</span> ' + excluded.join(" · ") + " — no Lab price published for this size, so these are excluded from the table until you select the firm above and enter its checkout price yourself.</td></tr>";
@@ -6827,7 +6973,15 @@
      A rule whose PLANNER_RULES text is marked "Unverified" is shown as
      Not verified and is NOT enforced. */
   var sim = {};
-  ["simFirm","simModel","simSize","simPreset","simCustom","simCTarget","simCDaily","simCDailyMode","simCMax","simCMaxMode","simCMinDays","simCCap","simDayBody","simAddDay","simRun","simClear","simRules","simEmpty","simResults","simVerdict","simKill","simResBody","simChecks","simFix","simSummary","simCopy","simCopyOut","simStory","simStoryBody","simStoryLesson","simSample","simOwn"].forEach(function(id){ sim[id] = document.getElementById(id); });
+  ["simFirm","simModel","simSize","simPreset","simCustom","simCTarget","simCDaily","simCDailyMode","simCMax","simCMaxMode","simCMinDays","simCCap","simDayBody","simAddDay","simRun","simClear","simRules","simEmpty","simResults","simVerdict","simKill","simResBody","simChecks","simFix","simSummary","simCopy","simCopyOut","simStory","simStoryBody","simStoryLesson","simSample","simOwn","simEqResetTh","simEqResetNote"].forEach(function(id){ sim[id] = document.getElementById(id); });
+  /* Blue Guardian verified daily floor (Help Centre, updated 13 Nov 2026):
+     floor = max(balance at reset, equity at reset) − daily% × starting balance.
+     Returns null when the reset-time equity is missing — the caller must
+     report "Insufficient data" for that day's daily rule, never guess. */
+  function bgDailyFloor(size, balReset, eqReset, dailyPct){
+    if (eqReset === null || eqReset === undefined || eqReset === "" || isNaN(parseFloat(eqReset))) return null;
+    return Math.max(balReset, parseFloat(eqReset)) - dailyPct / 100 * size;
+  }
   var simReady = !!sim.simFirm;
   var SIM_NV = /Unverified/;
   var simForceDaily = null; /* set only by the FundingPips reported-case preset */
@@ -6862,6 +7016,7 @@
     if (!m.daily || m.daily <= 0) dailyMode = "none";
     else if (dailyNV) dailyMode = "nv";
     else if (/pauses you|pauses the session|session pause|soft pause|soft-pause/i.test(m.dailyBasis)) dailyMode = "pause";
+    else if (/whichever is higher|higher of balance or equity/i.test(m.dailyBasis)) dailyMode = "resetmax";
     else if (/fixed \$ amount from the initial balance|fixed on initial balance/i.test(m.dailyBasis)) dailyMode = "fixed";
     else if (/equity|floating/i.test(m.dailyBasis)) dailyMode = "equity";
     else dailyMode = "balance";
@@ -6883,6 +7038,7 @@
     if (R.dailyMode === "none") return "No daily loss limit on this model — the max-loss floor is the only guardrail";
     if (R.dailyMode === "nv") return R.daily + "% published, but the basis is <span class='pending'>Unverified</span> — shown, NOT enforced here. Basis text: " + R.dailyBasis;
     if (R.dailyMode === "pause") return R.daily + "% — breach pauses the session under the published rule; it does not close the account. " + R.dailyBasis;
+    if (R.dailyMode === "resetmax") return R.daily + "% of the starting balance, measured from whichever is higher at the reset (" + R.reset + ") — daily floor = max(balance at reset, equity at reset) − " + d$ + ", tested on live equity. Enter each day's equity at reset in the log; a day without it reports Insufficient data for the daily rule and no floor is guessed. Basis: " + R.dailyBasis;
     if (R.dailyMode === "fixed") return R.daily + "% as a fixed $ amount from the initial balance — the daily floor is " + simMoney(size - R.daily / 100 * size) + " (initial " + simMoney(size) + " − " + d$ + ") on every day, whatever the balance has grown or fallen to; tested on live equity, floating losses count. Basis: " + R.dailyBasis;
     if (R.dailyMode === "equity") return R.daily + "% of the initial balance, tested on live equity — daily floor = start-of-day balance − " + d$ + ". Floating losses count. Basis: " + R.dailyBasis;
     return R.daily + "% of the initial balance, balance-based — the day breaches only if closed P/L &lt; −" + d$ + ". Floating dips are shown but cannot close the account. Basis: " + R.dailyBasis;
@@ -6916,7 +7072,8 @@
       ["Weekend holding", R.custom ? "Not set — Custom mode carries no weekend rule; Weekend? ticks are recorded but never enforced" : R.weekend + (R.weekendNV ? " — <span class='pending'>Not verified</span>; weekend flags are not enforced for this model" : "")]
     ];
     var formula = "";
-    if (R.dailyMode === "fixed") formula = "Formula used for " + fname + " — this firm's daily limit is a fixed $ amount from the initial balance, so the daily floor is " + simMoney(size) + " − " + R.daily + "% × " + simMoney(size) + " = " + simMoney(size - R.daily / 100 * size) + " on every day (it does NOT follow the start-of-day balance up or down); worst equity = start-of-day balance − your worst floating dip; below the fixed floor at any moment = closed that day.";
+    if (R.dailyMode === "resetmax") formula = "Formula used for " + fname + " — daily floor = max(balance at reset, equity at reset) − " + R.daily + "% × starting balance " + simMoney(size) + " (the verified Blue Guardian rule: the limit is " + R.daily + "% of the starting balance, measured from whichever is higher at the " + R.reset + " reset). Worst equity = start-of-day balance − your worst floating dip; below the floor at any moment = closed that day. A day with no equity-at-reset entry reports Insufficient data for the daily rule — no floor is guessed; the max-loss floor still runs.";
+    else if (R.dailyMode === "fixed") formula = "Formula used for " + fname + " — this firm's daily limit is a fixed $ amount from the initial balance, so the daily floor is " + simMoney(size) + " − " + R.daily + "% × " + simMoney(size) + " = " + simMoney(size - R.daily / 100 * size) + " on every day (it does NOT follow the start-of-day balance up or down); worst equity = start-of-day balance − your worst floating dip; below the fixed floor at any moment = closed that day.";
     else if (R.dailyMode === "equity") formula = "Formula used for " + fname + " — daily floor = start-of-day balance − " + R.daily + "% × " + simMoney(size) + " initial; worst equity = start-of-day balance − your worst floating dip; below the floor at any moment = closed that day.";
     else if (R.dailyMode === "balance") formula = "Formula used for " + fname + " — the day breaches only if closed P/L &lt; −" + simMoney(R.daily / 100 * size) + " (" + R.daily + "% of the initial balance); the floating dip cannot close the account under this basis.";
     else if (R.dailyMode === "pause") formula = "Formula used for " + fname + " — the daily limit (" + R.daily + "% of initial) pauses the session when hit, per the published rule; only the max-loss floor can close this account here.";
@@ -6928,9 +7085,20 @@
       + (R.minDaysNV ? '<span class="evchip ev-pend">Min days · not verified</span>' : "")
       + (R.capNV ? '<span class="evchip ev-pend">Best-day cap · not verified</span>' : "")
       + (simForceDaily ? '<span class="evchip ev-pend">Preset override · daily basis per case report</span>' : "");
+    /* reset-equity column + note only exist for highest-of-both rules */
+    var showEqReset = R.dailyMode === "resetmax";
+    if (sim.simEqResetTh) sim.simEqResetTh.hidden = !showEqReset;
+    if (sim.simEqResetNote) sim.simEqResetNote.hidden = !showEqReset;
+    if (sim.simDayBody) sim.simDayBody.querySelectorAll(".sim-eqreset-cell").forEach(function(td){ td.hidden = !showEqReset; });
+    var bgCheck = "";
+    if (fname === "Blue Guardian"){
+      var chkFloor = bgDailyFloor(100000, 100000, 103000, R.daily);
+      var chkOk = chkFloor === 99000 && (chkFloor - 98000) === 1000;
+      bgCheck = '<p class="pnote" style="margin:8px 0 0"><b>Built-in check — verified test case:</b> starting balance $100,000 · balance at reset $100,000 · equity at reset $103,000 → daily floor ' + (chkFloor === null ? "Insufficient data" : simMoney(chkFloor)) + (chkOk ? " ✓" : " ✗") + ' · equity $98,000 breaches by ' + simMoney(chkFloor - 98000) + (chkOk ? " ✓" : " ✗") + ' — Blue Guardian Help Centre (updated 13 Nov 2026), checked 18 Nov 2026.</p>';
+    }
     sim.simRules.innerHTML = '<div class="lbl">' + fname + " — " + R.label + ": rules in force</div>"
       + rows.map(function(r){ return '<div class="crit"><span style="color:var(--muted)">' + r[0] + '</span><span style="text-align:right;max-width:62%">' + r[1] + "</span></div>"; }).join("")
-      + '<p class="pnote" style="margin:12px 0 0">' + formula + "</p>"
+      + '<p class="pnote" style="margin:12px 0 0">' + formula + "</p>" + bgCheck
       + '<p class="pnote" style="margin:6px 0 0">Basis: ' + R.basis + (f && f.review ? ' · <a href="/' + f.review + '/" data-route="' + f.review + '">Full ' + fname + " review</a>" : "") + "</p>"
       + '<div class="evrow" style="margin-top:10px">' + chips + "</div>";
     sim.simRules.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); navigate(a.getAttribute("data-route")); }); });
@@ -6951,9 +7119,11 @@
   }
   function simAddRow(pl, dip, news, wknd){
     var tr = document.createElement("tr");
+    var eqHidden = !(sim.simEqResetTh && !sim.simEqResetTh.hidden);
     tr.innerHTML = '<td class="sim-dayno"></td>'
       + '<td><input type="number" step="any" class="sim-pl" placeholder="0" aria-label="Closed profit or loss for the day, in dollars"></td>'
       + '<td><input type="number" step="any" class="sim-dip" placeholder="0" aria-label="Worst intraday floating drawdown for the day, in dollars"></td>'
+      + '<td class="sim-eqreset-cell"' + (eqHidden ? " hidden" : "") + '><input type="number" step="any" class="sim-eqreset" placeholder="—" aria-label="Equity at the daily reset for this day, in dollars"></td>'
       + '<td style="text-align:center"><input type="checkbox" class="sim-news" aria-label="Traded around news this day"></td>'
       + '<td style="text-align:center"><input type="checkbox" class="sim-wknd" aria-label="Held a position over the weekend this day"></td>'
       + '<td><button type="button" class="sim-rm" aria-label="Remove this day row">✕</button></td>';
@@ -6969,9 +7139,10 @@
     var out = [];
     sim.simDayBody.querySelectorAll("tr").forEach(function(tr){
       var plV = tr.querySelector(".sim-pl").value, dipV = tr.querySelector(".sim-dip").value;
+      var eqEl = tr.querySelector(".sim-eqreset"), eqV = eqEl ? eqEl.value : "";
       var news = tr.querySelector(".sim-news").checked, wk = tr.querySelector(".sim-wknd").checked;
-      if (plV === "" && dipV === "" && !news && !wk) return;
-      out.push({ pl:parseFloat(plV) || 0, dip:Math.abs(parseFloat(dipV) || 0), news:news, wknd:wk });
+      if (plV === "" && dipV === "" && eqV === "" && !news && !wk) return;
+      out.push({ pl:parseFloat(plV) || 0, dip:Math.abs(parseFloat(dipV) || 0), eqReset:eqV, news:news, wknd:wk });
     });
     return out;
   }
@@ -7041,13 +7212,16 @@
     var bal = size, peakEOD = size, peakIntra = size, lastEnd = size;
     var closedInfo = null, targetDay = 0, processed = 0;
     var best = { pl:-Infinity, day:0 }, minHead = null, minHeadDay = 0;
-    var newsFlags = [], wkndFlags = [], pausedDays = [];
+    var newsFlags = [], wkndFlags = [], pausedDays = [], insuffDays = [];
     var rowsHtml = "", dayLines = [];
     for (var i = 0; i < days.length; i++){
       var d = days[i], dayNo = i + 1;
       var start = bal, worstEq = start - d.dip, end = start + d.pl;
       lastEnd = end;
-      var dailyFloor = R.dailyMode === "fixed" ? size - daily$ : ((R.dailyMode === "equity" || R.dailyMode === "balance" || R.dailyMode === "pause") ? start - daily$ : null);
+      var dailyFloor = null, dailyInsuff = false;
+      if (R.dailyMode === "fixed") dailyFloor = size - daily$;
+      else if (R.dailyMode === "equity" || R.dailyMode === "balance" || R.dailyMode === "pause") dailyFloor = start - daily$;
+      else if (R.dailyMode === "resetmax"){ dailyFloor = bgDailyFloor(size, start, d.eqReset, R.daily); if (dailyFloor === null) dailyInsuff = true; }
       var maxFloor, pkDyn = Math.max(peakIntra, end);
       if (R.maxMode === "static") maxFloor = size - max$;
       else if (R.maxMode === "eod") maxFloor = peakEOD - max$;
@@ -7055,6 +7229,8 @@
       var parts = [], cls = "", kill = null;
       if (R.dailyMode === "fixed" && worstEq < dailyFloor){
         kill = { kind:"daily", eq:worstEq, floor:dailyFloor, floorLabel:"Fixed daily floor", text:"Day " + dayNo + ": worst intraday equity fell to " + simMoney(worstEq) + " — below the fixed daily floor of " + simMoney(dailyFloor) + " (initial balance " + simMoney(size) + " − the fixed daily limit of " + simMoney(daily$) + ", " + R.daily + "% of initial). This firm's daily limit is a fixed $ amount from the initial balance, so the floor stays at " + simMoney(dailyFloor) + " even though the day started at " + simMoney(start) + ". The account is closed on day " + dayNo + " by the daily loss rule — " + simMoney(dailyFloor - worstEq) + " past the floor." };
+      } else if (R.dailyMode === "resetmax" && dailyFloor !== null && worstEq < dailyFloor){
+        kill = { kind:"daily", eq:worstEq, floor:dailyFloor, floorLabel:"Daily floor", text:"Day " + dayNo + ": worst intraday equity fell to " + simMoney(worstEq) + " — below the daily floor of " + simMoney(dailyFloor) + " (max(balance at reset " + simMoney(start) + ", equity at reset " + simMoney(parseFloat(d.eqReset)) + ") − " + R.daily + "% of the starting balance " + simMoney(size) + " = " + simMoney(daily$) + " — the verified Blue Guardian rule, Help Centre updated 13 Nov 2026). The account is closed on day " + dayNo + " by the daily loss rule — " + simMoney(dailyFloor - worstEq) + " past the floor." };
       } else if (R.dailyMode === "equity" && worstEq < dailyFloor){
         kill = { kind:"daily", eq:worstEq, floor:dailyFloor, floorLabel:"Daily floor", text:"Day " + dayNo + ": worst intraday equity fell to " + simMoney(worstEq) + " — below the daily floor of " + simMoney(dailyFloor) + " (start-of-day balance " + simMoney(start) + " − " + R.daily + "% of the initial " + simMoney(size) + " = " + simMoney(daily$) + "). The account is closed on day " + dayNo + " by the daily loss rule — " + simMoney(dailyFloor - worstEq) + " past the floor. The day's closed P/L (" + simSigned(d.pl) + ") never got a vote: on an equity-based rule the floating dip is the verdict." };
       } else if (R.dailyMode === "balance" && d.pl < -daily$){
@@ -7074,6 +7250,7 @@
           kill = { kind:"max", eq:breachEq, floor:maxFloor, floorLabel:"Max-loss floor", text:"Day " + dayNo + ": " + (R.maxMode === "eod" && end < maxFloor ? "the closing balance fell to " + simMoney(end) : "worst intraday equity fell to " + simMoney(breachEq)) + " — below " + maxDesc + ". The account is closed on day " + dayNo + " by the max loss rule — " + simMoney(maxFloor - breachEq) + " past the floor." };
         }
       }
+      if (dailyInsuff && !kill){ parts.push("Daily rule: Insufficient data"); if (!cls) cls = "sim-res-warn"; insuffDays.push(dayNo); }
       if (d.news && R.newsRestr){ newsFlags.push(dayNo); parts.push("News flag"); if (!cls) cls = "sim-res-warn"; }
       if (d.wknd && R.weekendRestr){ wkndFlags.push(dayNo); parts.push("Weekend flag"); if (!cls) cls = "sim-res-warn"; }
       if (kill){ parts = ["CLOSED — " + (kill.kind === "daily" ? "daily loss rule" : "max loss rule")]; cls = "sim-res-bad"; closedInfo = { day:dayNo, kind:kill.kind, text:kill.text, eq:kill.eq, floor:kill.floor, floorLabel:kill.floorLabel }; }
@@ -7082,13 +7259,13 @@
       if (d.pl > best.pl) best = { pl:d.pl, day:dayNo };
       if (!kill){
         var heads = [];
-        if (dailyFloor !== null && (R.dailyMode === "equity" || R.dailyMode === "fixed")) heads.push(worstEq - dailyFloor);
+        if (dailyFloor !== null && (R.dailyMode === "equity" || R.dailyMode === "fixed" || R.dailyMode === "resetmax")) heads.push(worstEq - dailyFloor);
         if (R.maxMode !== "eod" || R.maxRealTime) heads.push(worstEq - maxFloor); else heads.push(end - maxFloor);
         var h = Math.min.apply(null, heads);
         if (minHead === null || h < minHead){ minHead = h; minHeadDay = dayNo; }
       }
-      rowsHtml += '<tr class="' + cls + '"><td class="mono">Day ' + dayNo + '</td><td class="num">' + simMoney(start) + '</td><td class="num">' + simSigned(d.pl) + '</td><td class="num">' + simMoney(worstEq) + '</td><td class="num">' + (dailyFloor === null ? "—" : simMoney(dailyFloor)) + '</td><td class="num">' + simMoney(maxFloor) + "</td><td>" + parts.join(" · ") + "</td></tr>";
-      dayLines.push("Day " + dayNo + ": start " + simMoney(start) + " · closed " + simSigned(d.pl) + " · worst equity " + simMoney(worstEq) + " · daily floor " + (dailyFloor === null ? "n/a" : simMoney(dailyFloor)) + " · max-loss floor " + simMoney(maxFloor) + " · " + parts.join(" · "));
+      rowsHtml += '<tr class="' + cls + '"><td class="mono">Day ' + dayNo + '</td><td class="num">' + simMoney(start) + '</td><td class="num">' + simSigned(d.pl) + '</td><td class="num">' + simMoney(worstEq) + '</td><td class="num">' + (dailyFloor === null ? (dailyInsuff ? "Insufficient data" : "—") : simMoney(dailyFloor)) + '</td><td class="num">' + simMoney(maxFloor) + "</td><td>" + parts.join(" · ") + "</td></tr>";
+      dayLines.push("Day " + dayNo + ": start " + simMoney(start) + " · closed " + simSigned(d.pl) + " · worst equity " + simMoney(worstEq) + " · daily floor " + (dailyFloor === null ? (dailyInsuff ? "Insufficient data" : "n/a") : simMoney(dailyFloor)) + " · max-loss floor " + simMoney(maxFloor) + " · " + parts.join(" · "));
       if (kill) break;
       bal = end;
       if (end > peakEOD) peakEOD = end;
@@ -7155,7 +7332,9 @@
       ? "Simulated breach on day " + closedInfo.day + " · Equity " + simMoney(closedInfo.eq) + " · " + closedInfo.floorLabel + " " + simMoney(closedInfo.floor) + " · " + simMoney(closedInfo.floor - closedInfo.eq) + " below limit"
       : "No breach in " + processed + " simulated day(s) · Final balance " + simMoney(finalBal) + (minHead !== null && minHeadDay ? " · Tightest day: day " + minHeadDay + ", " + simMoney(Math.max(minHead, 0)) + " above the binding floor" : "");
     var svScope = "Scope: " + (R.t2 !== null && R.t2 !== undefined ? "Phase 1 only — the Phase 2 target (" + R.t2 + "%) is listed in the rules panel, not simulated. " : "single-phase model. ")
-      + "Equity at the daily reset moment is not modelled separately — intraday equity is approximated by the worst floating dip entered for each day. "
+      + (R.dailyMode === "resetmax"
+        ? "Daily floors use the equity-at-reset figure entered for each day (floor = max(balance, equity at reset) − " + R.daily + "% of the starting balance). " + (insuffDays.length ? "Day(s) " + insuffDays.join(", ") + " had no reset equity entered, so the daily rule reports Insufficient data for those days — only the max-loss floor was enforced there. " : "")
+        : "Equity at the daily reset moment is not modelled separately — intraday equity is approximated by the worst floating dip entered for each day. ")
       + "Source &amp; assumptions: " + (R.custom ? "Custom assumptions — your own numbers only, no firm data used." : "Firm-published rules for " + fname + " (" + R.label + "), checked 18 Nov 2026. Basis: " + R.basis + ".");
     sim.simVerdict.className = "sim-verdict " + vCls;
     sim.simVerdict.innerHTML = '<div class="sv-k">Simulation result · ' + fname + " — " + R.label + " · " + simMoney(size) + " account" + (runTag ? '<span class="sv-tag">' + runTag + "</span>" : "") + '</div><div class="sv-t">' + vTitle + '</div><div class="sv-line">' + svLine + '</div><div class="sv-s">' + vSub + '</div><div class="sv-scope">' + svScope + "</div>";
@@ -7170,6 +7349,9 @@
       ["News trading", R.custom ? "Not set in Custom mode — ticks recorded, never enforced" : R.newsNV ? "<span class='pending'>Not verified</span> for this model — flags not enforced (" + R.news + ")" : newsFlags.length ? "Rule violation — account at risk / flagged on day(s) " + newsFlags.join(", ") + ". Rule: " + R.news : R.newsRestr ? "No restricted news days ticked. Rule: " + R.news : "No restriction on this model. Rule: " + R.news],
       ["Weekend holding", R.custom ? "Not set in Custom mode — ticks recorded, never enforced" : R.weekendNV ? "<span class='pending'>Not verified</span> for this model — flags not enforced (" + R.weekend + ")" : wkndFlags.length ? "Rule violation — account at risk / flagged on day(s) " + wkndFlags.join(", ") + ". Rule: " + R.weekend : R.weekendRestr ? "No restricted weekend holds ticked. Rule: " + R.weekend : "No restriction on this model. Rule: " + R.weekend]
     ];
+    if (R.dailyMode === "resetmax") checks.push(["Daily loss — higher of balance/equity at reset", insuffDays.length
+      ? "Insufficient data on day(s) " + insuffDays.join(", ") + " — no equity at reset was entered, so no daily floor was computed or enforced for those days. The max-loss floor still applied. Rule: floor = max(balance, equity) at the " + R.reset + " reset − " + R.daily + "% of the starting balance (Blue Guardian Help Centre, updated 13 Nov 2026; checked 18 Nov 2026)."
+      : "Enforced from your reset-equity entries — floor = max(balance, equity) at the " + R.reset + " reset − " + R.daily + "% of the starting balance (Blue Guardian Help Centre, updated 13 Nov 2026; checked 18 Nov 2026)."]);
     if (pausedDays.length) checks.push(["Daily-limit pauses", "Session paused on day(s) " + pausedDays.join(", ") + " — under the published rule this pauses trading; it does not close the account."]);
     if (R.dailyMode === "nv") checks.push(["Daily loss basis", "<span class='pending'>Unverified</span> — the daily floor was NOT enforced in this run. Only the max-loss floor was simulated."]);
     sim.simChecks.innerHTML = checks.map(function(c){ return '<div class="sim-check"><span style="color:var(--muted)">' + c[0] + "</span><span>" + c[1] + "</span></div>"; }).join("");
@@ -7177,6 +7359,9 @@
     var fixes = [];
     if (closedInfo && closedInfo.kind === "daily" && R.dailyMode === "equity"){
       fixes.push("Cap the dip, not just the day: on this equity-based rule the worst floating dip must stay under " + simMoney(daily$) + " from the day's start (" + R.daily + "% of initial). Trade with a hard intraday equity stop at roughly " + simMoney(daily$ * 0.8) + " of floating loss to keep a buffer — the killing day dipped " + simMoney(days[closedInfo.day - 1].dip) + ".");
+    }
+    if (closedInfo && closedInfo.kind === "daily" && R.dailyMode === "resetmax"){
+      fixes.push("Defend the reset snapshot: on this rule the floor is set at the reset from the higher of balance or equity, so floating profit open at reset raises the next floor by the same amount — while the dip budget under it stays " + simMoney(daily$) + " (" + R.daily + "% of the starting balance). After a day that ends with open profit, cut size the next day: the floor followed your equity up, your room did not grow.");
     }
     if (closedInfo && closedInfo.kind === "daily" && R.dailyMode === "balance"){
       fixes.push("Stop the close earlier: the closed day lost " + simMoney(-days[closedInfo.day - 1].pl) + " against a " + simMoney(daily$) + " daily budget. A daily stop-out at " + simMoney(daily$ * 0.8) + " of closed loss keeps a buffer under the limit.");
