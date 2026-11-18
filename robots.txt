@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kenclark1209-tradewars.github.io/risk-first-prop-lab/sitemap.xml
+Sitemap: https://risk-first-prop-lab.vercel.app/sitemap.xml

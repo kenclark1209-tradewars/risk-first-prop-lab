@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/directory/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ftmo-review/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fundednext-review/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/the5ers-review/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/funding-pips-review/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/e8-markets-review/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/alpha-capital-review/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fundednext-payout-test/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/rule-trap-daily-dd/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/country-check/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/prop-firm-scorecard/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/prop-firm-match/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/trader-viet/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/community-reviews/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/payout-tracker/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/transparency/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/for-prop-firms/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/affiliate-disclosure/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/all-prop-firms/",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/all-prop-firms",
+      "destination": "/directory/",
+      "permanent": true
+    }
+  ]
+}
