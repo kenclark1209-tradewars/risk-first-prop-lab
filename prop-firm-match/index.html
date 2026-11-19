@@ -449,6 +449,7 @@
     section.blk{padding:48px 0}
     .hero-mark{max-width:118px;padding:14px}
     table.decision,table.dir{min-width:0}
+    .article-body table.dir{min-width:0}
     table.decision thead,table.dir thead{display:none}
     table.decision tbody tr,table.dir tbody tr{display:block;border-top:1px solid var(--line);padding:10px 6px}
     table.decision tbody tr:first-child,table.dir tbody tr:first-child{border-top:0}
@@ -724,6 +725,27 @@
     #h2hResult th,#h2hResult td{padding:8px 7px;overflow-wrap:break-word}
     #h2hResult td:first-child{width:23%}
   }
+  /* ============ Wave 0 (P0-3) + Wave 1 (additive only) ============
+     P0-3a: the simulator result card clears the sticky header when the run
+     scrolls it into view. P0-3b: the day-by-day result table scrolls inside
+     its own frame at every width. P0-3c: compare headers wrap cleanly at
+     390px. Wave 1: loss-column notes, verification stamps, PT:DD figures. */
+  #simResults{scroll-margin-top:84px}
+  .sim-verdict{scroll-margin-top:84px}
+  .sim-daywrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;min-width:0}
+  .planner-out{min-width:0}
+  .cmp-sheet-head{flex-wrap:wrap}
+  .cmp-sheet-head h2{flex:1 1 200px;min-width:0;overflow-wrap:break-word}
+  #cmpSection>h2{overflow-wrap:break-word}
+  @media (max-width:480px){ .cmp-sheet-head h2{font-size:22px} }
+  .loss-cell{display:block;min-width:0;overflow-wrap:break-word}
+  .loss-note{display:block;font-size:12px;color:var(--muted);line-height:1.45;margin-top:3px;overflow-wrap:break-word;white-space:normal}
+  .loss-src{font-size:12px;white-space:nowrap}
+  .verify-stamp{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);line-height:1.65;margin:14px 0 0}
+  .verify-stamp a{color:var(--gold-soft)}
+  html[data-theme="light"] .verify-stamp a{color:var(--gold-text)}
+  .ptdd{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--text)}
+  table.challenges td,table.challenges th{vertical-align:top}
   /* ============ Animated market background (visual only, additive) ============
      Layer order: body base -> #mktBg canvas (candles + waves) -> #mktVeil
      (readability gradient) -> page content. Both layers are fixed, inert and
@@ -820,7 +842,7 @@
    over, so the correct view is on screen from the first frame — the homepage is
    never rendered above a sub-page on a direct open or reload. */
 (function(){
-  var ROUTES = ["home","directory","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","challenge-planner","true-cost-to-funded","rule-trap-simulator","gold-cost","prop-firm-match","trader-viet","withdraw-to-vietnam","community-reviews","payout-tracker","denial-index","affiliate-disclosure","for-prop-firms","transparency","the-funded-trader-review","fxify-review","blue-guardian-review","instant-funding-review","apex-review","myfundedfutures-review","breakout-review","goat-funded-review","hantec-rzr-review","topstep-review","404"];
+  var ROUTES = ["home","directory","challenges","changelog","ftmo-review","fundednext-review","the5ers-review","funding-pips-review","e8-markets-review","alpha-capital-review","fundednext-payout-test","rule-trap-daily-dd","country-check","prop-firm-scorecard","challenge-planner","true-cost-to-funded","rule-trap-simulator","gold-cost","prop-firm-match","trader-viet","withdraw-to-vietnam","community-reviews","payout-tracker","denial-index","affiliate-disclosure","for-prop-firms","transparency","the-funded-trader-review","fxify-review","blue-guardian-review","instant-funding-review","apex-review","myfundedfutures-review","breakout-review","goat-funded-review","hantec-rzr-review","topstep-review","404"];
   function slug(){
     var h = window.location.hash.replace(/^#\/?/, "").replace(/\/$/, "");
     if (h && ROUTES.indexOf(h.split("/")[0]) >= 0) return h.split("/")[0];
@@ -860,6 +882,7 @@
       <div class="navdrop">
         <button class="navdrop-btn" id="toolsBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="toolsPanel">Tools <span class="nd-caret" aria-hidden="true">▾</span></button>
         <div class="navdrop-panel" id="toolsPanel" hidden>
+          <a href="/challenges/" data-route="challenges" data-nav="challenges"><b>$100K Challenges &amp; PT:DD</b><span>Every reviewed challenge normalised to $100K: targets, loss limits, max loss type and PT:DD side by side.</span></a>
           <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner"><b>Challenge Pass Planner</b><span>A day-by-day pass plan from each firm's own rules and hidden rules.</span></a>
           <a href="/true-cost-to-funded/" data-route="true-cost-to-funded" data-nav="true-cost-to-funded"><b>True Cost to Get Funded</b><span>What getting funded really costs: your pass probability per attempt, expected attempts and expected total cost — not the sticker price.</span></a>
           <a href="/rule-trap-simulator/" data-route="rule-trap-simulator" data-nav="rule-trap-simulator"><b>Rule Trap Simulator</b><span>Break the rules on paper first — run a day-by-day log against each firm's real loss rules.</span></a>
@@ -894,6 +917,8 @@
         <a href="/directory/" data-route="directory" data-nav="directory">Directory</a>
         <a href="/prop-firm-match/" data-route="prop-firm-match" data-nav="prop-firm-match">Match</a>
         <a href="/challenge-planner/" data-route="challenge-planner" data-nav="challenge-planner">Planner</a>
+        <a href="/challenges/" data-route="challenges" data-nav="challenges">Challenges &amp; PT:DD</a>
+        <a href="/changelog/" data-route="changelog" data-nav="changelog">Changelog</a>
         <p class="toolslbl">Tools</p>
         <a href="/true-cost-to-funded/" data-route="true-cost-to-funded" data-nav="true-cost-to-funded">True Cost to Get Funded</a>
         <a href="/rule-trap-simulator/" data-route="rule-trap-simulator" data-nav="rule-trap-simulator">Rule Trap Simulator</a>
@@ -1004,13 +1029,13 @@
         <thead><tr><th class="sortable" data-sort="name">Firm ↕</th><th>Score</th><th>Model</th><th>Daily / Max loss</th><th class="num sortable" data-sort="split">Max split ↕</th><th class="num sortable" data-sort="price">Entry from ↕</th><th class="num">XAUUSD all-in cost</th><th class="optcol" data-col="country">Country · years</th><th class="optcol" data-col="platforms">Platforms</th><th class="optcol" data-col="vietnam">Vietnam</th><th class="optcol" data-col="actions">Actions</th></tr></thead>
         <tbody id="decisionBody"></tbody>
       </table></div></div>
-      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (59)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a><a class="btn btn-line" href="/challenge-planner/" data-route="challenge-planner">Plan your pass — Challenge Pass Planner</a><a class="btn btn-line" href="/true-cost-to-funded/" data-route="true-cost-to-funded">True Cost to Get Funded — what a challenge really costs</a><a class="btn btn-line" href="/rule-trap-simulator/" data-route="rule-trap-simulator">Break the rules on paper — Rule Trap Simulator</a><a class="btn btn-line" href="/gold-cost/" data-route="gold-cost">Gold Cost League Table — what gold really costs per firm</a><a class="btn btn-line" href="/denial-index/" data-route="denial-index">Payout Denial Index — payouts refused, counted</a></div>
+      <div class="dl-row"><a class="btn btn-navy" href="/directory/" data-route="directory">View All Firms — Directory (59)</a><a class="btn btn-line" href="/prop-firm-match/" data-route="prop-firm-match">Open the Multi-Comparer</a><a class="btn btn-line" href="/payout-tracker/" data-route="payout-tracker">Payout Tracker</a><a class="btn btn-line" href="/challenge-planner/" data-route="challenge-planner">Plan your pass — Challenge Pass Planner</a><a class="btn btn-line" href="/true-cost-to-funded/" data-route="true-cost-to-funded">True Cost to Get Funded — what a challenge really costs</a><a class="btn btn-line" href="/challenges/" data-route="challenges">$100K Challenges — targets, loss limits &amp; PT:DD</a><a class="btn btn-line" href="/rule-trap-simulator/" data-route="rule-trap-simulator">Break the rules on paper — Rule Trap Simulator</a><a class="btn btn-line" href="/gold-cost/" data-route="gold-cost">Gold Cost League Table — what gold really costs per firm</a><a class="btn btn-line" href="/denial-index/" data-route="denial-index">Payout Denial Index — payouts refused, counted</a></div>
     </section>
 
     <section class="blk band" id="updates">
       <div class="sec-head"><span class="sec-no">NEW &amp; UPDATED</span><h2>New &amp; Updated — changelog</h2></div>
       <div class="rule"></div>
-      <p class="sec-sub">What changed, when, and where the firm itself announced it. Newest first. Every entry links to the firm's own official page — never to a review aggregator. The full rule-change history also lives in the <a href="/directory/" data-route="directory">Directory's Rule Change Tracker</a>.</p>
+      <p class="sec-sub">What changed, when, and where the firm itself announced it. Newest first. Every entry links to the firm's own official page — never to a review aggregator. The full rule-change history lives on the <a href="/changelog/" data-route="changelog">Changelog &amp; Rule Change Tracker page</a> and in the <a href="/directory/" data-route="directory">Directory</a>.</p>
       <div class="chg" id="homeChangelog"></div>
     </section>
 
@@ -2670,27 +2695,27 @@
         <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="market"> Market</label>
         <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="hq"> HQ</label>
         <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="founded"> Founded</label>
-        <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="updated"> Last updated</label>
+        <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="updated"> Last verified</label>
         <label><input type="checkbox" class="coltoggle" data-target="dirWrap" data-col="next"> Next review</label>
         <span class="cc-label" style="text-transform:none;letter-spacing:0">Tick up to 3 firms to compare ↓</span>
       </div>
       <div class="tblwrap" id="dirWrap"><table class="dir" aria-label="All prop firms directory">
-        <thead><tr><th>Firm</th><th class="optcol" data-col="market">Market</th><th class="optcol" data-col="hq">HQ</th><th class="num optcol" data-col="founded">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th>Vietnam</th><th>Lab status</th><th class="optcol" data-col="updated">Last updated</th><th class="optcol" data-col="next">Next review</th><th>Links</th></tr></thead>
+        <thead><tr><th>Firm</th><th class="optcol" data-col="market">Market</th><th class="optcol" data-col="hq">HQ</th><th class="num optcol" data-col="founded">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th class="num">Daily Loss</th><th class="num">Max Loss</th><th>Max Loss Type</th><th>Vietnam</th><th>Lab status</th><th class="optcol" data-col="updated">Last verified</th><th class="optcol" data-col="next">Next review</th><th>Links</th></tr></thead>
         <tbody id="dirBody"></tbody>
       </table></div>
-      <p class="note">Sources: for the 16 firms with full Lab reviews, every figure was checked against the firm's own homepage / FAQ / Help Centre on 18 Nov 2026 (official link in each review). For the other vetted brands, the brand list, published max allocation, the few published splits and Vietnam-hub status come from PropFirmMatch (propfirmmatch.com), checked 18 Nov 2026 — each such row links to its PropFirmMatch profile as its source. PropFirmMatch does not publish a lowest challenge price, country or platform list on its directory pages, so those cells stay “No data yet — Unverified”; no figure is taken from any other aggregator. Found an error? Bring the firm's own page to the Country Check topic and the row gets corrected with a date.</p>
+      <p class="note">Sources: for the 16 firms with full Lab reviews, every figure was checked against the firm's own homepage / FAQ / Help Centre on 18 Nov 2026 (official link in each review). For the other vetted brands, the brand list, published max allocation, the few published splits and Vietnam-hub status come from PropFirmMatch (propfirmmatch.com), checked 18 Nov 2026 — each such row links to its PropFirmMatch profile as its source. PropFirmMatch does not publish a lowest challenge price, country or platform list on its directory pages, so those cells stay “No data yet — Unverified”; no figure is taken from any other aggregator. Found an error? Bring the firm's own page to the Country Check topic and the row gets corrected with a date. Loss columns (Daily Loss, Max Loss, Max Loss Type) are filled only for the firms with full Lab reviews, from each firm's own published rules checked 18 Nov 2026 — every other row reads “Chưa kiểm chứng” (not yet verified). The same loss rules, normalised to a $100K account with PT:DD, are on the <a href="/challenges/" data-route="challenges">Challenges page</a>.</p>
       
       <h2 style="margin-top:40px">Lab-reviewed, not on PropFirmMatch (2)</h2>
       <p>Two firms the Lab has reviewed in full that PropFirmMatch does <b>not</b> list in its vetted directory — so they do not count toward the 59 vetted brands in the main table above, and they are not presented as PropFirmMatch-vetted. Their figures were checked against each firm's own pages on 18 Nov 2026, exactly as in their full reviews, which are linked from each row.</p>
       <div class="tblwrap" id="dirLabWrap"><table class="dir" aria-label="Lab-reviewed firms not listed by PropFirmMatch">
-        <thead><tr><th>Firm</th><th class="optcol" data-col="market">Market</th><th class="optcol" data-col="hq">HQ</th><th class="num optcol" data-col="founded">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th>Vietnam</th><th>Lab status</th><th class="optcol" data-col="updated">Last updated</th><th class="optcol" data-col="next">Next review</th><th>Links</th></tr></thead>
+        <thead><tr><th>Firm</th><th class="optcol" data-col="market">Market</th><th class="optcol" data-col="hq">HQ</th><th class="num optcol" data-col="founded">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th class="num">Daily Loss</th><th class="num">Max Loss</th><th>Max Loss Type</th><th>Vietnam</th><th>Lab status</th><th class="optcol" data-col="updated">Last verified</th><th class="optcol" data-col="next">Next review</th><th>Links</th></tr></thead>
         <tbody id="dirLabBody"></tbody>
       </table></div>
 
       <h2 style="margin-top:40px">Closed brands — kept as warnings (5)</h2>
       <p>These five brands have <b>closed</b>. They are kept on this page only as a warning: <b>none of them can be bought</b> — do not pay any site still selling their challenges, whatever the old marketing pages claim. They do not count toward the 59 vetted brands in the main table above. The Funded Trader's full closure case study is linked from its row.</p>
       <div class="tblwrap" id="dirClosedWrap"><table class="dir" aria-label="Closed prop firm brands — warnings only, not buyable">
-        <thead><tr><th>Firm</th><th class="optcol" data-col="market">Market</th><th class="optcol" data-col="hq">HQ</th><th class="num optcol" data-col="founded">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th>Vietnam</th><th>Lab status</th><th class="optcol" data-col="updated">Last updated</th><th class="optcol" data-col="next">Next review</th><th>Links</th></tr></thead>
+        <thead><tr><th>Firm</th><th class="optcol" data-col="market">Market</th><th class="optcol" data-col="hq">HQ</th><th class="num optcol" data-col="founded">Founded</th><th>Max funding (published)</th><th>Split (published)</th><th class="num">Entry from</th><th class="num">Daily Loss</th><th class="num">Max Loss</th><th>Max Loss Type</th><th>Vietnam</th><th>Lab status</th><th class="optcol" data-col="updated">Last verified</th><th class="optcol" data-col="next">Next review</th><th>Links</th></tr></thead>
         <tbody id="dirClosedBody"></tbody>
       </table></div>
 
@@ -2717,6 +2742,47 @@
       </table></div>
 
       <div class="callout"><h3>Shortlist from the directory</h3><p>Directory tells you what exists; <a href="/prop-firm-match/" data-route="prop-firm-match" style="color:var(--gold-light)">Prop Firm Match</a> tells you which of the sixteen fully reviewed firms fits your budget, style and country — and <a href="/community-reviews/" data-route="community-reviews" style="color:var(--gold-light)">User Reviews</a> tell you what traders in the community report.</p><a class="btn btn-gold btn-sm" href="/prop-firm-match/" data-route="prop-firm-match">Open Prop Firm Match →</a></div>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== VIEW: CHALLENGES ($100K NORMALISED + PT:DD) ===================== -->
+<div data-view="challenges" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Challenges</span></nav>
+      <h1>$100K Challenges Compared: Targets, Loss Limits &amp; PT:DD</h1>
+      <p class="standfirst">Every challenge model in the Lab's rule table, normalised to a $100K account so the numbers sit side by side: steps, profit target, daily loss, max loss, max loss type, PT:DD, split, payout frequency and price. One row per model — a firm's 1-Step and 2-Step are different products with different survival maths, so they get different rows.</p>
+      <div class="byline"><span>Challenges · Risk First Prop Lab</span><span>Rules &amp; prices checked 18 Nov 2026</span><span>Next re-check 18 Dec 2026</span></div>
+    </div>
+    <div class="article-body" style="max-width:1060px">
+      <div class="callout"><h3>How PT:DD is calculated</h3><p><span class="mono">PT:DD = Phase 1 profit target % ÷ max loss %</span> — how much profit the challenge demands for each unit of total loss room. Worked example, FTMO 2-Step: 10% ÷ 10% = <b>1.00</b>. Blue Guardian 2-Step Standard: 8% ÷ 8% = <b>1.00</b>. E8 One (Help Centre preset): 6% ÷ 4% = <b>1.50</b>. PT:DD says nothing about the daily limit, the drawdown type or whether the fee comes back — read it next to the Max Loss Type column, never alone. It is a ratio of two published percentages, not a score and not a ranking.</p></div>
+      <p>Rules come from the same Lab rule table as the <a href="/challenge-planner/" data-route="challenge-planner">Challenge Pass Planner</a> and the <a href="/rule-trap-simulator/" data-route="rule-trap-simulator">Rule Trap Simulator</a> — each firm's own published terms, checked 18 Nov 2026, with the source linked in every price cell. Prices are shown exactly as stored in Lab data, in each firm's own currency, never converted. Where the Lab holds no verified price for a model, the cell reads <span class="pending">Chưa kiểm chứng</span> (not yet verified) instead of an estimate; where only a smaller size's price is verified, the cell says so and marks the $100K price Chưa kiểm chứng. Futures models (Apex, MyFundedFutures, Topstep) price and target in dollars on their reference sizes — their rows carry the reference size in the price cell.</p>
+      <div class="tblwrap"><table class="challenges" aria-label="Normalised $100K challenge comparison" style="min-width:1180px">
+        <thead><tr><th>Firm · Model</th><th>Steps</th><th class="num">Profit Target</th><th class="num">Daily Loss</th><th class="num">Max Loss</th><th>Max Loss Type</th><th class="num">PT:DD</th><th>Split</th><th>Payout Frequency</th><th>Price · Billing · Verified</th></tr></thead>
+        <tbody id="chBody"></tbody>
+      </table></div>
+      <p class="note">Max Loss Type vocabulary: <b>Static</b> — the floor never moves · <b>Trailing Balance</b> — the floor follows your closed balance upward · <b>Trailing Equity</b> — the floor follows live equity · <b>EOD Trailing</b> — the floor trails the end-of-day balance · <b>lock-at-start</b> — a trailing floor that stops at the starting balance once a profit threshold is reached. A type whose basis the Lab could not confirm on the firm's own pages is flagged in the cell. Full rule audits, hidden rules and calculation bases: inside each firm's review, and in the <a href="/directory/" data-route="directory">Directory</a> loss columns.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== VIEW: CHANGELOG + RULE CHANGE TRACKER ===================== -->
+<div data-view="changelog" hidden>
+  <main class="wrap">
+    <div class="article-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <span>Changelog</span></nav>
+      <h1>Changelog &amp; Rule Change Tracker</h1>
+      <p class="standfirst">What changed, when, and where the firm itself announced it. Every entry is dated and links to the firm's own official page — never to a review aggregator. Rule changes come first; the site's own changelog follows.</p>
+      <div class="byline"><span>Changelog · Risk First Prop Lab</span><span>Checked 18 Nov 2026</span></div>
+    </div>
+    <div class="article-body">
+      <h2>Rule Change Tracker</h2>
+      <p>Every rule, price, split and country change the Lab has caught on a firm's own official pages — newest first, each with its official source. The same tracker also lives in the <a href="/directory/" data-route="directory">Directory</a>. Spotted a change first? Bring the firm's page to the Rule Trap Audit topic and it gets logged with a date.</p>
+      <div class="chg" id="pageRuleTracker"></div>
+      <h2 style="margin-top:40px">Full changelog — site &amp; firms</h2>
+      <p>Site launches, new tools and reviews, and firm changes, in one dated list — newest first. Changes to the methodology itself are versioned on the <a href="/transparency/" data-route="transparency">Transparency page</a>.</p>
+      <div class="chg" id="pageChangelog"></div>
     </div>
   </main>
 </div>
@@ -2854,6 +2920,12 @@
         <li>Star ratings without the review count beside them.</li>
         <li>Rankings influenced by commissions, sponsorships or firm requests.</li>
         <li>Personal data from review submissions beyond the nickname the trader chose to publish.</li>
+      </ul>
+      <h2>Methodology version history</h2>
+      <p>Every change to the method itself — not to firm data — is versioned here with its date and reason. Firm rule, price and country changes are logged separately in the <a href="/changelog/" data-route="changelog">Changelog &amp; Rule Change Tracker</a>.</p>
+      <ul>
+        <li><b>V1.1 — 18 Nov 2026 (later the same day).</b> Decision-support data presentation extended, formulas untouched: (1) Daily Loss, Max Loss and Max Loss Type columns added to the Directory and the side-by-side comparer, backfilled only for the firms with full Lab reviews from their own published rules — every other firm reads “Chưa kiểm chứng”; max-loss types use one fixed vocabulary (Static / Trailing Equity / Trailing Balance / EOD Trailing / lock-at-start). (2) A normalised $100K challenge table published on the <a href="/challenges/" data-route="challenges">Challenges page</a> with PT:DD — defined on the page as the Phase 1 profit target divided by the max loss — and a billing label plus a last-verified date on every price. (3) “Last verified [date] · source” stamps added to Directory rows and to every full review; a stamp that predates the latest full check is flagged “re-check due” on the page itself. (4) The changelog and Rule Change Tracker given their own page at <a href="/changelog/" data-route="changelog">/changelog/</a>. No ranking, score, verdict or simulator formula changed in V1.1.</li>
+        <li><b>V1.0 — 18 Nov 2026.</b> Initial published methodology: the five rankings above; the official-source-only rule (a figure is published only when it appears on the firm's own homepage, FAQ, Help Centre or Terms, or in Lab / community proof — aggregators are never a primary source and Trustpilot is never evidence); the interim documentation score (payout points stay at zero until a timed Lab payout completes); the evidence grades on the Payout Denial Index; and the commercial fence — money buys display position and publishing speed only, never a score, a ranking, a verdict or a review. Published together with the completed source audit of 18 Nov 2026, in which every rule, fee and payout figure on the six full reviews and the Directory was re-checked against official pages and unconfirmable figures were relabelled “Unverified”.</li>
       </ul>
       <div class="callout"><h3>Challenge this method</h3><p>Argue with any ranking in the Ask Thang topic — changes to the method are published here with reasons and a date.</p><a class="btn btn-gold btn-sm" href="https://t.me/RiskFirstPropLab" target="_blank" rel="noopener">Open Ask Thang topic ↗</a></div>
     </div>
@@ -3143,7 +3215,7 @@
             <p id="simKill" style="font-size:15px;line-height:1.65;margin:0"></p>
           </div>
           <div class="lbl">Day by day</div>
-          <div class="tblwrap" style="margin-bottom:16px"><table class="planner-table" aria-label="Simulation results by day">
+          <div class="tblwrap sim-daywrap" id="simDayWrap" style="margin-bottom:16px"><table class="planner-table" aria-label="Simulation results by day">
             <thead><tr><th>Day</th><th class="num">Start balance</th><th class="num">Closed P/L</th><th class="num">Worst equity</th><th class="num">Daily floor</th><th class="num">Max-loss floor</th><th>Status</th></tr></thead>
             <tbody id="simResBody"></tbody>
           </table></div>
@@ -4493,7 +4565,7 @@
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/" data-route="home">Home</a> <span>›</span> <a href="/directory/" data-route="directory">Directory</a> <span>›</span> <span>Goat Funded Trader Review</span></nav>
       <h1>Goat Funded Trader Review 2026: Suspended Trustpilot Rating &amp; a November Payout-Rejection Cluster</h1>
       <p class="standfirst">On paper, Goat Funded Trader (GFT) has the widest menu and some of the cheapest entries in Batch 2 — plus a homepage promise to pay an extra $1,000 if rewards are late. In November 2026, its Trustpilot page tells a different story: the rating is suspended for guideline breaches, and a dense cluster of traders report payouts rejected for alleged “coordinated group trading” — including payouts the firm had already approved in writing. This review weighs the product against the payout record, and the payout record wins.</p>
-      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Rules &amp; prices checked 18 Nov 2026</span><span>Series: Prop Lab #014</span><span>Last updated 18 Nov 2026</span><span>Next review 18 Dec 2026</span></div>
+      <div class="byline"><span>By Thang Nguyen · FTMO Prime Trader</span><span>Published 18 Nov 2026</span><span>Rules &amp; prices checked 18 Nov 2026</span><span>Series: Prop Lab #014</span><span>Last updated 19 Nov 2026</span><span>Next review 18 Dec 2026</span></div>
     </div>
     <div class="article-body">
       <div class="verdictbox">
@@ -4533,6 +4605,8 @@
           <tr><td>Weekend holding</td><td><span class="pending">Unverified</span> from official pages at check time; secondary sources disagree.</td></tr>
           <tr><td>Tools &amp; connection</td><td><b>VPN/VPS/proxy/hosted machines banned since 6 Oct 2026.</b> Hedging strictly prohibited; copy trading only via the firm's internal tool; third-party EAs and VPS tools banned (the firm may request your EA's code). Accounts inactive 45 days are closed.</td></tr>
           <tr><td>Consistency</td><td>15% best-day rule on Instant HERO and Instant GOAT funded accounts; none on most evaluation models (PropFirmGrade, Nov 2026). A 1% floating-loss variant exists on 2-Step GOAT (open trades must stay within 1% floating loss — homepage).</td></tr>
+          <tr><td>Inactivity — Goat Funded Futures</td><td><b>14 consecutive days without a trade = breach</b>, and the account is closed (evaluation and funded, all plans); the fee is not refunded. The window widened from 7 to 14 days on <b>7 Nov 2026</b>. Tell support in advance if you will be away. (<a href="https://help.goatfundedfutures.com/manage-account.html" target="_blank" rel="noopener">Goat Funded Futures Help Centre — Managing your account</a>, updated 18 Nov 2026.)</td></tr>
+          <tr><td>Holding time — Goat Funded Futures</td><td>From <b>9 Nov 2026</b>, a <b>1-minute holding rule</b> replaces the 2-minute microscalping rule on all plans: at evaluation pass and at each payout request, at least <b>70% of closed trades</b> and at least <b>70% of net profit</b> must come from trades held longer than 1 minute. If either share is missed, the payout request is declined and profit from trades held under 1 minute is deducted — this is not a breach. (<a href="https://help.goatfundedfutures.com/en/articles/14095625-instant-classic-specifications-rules-and-payouts" target="_blank" rel="noopener">Goat Funded Futures Help Centre — Instant Classic specifications, rules and payouts</a>.)</td></tr>
         </tbody></table></div>
 
       <h2>Fees &amp; trading costs</h2>
@@ -4991,6 +5065,8 @@
   var PAGES = {
     "home": { path:"", title:"Risk First Prop Lab — Prop Firm Reviews, Directory, Payout Tests & Rule Audits", desc:"Independent prop firm lab: sixteen full reviews — FTMO, FundedNext, The5ers, Funding Pips, E8 Markets, Alpha Capital, FXIFY, Blue Guardian, Instant Funding, Apex, MyFundedFutures, Breakout Prop, Goat Funded Trader, RZR Funded and Topstep, plus a closure case study of The Funded Trader — a 59-brand directory, payout tests, rule trap audits and community reviews. No paid rankings.", type:"website" },
     "directory": { path:"directory/", title:"All Prop Firms Directory: 59 Major Firms Compared | Risk First Prop Lab", desc:"Filterable directory of 59 major prop firms vetted by PropFirmMatch (checked 18 Nov 2026): max funding, profit split, entry price, Vietnam access and Lab test status. 16 firms carry full Lab reviews; unverified data labelled, closed firms flagged, plus 38 unlisted firms shown separately.", type:"website" },
+    "challenges": { path:"challenges/", title:"$100K Challenges Compared: Profit Target, Loss Limits & PT:DD | Risk First Prop Lab", desc:"Every reviewed firm's challenge normalised to a $100K account: steps, profit target, daily loss, max loss, max loss type, PT:DD (profit target divided by max loss), split, payout frequency and price with billing label and verification date — from the Lab's own rule table, checked 18 Nov 2026. Unverified prices are labelled, never invented.", type:"website" },
+    "changelog": { path:"changelog/", title:"Changelog & Rule Change Tracker | Risk First Prop Lab", desc:"Every rule, price, split and country change the Lab has caught on a firm's own official pages, plus the site's own changelog — newest first, each entry dated and linked to its official source. Checked 18 Nov 2026.", type:"website" },
     "ftmo-review": { path:"ftmo-review/", title:"FTMO Review 2026: Rules, XAUUSD Costs, Payouts & Verdict | Risk First Prop Lab", desc:"FTMO audited in full: 2-Step 10%/5% targets, 5% equity-based daily loss, 10% static max loss, fees from €89, gold commission formula, 80–90% split, payout terms, pros, cons and a Risk First verdict. Measured costs awaiting measurement.", type:"review", firm:"FTMO", headline:"FTMO Review 2026: Rules, XAUUSD Costs, Payouts & Verdict" },
     "fundednext-review": { path:"fundednext-review/", title:"FundedNext Review 2026: Stellar Rules, Costs, Payouts & Vietnam Ban | Risk First Prop Lab", desc:"FundedNext Stellar 2-Step audited: 8%/5% targets, balance-based 5% daily and 10% static max loss, splits to 95%, payout cycles — and the firm's own terms barring Vietnam residents and citizens from CFD.", type:"review", firm:"FundedNext", headline:"FundedNext Review 2026: Stellar Rules, All-In Gold Cost & Payout Terms" },
     "the5ers-review": { path:"the5ers-review/", title:"The5ers Review 2026: High Stakes Rules, Scaling & Payouts | Risk First Prop Lab", desc:"The5ers High Stakes audited: from $19, 10%/5% targets, static drawdown, 3 profitable days per phase, the $50K tier break (4%/8%), split scaling 80% to 100%, 14-day first payout. Open to Vietnam per the firm's FAQ.", type:"review", firm:"The5ers", headline:"The5ers Review 2026: High Stakes Rules, Scaling Model & Payout Test" },
@@ -5323,6 +5399,32 @@
   }
 
   var NV = "Unverified";
+  /* ---- Wave 1 (P1-1): loss rules for the firms with full Lab reviews ----
+     One literal per firm, transcribed from that firm's COMPARER row and
+     PLANNER_RULES model (themselves checked against the firm's own published
+     rules on 18 Nov 2026; src = the firm's official page as cited in its
+     review). Headline model per firm, matching the comparer. Firms NOT in
+     this map render "Chưa kiểm chứng" — never a guessed value. Types use the
+     canonical set: Static / Trailing Equity / Trailing Balance / EOD
+     Trailing / lock-at-start. wd = verified withdrawal-interaction note. */
+  var UNVERIFIED_VN = "Chưa kiểm chứng";
+  var LOSS_DATA = {
+    "FTMO": { daily:"5%", max:"10%", type:"Static", model:"2-Step Challenge", src:"https://ftmo.com/", wd:"" },
+    "FundedNext": { daily:"5%", max:"10%", type:"Static", model:"Stellar 2-Step", src:"https://fundednext.com/blog/fundednext-cfds-stellar-2-step-explained", wd:"" },
+    "The5ers": { daily:"5% · 4% on $50K+ tiers", max:"10% · 8% on $50K+ tiers", type:"Static", model:"High Stakes", src:"https://the5ers.com/challenge-programs-bootcamp-high-stakes-hyper-growth-explained/", wd:"" },
+    "Funding Pips": { daily:"5%", max:"10%", type:"Static", model:"2-Step Standard", src:"https://help.fundingpips.com/hc/en-us/articles/34501809112081-2-Step-Standard", wd:"" },
+    "E8 Markets": { daily:"3% (Help Centre preset) · 4% (configurator preset)", max:"4% – 6% by preset", type:"Trailing Balance", model:"E8 One", src:"https://help.e8markets.com/en/articles/11782996-dynamic-drawdown", wd:"A payout buffer must remain before a withdrawal — the buffer sits inside the loss floor, it is not free profit." },
+    "Alpha Capital Group": { daily:"4%", max:"8%", type:"Static", model:"Alpha Pro 8%", src:"http://alphacapitalgroup.uk/resources/alpha-capital-2026-plan-pricing-update", wd:"" },
+    "FXIFY": { daily:"4%", max:"10%", type:"Trailing — basis Chưa kiểm chứng", model:"2-Phase Standard (Classic variant: Static)", src:"https://fxify.com/", wd:"" },
+    "Blue Guardian": { daily:"4%", max:"8%", type:"Static", model:"2-Step Standard", src:"https://blueguardian.com/", wd:"On 1-Step / Instant the trailing floor locks at the starting balance at +6%, and 1% must stay behind at payout." },
+    "Instant Funding": { daily:"None (PRO)", max:"10% Smart Drawdown → 5%", type:"Trailing Balance", model:"Instant PRO", src:"https://instantfunding.com/", wd:"The Smart Drawdown must be locked at +5% before any payout." },
+    "Apex Trader Funding": { daily:"EOD daily limit $500–$2,000 by size (soft pause on EOD plans)", max:"Trailing threshold $1,000–$4,500 by size", type:"EOD Trailing", model:"Evaluation (Intraday / EOD trail)", src:"https://apextraderfunding.com/", wd:"" },
+    "MyFundedFutures": { daily:"None (Rapid / Pro)", max:"EOD trailing ≈ $2,000 on 50K (evaluation)", type:"EOD Trailing", model:"Rapid — switches to intraday trailing when funded", src:"https://myfundedfutures.com/", wd:"The payout buffer (max loss + $100) must clear before withdrawals." },
+    "Breakout Prop": { daily:"3%", max:"6% (Classic)", type:"Static", model:"Classic (1-Step)", src:"https://breakoutprop.com/", wd:"" },
+    "Goat Funded Trader": { daily:"4%", max:"10%", type:"Static", model:"2-Step GOAT (evaluations)", src:"https://goatfundedtrader.com/", wd:"" },
+    "Hantec Trader (RZR Funded)": { daily:"5%", max:"10%", type:"Static", model:"Enhanced (2-Step)", src:"https://hantectrader.com/", wd:"On Enhanced, the first withdrawal resets the max loss back to the initial balance." },
+    "Topstep": { daily:"None by default · optional DLL $1,000–$3,000 (session pause)", max:"$2,000 / $3,000 / $4,500 by size", type:"EOD Trailing", model:"Trading Combine", src:"https://www.topstep.com/", wd:"After each payout the Maximum Loss Limit resets to $0 — the remaining balance is the whole buffer." }
+  };
   var DIRECTORY = [
     {name:"FTMO", type:"CFD", hq:"Czechia", founded:2015, maxfund:"$200K accounts", split:90, splitLabel:"80% → 90%", price:89, priceLabel:"€89 ($10K 2-Step)", vn:"yes", status:"Testing", review:"ftmo-review", src:"https://ftmo.com/"},
     {name:"FundedNext", type:"CFD + Futures", hq:"UAE", founded:2022, maxfund:NV, split:95, splitLabel:"80% → 95% (add-on)", price:60, priceLabel:"$59.99 ($6K)", vn:"no", status:"Testing", review:"fundednext-review", src:"https://fundednext.com/api-docs/blog/stellar-1-step-vs-2-step-challenge"},
@@ -5417,6 +5519,16 @@
     if (s === "Closed") return '<span class="statuschip st-no">Closed — warning</span>';
     return '<span class="statuschip st-pending">Unverified — No full review yet</span>';
   }
+  /* Wave 1 (P1-1): the three loss cells for one Directory row. Filled only
+     from LOSS_DATA (full Lab review, firm's own rules, checked 18 Nov 2026,
+     source linked in the type cell); every other firm reads Chưa kiểm chứng. */
+  function lossCellsHTML(f){
+    var LD = LOSS_DATA[f.name];
+    if (!LD) return '<td class="num" data-label="Daily Loss"><span class="pending">' + UNVERIFIED_VN + '</span></td><td class="num" data-label="Max Loss"><span class="pending">' + UNVERIFIED_VN + '</span></td><td data-label="Max Loss Type"><span class="pending">' + UNVERIFIED_VN + "</span></td>";
+    return '<td class="num" data-label="Daily Loss"><span class="loss-cell">' + LD.daily + '<span class="loss-note">' + LD.model + "</span></span></td>"
+      + '<td class="num" data-label="Max Loss">' + LD.max + "</td>"
+      + '<td data-label="Max Loss Type"><span class="loss-cell">' + LD.type + (LD.wd ? '<span class="loss-note">Withdrawal: ' + LD.wd + "</span>" : "") + '<br><a class="loss-src" href="' + LD.src + '" target="_blank" rel="noopener">Rule source ↗</a> <span class="loss-note" style="display:inline">· verified 18 Nov 2026</span></span></td>';
+  }
   function appendDirRows(body, list){
     list.forEach(function(f){
       var tr = document.createElement("tr");
@@ -5437,8 +5549,9 @@
         + "<td data-label='Max funding'>" + (f.maxfund === NV ? '<span class="pending">' + NV + "</span>" : f.maxfund) + "</td>"
         + "<td data-label='Split'>" + (f.splitLabel === NV ? '<span class="pending">' + NV + "</span>" : f.splitLabel) + "</td>"
         + '<td class="num" data-label="Entry from">' + (f.priceLabel === NV ? '<span class="pending">' + NV + "</span>" : f.priceLabel) + "</td>"
+        + lossCellsHTML(f)
         + "<td data-label='Vietnam'>" + vnChip(f.vn) + "</td><td data-label='Lab status'>" + statusChip(f.status) + "</td>"
-        + '<td class="optcol" data-col="updated" data-label="Last updated" style="font-size:13px;white-space:nowrap">' + (f.updated || NV) + "</td>"
+        + '<td class="optcol" data-col="updated" data-label="Last verified" style="font-size:13px">' + (f.review ? '<span class="loss-cell">Last verified 18 Nov 2026' + (f.src ? '<br><a href="' + f.src + '" target="_blank" rel="noopener">Source ↗</a>' : "") + "</span>" : '<span class="pending">' + UNVERIFIED_VN + "</span>") + "</td>"
         + '<td class="optcol" data-col="next" data-label="Next review" style="font-size:13px;white-space:nowrap">' + (f.next || "—") + "</td>"
         + '<td data-label="Links" style="font-size:14px;white-space:nowrap">' + links + (f.status === "Closed" ? "" : '<br><button type="button" class="affbtn" data-aff="' + f.name + '">Visit Firm</button>') + "</td>";
       body.appendChild(tr);
@@ -5748,6 +5861,11 @@
      One row per change/firm — append a row, the pages render themselves.
      src must be the firm's OWN official page (or Trustpilot for trust notes). */
   var CHANGELOG = [
+    {date:"2026-11-19", firm:"Risk First Prop Lab", type:"Site", text:"Daily scan 19 Nov 2026: 4 new firms added to the Watchlist (WSDT, Coinhub Funded, Iceberg Funding, Evercrest Funding); 4 rule changes logged (Blue Guardian Futures Express discontinued 16 Nov; FTMO Futures Growth 5 Nov; Goat Funded Futures inactivity 7 Nov and holding-time rule 9 Nov); Goat Funded Trader review updated. No affiliate link added — none exists yet.", src:"https://riskproplab.vercel.app/directory/", srcLabel:"Directory — Watchlist & Rule Change Tracker"},
+    {date:"2026-11-16", firm:"Blue Guardian", type:"Rule", text:"Futures Express is no longer sold (from 16 Nov 2026); existing accounts only, keeping their rules. New buyers are directed to the Zero account.", src:"https://help.blueguardian.com/en/articles/18426764-express-account-rules", srcLabel:"Blue Guardian Help Centre — Express account rules"},
+    {date:"2026-11-09", firm:"Goat Funded Futures", type:"Rule", text:"One 1-minute holding rule replaces the 2-minute microscalping rule on all plans (from 9 Nov 2026): at evaluation pass and at each payout request, at least 70% of closed trades and at least 70% of net profit must come from trades held longer than 1 minute. If either share is missed, the payout request is declined and profit from trades held under 1 minute is deducted — this is not a breach.", src:"https://help.goatfundedfutures.com/en/articles/14095625-instant-classic-specifications-rules-and-payouts", srcLabel:"Goat Funded Futures Help Centre — Instant Classic specifications, rules and payouts"},
+    {date:"2026-11-07", firm:"Goat Funded Futures", type:"Rule", text:"Inactivity breach window widened from 7 to 14 days: no trade for 14 consecutive days breaches and closes the account (evaluation and funded, all plans), and the fee is not refunded. Tell support in advance if you will be away.", src:"https://help.goatfundedfutures.com/manage-account.html", srcLabel:"Goat Funded Futures Help Centre — Managing your account, updated 18 Nov 2026"},
+    {date:"2026-11-05", firm:"FTMO", type:"Rule", text:"FTMO Futures Growth changes for new evaluations from 5 Nov 2026, 4:30 a.m.: Growth 100K payout eligibility rises from $250 to $300 minimum daily P&L per qualifying day; Growth 150K maximum drawdown (end-of-day trailing) falls from $5,000 to $4,500 and payout eligibility rises from $300 to $450 per qualifying day. 4 qualifying days still required. Other Growth objectives unchanged.", src:"https://ftmo.com/en/futures/blog/trading-updates/futures-trading-update-5-nov-2026/", srcLabel:"FTMO — Futures Trading Update, 5 Nov 2026"},
     {date:"2026-11-18", firm:"Risk First Prop Lab", type:"Site", text:"New guide — Withdraw to Vietnam (Rút tiền về Việt Nam): step-by-step payout instructions for Vietnam-resident traders at the three Vietnam-usable firms with full Lab reviews — E8 Markets (Rise / WorkMarket, $100 net minimum, no firm fee, Classic / Perpetuals only), The5ers (Rise, crypto or bank transfer, $150 minimum, 3.5% fee, 14-day first withdrawal) and Breakout Prop (USDC ERC-20 only, $50 minimum, on demand) — with a side-by-side comparison, a before-your-first-payout checklist and a cheapest-rail explainer. Every step is per the firm's official docs, checked 18 Nov 2026; the Lab has not itself withdrawn from these firms and the page says so.", src:"https://riskproplab.vercel.app/withdraw-to-vietnam/", srcLabel:"Withdraw to Vietnam"},
     {date:"2026-11-18", firm:"Payout Denial Index", type:"Site", text:"Denial Index: first 5 cases published (2 Verified, 3 Awaiting verification)", src:"https://riskproplab.vercel.app/denial-index/", srcLabel:"Payout Denial Index"},
     {date:"2026-11-18", firm:"Risk First Prop Lab", type:"Site", text:"New tool — True Cost to Get Funded: the expected-cost calculator. Pick a firm, model and account size, enter your win rate, RRR and risk per trade, and it models your pass probability per attempt (diffusion approximation, all formulas printed on the page), the expected number of attempts, and the expected total, remaining and sunk cost of getting funded — set against the FPFX industry anchor (~14% of ~300,000 challenge buyers ever pass, ~7% ever get paid). Prices come only from Lab fee data; where a firm has no Lab price for a size the field stays empty for the checkout price, marked Unverified. No pass is promised — the model ignores daily drawdown and consistency caps, so it flatters you, and the page says so.", src:"https://riskproplab.vercel.app/true-cost-to-funded/", srcLabel:"True Cost to Get Funded"},
@@ -5766,7 +5884,11 @@
   ];
   var WATCHLIST = [
     {name:"Funded Trader Markets (FTM)", known:"New CFD prop brand reported as launched in 2024, advertising splits up to 100% across 1-step, 2-step and instant plans.", missing:"No full official rulebook, price list or payout record checked by the Lab; no Lab test; Vietnam status unknown.", src:null},
-    {name:"SabioTrade", known:"Prop brand appearing in 2026 comparison listings.", missing:"Official rulebook, payout terms and country eligibility unverified by the Lab.", src:null}
+    {name:"SabioTrade", known:"Prop brand appearing in 2026 comparison listings.", missing:"Official rulebook, payout terms and country eligibility unverified by the Lab.", src:null},
+    {name:"WSDT", known:"Launched 18 Nov 2026. One-step challenge: 10% profit target, 4% daily loss limit, 6% maximum drawdown, at least 4 trading days, no time limit, 80% profit split. One-time fees: $19 ($1,500), $55 ($5,000), $99 ($10,000), $199 ($25,000), $319 ($50,000), $499 ($100,000), $969 ($200,000). Markets: Hyperliquid crypto perpetuals, PAX Gold, xStocks tokenized US stocks. Built by TEFS (prop firm since 2017); operated by TEFS Marketing Management L.L.C., Dubai. Free 14-day $100,000 demo (no card) and a free weekly competition ($240,000 simulated account — top 3 win challenge accounts). Official site: <a href=\"https://wsdt.com/en\" target=\"_blank\" rel=\"noopener\">wsdt.com</a>.", missing:"Payout schedule and minimum not published — they sit only in the Provider Service Agreement, not summarised publicly (Unverified). Restricted-country list / Vietnam status: no list found (Unverified). Gold spread and commission: Pending MT5 log. No payout proof and no user reviews — the firm launched yesterday.", src:"https://wsdt.com/en/challenges#rules", srcLabel:"wsdt.com — Challenges & rules"},
+    {name:"Coinhub Funded", known:"Launched 2–3 Nov 2026. 2-Step, 1-Step and Instant challenges; accounts $5,000–$200,000; fees from $75; up to 90% profit split; payouts every 14 days in USDT or cash; leverage up to 1:100; crypto, forex, indices, metals and commodities; daily trading tournaments. Brand: Coinhub (2,000+ Bitcoin ATMs, established 2019 — IP licence).", missing:"Per-plan targets and drawdowns not confirmed (Unverified). Restricted countries / Vietnam status Unverified. Gold spread and commission: Pending MT5 log. No payout proof.", src:"https://coinhubfunded.com/", srcLabel:"coinhubfunded.com"},
+    {name:"Iceberg Funding", known:"Rules published 10 Nov 2026. Futures 4-phase challenge: 9% target per phase, 5% end-of-day trailing maximum drawdown, no daily loss limit, 25% consistency rule, 60 days per phase. Fixed payouts after every phase ($1,000 / $1,500 / $1,500 / $3,000 on a $50,000 account); live account with real capital after Phase 4, at 90% of account gains. Platforms: Rithmic with Bookmap. Founder Robert Rother (Bookmap educator). A brand of GEMS4GENS INC.; assessments provided by Prop Account, LLC. FX, CFD and crypto accounts run on DXtrade, MatchTrader and cTrader.", missing:"Challenge fees per size not published (Unverified). Restricted countries / Vietnam status Unverified. No payout proof. No user reviews.", src:"https://icebergfunding.com", srcLabel:"icebergfunding.com"},
+    {name:"Evercrest Funding", known:"Launched 2026; homepage live. Instant, 1-step and 2-step evaluations on MT5. Entity: Evercrest Funding Limited (Saint Lucia). 45% off first purchase (code FIRST).", missing:"Published rule table (targets, drawdowns, fees) not confirmed on an official page (Unverified). Restricted countries / Vietnam status Unverified. Gold spread and commission: Pending MT5 log. No payout proof. No user reviews.", src:"https://evercrestfunding.com/", srcLabel:"evercrestfunding.com"}
   ];
   function chgHTML(list){
     return list.map(function(c){
@@ -5778,9 +5900,13 @@
   var dc = document.getElementById("dirChangelog"); if (dc) dc.innerHTML = chgHTML(sortedChg);
   var rt = document.getElementById("ruleTracker");
   if (rt) rt.innerHTML = chgHTML(sortedChg.filter(function(c){ return c.type === "Rule" || c.type === "Price" || c.type === "Country"; }));
+  /* Wave 1 (P1-6): the standalone /changelog/ page renders the same two lists */
+  var pc = document.getElementById("pageChangelog"); if (pc) pc.innerHTML = chgHTML(sortedChg);
+  var prt = document.getElementById("pageRuleTracker");
+  if (prt) prt.innerHTML = chgHTML(sortedChg.filter(function(c){ return c.type === "Rule" || c.type === "Price" || c.type === "Country"; }));
   var wb = document.getElementById("watchBody");
   if (wb) wb.innerHTML = WATCHLIST.map(function(w){
-    return "<tr><td><b>" + w.name + "</b></td><td>" + w.known + "</td><td>" + w.missing + '</td><td><span class="statuschip st-pending">Watching — unverified, do not buy yet</span></td></tr>';
+    return "<tr><td><b>" + w.name + "</b>" + (w.src ? '<br><a href="' + w.src + '" target="_blank" rel="noopener">' + (w.srcLabel || "Official site") + ' ↗</a>' : "") + "</td><td>" + w.known + "</td><td>" + w.missing + '</td><td><span class="statuschip st-pending">Watching — unverified, do not buy yet</span></td></tr>';
   }).join("");
 
   /* Unlisted firms: on PropFirmMatch's /unlisted-firms page only (checked 18 Nov 2026).
@@ -6015,7 +6141,9 @@
       + h2hRow("Billing", billOf(A), billOf(B))
       + h2hRow("Steps", A.stepsLabel, B.stepsLabel)
       + h2hRow("Profit target", A.target, B.target)
-      + h2hRow("Daily / Max loss + type", A.daily + " · " + A.max, B.daily + " · " + B.max)
+      + h2hRow("Daily loss", A.daily, B.daily)
+      + h2hRow("Max loss", A.max, B.max)
+      + h2hRow("Max loss type", lossTypeOf(A.name), lossTypeOf(B.name))
       + h2hRow("Minimum days", A.minDays, B.minDays)
       + h2hRow("Payout — first / frequency", A.payoutFirst + " · " + A.payoutFreq, B.payoutFirst + " · " + B.payoutFreq)
       + h2hRow("Fee refunded?", A.refund, B.refund)
@@ -6449,10 +6577,10 @@
   var CMP = [];
   function cmpData(name){
     var c = cmpByName(name);
-    if (c) return { name:name, slug:c.slug, score:scoreOf(c.rankBasis), basis:c.rankBasis, model:c.stepsLabel, dailymax:c.daily.split("·")[0] + " / " + c.max, split:c.splitLabel, entry:c.priceLabel, payout:c.payoutFirst + " · " + c.payoutFreq, refund:c.refund, sizes:c.sizes.map(function(x){ return "$" + (x/1000) + "K"; }).join(" – "), gold:c.goldCost, vn:vnChipTxt(c.vn), country:c.country + " · since " + c.founded, platforms:c.platforms.join(", "), status:c.rank };
+    if (c){ var LDc = LOSS_DATA[name]; return { name:name, slug:c.slug, score:scoreOf(c.rankBasis), basis:c.rankBasis, model:c.stepsLabel, dailymax:c.daily.split("·")[0] + " / " + c.max, lossDaily:LDc ? LDc.daily : UNVERIFIED_VN, lossMax:LDc ? LDc.max : UNVERIFIED_VN, lossType:LDc ? LDc.type : UNVERIFIED_VN, wdNote:LDc ? LDc.wd : "", split:c.splitLabel, entry:c.priceLabel, payout:c.payoutFirst + " · " + c.payoutFreq, refund:c.refund, sizes:c.sizes.map(function(x){ return "$" + (x/1000) + "K"; }).join(" – "), gold:c.goldCost, vn:vnChipTxt(c.vn), country:c.country + " · since " + c.founded, platforms:c.platforms.join(", "), status:c.rank }; }
     var d = null;
     DIRECTORY_ALL.forEach(function(f){ if (f.name === name) d = f; });
-    if (d) return { name:name, slug:d.review || null, score:null, basis:"No full review yet — not scored", model:d.type, dailymax:"—", split:d.splitLabel, entry:d.priceLabel, payout:"—", refund:"—", sizes:"Up to " + d.maxfund, gold:"—", vn:vnChipTxt(d.vn), country:d.hq, platforms:"—", status:d.status + " · max funding " + d.maxfund };
+    if (d){ var LDd = LOSS_DATA[name]; return { name:name, slug:d.review || null, score:null, basis:"No full review yet — not scored", model:d.type, dailymax:"—", lossDaily:LDd ? LDd.daily : UNVERIFIED_VN, lossMax:LDd ? LDd.max : UNVERIFIED_VN, lossType:LDd ? LDd.type : UNVERIFIED_VN, wdNote:LDd ? LDd.wd : "", split:d.splitLabel, entry:d.priceLabel, payout:"—", refund:"—", sizes:"Up to " + d.maxfund, gold:"—", vn:vnChipTxt(d.vn), country:d.hq, platforms:"—", status:d.status + " · max funding " + d.maxfund }; }
     return null;
   }
   /* Billing model + representative size, read from the firm's own price label */
@@ -6499,7 +6627,10 @@
         ["Fee refunded?", function(f){ return f.refund; }]
       ]],
       ["Drawdown", [
-        ["Daily / Max loss", function(f){ return f.dailymax; }]
+        ["Daily Loss", function(f){ return f.lossDaily; }],
+        ["Max Loss", function(f){ return f.lossMax; }],
+        ["Max Loss Type", function(f){ return f.lossType; }],
+        ["Withdrawal interaction", function(f){ return f.wdNote || "—"; }]
       ]],
       ["Payout", [
         ["First payout · frequency", function(f){ return f.payout; }],
@@ -6721,6 +6852,80 @@
     "GBPJPY":{ unitVal:6.7, sl:25, slLabel:"Stop-loss distance (pips)", note:"1 pip = 0.01 — ≈ $6.70 per pip per lot at GBP/JPY ≈ 190 the cross rate changes the value; check your broker." },
     "BTCUSD":{ unitVal:1, sl:300, slLabel:"Stop-loss distance ($)", note:"Assumes 1 lot = 1 BTC, so a $1 move = $1 per lot — contract sizes vary by broker; verify before trading." }
   };
+  /* ================= Wave 1: challenges table (P1-2) + review stamps (P1-3) =================
+     Presentation only: rows are read from PLANNER_RULES + COMPARER at render
+     time — no rule value is duplicated here except the canonical max-loss
+     type per model (CH_TYPE), transcribed from each model's own maxType text
+     in PLANNER_RULES. PT:DD = Phase 1 profit target % / max loss %. */
+  function lossTypeOf(n){ var LD = LOSS_DATA[n]; return LD ? LD.type : UNVERIFIED_VN; }
+  var CH_TYPE = {
+    "FTMO:2step":"Static", "FTMO:1step":"EOD Trailing",
+    "FundedNext:stellar2":"Static", "FundedNext:stellar1":"Static",
+    "The5ers:hs":"Static", "Funding Pips:std2":"Static",
+    "E8 Markets:e8one":"Trailing Balance", "Alpha Capital:pro8":"Static",
+    "FXIFY:2phase":"Trailing — basis Chưa kiểm chứng",
+    "Blue Guardian:2step":"Static", "Blue Guardian:1step":"EOD Trailing · lock-at-start",
+    "Instant Funding:onephasepro":"Static",
+    "Apex Trader Funding:eval":"EOD Trailing",
+    "MyFundedFutures:rapid":"EOD Trailing",
+    "Breakout Prop:classic":"Static", "Goat Funded Trader:goat2":"Static",
+    "Hantec Trader (RZR Funded):enhanced":"Static",
+    "Topstep:combine50":"EOD Trailing"
+  };
+  function chPrice(fname, m, c){
+    var bill = (fname === "Topstep") ? "Monthly subscription · + $149 activation" : (fname === "FTMO" && m.id === "2step" ? "One-time · refunded with first payout" : "One-time");
+    var stamp = c ? '<span class="loss-note">Last verified 18 Nov 2026 · <a href="' + c.src + '" target="_blank" rel="noopener">source ↗</a></span>' : "";
+    if (m.fees && m.fees["100000"]) return m.fees["100000"] + '<span class="loss-note">$100K price · ' + bill + "</span>" + stamp;
+    if (fname === "Blue Guardian") return '<span class="pending">' + UNVERIFIED_VN + '</span><span class="loss-note">Only an aggregator-recorded range exists in Lab data — no firm-verified price for this model.</span>';
+    if (m.feeFrom) return "Entry from " + m.feeFrom + ' (smallest size)<span class="loss-note">$100K price: ' + UNVERIFIED_VN + " · " + bill + "</span>" + stamp;
+    if (c && c.price !== null && c.price !== undefined) return "Entry from " + c.priceLabel + '<span class="loss-note">$100K price: ' + UNVERIFIED_VN + " · " + bill + "</span>" + stamp;
+    return '<span class="pending">' + UNVERIFIED_VN + "</span>";
+  }
+  function renderChallenges(){
+    var body = document.getElementById("chBody"); if (!body) return;
+    var html = "";
+    Object.keys(PLANNER_RULES).forEach(function(fname){
+      if (fname === "Custom") return;
+      var f = PLANNER_RULES[fname];
+      var cName = (fname === "Alpha Capital") ? "Alpha Capital Group" : fname;
+      var c = cmpByName(cName);
+      f.models.forEach(function(m){
+        html += "<tr><td data-label='Firm · Model'>" + firmLogoHTML(cName) + "<b>" + cName + "</b>" + '<span class="loss-note">' + m.label + (f.review ? ' · <a href="/' + f.review + '/" data-route="' + f.review + '">Review →</a>' : "") + "</span></td>"
+          + "<td data-label='Steps'>" + (m.t2 != null ? "2-Step" : "1-Step") + "</td>"
+          + '<td class="num" data-label="Profit Target">' + m.t1 + "%" + (m.t2 != null ? " / " + m.t2 + "%" : "") + (fname === "E8 Markets" ? '<span class="loss-note">Target = 1.5× the drawdown dial</span>' : "") + "</td>"
+          + '<td class="num" data-label="Daily Loss">' + (m.daily === 0 ? "None" : m.daily + "%") + "</td>"
+          + '<td class="num" data-label="Max Loss">' + m.max + "%</td>"
+          + "<td data-label='Max Loss Type'>" + (CH_TYPE[fname + ":" + m.id] || UNVERIFIED_VN) + "</td>"
+          + '<td class="num" data-label="PT:DD"><span class="ptdd">' + (m.t1 / m.max).toFixed(2) + "</span></td>"
+          + "<td data-label='Split'>" + (c ? c.splitLabel : UNVERIFIED_VN) + "</td>"
+          + "<td data-label='Payout Frequency'>" + (c ? c.payoutFreq + '<span class="loss-note">First payout: ' + c.payoutFirst + "</span>" : UNVERIFIED_VN) + "</td>"
+          + "<td data-label='Price'>" + chPrice(fname, m, c) + "</td></tr>";
+      });
+    });
+    body.innerHTML = html;
+    body.querySelectorAll("[data-route]").forEach(function(a){ a.addEventListener("click", function(e){ e.preventDefault(); navigate(a.getAttribute("data-route")); }); });
+  }
+  renderChallenges();
+  /* P1-3: a "Last verified · source" stamp under the byline of every full
+     review. The date comes from the firm's COMPARER row (updated / next,
+     themselves stamped 18 Nov 2026 / 18 Dec 2026); a stamp older than the
+     last full check would be flagged re-check due on the page. */
+  COMPARER.forEach(function(c){
+    var view = document.querySelector('[data-view="' + c.slug + '"]'); if (!view) return;
+    var bl = view.querySelector(".article-head .byline"); if (!bl || view.querySelector(".verify-stamp")) return;
+    var p = document.createElement("p"); p.className = "verify-stamp";
+    var due = (c.updated && c.updated !== "18 Nov 2026") ? " · <b>Re-check due</b> — this stamp predates the last full check (18 Nov 2026)" : "";
+    p.innerHTML = "Last verified " + (c.updated || "18 Nov 2026") + ' · Source: <a href="' + c.src + '" target="_blank" rel="noopener">the firm\'s official pages ↗</a> · Next re-check ' + (c.next || "18 Dec 2026") + due;
+    bl.parentNode.insertBefore(p, bl.nextSibling);
+  });
+  (function(){
+    var view = document.querySelector('[data-view="the-funded-trader-review"]'); if (!view) return;
+    var bl = view.querySelector(".article-head .byline"); if (!bl || view.querySelector(".verify-stamp")) return;
+    var p = document.createElement("p"); p.className = "verify-stamp";
+    p.textContent = "Closure case study — firm offline. Facts last verified 18 Nov 2026 · sources cited inside the review";
+    bl.parentNode.insertBefore(p, bl.nextSibling);
+  })();
+
   var pl = {};
   ["plFirm","plModel","plPhase","plFee","plFeeNote","plTarget","plDaily","plMax","plMinDays","plRuleNote","plRuleChips","plSize","plDaysInput","plTrades","plWR","plRRR","plPair","plSL","plSLLabel","plUnitVal","plPairNote","plWarnings","plBinding","plStats","plSummary","plDayBody","plCrossFirm","plFirmRules","plShare"].forEach(function(id){ pl[id] = document.getElementById(id); });
   var plannerReady = !!pl.plFirm;
